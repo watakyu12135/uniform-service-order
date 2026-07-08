@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>採寸内容修正</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+.section {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.notice {
+  padding: 10px;
+  background: #fff7e6;
+  border-left: 4px solid #f5a623;
+  margin-bottom: 12px;
+}
+
+.error {
+  color: #c00;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input {
+  font-size: 16px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 14px;
+  padding: 10px 16px;
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.result-box {
+  margin-top: 16px;
+  padding: 12px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+}
+
+.item {
+  margin-top: 8px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.small {
+  font-size: 13px;
+  color: #555;
+}
+</style>
+</head>
+
+<body>
+
+<h2>採寸内容修正</h2>
+
+<div id="customerInfo">顧客：読み込み中...</div>
+<div id="message" class="error"></div>
+
+<div class="section">
+  <h3>採寸番号で検索</h3>
+
+  <div class="notice">
+    採寸番号が分かる場合はこちらに入力してください。<br>
+    採寸番号が入力されている場合は、こちらを優先して検索します。
+  </div>
+
+  <label for="measureNo">採寸番号</label>
+  <input id="measureNo" placeholder="例：E395538">
+</div>
+
+<div class="section">
+  <h3>採寸番号が分からない場合</h3>
+
+  <div class="notice">
+    採寸番号が分からない場合は、以下を入力してください。<br>
+    ※採寸番号欄は空欄にしてください。
+  </div>
+
+  <label for="sei">氏</label>
+  <input id="sei">
+
+  <label for="mei">名</label>
+  <input id="mei">
+
+  <label for="job">職種</label>
+  <input id="job" placeholder="例：看護師">
+
+  <label for="registrationNo">登録した4桁の数字</label>
+  <input id="registrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
+</div>
+
+<button type="button" onclick="searchRevision()">検索</button>
+
+<div id="resultArea" class="result-box hidden"></div>
+
+<script>
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
+
+let currentData = null;
+let customerKey = "";
+let customerCode = "";
+let lastSearchResult = null;
+
+function getCustomer() {
+  const url = new URL(window.location.href);
+  const customerKey =
+    url.searchParams.get("customer") ||
+    sessionStorage.getItem("uniformCustomer") ||
+    "gvhp8hex";
+
+  if (customerKey) {
+    sessionStorage.setItem("uniformCustomer", customerKey);
+  }
+
+  return customerKey;
+}
+
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+async function checkPageDeadline() {
+  const payload = {
+    deadlineOnly: true,
+    publicKey: getCustomer()
+  };
+
+  const res = await fetch(GAS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const text = await res.text();
+  const json = JSON.parse(text);
+
+  if (json.result !== "ok") {
+    location.href = "expired.html";
+    return false;
+  }
+
+  if (!json.found || !json.active || json.expired) {
+    location.href = "expired.html";
+    return false;
+  }
+
+  return true;
+}
+
+function loadCustomerConfig() {
+  customerKey = getCustomer();
+
+  checkPageDeadline()
+    .then(ok => {
+      if (!ok) {
+        return null;
+      }
+
+ return fetch(`config/${customerKey}.json?ts=${Date.now()}`);
+    })
+    .then(res => {
+      if (!res) {
+        return null;
+      }
+
+      if (!res.ok) {
+        throw new Error("顧客設定ファイルが見つかりません。");
+      }
+
+      return res.json();
+    })
+    .then(data => {
+      if (!data) {
+        return;
+      }
+
+      currentData = data;
+      customerCode = String(currentData.customerCode || "").trim();
+
+      document.getElementById("customerInfo").innerText =
+        "顧客：" + (currentData.customerName || "");
+
+      if (!customerCode) {
+        document.getElementById("message").innerText =
+          "顧客コードが取得できません。設定ファイルを確認してください。";
+      }
+    })
+    .catch(err => {
+      document.getElementById("message").innerText =
+        "顧客設定の読み込みに失敗しました：" + err.message;
+    });
+}
+async function searchRevision() {
+  const message = document.getElementById("message");
+  const resultArea = document.getElementById("resultArea");
+
+  message.innerText = "";
+  resultArea.classList.add("hidden");
+  resultArea.innerHTML = "";
+  lastSearchResult = null;
+
+  if (!customerCode) {
+    alert("顧客情報の読み込みが完了していません。");
+    return;
+  }
+
+  const measureNo = document.getElementById("measureNo").value.trim();
+
+  const sei = document.getElementById("sei").value.trim();
+  const mei = document.getElementById("mei").value.trim();
+  const job = document.getElementById("job").value.trim();
+  const registrationNo = document.getElementById("registrationNo").value.trim();
+
+  const payload = {
+    searchOnly: true,
+    customerCode: customerCode
+  };
+
+  if (measureNo) {
+    payload.measureNo = measureNo;
+  } else {
+    if (!sei || !mei || !job || !registrationNo) {
+      alert("採寸番号を入力するか、氏・名・職種・登録した4桁の数字を入力してください。");
+      return;
+    }
+
+    if (!/^\d{4}$/.test(registrationNo)) {
+      alert("登録した4桁の数字は半角数字4桁で入力してください。");
+      return;
+    }
+
+    payload.sei = sei;
+    payload.mei = mei;
+    payload.job = job;
+    payload.registrationNo = registrationNo;
+  }
+
+  resultArea.classList.remove("hidden");
+  resultArea.innerText = "検索中...";
+
+  try {
+    const res = await fetch(GAS_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const text = await res.text();
+    const json = JSON.parse(text);
+
+    if (json.result !== "ok") {
+      resultArea.innerHTML = `
+        <div class="error">検索中にエラーが発生しました。</div>
+        <pre>${escapeHtml(JSON.stringify(json, null, 2))}</pre>
+      `;
+      return;
+    }
+
+    if (!json.found) {
+      resultArea.innerHTML = `
+        <div class="error">該当する登録情報が見つかりませんでした。</div>
+        <div class="small">
+          入力内容、採寸番号、登録した4桁の数字をご確認ください。
+        </div>
+      `;
+      return;
+    }
+
+    lastSearchResult = json;
+    renderSearchResult(json);
+
+  } catch (err) {
+    resultArea.innerHTML = `
+      <div class="error">検索に失敗しました。</div>
+      <div>${escapeHtml(err.message)}</div>
+    `;
+  }
+}
+
+function renderSearchResult(result) {
+  const resultArea = document.getElementById("resultArea");
+  const orders = result.orders || [];
+  const first = orders[0] || {};
+  const measurement = result.measurement || null;
+
+  let html = "";
+
+  html += `<div class="success">該当する登録情報が見つかりました。</div>`;
+
+  html += `
+    <div style="margin-top:12px;">
+      <div>採寸番号：<strong>${escapeHtml(result.measureNo || "")}</strong></div>
+      <div>氏名：${escapeHtml(first["氏"] || first.sei || "")} ${escapeHtml(first["名"] || first.mei || "")}</div>
+      <div>性別：${escapeHtml(first["性別"] || first.gender || "")}</div>
+      <div>職種：${escapeHtml(first["職種"] || first.job || "")}</div>
+      <div>部署：${escapeHtml(first["部署"] || first.department || "なし")}</div>
+    </div>
+  `;
+
+  html += `<h3>商品選択内容</h3>`;
+
+  if (orders.length === 0) {
+    html += `<div>商品データなし</div>`;
+  } else {
+    orders.forEach(item => {
+      html += `
+        <div class="item">
+          <div><strong>${escapeHtml(item["商品名"] || item.product || "")}</strong> ${escapeHtml(item["商品コード"] || item.productCode || "")}</div>
+          <div>色：${escapeHtml(item["色"] || item.color || "")}</div>
+          <div>サイズ：${escapeHtml(item["サイズ"] || item.size || "")}</div>
+          <div>数量：${escapeHtml(item["数量"] || item.qty || "")}</div>
+        </div>
+      `;
+    });
+  }
+
+  html += `<h3>採寸入力内容</h3>`;
+
+  if (!measurement) {
+    html += `<div>採寸入力なし</div>`;
+  } else {
+    html += renderMeasurementSummary(measurement);
+  }
+
+  html += `
+    <button type="button" onclick="startEdit()">
+      この内容を修正する
+    </button>
+  `;
+
+  resultArea.innerHTML = html;
+}
+
+function renderMeasurementSummary(measurement) {
+  const hiddenKeys = [
+    "登録ID",
+    "顧客コード",
+    "顧客名",
+    "氏",
+    "名",
+    "性別",
+    "職種",
+    "部署",
+    "採寸区分",
+    "登録日時",
+    "更新日時",
+    "上衣入力済",
+    "下衣入力済",
+    "採寸番号",
+    "登録番号",
+    "登録区分",
+    "有効フラグ",
+    "修正用番号"
+  ];
+
+  let html = "";
+
+  Object.keys(measurement).forEach(key => {
+    const value = measurement[key];
+
+    if (hiddenKeys.includes(key)) return;
+    if (value === "" || value === null || value === undefined) return;
+
+    html += `<div>${escapeHtml(key)}：${escapeHtml(value)}</div>`;
+  });
+
+  if (!html) {
+    return `<div>採寸入力なし</div>`;
+  }
+
+  return html;
+}
+
+function startEdit() {
+  if (!lastSearchResult) {
+    alert("修正対象データがありません。");
+    return;
+  }
+
+  sessionStorage.setItem("uniformEditData", JSON.stringify(lastSearchResult));
+  sessionStorage.setItem("uniformEditCustomer", customerKey);
+
+  location.href = "index.html?customer=" + encodeURIComponent(customerKey) + "&mode=edit";
+}
+
+loadCustomerConfig();
+</script>
+
+</body>
+</html>
