@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>登録完了</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: sans-serif; padding: 20px; }
+.box { margin-top: 20px; padding: 18px; border: 1px solid #ccc; background: #f9f9f9; }
+.no { font-size: 28px; font-weight: bold; color: #c00; letter-spacing: 2px; }
+.notice { margin-top: 16px; padding: 12px; background: #fff7e6; border-left: 4px solid #f5a623; }
+.section { margin-top: 22px; }
+label { display: block; margin-top: 10px; font-weight: bold; }
+input { font-size: 16px; padding: 8px; width: 100%; max-width: 360px; box-sizing: border-box; }
+button { margin-top: 16px; padding: 10px 18px; }
+.hidden { display: none; }
+.small { font-size: 13px; color: #555; margin-top: 6px; }
+</style>
+</head>
+<body>
+<h2>登録完了</h2>
+
+<div class="box">
+  <p>登録を受け付けました。</p>
+  <p>採寸番号は</p>
+  <div class="no" id="measureNo">----</div>
+  <div class="notice">
+    登録内容の修正には、<br>
+    採寸番号 または<br>
+    氏名・職種・入力した4桁の数字が必要です。<br>
+    必ずメモをお取りください。
+  </div>
+</div>
+
+<!-- メール送信（任意） -->
+<div class="section">
+  <h3>控えをメールで受け取る（任意）</h3>
+  <div class="notice">
+    採寸番号と入力内容を記録用として<br>
+    ご自身のメールアドレスに送信できます。<br>
+    <br>
+    ※ メールアドレスは弊社には登録されません。
+  </div>
+
+  <label for="email">メールアドレス</label>
+  <input id="email" type="email" inputmode="email" autocomplete="email">
+
+  <label for="emailConfirm">メールアドレス再入力</label>
+  <input id="emailConfirm" type="email" inputmode="email" autocomplete="email">
+
+  <button id="mailBtn" class="hidden">メールを送信する</button>
+</div>
+
+<button onclick="finish()">OK</button>
+
+<script>
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
+
+/* 完了済み画面なので戻れないようにする */
+history.pushState(null, null, location.href);
+window.onpopstate = () => {
+  history.go(1);
+};
+
+/* 読み込み */
+const raw = sessionStorage.getItem("uniformComplete");
+let info = {};
+try {
+  info = raw ? JSON.parse(raw) : {};
+} catch (e) {
+  info = {};
+}
+
+document.getElementById("measureNo").innerText = info.measureNo || "----";
+
+/* メール入力一致チェック */
+function checkEmail() {
+  const e1 = document.getElementById("email").value.trim();
+  const e2 = document.getElementById("emailConfirm").value.trim();
+  const btn = document.getElementById("mailBtn");
+
+  if (!e1 || !e2) {
+    btn.classList.add("hidden");
+    return;
+  }
+
+  if (e1 !== e2) {
+    btn.classList.add("hidden");
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e1)) {
+    btn.classList.add("hidden");
+    return;
+  }
+
+  btn.classList.remove("hidden");
+}
+
+document.getElementById("email").addEventListener("input", checkEmail);
+document.getElementById("emailConfirm").addEventListener("input", checkEmail);
+
+/* メール送信 */
+document.getElementById("mailBtn").addEventListener("click", async () => {
+  const email = document.getElementById("email").value.trim();
+  const emailConfirm = document.getElementById("emailConfirm").value.trim();
+  const mailBtn = document.getElementById("mailBtn");
+
+  if (!email || !emailConfirm || email !== emailConfirm) {
+    alert("メールアドレスが一致していません。");
+    return;
+  }
+
+  const rawMailDraft = sessionStorage.getItem("uniformMailDraft");
+  let mailDraft = {};
+
+  try {
+    mailDraft = rawMailDraft ? JSON.parse(rawMailDraft) : {};
+  } catch (e) {
+    alert("送信用データの読み込みに失敗しました。");
+    return;
+  }
+
+  const mailPayload = {
+    mailOnly: true,
+    toEmail: email,
+    measureNo: info.measureNo || "",
+    registrationNo: info.registrationNo || "",
+    orders: mailDraft.orders || [],
+    measurement: mailDraft.measurement || null
+  };
+
+  mailBtn.disabled = true;
+  mailBtn.innerText = "送信中...";
+
+  try {
+    const res = await fetch(GAS_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(mailPayload)
+    });
+
+    const text = await res.text();
+    const json = JSON.parse(text);
+
+    if (json.result !== "ok") {
+      alert("控えメールの送信に失敗しました。\n時間をおいて再度お試しください。");
+      mailBtn.disabled = false;
+      mailBtn.innerText = "メールを送信する";
+      return;
+    }
+
+    alert("控えメールを送信しました。");
+
+    mailBtn.disabled = true;
+    mailBtn.innerText = "送信済み";
+
+    sessionStorage.removeItem("uniformMailDraft");
+    sessionStorage.removeItem("uniformComplete");
+
+    location.href = "https://www.yahoo.co.jp/";
+
+  } catch (err) {
+    alert("控えメール送信中にエラーが発生しました。\n通信環境を確認して、再度お試しください。\n\n" + err.message);
+
+    mailBtn.disabled = false;
+    mailBtn.innerText = "メールを送信する";
+  }
+});
+
+/* 完了後 */
+function finish() {
+  sessionStorage.removeItem("uniformComplete");
+  sessionStorage.removeItem("uniformMailDraft");
+  location.href = "https://www.yahoo.co.jp/";
+}
+</script>
+</body>
+</html>
