@@ -60,8 +60,8 @@ label { font-weight: bold; display: block; margin-top: 10px; }
   <div id="orderArea"></div>
 </div>
 
-<!-- 採寸内容 -->
-<div class="section">
+<!-- 採寸内容：別寸選択または採寸入力がある場合のみ表示 -->
+<div id="measurementSection" class="section hidden">
   <h3>採寸入力内容</h3>
   <div id="measurementContent"></div>
 </div>
@@ -185,7 +185,7 @@ document.getElementById("fullNameKana").innerText =
   document.getElementById("department").innerText = first.department || "なし";
 
   renderOrders(orders);
-  renderMeasurement(draft.measurement);
+  renderMeasurement(draft.measurement, orders);
 
   if (draft.editMode) {
     document.querySelector("h2").innerText = "登録内容確認（修正）";
@@ -224,20 +224,47 @@ function renderOrders(orders) {
   area.innerHTML = html;
 }
 
-function renderMeasurement(measurement) {
+function hasBespokeOrder(orders) {
+  return (orders || []).some(o => {
+    const size = String(o.size || o["サイズ"] || "").trim();
+    const sizeType = String(o.sizeType || o["サイズ区分"] || "").trim();
+    return size === "別寸" || sizeType === "bespoke";
+  });
+}
+
+function renderMeasurement(measurement, orders) {
+  const section = document.getElementById("measurementSection");
   const area = document.getElementById("measurementContent");
+  const hasBespoke = hasBespokeOrder(orders);
+
+  if (!section || !area) return;
+
   if (!measurement) {
-    area.innerText = "採寸入力なし";
+    if (hasBespoke) {
+      section.classList.remove("hidden");
+      area.innerText = "採寸情報はありません";
+    } else {
+      section.classList.add("hidden");
+      area.innerHTML = "";
+    }
     return;
   }
 
-  const entries = Object.entries(measurement).filter(([k,v]) => v);
+  const entries = Object.entries(measurement).filter(([k, v]) => v);
+
   if (entries.length === 0) {
-    area.innerText = "採寸入力なし";
+    if (hasBespoke) {
+      section.classList.remove("hidden");
+      area.innerText = "採寸情報はありません";
+    } else {
+      section.classList.add("hidden");
+      area.innerHTML = "";
+    }
     return;
   }
 
-  area.innerHTML = entries.map(([k,v]) =>
+  section.classList.remove("hidden");
+  area.innerHTML = entries.map(([k, v]) =>
     `<div>${escapeHtml(k)}：${escapeHtml(v)}</div>`
   ).join("");
 }
