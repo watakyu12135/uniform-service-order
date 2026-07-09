@@ -2,87 +2,136 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>PowerAutomateのテスト</title>
+<title>Power Automate テスト</title>
+
+<style>
+body{
+    font-family:Meiryo,sans-serif;
+    margin:30px;
+}
+
+h2{
+    margin-top:30px;
+}
+
+input{
+    width:300px;
+    padding:8px;
+}
+
+button{
+    padding:8px 15px;
+    margin-left:10px;
+}
+
+.result{
+    margin-top:10px;
+    font-weight:bold;
+    color:blue;
+}
+</style>
+
 </head>
 <body>
 
 <h2>登録テスト</h2>
 
-<input type="text" id="txtName">
+<input type="text" id="txtName" placeholder="名前を入力">
 <button onclick="saveData()">登録</button>
 
-<div id="saveResult"></div>
+<div id="saveResult" class="result"></div>
 
 <hr>
 
 <h2>検索テスト</h2>
 
-<input type="text" id="txtSearch">
+<input type="text" id="txtSearch" placeholder="検索する名前">
 <button onclick="searchData()">検索</button>
 
-<div id="searchResult"></div>
+<div id="searchResult" class="result"></div>
 
 <script>
 
-const SAVE_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/23/workflows/310370d83f914c6ca62b5f62686d4aab/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zvg9zdny_kiPnGfHSkS_2eyvdznVVM7hiwYt0wdUaLs";
-const SEARCH_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/08/workflows/59e341d66cda4ccabfd99ed33bbee5a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SxaovbPjdtG54RVlDXLj4zwcMvgu9JBVEYMtxbaSU2s";
+// 登録用フローURL
+const SAVE_URL =
+"https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/23/workflows/310370d83f914c6ca62b5f62686d4aab/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zvg9zdny_kiPnGfHSkS_2eyvdznVVM7hiwYt0wdUaLs";
+
+// 検索用フローURL
+const SEARCH_URL =
+"https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/08/workflows/59e341d66cda4ccabfd99ed33bbee5a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SxaovbPjdtG54RVlDXLj4zwcMvgu9JBVEYMtxbaSU2s";
+
 
 async function saveData(){
 
-    const name =
-        document.getElementById("txtName").value;
+    try{
 
-    const res = await fetch(
-        SAVE_URL,
-        {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                name:name
-            })
-        }
-    );
+        const name =
+            document.getElementById("txtName").value;
 
-    const data = await res.json();
+        const response =
+            await fetch(SAVE_URL,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    name:name
+                })
+            });
 
-    document.getElementById(
-        "saveResult"
-    ).innerText =
-        "登録完了";
+        const result =
+            await response.text();
+
+        console.log(result);
+
+        document.getElementById("saveResult")
+            .innerText = "登録完了";
+
+    }catch(error){
+
+        console.error(error);
+
+        document.getElementById("saveResult")
+            .innerText = "登録失敗";
+
+    }
 }
+
+
 
 async function searchData(){
 
-    const name =
-        document.getElementById("txtSearch").value;
+    try{
 
-    const res = await fetch(
-        SEARCH_URL,
-        {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                name:name
-            })
-        }
-    );
+        const name =
+            document.getElementById("txtSearch").value;
 
-    const data = await res.json();
+        const response =
+            await fetch(SEARCH_URL,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    name:name
+                })
+            });
 
-    if(data.exists){
-        document.getElementById(
-            "searchResult"
-        ).innerText =
-            "データ有";
-    }else{
-        document.getElementById(
-            "searchResult"
-        ).innerText =
-            "データ無";
+        const result =
+            await response.text();
+
+        console.log(result);
+
+        document.getElementById("searchResult")
+            .innerText = result;
+
+    }catch(error){
+
+        console.error(error);
+
+        document.getElementById("searchResult")
+            .innerText = "検索エラー";
+
     }
 }
 
