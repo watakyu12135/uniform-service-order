@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>PowerAutomateテスト</title>
+</head>
+<body>
+
+<h2>登録テスト</h2>
+
+<input type="text" id="txtName">
+<button onclick="saveData()">登録</button>
+
+<div id="saveResult"></div>
+
+<hr>
+
+<h2>検索テスト</h2>
+
+<input type="text" id="txtSearch">
+<button onclick="searchData()">検索</button>
+
+<div id="searchResult"></div>
+
+<script>
+
+const SAVE_URL = "登録用PowerAutomateURL";
+const SEARCH_URL = "検索用PowerAutomateURL";
+
+async function saveData(){
+
+    const name =
+        document.getElementById("txtName").value;
+
+    const res = await fetch(
+        SAVE_URL,
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                name:name
+            })
+        }
+    );
+
+    const data = await res.json();
+
+    document.getElementById(
+        "saveResult"
+    ).innerText =
+        "登録完了";
+}
+
+async function searchData(){
+
+    const name =
+        document.getElementById("txtSearch").value;
+
+    const res = await fetch(
+        SEARCH_URL,
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                name:name
+            })
+        }
+    );
+
+    const data = await res.json();
+
+    if(data.exists){
+        document.getElementById(
+            "searchResult"
+        ).innerText =
+            "データ有";
+    }else{
+        document.getElementById(
+            "searchResult"
+        ).innerText =
+            "データ無";
+    }
+}
+
+</script>
+
+</body>
+</html>
