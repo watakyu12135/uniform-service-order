@@ -31,6 +31,7 @@
           "color": "ピンク",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -41,6 +42,7 @@
           "color": "ネイビー",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -51,6 +53,7 @@
           "color": "バーガンディ",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -61,6 +64,7 @@
           "color": "ロイヤルブルー",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -71,6 +75,7 @@
           "color": "スカイブルー",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -81,6 +86,7 @@
           "color": "ディープピンク",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -91,6 +97,7 @@
           "color": "ターコイズ",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -101,6 +108,7 @@
           "color": "Tピンク",
           "gender": "兼用",
           "productCategory": "上衣②",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -111,6 +119,7 @@
           "color": "Tネイビー",
           "gender": "兼用",
           "productCategory": "上衣②",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -121,6 +130,7 @@
           "color": "Tバーガンディ",
           "gender": "兼用",
           "productCategory": "上衣②",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -131,6 +141,7 @@
           "color": "TPグリーン",
           "gender": "兼用",
           "productCategory": "上衣②",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -141,6 +152,7 @@
           "color": "ネイビー",
           "gender": "兼用",
           "productCategory": "パンツ",
+          "measurementGroup": "下衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 1,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -192,6 +204,7 @@
           "color": "ピンク",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -202,6 +215,7 @@
           "color": "ネイビー",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -212,6 +226,7 @@
           "color": "バーガンディ",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -222,6 +237,7 @@
           "color": "ロイヤルブルー",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -232,6 +248,7 @@
           "color": "スカイブルー",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -242,6 +259,7 @@
           "color": "ディープピンク",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -252,6 +270,7 @@
           "color": "ターコイズ",
           "gender": "兼用",
           "productCategory": "上衣①",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -262,6 +281,7 @@
           "color": "Tピンク",
           "gender": "兼用",
           "productCategory": "上衣②",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -272,6 +292,7 @@
           "color": "Tネイビー",
           "gender": "兼用",
           "productCategory": "上衣②",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -282,6 +303,7 @@
           "color": "Tバーガンディ",
           "gender": "兼用",
           "productCategory": "上衣②",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -292,6 +314,7 @@
           "color": "TPグリーン",
           "gender": "兼用",
           "productCategory": "上衣②",
+          "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -302,6 +325,7 @@
           "color": "ネイビー",
           "gender": "兼用",
           "productCategory": "パンツ",
+          "measurementGroup": "下衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 1,
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -312,6 +336,7 @@
           "color": "Tネイビー",
           "gender": "女性",
           "productCategory": "ワンピース",
+          "measurementGroup": "全身",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
           "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -371,6 +396,7 @@
           "color": "グレー系",
           "gender": "女性",
           "productCategory": "ベスト",
+          "measurementGroup": "上衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -381,6 +407,7 @@
           "color": "黒",
           "gender": "女性",
           "productCategory": "スカート",
+          "measurementGroup": "下衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -391,6 +418,7 @@
           "color": "ホワイト",
           "gender": "女性",
           "productCategory": "ブラウス",
+          "measurementGroup": "上衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -401,6 +429,7 @@
           "color": "ホワイト",
           "gender": "女性",
           "productCategory": "ブラウス",
+          "measurementGroup": "上衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -411,6 +440,7 @@
           "color": "ホワイト",
           "gender": "女性",
           "productCategory": "ブラウス",
+          "measurementGroup": "上衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -466,6 +496,7 @@
           "color": "グレー系",
           "gender": "女性",
           "productCategory": "ブラウス",
+          "measurementGroup": "上衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -476,6 +507,7 @@
           "color": "黒",
           "gender": "女性",
           "productCategory": "スカート",
+          "measurementGroup": "下衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -520,6 +552,7 @@
           "color": "グレー系",
           "gender": "女性",
           "productCategory": "ブラウス",
+          "measurementGroup": "上衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
@@ -530,6 +563,7 @@
           "color": "黒",
           "gender": "女性",
           "productCategory": "スカート",
+          "measurementGroup": "上衣",
           "sizeSuffix": "号",
           "inseamAlterable": 0,
           "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
