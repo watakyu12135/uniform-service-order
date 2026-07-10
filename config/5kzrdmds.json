@@ -1,602 +1,2697 @@
-{
-  "customerCode": "31029999",
-  "customerName": "テスト病院",
-  "basicInfos": [
-    {"name": "氏名", "displayOrder": 0, "active": true},
-    {"name": "性別", "displayOrder": 0, "active": true},
-    {"name": "職員番号", "displayOrder": 0, "active": false},
-    {"name": "職種", "displayOrder": 0, "active": true},
-    {"name": "部署", "displayOrder": 0, "active": true}
-  ],
-  "departments": [
-    {"job": "看護師", "department": "３階病棟", "gender": "", "displayOrder": 1, "active": true},
-    {"job": "看護師", "department": "４階病棟", "gender": "", "displayOrder": 2, "active": true},
-    {"job": "看護師", "department": "手術室", "gender": "", "displayOrder": 4, "active": true},
-    {"job": "看護師", "department": "外来", "gender": "", "displayOrder": 3, "active": true},
-    {"job": "看護師", "department": "小児科", "gender": "女性", "displayOrder": 5, "active": true},
-    {"job": "一般事務", "department": "事務部", "gender": "女性", "displayOrder": 1, "active": true},
-    {"job": "一般事務", "department": "受付", "gender": "女性", "displayOrder": 2, "active": true},
-    {"job": "医療秘書", "department": "医事課", "gender": "女性", "displayOrder": 1, "active": true},
-    {"job": "医療秘書", "department": "秘書課", "gender": "女性", "displayOrder": 2, "active": true},
-    {"job": "健診センター", "department": "健診センター", "gender": "女性", "displayOrder": 1, "active": true}
-  ],
-  "jobs": [
-    {
-      "gender": "男性",
-      "job": "看護師",
-      "products": [
-        {
-          "productCode": "RT5402-5",
-          "name": "男女兼用スクラブ",
-          "color": "ピンク",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-14",
-          "name": "男女兼用スクラブ",
-          "color": "ネイビー",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-51",
-          "name": "男女兼用スクラブ",
-          "color": "バーガンディ",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-36",
-          "name": "男女兼用スクラブ",
-          "color": "ロイヤルブルー",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-53",
-          "name": "男女兼用スクラブ",
-          "color": "スカイブルー",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-84",
-          "name": "男女兼用スクラブ",
-          "color": "ディープピンク",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-89",
-          "name": "男女兼用スクラブ",
-          "color": "ターコイズ",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4492-40",
-          "name": "男女兼用上衣",
-          "color": "Tピンク",
-          "gender": "兼用",
-          "productCategory": "上衣②",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4492-71",
-          "name": "男女兼用上衣",
-          "color": "Tネイビー",
-          "gender": "兼用",
-          "productCategory": "上衣②",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4492-79",
-          "name": "男女兼用上衣",
-          "color": "Tバーガンディ",
-          "gender": "兼用",
-          "productCategory": "上衣②",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4492-80",
-          "name": "男女兼用上衣",
-          "color": "TPグリーン",
-          "gender": "兼用",
-          "productCategory": "上衣②",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "CFS2603-14",
-          "name": "男女兼用パンツ",
-          "color": "ネイビー",
-          "gender": "兼用",
-          "productCategory": "パンツ",
-          "measurementGroup": "下衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 1,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
-      ],
-      "categoryLimits": [
-        {
-          "productCategory": "上衣",
-          "limit": 6
-        },
-        {
-          "productCategory": "下衣",
-          "limit": 6
-        }
-      ],
-      "conversionRules": [
-        {"fromProductCategory": "上衣①", "toConsumptionCategory": "上衣", "qty": 1},
-        {"fromProductCategory": "上衣②", "toConsumptionCategory": "上衣", "qty": 1},
-        {"fromProductCategory": "パンツ", "toConsumptionCategory": "下衣", "qty": 1}
-      ],
-      "categoryDisplay": [
-        {
-          "productCategory": "上衣①",
-          "displayOrder": 1,
-          "heading": "上衣①を選んで下さい",
-          "note": "上衣は①と②合計で6枚です"
-        },
-        {
-          "productCategory": "上衣②",
-          "displayOrder": 1,
-          "heading": "上衣②を選んで下さい",
-          "note": "上衣は①と②合計で6枚です"
-        },
-        {
-          "productCategory": "パンツ",
-          "displayOrder": 2,
-          "heading": "パンツを選んで下さい",
-          "note": ""
-        }
-      ]
-    },
-    {
-      "gender": "女性",
-      "job": "看護師",
-      "products": [
-        {
-          "productCode": "RT5402-5",
-          "name": "男女兼用スクラブ",
-          "color": "ピンク",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-14",
-          "name": "男女兼用スクラブ",
-          "color": "ネイビー",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-51",
-          "name": "男女兼用スクラブ",
-          "color": "バーガンディ",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-36",
-          "name": "男女兼用スクラブ",
-          "color": "ロイヤルブルー",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-53",
-          "name": "男女兼用スクラブ",
-          "color": "スカイブルー",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-84",
-          "name": "男女兼用スクラブ",
-          "color": "ディープピンク",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "RT5402-89",
-          "name": "男女兼用スクラブ",
-          "color": "ターコイズ",
-          "gender": "兼用",
-          "productCategory": "上衣①",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4492-40",
-          "name": "男女兼用上衣",
-          "color": "Tピンク",
-          "gender": "兼用",
-          "productCategory": "上衣②",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4492-71",
-          "name": "男女兼用上衣",
-          "color": "Tネイビー",
-          "gender": "兼用",
-          "productCategory": "上衣②",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4492-79",
-          "name": "男女兼用上衣",
-          "color": "Tバーガンディ",
-          "gender": "兼用",
-          "productCategory": "上衣②",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4492-80",
-          "name": "男女兼用上衣",
-          "color": "TPグリーン",
-          "gender": "兼用",
-          "productCategory": "上衣②",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "CFS2603-14",
-          "name": "男女兼用パンツ",
-          "color": "ネイビー",
-          "gender": "兼用",
-          "productCategory": "パンツ",
-          "measurementGroup": "下衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 1,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "FT4417-71",
-          "name": "ワンピース",
-          "color": "Tネイビー",
-          "gender": "女性",
-          "productCategory": "ワンピース",
-          "measurementGroup": "全身",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
-      ],
-      "categoryLimits": [
-        {
-          "productCategory": "上衣",
-          "limit": 6
-        },
-        {
-          "productCategory": "下衣",
-          "limit": 6
-        }
-      ],
-      "conversionRules": [
-        {"fromProductCategory": "上衣①", "toConsumptionCategory": "上衣", "qty": 1},
-        {"fromProductCategory": "上衣②", "toConsumptionCategory": "上衣", "qty": 1},
-        {"fromProductCategory": "パンツ", "toConsumptionCategory": "下衣", "qty": 1},
-        {"fromProductCategory": "ワンピース", "toConsumptionCategory": "上衣", "qty": 1},
-        {"fromProductCategory": "ワンピース", "toConsumptionCategory": "下衣", "qty": 1}
-      ],
-      "categoryDisplay": [
-        {
-          "productCategory": "上衣①",
-          "displayOrder": 1,
-          "heading": "上衣①を選んで下さい",
-          "note": "上衣は①と②合計で6枚です"
-        },
-        {
-          "productCategory": "上衣②",
-          "displayOrder": 1,
-          "heading": "上衣②を選んで下さい",
-          "note": "上衣は①と②合計で6枚です"
-        },
-        {
-          "productCategory": "ワンピース",
-          "displayOrder": 2,
-          "heading": "ワンピースを選んで下さい",
-          "note": "※ワンピースは1枚で上下各1枚分となります。"
-        },
-        {
-          "productCategory": "パンツ",
-          "displayOrder": 3,
-          "heading": "パンツを選んで下さい",
-          "note": ""
-        }
-      ]
-    },
-    {
-      "gender": "女性",
-      "job": "一般事務",
-      "products": [
-        {
-          "productCode": "GVEL-2208-B2",
-          "name": "ベスト",
-          "color": "グレー系",
-          "gender": "女性",
-          "productCategory": "ベスト",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "GSKL-2205-B9",
-          "name": "Aラインスカート",
-          "color": "黒",
-          "gender": "女性",
-          "productCategory": "スカート",
-          "measurementGroup": "下衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "GBLL-1868-A1",
-          "name": "長袖ブラウス",
-          "color": "ホワイト",
-          "gender": "女性",
-          "productCategory": "ブラウス",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "GBLL-1869-A1",
-          "name": "七分袖ブラウス",
-          "color": "ホワイト",
-          "gender": "女性",
-          "productCategory": "ブラウス",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "GBLL-1870-A1",
-          "name": "半袖ブラウス",
-          "color": "ホワイト",
-          "gender": "女性",
-          "productCategory": "ブラウス",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
-      ],
-      "categoryLimits": [
-        {
-          "productCategory": "ベスト",
-          "limit": 2
-        },
-        {
-          "productCategory": "スカート",
-          "limit": 2
-        },
-        {
-          "productCategory": "ブラウス",
-          "limit": 6
-        }
-      ],
-      "conversionRules": [
-        {"fromProductCategory": "ベスト", "toConsumptionCategory": "ベスト", "qty": 1},
-        {"fromProductCategory": "スカート", "toConsumptionCategory": "スカート", "qty": 1},
-        {"fromProductCategory": "ブラウス", "toConsumptionCategory": "ブラウス", "qty": 1}
-      ],
-      "categoryDisplay": [
-        {
-          "productCategory": "ベスト",
-          "displayOrder": 1,
-          "heading": "ベストを選んで下さい",
-          "note": ""
-        },
-        {
-          "productCategory": "ブラウス",
-          "displayOrder": 2,
-          "heading": "ブラウスを選んで下さい",
-          "note": ""
-        },
-        {
-          "productCategory": "スカート",
-          "displayOrder": 3,
-          "heading": "スカートを選んで下さい",
-          "note": ""
-        }
-      ]
-    },
-    {
-      "gender": "女性",
-      "job": "医療秘書",
-      "products": [
-        {
-          "productCode": "GOBL-2004-B2",
-          "name": "オーバーブラウス",
-          "color": "グレー系",
-          "gender": "女性",
-          "productCategory": "ブラウス",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "GSKL-2205-B9",
-          "name": "Aラインスカート",
-          "color": "黒",
-          "gender": "女性",
-          "productCategory": "スカート",
-          "measurementGroup": "下衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
-      ],
-      "categoryLimits": [
-        {
-          "productCategory": "ブラウス",
-          "limit": 6
-        },
-        {
-          "productCategory": "スカート",
-          "limit": 2
-        }
-      ],
-      "conversionRules": [
-        {"fromProductCategory": "ブラウス", "toConsumptionCategory": "ブラウス", "qty": 1},
-        {"fromProductCategory": "スカート", "toConsumptionCategory": "スカート", "qty": 1}
-      ],
-      "categoryDisplay": [
-        {
-          "productCategory": "ブラウス",
-          "displayOrder": 1,
-          "heading": "ブラウスを選んで下さい",
-          "note": ""
-        },
-        {
-          "productCategory": "スカート",
-          "displayOrder": 2,
-          "heading": "スカートを選んで下さい",
-          "note": ""
-        }
-      ]
-    },
-    {
-      "gender": "女性",
-      "job": "健診センター",
-      "products": [
-        {
-          "productCode": "GOBL-2004-B2",
-          "name": "オーバーブラウス",
-          "color": "グレー系",
-          "gender": "女性",
-          "productCategory": "ブラウス",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "GSKL-2205-B9",
-          "name": "Aラインスカート",
-          "color": "黒",
-          "gender": "女性",
-          "productCategory": "スカート",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "号",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "5", "label": "5号", "type": "standard"},{"value": "7", "label": "7号", "type": "standard"},{"value": "9", "label": "9号", "type": "standard"},{"value": "11", "label": "11号", "type": "standard"},{"value": "13", "label": "13号", "type": "standard"},{"value": "15", "label": "15号", "type": "standard"},{"value": "17", "label": "17号", "type": "standard"},{"value": "19", "label": "19号", "type": "standard"},{"value": "21", "label": "21号", "type": "standard"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
-      ],
-      "categoryLimits": [
-        {
-          "productCategory": "ブラウス",
-          "limit": 6
-        },
-        {
-          "productCategory": "スカート",
-          "limit": 2
-        }
-      ],
-      "conversionRules": [
-        {"fromProductCategory": "ブラウス", "toConsumptionCategory": "ブラウス", "qty": 1},
-        {"fromProductCategory": "スカート", "toConsumptionCategory": "スカート", "qty": 1}
-      ],
-      "categoryDisplay": [
-        {
-          "productCategory": "ブラウス",
-          "displayOrder": 1,
-          "heading": "ブラウスを選んで下さい",
-          "note": ""
-        },
-        {
-          "productCategory": "スカート",
-          "displayOrder": 2,
-          "heading": "スカートを選んで下さい",
-          "note": ""
-        }
-      ]
-    }
-  ]
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ユニフォーム申請</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: sans-serif;
+  padding: 20px;
+  overflow-x: hidden;
 }
+
+table {
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.basic-field {
+  margin-bottom: 12px;
+  max-width: 520px;
+}
+.basic-field label {
+  font-weight: bold;
+  display: inline-block;
+  min-width: 80px;
+}
+.basic-field input {
+  width: 260px;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* 姓名・フリガナ */
+.name-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin-bottom: 16px;
+  max-width: 520px;
+}
+
+.name-field {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  gap: 6px;
+}
+
+.name-field label {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.name-field input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* 貸与枚数 */
+#categoryStatus {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+}
+
+#limitDeclarationArea {
+  margin: 10px 0 14px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+#limitDeclarationArea:empty {
+  display: none;
+}
+
+.category-ok {
+  color: green;
+  font-weight: bold;
+}
+
+.category-warning {
+  color: orange;
+  font-weight: bold;
+}
+
+.category-over {
+  color: red;
+  font-weight: bold;
+}
+
+.category-normal {
+  color: black;
+  font-weight: bold;
+}
+
+.category-heading {
+  margin-top: 18px;
+  padding: 10px;
+  background: #eef5ff;
+  border-left: 5px solid #4a90e2;
+  font-weight: bold;
+}
+
+.category-note {
+  margin: 6px 0 8px 0;
+  padding: 8px;
+  background: #fff7e6;
+  border-left: 4px solid #f5a623;
+  font-size: 14px;
+}
+
+.category-title {
+  font-weight: bold;
+}
+
+.category-count {
+  margin-left: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.category-count-ok {
+  color: green;
+}
+
+.category-count-warning {
+  color: orange;
+}
+
+.category-count-over {
+  color: red;
+}
+
+/* 通常の商品行：色A・色Bの交互表示 */
+tr.product-row.row-theme-0,
+tr.product-row.row-theme-0 td {
+  background: #ffffff;
+}
+
+tr.product-row.row-theme-1,
+tr.product-row.row-theme-1 td {
+  background: #f7fbff;
+}
+
+/* 「他のサイズも選択する」で追加された行：色C・色D・色E */
+tr.product-row.extra-size-row-1,
+tr.product-row.extra-size-row-1 td {
+  background: #fff1f1 !important;
+}
+
+tr.product-row.extra-size-row-2,
+tr.product-row.extra-size-row-2 td {
+  background: #fff7e6 !important;
+}
+
+tr.product-row.extra-size-row-3,
+tr.product-row.extra-size-row-3 td {
+  background: #f1fff1 !important;
+}
+
+tr.product-row.extra-size-row-1,
+tr.product-row.extra-size-row-2,
+tr.product-row.extra-size-row-3 {
+  border-left: 6px solid #e57373;
+}
+
+/* 採寸画面 */
+.measurement-area {
+  margin-top: 20px;
+  padding: 15px;
+  border: 2px solid #4a90e2;
+  background: #f7fbff;
+}
+
+.measure-section {
+  margin-top: 15px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.measure-section label {
+  display: inline-block;
+  min-width: 130px;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.measure-section input,
+.measure-section select {
+  width: 120px;
+}
+
+.measure-help {
+  margin: 2px 0 8px 135px;
+  font-size: 13px;
+  color: #555;
+}
+
+.disabled-section {
+  opacity: 0.45;
+  background: #eee;
+}
+
+.guide-placeholder {
+  margin-top: 8px;
+  padding: 20px;
+  border: 1px dashed #999;
+  background: #fff;
+  text-align: center;
+  color: #666;
+}
+
+.measurement-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.measure-required-message {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #c00;
+  font-weight: bold;
+}
+
+.measure-inline {
+  display: none;
+}
+
+.cell-inseam {
+  font-size: 13px;
+  color: #333;
+}
+
+.inseam-box {
+  margin-top: 6px;
+  padding: 6px;
+  background: #fff7e6;
+  border-left: 4px solid #f5a623;
+}
+
+.inseam-box label {
+  font-weight: bold;
+}
+
+.inseam-box input {
+  width: 80px;
+  margin-top: 4px;
+}
+
+.inseam-message {
+  margin-top: 6px;
+  color: #c00;
+  font-weight: bold;
+}
+
+.inseam-box.disabled {
+  background: #eee;
+  border-left-color: #999;
+  color: #666;
+}
+
+.inseam-box.disabled input {
+  background: #ddd;
+  color: #666;
+}
+
+/* スマホ表示 */
+@media (max-width: 600px) {
+
+  table {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .product-header {
+    display: none;
+  }
+
+  tr.product-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.2fr;
+    grid-template-areas:
+      "product code size"
+  "product color qty"
+  "inseam inseam inseam"
+  "measure measure measure";
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+    padding: 6px;
+    background: #fff;
+  }
+
+  tr.product-row td {
+    border: none;
+    padding: 4px;
+    text-align: left;
+  }
+
+  .cell-product {
+    grid-area: product;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #ddd !important;
+    padding-right: 8px;
+  }
+
+  .cell-code {
+    grid-area: code;
+    font-size: 12px;
+    border-right: 1px solid #ddd !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  .cell-color {
+    grid-area: color;
+    font-size: 12px;
+    border-right: 1px solid #ddd !important;
+  }
+
+  .cell-size {
+    grid-area: size;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  .cell-qty {
+    grid-area: qty;
+  }
+
+.cell-inseam {
+  grid-area: inseam;
+  display: block !important;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid #ddd !important;
+  margin-top: 6px;
+  padding-top: 8px;
+}
+
+.cell-inseam:empty {
+  display: none !important;
+}
+
+.cell-inseam .inseam-box {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cell-inseam .inseam-message {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+  .cell-measure {
+    grid-area: measure;
+    text-align: right;
+    display: none;
+  }
+
+  .cell-size select,
+  .cell-qty input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .category-header {
+    display: block;
+  }
+
+  .category-header td {
+    display: block;
+    width: 100%;
+  }
+
+  .category-heading {
+    margin-top: 14px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .cell-qty input,
+  .cell-size select,
+  .specialSize {
+    min-height: 36px;
+  }
+
+.name-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 8px;
+  width: 100%;
+  max-width: none;
+}
+
+.name-field {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  gap: 4px;
+}
+
+.name-field label {
+  width: auto;
+  font-size: 14px;
+}
+
+.name-field input {
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+  .measure-inline:not(.hidden) {
+    display: inline-block;
+    margin-top: 6px;
+  }
+
+  .measure-section {
+    font-size: 14px;
+  }
+
+  .measure-section label {
+    min-width: 140px;
+    width: 140px;
+    display: inline-block;
+    margin-top: 10px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .measure-section input[type="number"] {
+    width: 72px;
+    box-sizing: border-box;
+  }
+
+  .measure-section select {
+    width: 150px;
+    box-sizing: border-box;
+  }
+
+  .measure-help {
+    display: block;
+    margin: 4px 0 10px 0;
+    width: 100%;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #555;
+  }
+}
+
+
+/* 上部リンク */
+#policyLink {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 13px;
+}
+
+#policyLink a,
+.top-links a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.top-links {
+  margin: 10px 0 16px 0;
+  font-size: 15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- プライバセイーポリセイー・免責事項リンク -->
+<div id="policyLink">
+  <a href="privacy.html">プライバセイーポリセイー・免責事項</a>
+</div>
+
+<!-- 修正画面リンク -->
+<div class="top-links">
+  <a id="reviseLink" href="revise.html">入力済みの採寸情報を修正する方はこちら</a>
+</div>
+
+<h2>ユニフォーム申請</h2>
+
+<div id="customerInfo">顧客：読み込み中...</div>
+<br>
+
+<div id="employeeNoArea" class="basic-field hidden">
+  <label for="employeeNo">職員番号</label>
+  <input id="employeeNo" inputmode="latin" autocomplete="off" maxlength="30" oninput="normalizeEmployeeNoInput(this)">
+</div>
+
+<div class="name-area">
+  <div class="name-field">
+    <label for="sei">姓</label>
+    <input id="sei" inputmode="text" autocomplete="family-name">
+  </div>
+
+  <div class="name-field">
+    <label for="mei">名</label>
+    <input id="mei" inputmode="text" autocomplete="given-name">
+  </div>
+
+  <div class="name-field">
+    <label for="seiKana">セイ</label>
+    <input id="seiKana" inputmode="katakana" autocomplete="off">
+  </div>
+
+  <div class="name-field">
+    <label for="meiKana">メイ</label>
+    <input id="meiKana" inputmode="katakana" autocomplete="off">
+  </div>
+</div>
+
+
+性別：
+<select id="gender" onchange="changeGender()">
+  <option value="">選択</option>
+  <option value="男性">男性</option>
+  <option value="女性">女性</option>
+</select><br><br>
+
+
+職種：
+<select id="job" onchange="changeJob()">
+  <option value="">選択</option>
+</select><br><br>
+
+<div id="departmentArea" class="hidden">
+  部署：
+  <select id="department">
+    <option value="">選択</option>
+  </select>
+  <br><br>
+</div>
+
+<div id="limitDeclarationArea"></div>
+
+<div class="table-wrap">
+  <table id="table"></table>
+</div>
+
+<div id="categoryStatus"></div>
+
+<button id="submitButton" onclick="submitData()">確認</button>
+
+<div id="measurementArea" class="hidden measurement-area">
+
+  <h2>別寸採寸表入力</h2>
+
+  <div id="measurementMessage"></div>
+
+  <div class="measurement-guide">
+    <strong>採寸図：</strong><br>
+    <img src="images/measurement-guide.png" alt="採寸図" class="measurement-image">
+  </div>
+
+  <section class="measure-section" id="measureCommon">
+    <h3>共通項目</h3>
+
+    <label>身長</label>
+    <input type="number" id="m_height"> cm<br>
+
+    <label>体重</label>
+    <input type="number" id="m_weight"> kg<br>
+
+  </section>
+
+  <section class="measure-section" id="measureUpper">
+    <h3>上衣採寸</h3>
+
+    <label>A_衿回り</label>
+    <input type="number" id="m_A"> cm
+    <div class="measure-help">のどぼとけのすぐ下で測る。</div>
+
+    <label>B_肩巾</label>
+    <input type="number" id="m_B"> cm
+    <div class="measure-help">左、右の肩先まで測る。</div>
+
+    <label>C1_袖丈_半袖</label>
+    <input type="number" id="m_C1"> cm<br>
+
+    <label>C2_袖丈_七分袖</label>
+    <input type="number" id="m_C2"> cm<br>
+
+    <label>C3_袖丈_長袖</label>
+    <input type="number" id="m_C3"> cm
+
+    <div class="measure-help">
+      肩先から本人希望の長さ。該当する袖丈のみ入力してください。<br>
+      ※半袖の商品を長袖で製作することはできません。
+    </div>
+
+    <label>D_胸回り</label>
+    <input type="number" id="m_D"> cm
+    <div class="measure-help">脇のすぐ下で水平にメジャーを回して測る。</div>
+
+    <label>E_胴回り</label>
+    <input type="number" id="m_E"> cm
+    <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
+
+    <label>F_腰回り</label>
+    <input type="number" id="m_F"> cm
+    <div class="measure-help">腰の一番張ったところを測る。</div>
+
+    <label>G_背丈</label>
+    <input type="number" id="m_G"> cm
+    <div class="measure-help">首の付け根の中心から胴回りの測定位置まで。</div>
+
+    <label>H_着丈</label>
+    <input type="number" id="m_H"> cm
+    <div class="measure-help">首の付け根の中心から本人希望の長さまで。</div>
+
+    <label>I_袖付回り</label>
+    <input type="number" id="m_I"> cm
+    <div class="measure-help">肩先から腕の付け根部分回りを測る。</div>
+  </section>
+
+  <section class="measure-section" id="measureLower">
+    <h3>下衣採寸</h3>
+
+    <label>a_胴回り</label>
+    <input type="number" id="m_a"> cm
+    <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
+
+    <label>b_腰回り</label>
+    <input type="number" id="m_b"> cm
+    <div class="measure-help">腰の一番張ったところを測る。</div>
+
+    <label>c_股上</label>
+    <input type="number" id="m_c"> cm
+    <div class="measure-help">胴回り位置から股下までを測る。</div>
+
+    <label>d_股下</label>
+    <input type="number" id="m_d"> cm
+    <div class="measure-help">股下より本人希望の長さ。</div>
+
+    <label>e_総丈</label>
+    <input type="number" id="m_e"> cm
+    <div class="measure-help">胴回り位置からズボン裾まで。</div>
+
+    <label>f_太股回り</label>
+    <input type="number" id="m_f"> cm
+    <div class="measure-help">股下より10cm下がった位置を測る。</div>
+  </section>
+
+  <section class="measure-section">
+    <h3>特記事項・備考</h3>
+
+    <label>特記事項</label><br>
+    <textarea id="m_specialNote" rows="3"></textarea><br>
+
+    <label>備考</label><br>
+    <textarea id="m_memo" rows="3"></textarea>
+  </section>
+
+  <button onclick="saveMeasurement()">採寸表を保存して戻る</button>
+  <button onclick="cancelMeasurement()">保存せず戻る</button>
+
+</div>
+
+<script>
+
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
+
+function getCustomer() {
+  const url = new URL(window.location.href);
+  const customerKey =
+    url.searchParams.get("customer") ||
+    sessionStorage.getItem("uniformCustomer") ||
+    "gvhp8hex";
+
+  if (customerKey) {
+    sessionStorage.setItem("uniformCustomer", customerKey);
+  }
+
+  return customerKey;
+}
+
+
+async function checkPageDeadline() {
+  const payload = {
+    deadlineOnly: true,
+    publicKey: getCustomer()
+  };
+
+  const res = await fetch(GAS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const text = await res.text();
+  const json = JSON.parse(text);
+
+  if (json.result !== "ok") {
+    location.href = "expired.html";
+    return false;
+  }
+
+  if (!json.found || !json.active || json.expired) {
+    location.href = "expired.html";
+    return false;
+  }
+
+  return true;
+}
+
+let currentData;
+
+/* ===== 修正モード用 ===== */
+const urlParams = new URLSearchParams(location.search);
+const isEditMode = urlParams.get("mode") === "edit";
+
+let editData = null;
+let editMeasureNo = "";
+/* ======================== */
+
+function getBasicInfoSetting(name) {
+  const infos = currentData && Array.isArray(currentData.basicInfos)
+    ? currentData.basicInfos
+    : [];
+  return infos.find(info => String(info.name || "") === name) || null;
+}
+
+function isBasicInfoActive(name) {
+  const info = getBasicInfoSetting(name);
+  if (["姓名", "性別", "職種"].includes(name)) return true;
+  if (!info) return false;
+  return info.active === true || info.active === 1 || String(info.active).toLowerCase() === "true";
+}
+
+function isEmployeeNoActive() {
+  return isBasicInfoActive("職員番号");
+}
+
+function isDepartmentActive() {
+  return isBasicInfoActive("部署");
+}
+
+
+function setupBasicInfoVisibility() {
+  const employeeArea = document.getElementById("employeeNoArea");
+  const employeeInput = document.getElementById("employeeNo");
+
+  if (employeeArea) {
+    if (isEmployeeNoActive()) {
+      employeeArea.classList.remove("hidden");
+    } else {
+      employeeArea.classList.add("hidden");
+
+      if (employeeInput) {
+        employeeInput.value = "";
+      }
+    }
+  }
+
+  const departmentArea = document.getElementById("departmentArea");
+  const departmentSelect = document.getElementById("department");
+
+  if (departmentArea && departmentSelect) {
+    if (isDepartmentActive()) {
+      departmentArea.classList.remove("hidden");
+
+      if (!departmentSelect.value && departmentSelect.options.length <= 1) {
+        departmentSelect.innerHTML =
+          '<option value="">性別と職種を選択してください</option>';
+        departmentSelect.disabled = true;
+      }
+    } else {
+      departmentArea.classList.add("hidden");
+      departmentSelect.innerHTML = '<option value="">選択</option>';
+      departmentSelect.disabled = false;
+    }
+  }
+}
+
+function normalizeEmployeeNoInput(input) {
+  if (!input) return;
+  input.value = String(input.value || "").replace(/[^A-Za-z0-9]/g, "");
+}
+
+function validateEmployeeNoValue(value) {
+  return /^[A-Za-z0-9]+$/.test(String(value || "").trim());
+}
+
+let currentMeasurementType = "";
+let currentMeasurementButton = null;
+
+let measurementData = {
+  common: {
+    height: "",
+    weight: "",
+    method: "ヌード寸法"
+  },
+  upper: {
+    completed: false,
+    A: "",
+    B: "",
+    C1: "",
+    C2: "",
+    C3: "",
+    D: "",
+    E: "",
+    F: "",
+    G: "",
+    H: "",
+    I: ""
+  },
+  lower: {
+    completed: false,
+    a: "",
+    b: "",
+    c: "",
+    d: "",
+    e: "",
+    f: ""
+  },
+  specialNote: "",
+  memo: ""
+};
+
+checkPageDeadline()
+  .then(ok => {
+    if (!ok) {
+      return null;
+    }
+
+    return fetch(`config/${getCustomer()}.json?ts=${Date.now()}`);
+  })
+  .then(res => {
+    if (!res) {
+      return null;
+    }
+    if (!res.ok) {
+      throw new Error("JSONファイルが見つかりません");
+    }
+    return res.json();
+  })
+  .then(data => {
+    if (!data) {
+      return;
+    }
+
+currentData = data;
+setupBasicInfoVisibility();
+
+document.getElementById("customerInfo").innerText =
+  "顧客：" + currentData.customerName;
+
+    const reviseLink = document.getElementById("reviseLink");
+    if (reviseLink) {
+      reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
+    }
+
+    document.getElementById("table").innerHTML =
+      "<tr><td colspan='7'>性別と職種を選択してください</td></tr>";
+
+    document.getElementById("categoryStatus").innerHTML = "";
+
+    updateJobOptions();
+
+    if (isEditMode) {
+      applyEditModeData();
+    }
+  })
+  .catch(error => {
+    document.getElementById("table").innerHTML =
+      "<tr><td colspan='7'>読み込みに失敗しました：" + error.message + "</td></tr>";
+  });
+
+function applyEditModeData() {
+
+  editData = JSON.parse(sessionStorage.getItem("uniformEditData") || "null");
+
+  if (!editData || !editData.found || !editData.orders || editData.orders.length === 0) {
+    alert("修正対象データが見つかりません。もう一度検索してください。");
+    location.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
+    return;
+  }
+
+  const base = editData.orders[0];
+
+  editMeasureNo =
+    editData.measureNo ||
+    base["採寸番号"] ||
+    "";
+
+  if (!editMeasureNo) {
+    alert("採寸番号が取得できませんでした。もう一度検索してください。");
+    location.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
+    return;
+  }
+
+  const title = document.querySelector("h2");
+  if (title) {
+    title.innerText = "ユニフォーム申請（修正）";
+  }
+
+  const reviseLink = document.getElementById("reviseLink");
+  if (reviseLink) {
+    reviseLink.innerText = "修正対象を検索し直す";
+    reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
+  }
+
+  const employeeNoInput = document.getElementById("employeeNo");
+  if (employeeNoInput) {
+    employeeNoInput.value = base["職員番号"] || base.employeeNo || base.staffNo || "";
+  }
+
+  document.getElementById("sei").value = base["姓"] || "";
+  document.getElementById("mei").value = base["名"] || "";
+
+document.getElementById("seiKana").value = base["セイ"] || base.seiKana || "";
+document.getElementById("meiKana").value = base["メイ"] || base.meiKana || "";
+
+  document.getElementById("gender").value = base["性別"] || "";
+  updateJobOptions();
+
+  addMissingOption(document.getElementById("job"), base["職種"]);
+  document.getElementById("job").value = base["職種"] || "";
+
+  changeJob();
+
+  const departmentSelect = document.getElementById("department");
+  if (departmentSelect) {
+    addMissingOption(departmentSelect, base["部署"]);
+    departmentSelect.value = base["部署"] || "";
+  }
+
+  restoreMeasurementFromEditData(editData.measurement);
+  restoreOrdersFromEditData(editData.orders);
+
+  setBasicInfoReadOnly();
+
+  updateCategorySummary();
+  updateAllMeasurementButtons();
+  
+}
+
+function addMissingOption(select, value) {
+
+  if (!select || !value) return;
+
+  const exists = Array.from(select.options).some(option => option.value === value);
+
+  if (!exists) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  }
+}
+
+function setBasicInfoReadOnly() {
+
+  const ids = [
+  "employeeNo",
+  "sei",
+  "mei",
+  "seiKana",
+  "meiKana",
+  "gender",
+  "job",
+  "department"
+];
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.disabled = true;
+      el.style.backgroundColor = "#eee";
+    }
+  });
+}
+
+function restoreOrdersFromEditData(orders) {
+
+  if (!orders || orders.length === 0) return;
+
+  const grouped = {};
+
+  orders.forEach(order => {
+    const productCode = String(order["カタログ品番"] || "");
+
+    if (!productCode) return;
+
+    if (!grouped[productCode]) {
+      grouped[productCode] = [];
+    }
+
+    grouped[productCode].push(order);
+  });
+
+  Object.keys(grouped).forEach(productCode => {
+
+    const orderList = grouped[productCode];
+
+    orderList.forEach((order, index) => {
+
+      let productRows = Array.from(
+        document.querySelectorAll(`tr[data-product-code="${productCode}"]`)
+      );
+
+      if (productRows.length === 0) return;
+
+      if (index >= productRows.length) {
+        const addButton = productRows[0].querySelector(".addSizeBtn");
+
+        if (addButton) {
+          addSameProductRow(addButton);
+        }
+
+        productRows = Array.from(
+          document.querySelectorAll(`tr[data-product-code="${productCode}"]`)
+        );
+      }
+
+      const row = productRows[index];
+
+      if (!row) return;
+
+      setProductRowValue(row, order);
+    });
+  });
+
+updateCategorySummary();
+  updateAllMeasurementButtons();
+  updateAllInseamAreas();
+  restoreInseamFromEditData(orders);
+}
+
+function setProductRowValue(row, order) {
+
+  const size = String(order["サイズ"] || "");
+  const qty = order["数量"] || "";
+
+  const mainSizeSelect = row.querySelector(".mainSize");
+  const specialSizeSelect = row.querySelector(".specialSize");
+  const qtyInput = row.querySelector(".cell-qty input");
+
+  if (!mainSizeSelect || !qtyInput) return;
+
+  const mainMatch = Array.from(mainSizeSelect.options).some(option => option.value === size);
+
+  if (mainMatch) {
+    mainSizeSelect.value = size;
+    checkMainSize(mainSizeSelect);
+  } else {
+    mainSizeSelect.value = "__OTHER__";
+    checkMainSize(mainSizeSelect);
+
+    if (specialSizeSelect) {
+      const specialMatch = Array.from(specialSizeSelect.options).some(option => option.value === size);
+
+      if (specialMatch) {
+        specialSizeSelect.value = size;
+      } else if (size) {
+        addMissingOption(specialSizeSelect, size);
+        specialSizeSelect.value = size;
+      }
+
+      checkSpecialSize(specialSizeSelect);
+    }
+  }
+
+  qtyInput.value = qty;
+  toggleAddSizeButton(qtyInput);
+}
+
+function restoreMeasurementFromEditData(measurement) {
+
+  if (!measurement) return;
+
+  measurementData.common.height = measurement["身長"] || "";
+  measurementData.common.weight = measurement["体重"] || "";
+  measurementData.common.method = measurement["採寸方法"] || "ヌード寸法";
+
+  measurementData.upper.completed =
+    isTrueValue(measurement["上衣入力済"]) ||
+    measurement["採寸区分"] === "上衣" ||
+    measurement["採寸区分"] === "全身";
+
+  measurementData.upper.A = measurement["A_衿回り"] || "";
+  measurementData.upper.B = measurement["B_肩巾"] || "";
+  measurementData.upper.C1 = measurement["C1_袖丈_半袖"] || "";
+  measurementData.upper.C2 = measurement["C2_袖丈_七分袖"] || "";
+  measurementData.upper.C3 = measurement["C3_袖丈_長袖"] || "";
+  measurementData.upper.D = measurement["D_胸回り"] || "";
+  measurementData.upper.E = measurement["E_胴回り"] || "";
+  measurementData.upper.F = measurement["F_腰回り"] || "";
+  measurementData.upper.G = measurement["G_背丈"] || "";
+  measurementData.upper.H = measurement["H_着丈"] || "";
+  measurementData.upper.I = measurement["I_袖付回り"] || "";
+
+  measurementData.lower.completed =
+    isTrueValue(measurement["下衣入力済"]) ||
+    measurement["採寸区分"] === "下衣" ||
+    measurement["採寸区分"] === "全身";
+
+  measurementData.lower.a = measurement["a_胴回り"] || "";
+  measurementData.lower.b = measurement["b_腰回り"] || "";
+  measurementData.lower.c = measurement["c_股上"] || "";
+  measurementData.lower.d = measurement["d_股下"] || "";
+  measurementData.lower.e = measurement["e_総丈"] || "";
+  measurementData.lower.f = measurement["f_太股回り"] || "";
+
+  measurementData.specialNote = measurement["特記事項"] || "";
+  measurementData.memo = measurement["備考"] || "";
+}
+
+function isTrueValue(value) {
+
+  if (value === true) return true;
+  if (value === 1) return true;
+
+  const text = String(value || "").toUpperCase();
+
+  return text === "TRUE" || text === "1";
+}
+
+function changeGender() {
+  updateJobOptions();
+  changeJob();
+}
+
+function updateJobOptions() {
+
+  const gender = document.getElementById("gender").value;
+  const jobSelect = document.getElementById("job");
+
+  jobSelect.innerHTML = '<option value="">選択</option>';
+
+  if (!currentData || !gender) {
+    return;
+  }
+
+  const jobs = currentData.jobs
+    .filter(j => j.gender === gender)
+    .map(j => j.job);
+
+  const uniqueJobs = [...new Set(jobs)];
+
+  if (uniqueJobs.length === 0) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "該当する職種なし";
+    jobSelect.appendChild(option);
+    return;
+  }
+
+  uniqueJobs.forEach(job => {
+    const option = document.createElement("option");
+    option.value = job;
+    option.textContent = job;
+    jobSelect.appendChild(option);
+  });
+}
+
+function changeJob() {
+  const job = document.getElementById("job").value;
+  const gender = document.getElementById("gender").value;
+
+  if (!job || !gender) {
+    document.getElementById("table").innerHTML =
+      "<tr><td colspan='7'>性別と職種を選択してください</td></tr>";
+    document.getElementById("categoryStatus").innerHTML = "";
+
+    const limitArea = document.getElementById("limitDeclarationArea");
+    if (limitArea) {
+      limitArea.innerHTML = "";
+    }
+
+    const departmentArea = document.getElementById("departmentArea");
+    const departmentSelect = document.getElementById("department");
+
+    if (departmentArea && departmentSelect) {
+      if (isDepartmentActive()) {
+        departmentArea.classList.remove("hidden");
+        departmentSelect.innerHTML =
+          '<option value="">性別と職種を選択してください</option>';
+        departmentSelect.disabled = true;
+      } else {
+        departmentArea.classList.add("hidden");
+        departmentSelect.innerHTML = '<option value="">選択</option>';
+        departmentSelect.disabled = false;
+      }
+    }
+
+    return;
+  }
+
+  if (!currentData) {
+    document.getElementById("table").innerHTML =
+      "<tr><td colspan='7'>データ読み込み中です</td></tr>";
+    return;
+  }
+
+  createTable(currentData, job, gender);
+  updateDepartmentOptions();
+}
+
+function updateDepartmentOptions() {
+  const departmentArea = document.getElementById("departmentArea");
+  const departmentSelect = document.getElementById("department");
+
+  if (!departmentArea || !departmentSelect) return;
+
+  if (!isDepartmentActive()) {
+    departmentArea.classList.add("hidden");
+    departmentSelect.innerHTML = '<option value="">選択</option>';
+    departmentSelect.disabled = false;
+    return;
+  }
+
+  departmentArea.classList.remove("hidden");
+
+  const job = document.getElementById("job").value;
+  const gender = document.getElementById("gender").value;
+
+  departmentSelect.innerHTML = '<option value="">選択</option>';
+
+  if (!currentData || !currentData.departments || !job || !gender) {
+    departmentSelect.innerHTML =
+      '<option value="">性別と職種を選択してください</option>';
+    departmentSelect.disabled = true;
+    return;
+  }
+
+  const departments = currentData.departments
+    .filter(d =>
+      d.active !== false &&
+      d.job === job &&
+      (!d.gender || d.gender === gender)
+    )
+    .sort((a, b) => (a.displayOrder || 9999) - (b.displayOrder || 9999));
+
+  if (departments.length === 0) {
+    departmentSelect.innerHTML =
+      '<option value="">該当する部署なし</option>';
+    departmentSelect.disabled = true;
+    return;
+  }
+
+  departmentSelect.disabled = false;
+
+  departments.forEach(d => {
+    const option = document.createElement("option");
+    option.value = d.department;
+    option.textContent = d.department;
+    departmentSelect.appendChild(option);
+  });
+}
+
+function createTable(data, selectedJob, selectedGender) {
+
+  const table = document.getElementById("table");
+
+  const jobData = data.jobs.find(j =>
+    j.job === selectedJob && j.gender === selectedGender
+  );
+
+  if (!jobData) {
+    table.innerHTML = "<tr><td colspan='7'>該当データなし</td></tr>";
+    document.getElementById("categoryStatus").innerHTML = "";
+    return;
+  }
+
+  let html = "";
+
+  let categoryDisplay = jobData.categoryDisplay || [];
+
+  if (categoryDisplay.length === 0) {
+    const categoryNames = [...new Set(jobData.products.map(p => p.productCategory))];
+
+    categoryDisplay = categoryNames.map((cat, index) => ({
+      productCategory: cat,
+      displayOrder: index + 1,
+      heading: cat + "を選んで下さい",
+      note: ""
+    }));
+  }
+
+  categoryDisplay
+    .sort((a, b) => a.displayOrder - b.displayOrder)
+    .forEach(categoryInfo => {
+
+      const category = categoryInfo.productCategory;
+
+      const products = jobData.products.filter(p =>
+        p.productCategory === category
+      );
+
+      if (products.length === 0) return;
+
+      html += `<tr class="category-header">
+        <td colspan="7">
+          <div class="category-heading" data-category-heading="${category}">
+            <span class="category-title">${category}を選択</span>
+            <span class="category-count"></span>
+          </div>`;
+
+      if (categoryInfo.note) {
+        html += `<div class="category-note">${categoryInfo.note}</div>`;
+      }
+
+      html += `</td></tr>`;
+
+      html += `<tr class="product-header">
+  <th>商品</th>
+  <th>品番</th>
+  <th>色</th>
+  <th>サイズ</th>
+  <th>数量</th>
+  <th>股下加工</th>
+  <th>採寸</th>
+</tr>`;
+
+      products.forEach((p, productIndex) => {
+
+       let row = `<tr
+  data-product-code="${p.productCode}"
+  data-product-category="${p.productCategory}"
+  data-measurement-group="${p.measurementGroup || ''}"
+  data-inseam-alterable="${p.inseamAlterable || 0}"
+  class="product-row row-theme-${productIndex % 2}"
+>
+          <td class="cell-product">${p.name}</td>
+          <td class="cell-code">${p.productCode}</td>
+          <td class="cell-color">${p.color}</td>`;
+
+        const standardSizes = p.sizes.filter(size => size.type === "standard");
+        const specialSizes = p.sizes.filter(size => size.type !== "standard");
+
+        row += `<td class="cell-size">
+          <select class="mainSize" onchange="checkMainSize(this); 
+toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input')); 
+updateCategorySummary();">
+            <option value="">選択</option>`;
+
+        standardSizes.forEach(size => {
+          row += `<option value="${size.value}" data-size-type="${size.type}">
+            ${size.label}
+          </option>`;
+        });
+
+        if (specialSizes.length > 0) {
+          row += `<option value="__OTHER__">その他</option>`;
+        }
+
+        row += `</select>`;
+
+        row += `<div class="specialSizeArea hidden" style="margin-top:6px;">
+          <select class="specialSize" onchange="checkSpecialSize(this); 
+toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
+ updateCategorySummary();">
+            <option value="">特注サイズを選択</option>`;
+
+        specialSizes.forEach(size => {
+          row += `<option value="${size.value}" data-size-type="${size.type}">
+            ${size.label}
+          </option>`;
+        });
+
+        row += `</select>
+
+          <div class="bespokeInputArea hidden measure-required-message">
+            採寸表への入力が必要です<br>
+            <button type="button" class="measure measure-inline hidden" onclick="openMeasurement(this)">採寸</button>
+          </div>
+        </div>`;
+
+        row += `</td>`;
+
+        row += `<td class="cell-qty">
+          <input
+            type="number"
+            min="0"
+            step="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            oninput="this.value=this.value.replace(/[^0-9]/g,''); toggleAddSizeButton(this); updateCategorySummary()"
+          >
+          <div>
+            <button type="button" class="addSizeBtn hidden" onclick="addSameProductRow(this)">
+              他のサイズも選択する
+            </button>
+          </div>
+        </td>`;
+
+	row += `<td class="cell-inseam">
+  ${buildInseamAreaHtml(p.productCategory, p.measurementGroup || "", p.inseamAlterable || 0)}
+</td>`;
+
+ 	row += `<td class="cell-measure">
+          <button class="measure measure-table hidden" onclick="openMeasurement(this)">採寸</button>
+        </td>`;
+
+        row += `</tr>`;
+
+        html += row;
+      });
+    });
+
+table.innerHTML = html;
+updateLimitDeclarationArea();
+updateCategorySummary();
+}
+
+
+function toggleAddSizeButton(input) {
+  if (!input) return;
+
+  const row = input.closest("tr");
+  const qty = Number(input.value) || 0;
+  const sizeInfo = getRowSizeInfo(row);
+  const button = row.querySelector(".addSizeBtn");
+
+  if (!button) return;
+
+  if (qty > 0 && sizeInfo.valid) {
+    button.classList.remove("hidden");
+  } else {
+    button.classList.add("hidden");
+  }
+}
+
+function addSameProductRow(button) {
+  const row = button.closest("tr");
+  const productCode = row.dataset.productCode;
+
+  const productRows = Array.from(
+    document.querySelectorAll(`tr[data-product-code="${productCode}"]`)
+  );
+
+  if (productRows.length >= 3) {
+    alert("同じ商品のサイズ選択は最大3行までです。");
+    return;
+  }
+
+const clone = row.cloneNode(true);
+
+const extraIndex = productRows.length;
+clone.classList.remove(
+  "extra-size-row",
+  "extra-size-row-1",
+  "extra-size-row-2",
+  "extra-size-row-3"
+);
+clone.classList.add("extra-size-row-" + extraIndex);
+
+  clone.querySelectorAll("input").forEach(input => {
+    input.value = "";
+  });
+
+  clone.querySelectorAll("select").forEach(select => {
+    select.selectedIndex = 0;
+  });
+
+  clone.querySelectorAll(".addSizeBtn").forEach(addButton => {
+    addButton.classList.add("hidden");
+  });
+
+  clone.querySelectorAll(".specialSizeArea").forEach(area => {
+    area.classList.add("hidden");
+  });
+
+  clone.querySelectorAll(".bespokeInputArea").forEach(area => {
+    area.classList.add("hidden");
+  });
+
+  clone.querySelectorAll(".measure").forEach(measureButton => {
+    measureButton.classList.add("hidden");
+    measureButton.innerText = "採寸";
+  });
+clone.querySelectorAll(".cell-inseam").forEach(cell => {
+  cell.innerHTML = "";
+});
+
+  productRows[productRows.length - 1].after(clone);
+updateCategorySummary();
+updateInseamAreaForProduct(row);
+}
+
+function checkMainSize(select) {
+
+  const row = select.closest("tr");
+  const specialArea = row.querySelector(".specialSizeArea");
+  const specialSelect = row.querySelector(".specialSize");
+  const bespokeArea = row.querySelector(".bespokeInputArea");
+
+  if (select.value === "__OTHER__") {
+    specialArea.classList.remove("hidden");
+  } else {
+    specialArea.classList.add("hidden");
+
+    if (specialSelect) specialSelect.value = "";
+    if (bespokeArea) bespokeArea.classList.add("hidden");
+
+    row.querySelectorAll(".measure").forEach(btn => {
+      btn.classList.add("hidden");
+      btn.innerText = "採寸";
+    });
+  }
+updateInseamAreaForProduct(row);
+}
+
+function checkSpecialSize(select) {
+
+  const row = select.closest("tr");
+  const bespokeArea = row.querySelector(".bespokeInputArea");
+  const buttons = row.querySelectorAll(".measure");
+
+  if (select.value === "別寸") {
+    bespokeArea.classList.remove("hidden");
+
+    const type = getMeasurementTypeByRow(row);
+
+    if (!type) {
+      bespokeArea.classList.add("hidden");
+      buttons.forEach(btn => {
+        btn.classList.add("hidden");
+        btn.innerText = "採寸";
+      });
+      updateInseamAreaForProduct(row);
+      return;
+    }
+
+    const buttonText = isMeasurementCompleteForType(type) ? "採寸済" : "採寸";
+
+    buttons.forEach(btn => {
+      btn.classList.remove("hidden");
+      btn.innerText = buttonText;
+    });
+
+  } else {
+    bespokeArea.classList.add("hidden");
+
+    buttons.forEach(btn => {
+      btn.classList.add("hidden");
+      btn.innerText = "採寸";
+    });
+  }
+updateInseamAreaForProduct(row);
+}
+
+function getMeasurementTypeByGroup(measurementGroup) {
+
+  const group = String(measurementGroup || "").trim();
+
+  if (group === "上衣") return "上衣";
+  if (group === "下衣") return "下衣";
+  if (group === "全身") return "全身";
+
+  return "";
+}
+
+function getMeasurementTypeByCategory(category) {
+
+  // 旧JSON互換用。新JSONでは measurementGroup を優先する。
+  const categoryText = String(category || "").trim();
+
+  if (categoryText === "ワンピース") return "全身";
+  if (categoryText === "上衣" || categoryText === "ベスト" || categoryText === "ブラウス") return "上衣";
+  if (categoryText === "下衣" || categoryText === "パンツ" || categoryText === "スカート" || categoryText === "ズボン") return "下衣";
+
+  return "";
+}
+
+function getMeasurementTypeByRow(row) {
+
+  if (!row) return "";
+
+  const byGroup = getMeasurementTypeByGroup(row.dataset.measurementGroup);
+  if (byGroup) return byGroup;
+
+  return getMeasurementTypeByRow(row);
+}
+
+function openMeasurement(button) {
+
+  const row = button.closest("tr");
+
+  currentMeasurementType = getMeasurementTypeByRow(row);
+  currentMeasurementButton = button;
+
+  if (!currentMeasurementType) {
+    alert("この商品の採寸グループが未設定、または採寸対象外です。商品マスタの採寸グループを確認してください。");
+    return;
+  }
+
+  loadMeasurementToForm();
+  applyMeasurementMode(currentMeasurementType);
+
+  document.querySelector(".table-wrap").classList.add("hidden");
+  document.getElementById("categoryStatus").classList.add("hidden");
+  document.getElementById("submitButton").classList.add("hidden");
+  document.getElementById("measurementArea").classList.remove("hidden");
+
+  document.getElementById("measurementMessage").innerText =
+    "採寸区分：" + currentMeasurementType;
+}
+
+function closeMeasurement() {
+
+  document.getElementById("measurementArea").classList.add("hidden");
+  document.querySelector(".table-wrap").classList.remove("hidden");
+  document.getElementById("categoryStatus").classList.remove("hidden");
+  document.getElementById("submitButton").classList.remove("hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function cancelMeasurement() {
+
+  const ok = confirm("入力した内容は保存されません。\n戻ってもよろしいですか？");
+
+  if (!ok) {
+    return;
+  }
+
+  closeMeasurement();
+}
+
+function setSectionEnabled(sectionId, enabled) {
+
+  const section = document.getElementById(sectionId);
+
+  if (!section) {
+    return;
+  }
+
+  const inputs = section.querySelectorAll("input, select, textarea");
+
+  if (enabled) {
+    section.classList.remove("disabled-section");
+  } else {
+    section.classList.add("disabled-section");
+  }
+
+  inputs.forEach(input => {
+    input.disabled = !enabled;
+  });
+}
+
+function applyMeasurementMode(type) {
+
+  const upperEditable =
+    type === "上衣" ||
+    type === "全身" ||
+    measurementData.upper.completed;
+
+  const lowerEditable =
+    type === "下衣" ||
+    type === "全身" ||
+    measurementData.lower.completed;
+
+  setSectionEnabled("measureCommon", true);
+  setSectionEnabled("measureUpper", upperEditable);
+  setSectionEnabled("measureLower", lowerEditable);
+}
+
+function loadMeasurementToForm() {
+
+  document.getElementById("m_height").value = measurementData.common.height;
+  document.getElementById("m_weight").value = measurementData.common.weight;
+
+  document.getElementById("m_A").value = measurementData.upper.A;
+  document.getElementById("m_B").value = measurementData.upper.B;
+  document.getElementById("m_C1").value = measurementData.upper.C1;
+  document.getElementById("m_C2").value = measurementData.upper.C2;
+  document.getElementById("m_C3").value = measurementData.upper.C3;
+  document.getElementById("m_D").value = measurementData.upper.D;
+  document.getElementById("m_E").value = measurementData.upper.E;
+  document.getElementById("m_F").value = measurementData.upper.F;
+  document.getElementById("m_G").value = measurementData.upper.G;
+  document.getElementById("m_H").value = measurementData.upper.H;
+  document.getElementById("m_I").value = measurementData.upper.I;
+
+  document.getElementById("m_a").value = measurementData.lower.a;
+  document.getElementById("m_b").value = measurementData.lower.b;
+  document.getElementById("m_c").value = measurementData.lower.c;
+  document.getElementById("m_d").value = measurementData.lower.d;
+  document.getElementById("m_e").value = measurementData.lower.e;
+  document.getElementById("m_f").value = measurementData.lower.f;
+
+  document.getElementById("m_specialNote").value = measurementData.specialNote;
+  document.getElementById("m_memo").value = measurementData.memo;
+}
+
+function saveMeasurement() {
+
+  const height = document.getElementById("m_height").value;
+  const weight = document.getElementById("m_weight").value;
+
+  if (!height) {
+    alert("身長を入力してください");
+    return;
+  }
+
+  if (!weight) {
+    alert("体重を入力してください");
+    return;
+  }
+
+
+  measurementData.common.height = height;
+  measurementData.common.weight = weight;
+  measurementData.common.method = "ヌード寸法";
+
+  measurementData.upper.A = document.getElementById("m_A").value;
+  measurementData.upper.B = document.getElementById("m_B").value;
+  measurementData.upper.C1 = document.getElementById("m_C1").value;
+  measurementData.upper.C2 = document.getElementById("m_C2").value;
+  measurementData.upper.C3 = document.getElementById("m_C3").value;
+  measurementData.upper.D = document.getElementById("m_D").value;
+  measurementData.upper.E = document.getElementById("m_E").value;
+  measurementData.upper.F = document.getElementById("m_F").value;
+  measurementData.upper.G = document.getElementById("m_G").value;
+  measurementData.upper.H = document.getElementById("m_H").value;
+  measurementData.upper.I = document.getElementById("m_I").value;
+
+  measurementData.lower.a = document.getElementById("m_a").value;
+  measurementData.lower.b = document.getElementById("m_b").value;
+  measurementData.lower.c = document.getElementById("m_c").value;
+  measurementData.lower.d = document.getElementById("m_d").value;
+  measurementData.lower.e = document.getElementById("m_e").value;
+  measurementData.lower.f = document.getElementById("m_f").value;
+
+  measurementData.specialNote = document.getElementById("m_specialNote").value;
+  measurementData.memo = document.getElementById("m_memo").value;
+
+  if (currentMeasurementType === "上衣") {
+    measurementData.upper.completed = true;
+  }
+
+  if (currentMeasurementType === "下衣") {
+    measurementData.lower.completed = true;
+  }
+
+  if (currentMeasurementType === "全身") {
+    measurementData.upper.completed = true;
+    measurementData.lower.completed = true;
+  }
+
+  updateAllMeasurementButtons();
+
+  closeMeasurement();
+}
+
+function isMeasurementCompleteForType(type) {
+
+  if (type === "上衣") {
+    return measurementData.upper.completed;
+  }
+
+  if (type === "下衣") {
+    return measurementData.lower.completed;
+  }
+
+  if (type === "全身") {
+    return measurementData.upper.completed && measurementData.lower.completed;
+  }
+
+  return false;
+}
+
+function hasBespokeWithoutMeasurement() {
+
+  const rows = document.querySelectorAll("#table tr");
+  let missing = false;
+
+  rows.forEach(row => {
+
+    if (!row.dataset.productCategory) return;
+
+    const sizeInfo = getRowSizeInfo(row);
+    const qtyInput = row.querySelector(".cell-qty input");
+    const qty = Number(qtyInput.value) || 0;
+
+    if (qty <= 0) return;
+
+    if (sizeInfo.size === "別寸") {
+
+      const type = getMeasurementTypeByRow(row);
+
+      if (type && !isMeasurementCompleteForType(type)) {
+        missing = true;
+      }
+    }
+  });
+
+  return missing;
+}
+
+function updateAllMeasurementButtons() {
+
+  const rows = document.querySelectorAll("#table tr");
+
+  rows.forEach(row => {
+
+    if (!row.dataset.productCategory) return;
+
+    const buttons = row.querySelectorAll(".measure");
+    if (buttons.length === 0) return;
+
+    const sizeInfo = getRowSizeInfo(row);
+
+    buttons.forEach(btn => {
+
+      if (sizeInfo.size !== "別寸") {
+        btn.innerText = "採寸";
+        btn.classList.add("hidden");
+        return;
+      }
+
+      const type = getMeasurementTypeByRow(row);
+
+      if (!type) {
+        btn.innerText = "採寸";
+        btn.classList.add("hidden");
+        return;
+      }
+
+      btn.classList.remove("hidden");
+
+      if (isMeasurementCompleteForType(type)) {
+        btn.innerText = "採寸済";
+      } else {
+        btn.innerText = "採寸";
+      }
+    });
+  });
+}
+
+function buildMeasurementPayload(common) {
+
+  const upperDone = measurementData.upper.completed;
+  const lowerDone = measurementData.lower.completed;
+
+  if (!upperDone && !lowerDone) {
+    return null;
+  }
+
+  let measurementType = "";
+
+  if (upperDone && lowerDone) {
+    measurementType = "全身";
+  } else if (upperDone) {
+    measurementType = "上衣";
+  } else if (lowerDone) {
+    measurementType = "下衣";
+  }
+
+ return {
+  "登録ID": common.id,
+  "顧客コード": common.customerCode,
+  "顧客名": common.customerName,
+  "職員番号": common.employeeNo || "",
+  employeeNo: common.employeeNo || "",
+  staffNo: common.employeeNo || "",
+  publicKey: common.publicKey || "",
+  customerKey: common.customerKey || "",
+  customer: common.customer || "",
+  "姓": common.sei,
+"名": common.mei,
+"セイ": common.seiKana,
+"メイ": common.meiKana,
+"性別": common.gender,
+  "職種": common.job,
+  "部署": common.department,
+  "採寸区分": measurementType,
+    "登録日時": common.createdAt,
+    "更新日時": common.updatedAt,
+
+    "身長": measurementData.common.height,
+    "体重": measurementData.common.weight,
+
+    "上衣入力済": upperDone ? 1 : 0,
+    "A_衿回り": measurementData.upper.A,
+    "B_肩巾": measurementData.upper.B,
+    "C1_袖丈_半袖": measurementData.upper.C1,
+    "C2_袖丈_七分袖": measurementData.upper.C2,
+    "C3_袖丈_長袖": measurementData.upper.C3,
+    "D_胸回り": measurementData.upper.D,
+    "E_胴回り": measurementData.upper.E,
+    "F_腰回り": measurementData.upper.F,
+    "G_背丈": measurementData.upper.G,
+    "H_着丈": measurementData.upper.H,
+    "I_袖付回り": measurementData.upper.I,
+
+    "下衣入力済": lowerDone ? 1 : 0,
+    "a_胴回り": measurementData.lower.a,
+    "b_腰回り": measurementData.lower.b,
+    "c_股上": measurementData.lower.c,
+    "d_股下": measurementData.lower.d,
+    "e_総丈": measurementData.lower.e,
+    "f_太股回り": measurementData.lower.f,
+
+    "特記事項": measurementData.specialNote,
+    "備考": measurementData.memo
+  };
+}
+
+function getSelectedJobData() {
+
+  const job = document.getElementById("job").value;
+  const gender = document.getElementById("gender").value;
+
+  if (!currentData || !job || !gender) {
+    return null;
+  }
+
+  return currentData.jobs.find(j =>
+    j.job === job && j.gender === gender
+  );
+}
+
+function getRowSizeInfo(row) {
+
+  const mainSizeSelect = row.querySelector(".mainSize");
+  const specialSizeSelect = row.querySelector(".specialSize");
+
+  let size = "";
+  let sizeType = "";
+  let bespokeText = "";
+
+  if (!mainSizeSelect) {
+    return {
+      size: "",
+      sizeType: "",
+      bespokeText: "",
+      valid: false
+    };
+  }
+
+  if (mainSizeSelect.value === "__OTHER__") {
+
+    if (!specialSizeSelect || !specialSizeSelect.value) {
+      return {
+        size: "",
+        sizeType: "",
+        bespokeText: "",
+        valid: false
+      };
+    }
+
+    size = specialSizeSelect.value;
+
+    if (size === "別寸") {
+      sizeType = "bespoke";
+      bespokeText = "";
+    } else {
+      sizeType = "custom";
+    }
+
+  } else {
+
+    size = mainSizeSelect.value;
+
+    if (!size) {
+      return {
+        size: "",
+        sizeType: "",
+        bespokeText: "",
+        valid: false
+      };
+    }
+
+    sizeType = "standard";
+  }
+
+  return {
+    size,
+    sizeType,
+    bespokeText,
+    valid: true
+  };
+}
+
+function isInseamTargetCategory(productCategory, measurementGroup) {
+  const group = String(measurementGroup || "").trim();
+  if (group === "下衣") return true;
+
+  // 旧JSON互換用。新JSONでは measurementGroup を優先する。
+  const category = String(productCategory || "").trim();
+  return ["下衣", "パンツ", "スカート", "ズボン"].includes(category);
+}
+
+function buildInseamAreaHtml(productCategory, measurementGroup, inseamAlterable) {
+  const canAlter = String(inseamAlterable || "").trim() === "1";
+
+  if (!isInseamTargetCategory(productCategory, measurementGroup)) {
+    return "";
+  }
+
+  if (canAlter) {
+    return `
+      <div class="inseam-box">
+        <label>股下加工寸法</label><br>
+        <input
+  type="number"
+  class="inseamCmInput"
+  step="1"
+  inputmode="numeric"
+  placeholder="cm"
+  oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+> cm
+        <div class="small inseam-help">股下加工が必要な場合のみ入力してください。</div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="inseam-message">
+      股下加工のできない商品です
+    </div>
+  `;
+}
+
+function isInseamAlterable(row) {
+  if (!row) return false;
+
+  const value = String(row.dataset.inseamAlterable || "").trim();
+
+  return value === "1" || value.toLowerCase() === "true";
+}
+
+function getRowsByProductCode(productCode) {
+  return Array.from(
+    document.querySelectorAll(`tr[data-product-code="${productCode}"]`)
+  );
+}
+
+function getProductInseamInput(productCode) {
+  const rows = getRowsByProductCode(productCode);
+
+  for (const row of rows) {
+    const input = row.querySelector(".inseamCmInput");
+    if (input) {
+      return input;
+    }
+  }
+
+  return null;
+}
+
+function updateInseamAreaForProduct(row) {
+  if (!row || !row.dataset.productCode) return;
+
+  const productCode = row.dataset.productCode;
+  const productRows = getRowsByProductCode(productCode);
+
+  if (productRows.length === 0) return;
+
+  const currentInput = getProductInseamInput(productCode);
+  const currentInseamCm = currentInput ? currentInput.value.trim() : "";
+
+  // 同じ商品の股下加工欄はいったん全部消す
+  productRows.forEach(r => {
+    const cell = r.querySelector(".cell-inseam");
+    if (!cell) return;
+    cell.innerHTML = "";
+  });
+
+  // 股下加工欄は、同じ商品の最初の行に表示する
+  // 追加サイズ行の背景色に巻き込まれないようにする
+  const baseRow = productRows[0];
+  const baseCell = baseRow.querySelector(".cell-inseam");
+
+  if (!baseCell) return;
+
+  baseCell.innerHTML = buildInseamAreaHtml(
+    baseRow.dataset.productCategory,
+    baseRow.dataset.measurementGroup || "",
+    baseRow.dataset.inseamAlterable || 0
+  );
+
+  const newInput = getProductInseamInput(productCode);
+
+  if (newInput && currentInseamCm) {
+    newInput.value = currentInseamCm;
+  }
+
+  updateInseamInputStateForProduct(productCode);
+}
+
+function updateAllInseamAreas() {
+  const rows = Array.from(document.querySelectorAll("#table tr[data-product-code]"));
+  const productCodes = [...new Set(rows.map(row => row.dataset.productCode))];
+
+  productCodes.forEach(productCode => {
+    const productRows = getRowsByProductCode(productCode);
+    if (productRows.length > 0) {
+      updateInseamAreaForProduct(productRows[0]);
+    }
+  });
+}
+
+function getInseamCmForProduct(productCode) {
+  const input = getProductInseamInput(productCode);
+
+  if (!input) {
+    return "";
+  }
+
+  return input.value.trim();
+}
+
+function restoreInseamFromEditData(orders) {
+  if (!orders || orders.length === 0) return;
+
+  updateAllInseamAreas();
+
+  const restored = {};
+
+  orders.forEach(order => {
+    const productCode = String(order["カタログ品番"] || order.productCode || "");
+    const inseamCm = String(order["股下cm"] || order.inseamCm || "").trim();
+
+    if (!productCode || !inseamCm) return;
+    if (restored[productCode]) return;
+
+    const input = getProductInseamInput(productCode);
+
+    if (input) {
+      input.value = inseamCm;
+      restored[productCode] = true;
+    }
+  });
+}
+
+function updateInseamInputStateForProduct(productCode) {
+  const productRows = getRowsByProductCode(productCode);
+  if (productRows.length === 0) return;
+
+  const input = getProductInseamInput(productCode);
+  if (!input) return;
+
+  const box = input.closest(".inseam-box");
+
+  let hasBespoke = false;
+  let hasNonBespokeSelected = false;
+
+  productRows.forEach(row => {
+    const sizeInfo = getRowSizeInfo(row);
+
+    if (!sizeInfo.valid) return;
+
+    if (sizeInfo.size === "別寸") {
+      hasBespoke = true;
+    } else {
+      hasNonBespokeSelected = true;
+    }
+  });
+
+  // 別寸のみ選択されている場合は入力不可にする
+  if (hasBespoke && !hasNonBespokeSelected) {
+    input.value = "";
+    input.disabled = true;
+
+    if (box) {
+      box.classList.add("disabled");
+    }
+
+    return;
+  }
+
+  // 未選択、または別寸以外が選択されている場合は入力可能
+  input.disabled = false;
+
+  if (box) {
+    box.classList.remove("disabled");
+  }
+}
+
+function buildLimitDeclarationHtml(jobData) {
+  if (!jobData || !jobData.categoryLimits || jobData.categoryLimits.length === 0) {
+    return "";
+  }
+
+  let html = `
+    <div>
+      <strong>貸与枚数は以下のとおりです</strong><br>
+  `;
+
+  jobData.categoryLimits.forEach(rule => {
+    html += `${rule.productCategory} ${rule.limit}枚<br>`;
+  });
+
+  html += `</div>`;
+
+  return html;
+}
+
+function updateLimitDeclarationArea() {
+  const area = document.getElementById("limitDeclarationArea");
+  if (!area) return;
+
+  const jobData = getSelectedJobData();
+
+  if (!jobData) {
+    area.innerHTML = "";
+    return;
+  }
+
+  area.innerHTML = buildLimitDeclarationHtml(jobData);
+}
+
+function updateCategorySummary() {
+
+  const jobData = getSelectedJobData();
+  const area = document.getElementById("categoryStatus");
+
+  if (!jobData) {
+    area.innerHTML = "";
+    return;
+  }
+
+  const counts = {};
+  const limits = {};
+  const selectedByProductCategory = {};
+
+  jobData.categoryLimits.forEach(rule => {
+    limits[rule.productCategory] = rule.limit;
+    counts[rule.productCategory] = 0;
+  });
+
+  const rows = document.querySelectorAll("#table tr");
+
+  rows.forEach(row => {
+
+    const productCategory = row.dataset.productCategory;
+
+    if (!productCategory) return;
+
+    const qtyInput = row.querySelector(".cell-qty input");
+    const qty = Number(qtyInput.value) || 0;
+
+    if (qty <= 0) return;
+
+    const sizeInfo = getRowSizeInfo(row);
+    if (!sizeInfo.valid) return;
+
+    if (selectedByProductCategory[productCategory] === undefined) {
+      selectedByProductCategory[productCategory] = 0;
+    }
+
+    selectedByProductCategory[productCategory] += qty;
+
+    const rules = jobData.conversionRules.filter(r =>
+      r.fromProductCategory === productCategory
+    );
+
+    rules.forEach(rule => {
+
+      if (counts[rule.toConsumptionCategory] === undefined) {
+        counts[rule.toConsumptionCategory] = 0;
+      }
+
+      counts[rule.toConsumptionCategory] += qty * rule.qty;
+    });
+  });
+
+  let html = "";
+html += "<h3>現在の選択枚数</h3>";
+
+  Object.keys(limits).forEach(category => {
+
+    const current = counts[category] || 0;
+    const limit = limits[category];
+
+    let className = "category-normal";
+
+    if (current > limit) {
+      className = "category-over";
+    } else if (current === limit) {
+      className = "category-ok";
+    } else if (limit - current === 1) {
+      className = "category-warning";
+    }
+
+    html += `<div class="${className}">
+      ${category}：${current} / ${limit}
+    </div>`;
+  });
+
+  area.innerHTML = html;
+
+  const headingElements = document.querySelectorAll("[data-category-heading]");
+
+  headingElements.forEach(el => {
+
+    const category = el.dataset.categoryHeading;
+    const countSpan = el.querySelector(".category-count");
+
+    if (!countSpan) return;
+
+    const limit = limits[category];
+    const current = counts[category] || 0;
+    const selected = selectedByProductCategory[category] || 0;
+
+    countSpan.classList.remove(
+      "category-count-ok",
+      "category-count-warning",
+      "category-count-over"
+    );
+
+    if (limit !== undefined) {
+
+      countSpan.innerText = `（合計${limit}枚） 選択中 ${current}/${limit}`;
+
+      if (current > limit) {
+        countSpan.classList.add("category-count-over");
+      } else if (current === limit) {
+        countSpan.classList.add("category-count-ok");
+      } else if (limit - current === 1) {
+        countSpan.classList.add("category-count-warning");
+      }
+
+    } else {
+
+      if (selected > 0) {
+        countSpan.innerText = `選択中 ${selected}枚`;
+      } else {
+        countSpan.innerText = "";
+      }
+    }
+  });
+}
+
+function validateCategoryLimitsBeforeSubmit() {
+  const jobData = getSelectedJobData();
+
+  if (!jobData || !jobData.categoryLimits || jobData.categoryLimits.length === 0) {
+    return "";
+  }
+
+  const counts = {};
+  const limits = {};
+
+  jobData.categoryLimits.forEach(rule => {
+    limits[rule.productCategory] = Number(rule.limit) || 0;
+    counts[rule.productCategory] = 0;
+  });
+
+  const rows = document.querySelectorAll("#table tr");
+
+  rows.forEach(row => {
+    const productCategory = row.dataset.productCategory;
+    if (!productCategory) return;
+
+    const qtyInput = row.querySelector(".cell-qty input");
+    const qty = Number(qtyInput ? qtyInput.value : 0) || 0;
+    if (qty <= 0) return;
+
+    const sizeInfo = getRowSizeInfo(row);
+    if (!sizeInfo.valid) return;
+
+    const rules = jobData.conversionRules.filter(r =>
+      r.fromProductCategory === productCategory
+    );
+
+    rules.forEach(rule => {
+      if (counts[rule.toConsumptionCategory] === undefined) {
+        counts[rule.toConsumptionCategory] = 0;
+      }
+
+      counts[rule.toConsumptionCategory] += qty * rule.qty;
+    });
+  });
+
+  const messages = [];
+
+  Object.keys(limits).forEach(category => {
+    const current = counts[category] || 0;
+    const limit = limits[category];
+
+    if (current !== limit) {
+      messages.push(category + "：現在 " + current + " / 必要 " + limit);
+    }
+  });
+
+  if (messages.length > 0) {
+    return "貸与枚数が合っていません。\n\n" + messages.join("\n");
+  }
+
+  return "";
+}
+
+function isFullWidthText(value) {
+  const text = String(value || "").trim();
+
+  if (!text) {
+    return false;
+  }
+
+  // 半角ASCII・半角カナを含まない = 全角のみ
+  return !/[\x00-\x7F\uFF61-\uFF9F]/.test(text);
+}
+
+function isFullWidthKatakana(value) {
+  const text = String(value || "").trim();
+
+  if (!text) {
+    return false;
+  }
+
+  // 全角カタカナ、長音、全角スペースのみ許可
+  return /^[ァ-ヶー　]+$/.test(text);
+}
+
+function submitData() {
+  const employeeNo = document.getElementById("employeeNo")
+    ? document.getElementById("employeeNo").value.trim()
+    : "";
+  if (isEmployeeNoActive()) {
+    if (!employeeNo) {
+      alert("職員番号を入力してください");
+      return;
+    }
+    if (!validateEmployeeNoValue(employeeNo)) {
+      alert("職員番号は半角英数字で入力してください");
+      return;
+    }
+  }
+
+  const sei = document.getElementById("sei").value.trim();
+  const mei = document.getElementById("mei").value.trim();
+  const seiKana = document.getElementById("seiKana").value.trim();
+  const meiKana = document.getElementById("meiKana").value.trim();
+
+  if (!sei) {
+    alert("姓を入力してください");
+    return;
+  }
+
+  if (!mei) {
+    alert("名を入力してください");
+    return;
+  }
+
+  if (!seiKana) {
+    alert("セイを入力してください");
+    return;
+  }
+
+  if (!meiKana) {
+    alert("メイを入力してください");
+    return;
+  }
+
+  if (!isFullWidthText(sei)) {
+    alert("姓は全角で入力してください");
+    return;
+  }
+
+  if (!isFullWidthText(mei)) {
+    alert("名は全角で入力してください");
+    return;
+  }
+
+  if (!isFullWidthKatakana(seiKana)) {
+    alert("セイは全角カタカナで入力してください");
+    return;
+  }
+
+  if (!isFullWidthKatakana(meiKana)) {
+    alert("メイは全角カタカナで入力してください");
+    return;
+  }
+
+  if (!document.getElementById("gender").value) {
+    alert("性別を選択してください");
+    return;
+  }
+
+  if (!document.getElementById("job").value) {
+    alert("職種を選択してください");
+    return;
+  }
+
+  const departmentArea = document.getElementById("departmentArea");
+  const departmentSelect = document.getElementById("department");
+
+  if (
+    departmentArea &&
+    departmentSelect &&
+    !departmentArea.classList.contains("hidden") &&
+    !departmentSelect.value
+  ) {
+    alert("部署を選択してください");
+    return;
+  }
+
+  const now = new Date();
+
+  const common = {
+  id: Date.now(),
+  createdAt: now.toLocaleString("ja-JP"),
+  updatedAt: now.toLocaleString("ja-JP"),
+  customerCode: currentData.customerCode,
+  customerName: currentData.customerName,
+  employeeNo: employeeNo,
+  staffNo: employeeNo,
+  "職員番号": employeeNo,
+  publicKey: getCustomer(),
+  customerKey: getCustomer(),
+  customer: getCustomer(),
+sei: sei,
+mei: mei,
+seiKana: seiKana,
+meiKana: meiKana,
+  gender: document.getElementById("gender").value,
+  job: document.getElementById("job").value,
+  department: departmentSelect ? departmentSelect.value : ""
+};
+
+
+  const rows = document.querySelectorAll("#table tr");
+  let data = [];
+  const duplicateCheck = {};
+  let errorMessage = "";
+
+  rows.forEach(row => {
+
+    if (!row.dataset.productCategory) return;
+
+    const cells = row.querySelectorAll("td");
+
+    const product = cells[0].innerText;
+    const productCode = cells[1].innerText;
+    const color = cells[2].innerText;
+
+    const qtyInput = row.querySelector(".cell-qty input");
+const qty = Number(qtyInput ? qtyInput.value : 0) || 0;
+
+    if (qty <= 0) return;
+
+    const sizeInfo = getRowSizeInfo(row);
+
+    if (!sizeInfo.valid) {
+      errorMessage = product + " のサイズを選択してください";
+      return;
+    }
+
+    const duplicateKey = productCode + "|" + sizeInfo.size;
+
+    if (duplicateCheck[duplicateKey]) {
+      errorMessage = product + " は同じサイズを複数登録できません。";
+      return;
+    }
+
+    duplicateCheck[duplicateKey] = true;
+
+    const inseamAlterable = isInseamAlterable(row) ? 1 : 0;
+let inseamCm = "";
+
+// 股下加工可能商品で、別寸以外なら入力値を取得する
+// 数字が入力されていればOKとする
+if (inseamAlterable === 1 && sizeInfo.size !== "別寸") {
+  const inseamInput = getProductInseamInput(productCode);
+
+  if (inseamInput && !inseamInput.disabled) {
+    inseamCm = inseamInput.value.trim();
+  }
+
+  if (inseamCm && !/^\d+$/.test(inseamCm)) {
+    errorMessage = product + " の股下加工寸法は数字で入力してください。";
+    return;
+  }
+}
+
+data.push({
+  ...common,
+  product,
+  productCode,
+  color,
+  size: sizeInfo.size,
+  sizeType: sizeInfo.sizeType,
+  bespokeText: sizeInfo.bespokeText,
+  qty,
+  productCategory: row.dataset.productCategory,
+  measurementGroup: row.dataset.measurementGroup || "",
+  inseamAlterable: inseamAlterable,
+  inseamCm: inseamCm,
+  "股下加工可能": inseamAlterable,
+  "股下cm": inseamCm
+});
+  });
+
+  if (errorMessage) {
+    alert(errorMessage);
+    return;
+  }
+
+ if (data.length === 0) {
+  alert("商品が入力されていません（サイズ・数量）");
+  return;
+}
+
+const categoryLimitError = validateCategoryLimitsBeforeSubmit();
+
+if (categoryLimitError) {
+  alert(categoryLimitError);
+  return;
+}
+
+if (hasBespokeWithoutMeasurement()) {
+    const ok = confirm("採寸表の登録がありません。このまま登録しますか？");
+
+    if (!ok) {
+      return;
+    }
+  }
+
+  const measurementPayload = buildMeasurementPayload(common);
+
+  const customerKey = getCustomer();
+  const payload = {
+    orders: data,
+    measurement: measurementPayload,
+    editMode: isEditMode,
+    measureNo: isEditMode ? editMeasureNo : "",
+    registrationType: isEditMode ? "修正" : "新規",
+    publicKey: customerKey,
+    customerKey: customerKey,
+    customer: customerKey
+  };
+
+  payload.orders.forEach(o => {
+    o.publicKey = customerKey;
+    o.customerKey = customerKey;
+    o.customer = customerKey;
+  });
+
+  if (payload.measurement) {
+    payload.measurement.publicKey = customerKey;
+    payload.measurement.customerKey = customerKey;
+    payload.measurement.customer = customerKey;
+  }
+
+  console.log(payload);
+
+  sessionStorage.setItem("uniformCustomer", customerKey);
+  sessionStorage.setItem("uniformDraft", JSON.stringify(payload));
+  location.href = "confirm.html?customer=" + encodeURIComponent(customerKey);
+}
+</script>
+
+</body>
+</html>
