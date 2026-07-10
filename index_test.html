@@ -105,7 +105,14 @@ async function saveData(){
         const result =
             await response.text();
 
-        console.log(result);
+        console.log("HTTP status:", response.status);
+        console.log("Power Automate response:", result);
+
+        if(!response.ok){
+            document.getElementById("saveResult")
+                .innerText = "登録失敗 status=" + response.status + " / " + result;
+            return;
+        }
 
         document.getElementById("saveResult")
             .innerText = "送信結果：" + result;
@@ -119,7 +126,6 @@ async function saveData(){
 
     }
 }
-
 
 
 async function searchData(){
