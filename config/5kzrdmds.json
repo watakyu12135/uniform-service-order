@@ -1,6 +1,6 @@
 ﻿{
   "customerCode": "31029999",
-  "customerName": "サンプル病院",
+  "customerName": "テスト病院",
   "basicInfos": [
     {"name": "氏名", "displayOrder": 0, "active": true},
     {"name": "性別", "displayOrder": 0, "active": true},
