@@ -100,6 +100,53 @@ function checkEmail() {
 document.getElementById("email").addEventListener("input", checkEmail);
 document.getElementById("emailConfirm").addEventListener("input", checkEmail);
 
+/* 控えメール用に送信データを整える */
+function prepareMailDraftForMail(mailDraft) {
+  const orders = Array.isArray(mailDraft.orders)
+    ? JSON.parse(JSON.stringify(mailDraft.orders))
+    : [];
+
+  const firstOrder = orders[0] || {};
+
+  let measurement = mailDraft.measurement
+    ? JSON.parse(JSON.stringify(mailDraft.measurement))
+    : null;
+
+  // 採寸入力内容メールに表示不要な内部キーを削除する
+  if (measurement) {
+    delete measurement.publicKey;
+    delete measurement.customerKey;
+    delete measurement.customer;
+    delete measurement["採寸方法"];
+
+    // 念のため、名がmeasurementに無い場合は商品明細側から補完する
+    measurement["姓"] = measurement["姓"] || measurement.sei || measurement["氏"] || firstOrder["姓"] || firstOrder.sei || firstOrder["氏"] || "";
+    measurement["名"] = measurement["名"] || measurement.mei || firstOrder["名"] || firstOrder.mei || "";
+    measurement["セイ"] = measurement["セイ"] || measurement.seiKana || measurement["シ"] || firstOrder["セイ"] || firstOrder.seiKana || firstOrder["シ"] || "";
+    measurement["メイ"] = measurement["メイ"] || measurement.meiKana || firstOrder["メイ"] || firstOrder.meiKana || "";
+
+    // 旧項目名が混ざる場合はメール表示用から削除する
+    delete measurement.sei;
+    delete measurement.mei;
+    delete measurement.seiKana;
+    delete measurement.meiKana;
+    delete measurement["氏"];
+    delete measurement["シ"];
+  }
+
+  // 念のため商品明細側の内部キーも削除する
+  orders.forEach(o => {
+    delete o.publicKey;
+    delete o.customerKey;
+    delete o.customer;
+  });
+
+  return {
+    orders,
+    measurement
+  };
+}
+
 /* メール送信 */
 document.getElementById("mailBtn").addEventListener("click", async () => {
   const email = document.getElementById("email").value.trim();
@@ -121,13 +168,15 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
     return;
   }
 
+  const preparedMailDraft = prepareMailDraftForMail(mailDraft);
+
   const mailPayload = {
     mailOnly: true,
     toEmail: email,
     measureNo: info.measureNo || "",
     registrationNo: info.registrationNo || "",
-    orders: mailDraft.orders || [],
-    measurement: mailDraft.measurement || null
+    orders: preparedMailDraft.orders,
+    measurement: preparedMailDraft.measurement
   };
 
   mailBtn.disabled = true;
