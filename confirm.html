@@ -110,6 +110,7 @@ label { font-weight: bold; display: block; margin-top: 10px; }
 
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
+const FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/2fadd75538814f6eb11f426aee74c62e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r_0adeV2uMpNHxM0OzPQUcI8StgIf6zMICtxq4y2cG0";  
 let draft = null;
 
 /* HTMLエスケープ */
@@ -337,6 +338,8 @@ async function checkDuplicateBeforeSubmit(payload) {
 }
 
 async function checkDuplicateOnLoad() {
+return;
+
   if (!draft || draft.editMode === true) {
     return;
   }
@@ -422,6 +425,129 @@ function resetSubmitButton(isEdit) {
   submitBtn.disabled = !(confirmCheck && confirmCheck.checked);
 }
 
+function normalizePayloadForPowerAutomate(payload){
+
+  const orders = payload.orders || [];
+
+  orders.forEach(o => {
+
+    o["顧客コード"] = o["顧客コード"] || o.customerCode || "";
+    o["顧客名"] = o["顧客名"] || o.customerName || "";
+
+    o["職員番号"] =
+      o["職員番号"] ||
+      o.employeeNo ||
+      o.staffNo ||
+      "";
+
+    o["姓"] =
+      o["姓"] ||
+      o.sei ||
+      o["氏"] ||
+      "";
+
+    o["名"] =
+      o["名"] ||
+      o.mei ||
+      "";
+
+    o["セイ"] =
+      o["セイ"] ||
+      o.seiKana ||
+      o["シ"] ||
+      "";
+
+    o["メイ"] =
+      o["メイ"] ||
+      o.meiKana ||
+      o["メイ"] ||
+      "";
+
+    o["性別"] = o["性別"] || o.gender || "";
+    o["職種"] = o["職種"] || o.job || "";
+    o["部署"] = o["部署"] || o.department || "";
+
+    o["股下加工可能"] =
+      o["股下加工可能"] === undefined || o["股下加工可能"] === ""
+        ? 0
+        : Number(o["股下加工可能"]);
+
+    o["股下cm"] =
+      o["股下cm"] === undefined
+        ? ""
+        : o["股下cm"];
+
+    o["有効フラグ"] =
+      o["有効フラグ"] === undefined || o["有効フラグ"] === ""
+        ? 1
+        : Number(o["有効フラグ"]);
+
+  });
+
+  if(payload.measurement){
+
+    const m = payload.measurement;
+
+    m["顧客コード"] = m["顧客コード"] || m.customerCode || "";
+    m["顧客名"] = m["顧客名"] || m.customerName || "";
+
+    m["職員番号"] =
+      m["職員番号"] ||
+      m.employeeNo ||
+      m.staffNo ||
+      "";
+
+    m["姓"] =
+      m["姓"] ||
+      m.sei ||
+      m["氏"] ||
+      "";
+
+    m["名"] =
+      m["名"] ||
+      m.mei ||
+      "";
+
+    m["セイ"] =
+      m["セイ"] ||
+      m.seiKana ||
+      m["シ"] ||
+      "";
+
+    m["メイ"] =
+      m["メイ"] ||
+      m.meiKana ||
+      m["メイ"] ||
+      "";
+
+    m["性別"] = m["性別"] || m.gender || "";
+    m["職種"] = m["職種"] || m.job || "";
+    m["部署"] = m["部署"] || m.department || "";
+
+    m["上衣入力済"] =
+      m["上衣入力済"] === true ||
+      m["上衣入力済"] === 1 ||
+      String(m["上衣入力済"]).toUpperCase() === "TRUE"
+        ? 1
+        : 0;
+
+    m["下衣入力済"] =
+      m["下衣入力済"] === true ||
+      m["下衣入力済"] === 1 ||
+      String(m["下衣入力済"]).toUpperCase() === "TRUE"
+        ? 1
+        : 0;
+
+    m["有効フラグ"] =
+      m["有効フラグ"] === undefined || m["有効フラグ"] === ""
+        ? 1
+        : Number(m["有効フラグ"]);
+
+  }
+
+  return payload;
+}
+
 document.getElementById("submitBtn").addEventListener("click", async () => {
   if (submitInProgress) {
     return;
@@ -446,18 +572,17 @@ const duplicateArea = document.getElementById("duplicateWarningArea");
     duplicateCheck &&
     duplicateCheck.checked;
 
-  if (!isEdit) {
+  /*
+if (!isEdit) {
   try {
     const tempPayload = JSON.parse(JSON.stringify(draft));
     const duplicateResult = await checkDuplicateBeforeSubmit(tempPayload);
-
     if (duplicateResult.duplicateNameFound && !duplicateAlreadyConfirmed) {
       showDuplicateWarning();
       alert("確認の上、このまま登録する場合はチェックを入れてください。");
       resetSubmitButton(isEdit);
       return;
     }
-
     if (
       duplicateResult.duplicateNameFound &&
       duplicateAlreadyConfirmed &&
@@ -467,13 +592,13 @@ const duplicateArea = document.getElementById("duplicateWarningArea");
       resetSubmitButton(isEdit);
       return;
     }
-
   } catch (err) {
     alert("重複チェック中にエラーが発生しました。\n" + err.message);
     resetSubmitButton(isEdit);
     return;
   }
 }
+*/
 
   const registrationNo = document.getElementById("pin").value.trim();
 
@@ -560,20 +685,21 @@ payload.rosterMismatchInfo = duplicateAlreadyConfirmed
     payload.measurement["職員番号"] = payload.measurement.employeeNo;
   }
 
+normalizePayloadForPowerAutomate(payload);
+
   try {
-    const res = await fetch(GAS_URL, {
+    const res = await fetch(FLOW_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "text/plain;charset=utf-8"
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(payload)
     });
 
-    const text = await res.text();
-    const json = JSON.parse(text);
+   const text = await res.text();
 
-    if (json.result !== "ok") {
-      alert("登録に失敗しました。時間をおいて再度お試しください。\n" + (json.message || ""));
+    if (!res.ok) {
+      alert("登録に失敗しました。時間をおいて再度お試しください。\n" + text);
       resetSubmitButton(isEdit);
       return;
     }
