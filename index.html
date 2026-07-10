@@ -52,7 +52,7 @@ button {
   font-size: 16px;
 }
 
-/* 氏名・フリガナ */
+/* 姓名・フリガナ */
 .name-area {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -510,9 +510,9 @@ tr.product-row.extra-size-row-3 {
 
 <body>
 
-<!-- プライバシーポリシー・免責事項リンク -->
+<!-- プライバセイーポリセイー・免責事項リンク -->
 <div id="policyLink">
-  <a href="privacy.html">プライバシーポリシー・免責事項</a>
+  <a href="privacy.html">プライバセイーポリセイー・免責事項</a>
 </div>
 
 <!-- 修正画面リンク -->
@@ -532,7 +532,7 @@ tr.product-row.extra-size-row-3 {
 
 <div class="name-area">
   <div class="name-field">
-    <label for="sei">氏</label>
+    <label for="sei">姓</label>
     <input id="sei" inputmode="text" autocomplete="family-name">
   </div>
 
@@ -542,7 +542,7 @@ tr.product-row.extra-size-row-3 {
   </div>
 
   <div class="name-field">
-    <label for="seiKana">シ</label>
+    <label for="seiKana">セイ</label>
     <input id="seiKana" inputmode="katakana" autocomplete="off">
   </div>
 
@@ -773,7 +773,7 @@ function getBasicInfoSetting(name) {
 
 function isBasicInfoActive(name) {
   const info = getBasicInfoSetting(name);
-  if (["氏名", "性別", "職種"].includes(name)) return true;
+  if (["姓名", "性別", "職種"].includes(name)) return true;
   if (!info) return false;
   return info.active === true || info.active === 1 || String(info.active).toLowerCase() === "true";
 }
@@ -956,10 +956,10 @@ function applyEditModeData() {
     employeeNoInput.value = base["職員番号"] || base.employeeNo || base.staffNo || "";
   }
 
-  document.getElementById("sei").value = base["氏"] || "";
+  document.getElementById("sei").value = base["姓"] || "";
   document.getElementById("mei").value = base["名"] || "";
 
-document.getElementById("seiKana").value = base["シ"] || base.seiKana || "";
+document.getElementById("seiKana").value = base["セイ"] || base.seiKana || "";
 document.getElementById("meiKana").value = base["メイ"] || base.meiKana || "";
 
   document.getElementById("gender").value = base["性別"] || "";
@@ -1029,7 +1029,7 @@ function restoreOrdersFromEditData(orders) {
   const grouped = {};
 
   orders.forEach(order => {
-    const productCode = String(order["商品コード"] || "");
+    const productCode = String(order["カタログ品番"] || "");
 
     if (!productCode) return;
 
@@ -1882,9 +1882,9 @@ function buildMeasurementPayload(common) {
   publicKey: common.publicKey || "",
   customerKey: common.customerKey || "",
   customer: common.customer || "",
-  "氏": common.sei,
+  "姓": common.sei,
 "名": common.mei,
-"シ": common.seiKana,
+"セイ": common.seiKana,
 "メイ": common.meiKana,
 "性別": common.gender,
   "職種": common.job,
@@ -2131,7 +2131,7 @@ function restoreInseamFromEditData(orders) {
   const restored = {};
 
   orders.forEach(order => {
-    const productCode = String(order["商品コード"] || order.productCode || "");
+    const productCode = String(order["カタログ品番"] || order.productCode || "");
     const inseamCm = String(order["股下cm"] || order.inseamCm || "").trim();
 
     if (!productCode || !inseamCm) return;
@@ -2447,7 +2447,7 @@ function submitData() {
   const meiKana = document.getElementById("meiKana").value.trim();
 
   if (!sei) {
-    alert("氏を入力してください");
+    alert("姓を入力してください");
     return;
   }
 
@@ -2457,7 +2457,7 @@ function submitData() {
   }
 
   if (!seiKana) {
-    alert("シを入力してください");
+    alert("セイを入力してください");
     return;
   }
 
@@ -2467,7 +2467,7 @@ function submitData() {
   }
 
   if (!isFullWidthText(sei)) {
-    alert("氏は全角で入力してください");
+    alert("姓は全角で入力してください");
     return;
   }
 
@@ -2477,7 +2477,7 @@ function submitData() {
   }
 
   if (!isFullWidthKatakana(seiKana)) {
-    alert("シは全角カタカナで入力してください");
+    alert("セイは全角カタカナで入力してください");
     return;
   }
 
