@@ -225,6 +225,67 @@ function renderOrders(orders) {
   area.innerHTML = html;
 }
 
+/* 採寸入力内容の表示用設定 */
+const MEASUREMENT_HIDE_KEYS = new Set([
+  "登録ID",
+  "顧客コード",
+  "顧客名",
+  "publicKey",
+  "customerKey",
+  "customer",
+  "採寸方法",
+  "上衣入力済",
+  "下衣入力済",
+  "登録日時",
+  "更新日時",
+  "登録番号",
+  "登録区分",
+  "有効フラグ",
+  "修正用番号",
+  "employeeNo",
+  "staffNo",
+  "measurementNo",
+  "registrationNo",
+  "entryType",
+  "activeFlag",
+  "contactPin"
+]);
+
+const MEASUREMENT_UNIT_MAP = {
+  "身長": "cm",
+  "体重": "kg",
+  "A_衿回り": "cm",
+  "B_肩巾": "cm",
+  "C1_袖丈_半袖": "cm",
+  "C2_袖丈_七分袖": "cm",
+  "C3_袖丈_長袖": "cm",
+  "D_胸回り": "cm",
+  "E_胴回り": "cm",
+  "F_腰回り": "cm",
+  "G_背丈": "cm",
+  "H_着丈": "cm",
+  "I_袖付回り": "cm",
+  "a_胴回り": "cm",
+  "b_腰回り": "cm",
+  "c_股上": "cm",
+  "d_股下": "cm",
+  "e_総丈": "cm",
+  "f_太股回り": "cm"
+};
+
+function hasDisplayValue(value) {
+  return value !== null && value !== undefined && String(value).trim() !== "";
+}
+
+function formatMeasurementValue(key, value) {
+  const text = String(value ?? "").trim();
+  if (!text) return "";
+  const unit = MEASUREMENT_UNIT_MAP[key] || "";
+  if (!unit) return text;
+  if (text.endsWith(unit)) return text;
+  return text + unit;
+}
+
 function hasBespokeOrder(orders) {
   return (orders || []).some(o => {
     const size = String(o.size || o["サイズ"] || "").trim();
@@ -251,7 +312,8 @@ function renderMeasurement(measurement, orders) {
     return;
   }
 
-  const entries = Object.entries(measurement).filter(([k, v]) => v);
+  const entries = Object.entries(measurement)
+    .filter(([key, value]) => !MEASUREMENT_HIDE_KEYS.has(key) && hasDisplayValue(value));
 
   if (entries.length === 0) {
     if (hasBespoke) {
@@ -265,8 +327,8 @@ function renderMeasurement(measurement, orders) {
   }
 
   section.classList.remove("hidden");
-  area.innerHTML = entries.map(([k, v]) =>
-    `<div>${escapeHtml(k)}：${escapeHtml(v)}</div>`
+  area.innerHTML = entries.map(([key, value]) =>
+    `<div>${escapeHtml(key)}：${escapeHtml(formatMeasurementValue(key, value))}</div>`
   ).join("");
 }
 
