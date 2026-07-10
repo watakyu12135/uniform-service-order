@@ -47,7 +47,7 @@ label { font-weight: bold; display: block; margin-top: 10px; }
   <h3>基本情報</h3>
   <div class="info-row">顧客：<span id="customerName"></span></div>
   <div id="employeeNoRow" class="info-row hidden">職員番号：<span id="employeeNo"></span></div>
-  <div class="info-row">氏名：<span id="fullName"></span></div>
+  <div class="info-row">姓名：<span id="fullName"></span></div>
 <div class="info-row">フリガナ：<span id="fullNameKana"></span></div>
   <div class="info-row">性別：<span id="gender"></span></div>
   <div class="info-row">職種：<span id="job"></span></div>
@@ -180,7 +180,7 @@ function loadDraft() {
   document.getElementById("fullName").innerText =
     `${first.sei || ""} ${first.mei || ""}`.trim();
 document.getElementById("fullNameKana").innerText =
-  `${first.seiKana || first["シ"] || ""} ${first.meiKana || first["メイ"] || ""}`.trim();
+  `${first.seiKana || first["セイ"] || ""} ${first.meiKana || first["メイ"] || ""}`.trim();
   document.getElementById("gender").innerText = first.gender || "";
   document.getElementById("job").innerText = first.job || "";
   document.getElementById("department").innerText = first.department || "なし";
@@ -312,9 +312,9 @@ async function checkDuplicateBeforeSubmit(payload) {
     employeeNo: first.employeeNo || first.staffNo || first["職員番号"] || "",
     staffNo: first.employeeNo || first.staffNo || first["職員番号"] || "",
     "職員番号": first.employeeNo || first.staffNo || first["職員番号"] || "",
-    sei: first.sei || first["氏"] || "",
+    sei: first.sei || first["姓"] || "",
     mei: first.mei || first["名"] || "",
-    seiKana: first.seiKana || first["シ"] || "",
+    seiKana: first.seiKana || first["セイ"] || "",
     meiKana: first.meiKana || first["メイ"] || "",
     registrationNo: registrationNo
   };
@@ -357,9 +357,9 @@ return;
     employeeNo: first.employeeNo || first.staffNo || first["職員番号"] || "",
     staffNo: first.employeeNo || first.staffNo || first["職員番号"] || "",
     "職員番号": first.employeeNo || first.staffNo || first["職員番号"] || "",
-    sei: first.sei || first["氏"] || "",
+    sei: first.sei || first["姓"] || "",
     mei: first.mei || first["名"] || "",
-    seiKana: first.seiKana || first["シ"] || "",
+    seiKana: first.seiKana || first["セイ"] || "",
     meiKana: first.meiKana || first["メイ"] || "",
     registrationNo: ""
   };
@@ -443,7 +443,7 @@ function normalizePayloadForPowerAutomate(payload){
     o["姓"] =
       o["姓"] ||
       o.sei ||
-      o["氏"] ||
+      o["姓"] ||
       "";
 
     o["名"] =
@@ -454,7 +454,7 @@ function normalizePayloadForPowerAutomate(payload){
     o["セイ"] =
       o["セイ"] ||
       o.seiKana ||
-      o["シ"] ||
+      o["セイ"] ||
       "";
 
     o["メイ"] =
@@ -500,7 +500,7 @@ function normalizePayloadForPowerAutomate(payload){
     m["姓"] =
       m["姓"] ||
       m.sei ||
-      m["氏"] ||
+      m["姓"] ||
       "";
 
     m["名"] =
@@ -511,7 +511,7 @@ function normalizePayloadForPowerAutomate(payload){
     m["セイ"] =
       m["セイ"] ||
       m.seiKana ||
-      m["シ"] ||
+      m["セイ"] ||
       "";
 
     m["メイ"] =
