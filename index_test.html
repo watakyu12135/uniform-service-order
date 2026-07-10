@@ -65,9 +65,6 @@ async function saveData(){
 
     try{
 
-        const name =
-            document.getElementById("txtName").value;
-
         const response =
             await fetch(SAVE_URL,{
                 method:"POST",
@@ -75,7 +72,33 @@ async function saveData(){
                     "Content-Type":"application/json"
                 },
                 body:JSON.stringify({
-                    name:name
+                    orders:[
+                        {
+                            "採寸番号":"A123456",
+                            "顧客コード":"31029999",
+                            "顧客名":"テスト病院",
+                            "職員番号":"1234",
+                            "姓":"南山",
+                            "名":"研二",
+                            "セイ":"ミナミヤマ",
+                            "メイ":"ケンジ",
+                            "性別":"男性",
+                            "職種":"看護師",
+                            "部署":"４階病棟",
+                            "product":"男女兼用スクラブ",
+                            "productCode":"RT5402-14",
+                            "color":"ネイビー",
+                            "size":"L",
+                            "qty":1,
+                            "股下加工可能":0,
+                            "股下cm":"",
+                            "登録日時":"2026/07/10",
+                            "更新日時":"2026/07/10",
+                            "登録番号":"1234",
+                            "登録区分":"新規",
+                            "有効フラグ":1
+                        }
+                    ]
                 })
             });
 
@@ -85,14 +108,14 @@ async function saveData(){
         console.log(result);
 
         document.getElementById("saveResult")
-            .innerText = "登録完了";
+            .innerText = "送信結果：" + result;
 
     }catch(error){
 
         console.error(error);
 
         document.getElementById("saveResult")
-            .innerText = "登録失敗";
+            .innerText = "登録失敗：" + error.message;
 
     }
 }
