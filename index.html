@@ -1616,7 +1616,7 @@ function getMeasurementTypeByRow(row) {
   const byGroup = getMeasurementTypeByGroup(row.dataset.measurementGroup);
   if (byGroup) return byGroup;
 
-  return getMeasurementTypeByRow(row);
+  return getMeasurementTypeByCategory(row.dataset.productCategory);
 }
 
 function openMeasurement(button) {
