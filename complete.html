@@ -105,6 +105,13 @@ const MAIL_MEASUREMENT_HIDE_KEYS = new Set([
   "登録ID",
   "顧客コード",
   "顧客名",
+  "姓",
+  "名",
+  "セイ",
+  "メイ",
+  "性別",
+  "職種",
+  "部署",
   "publicKey",
   "customerKey",
   "customer",
@@ -259,7 +266,9 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
     measurement: preparedMailDraft.measurement,
     seiKana: preparedMailDraft.seiKana,
     meiKana: preparedMailDraft.meiKana,
-    kanaName: preparedMailDraft.kanaName
+    kanaName: preparedMailDraft.kanaName,
+    measurementTitle: "別寸サイズ採寸入力内容",
+    measurementHeading: "別寸サイズ採寸入力内容"
   };
 
   mailBtn.disabled = true;
