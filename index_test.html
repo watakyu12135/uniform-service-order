@@ -3,55 +3,45 @@
 <head>
 <meta charset="utf-8">
 <title>Power Automate テスト</title>
-
 <style>
 body{
     font-family:Meiryo,sans-serif;
     margin:30px;
 }
-
 h2{
     margin-top:30px;
 }
-
 input{
     width:300px;
     padding:8px;
 }
-
 button{
     padding:8px 15px;
     margin-left:10px;
 }
-
 .result{
     margin-top:10px;
     font-weight:bold;
     color:blue;
+    white-space:pre-wrap;
 }
 </style>
-
 </head>
 <body>
 
 <h2>登録テスト</h2>
-
-<input type="text" id="txtName" placeholder="名前を入力">
+<input type="text" id="txtName" placeholder="名前を入力（現在は固定データ送信）">
 <button onclick="saveData()">登録</button>
-
 <div id="saveResult" class="result"></div>
 
 <hr>
 
 <h2>検索テスト</h2>
-
 <input type="text" id="txtSearch" placeholder="検索する名前">
 <button onclick="searchData()">検索</button>
-
 <div id="searchResult" class="result"></div>
 
 <script>
-
 // 登録用フローURL
 const SAVE_URL =
 "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/2fadd75538814f6eb11f426aee74c62e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r_0adeV2uMpNHxM0OzPQUcI8StgIf6zMICtxq4y2cG0";
@@ -60,50 +50,92 @@ const SAVE_URL =
 const SEARCH_URL =
 "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/08/workflows/59e341d66cda4ccabfd99ed33bbee5a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SxaovbPjdtG54RVlDXLj4zwcMvgu9JBVEYMtxbaSU2s";
 
-
 async function saveData(){
 
     try{
 
-        const response =
-            await fetch(SAVE_URL,{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    orders:[
-                        {
-                            "採寸番号":"A123456",
-                            "顧客コード":"31029999",
-                            "顧客名":"テスト病院",
-                            "職員番号":"1234",
-                            "姓":"南山",
-                            "名":"研二",
-                            "セイ":"ミナミヤマ",
-                            "メイ":"ケンジ",
-                            "性別":"男性",
-                            "職種":"看護師",
-                            "部署":"４階病棟",
-                            "product":"男女兼用スクラブ",
-                            "productCode":"RT5402-14",
-                            "color":"ネイビー",
-                            "size":"L",
-                            "qty":1,
-                            "股下加工可能":0,
-                            "股下cm":"",
-                            "登録日時":"2026/07/10",
-                            "更新日時":"2026/07/10",
-                            "登録番号":"1234",
-                            "登録区分":"新規",
-                            "有効フラグ":1
-                        }
-                    ]
-                })
-            });
+        document.getElementById("saveResult").innerText = "送信中...";
 
-        const result =
-            await response.text();
+        const payload = {
+            orders:[
+                {
+                    "採寸番号":"A123456",
+                    "顧客コード":"31029999",
+                    "顧客名":"テスト病院",
+                    "職員番号":"1234",
+                    "姓":"南山",
+                    "名":"研二",
+                    "セイ":"ミナミヤマ",
+                    "メイ":"ケンジ",
+                    "性別":"男性",
+                    "職種":"看護師",
+                    "部署":"４階病棟",
+                    "product":"男女兼用スクラブ",
+                    "productCode":"RT5402-14",
+                    "color":"ネイビー",
+                    "size":"L",
+                    "qty":1,
+                    "股下加工可能":0,
+                    "股下cm":"",
+                    "登録番号":"1234",
+                    "登録区分":"新規",
+                    "有効フラグ":1
+                }
+            ],
+            measurement:{
+                "採寸番号":"A123456",
+                "顧客コード":"31029999",
+                "顧客名":"テスト病院",
+                "職員番号":"1234",
+                "姓":"南山",
+                "名":"研二",
+                "セイ":"ミナミヤマ",
+                "メイ":"ケンジ",
+                "性別":"男性",
+                "職種":"看護師",
+                "部署":"４階病棟",
+                "採寸区分":"全身",
+                "身長":170,
+                "体重":65,
+                "採寸方法":"ヌード寸法",
+                "上衣入力済":"TRUE",
+                "A_衿回り":40,
+                "B_肩巾":45,
+                "C1_袖丈_半袖":25,
+                "C2_袖丈_七分袖":45,
+                "C3_袖丈_長袖":58,
+                "D_胸回り":95,
+                "E_胴回り":85,
+                "F_腰回り":95,
+                "G_背丈":42,
+                "H_着丈":70,
+                "I_袖付回り":48,
+                "下衣入力済":"TRUE",
+                "a_胴回り":85,
+                "b_腰回り":95,
+                "c_股上":28,
+                "d_股下":74,
+                "e_総丈":100,
+                "f_太股回り":55,
+                "特記事項":"",
+                "備考":"",
+                "登録番号":"1234",
+                "登録区分":"新規",
+                "有効フラグ":1
+            }
+        };
+
+        console.log("送信ペイロード:", payload);
+
+        const response = await fetch(SAVE_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(payload)
+        });
+
+        const result = await response.text();
 
         console.log("HTTP status:", response.status);
         console.log("Power Automate response:", result);
@@ -127,27 +159,23 @@ async function saveData(){
     }
 }
 
-
 async function searchData(){
 
     try{
 
-        const name =
-            document.getElementById("txtSearch").value;
+        const name = document.getElementById("txtSearch").value;
 
-        const response =
-            await fetch(SEARCH_URL,{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    name:name
-                })
-            });
+        const response = await fetch(SEARCH_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                name:name
+            })
+        });
 
-        const result =
-            await response.text();
+        const result = await response.text();
 
         console.log(result);
 
@@ -159,12 +187,10 @@ async function searchData(){
         console.error(error);
 
         document.getElementById("searchResult")
-            .innerText = "検索エラー";
+            .innerText = "検索エラー：" + error.message;
 
     }
 }
-
 </script>
-
 </body>
 </html>
