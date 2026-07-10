@@ -604,12 +604,6 @@ tr.product-row.extra-size-row-3 {
     <label>体重</label>
     <input type="number" id="m_weight"> kg<br>
 
-    <label>採寸方法</label>
-    <select id="m_method">
-      <option value="">選択</option>
-      <option value="ヌード寸法">ヌード寸法</option>
-      <option value="出来上がり寸法">出来上がり寸法</option>
-    </select>
   </section>
 
   <section class="measure-section" id="measureUpper">
@@ -839,7 +833,7 @@ let measurementData = {
   common: {
     height: "",
     weight: "",
-    method: ""
+    method: "ヌード寸法"
   },
   upper: {
     completed: false,
@@ -1122,7 +1116,7 @@ function restoreMeasurementFromEditData(measurement) {
 
   measurementData.common.height = measurement["身長"] || "";
   measurementData.common.weight = measurement["体重"] || "";
-  measurementData.common.method = measurement["採寸方法"] || "";
+  measurementData.common.method = measurement["採寸方法"] || "ヌード寸法";
 
   measurementData.upper.completed =
     isTrueValue(measurement["上衣入力済"]) ||
@@ -1684,7 +1678,6 @@ function loadMeasurementToForm() {
 
   document.getElementById("m_height").value = measurementData.common.height;
   document.getElementById("m_weight").value = measurementData.common.weight;
-  document.getElementById("m_method").value = measurementData.common.method;
 
   document.getElementById("m_A").value = measurementData.upper.A;
   document.getElementById("m_B").value = measurementData.upper.B;
@@ -1713,7 +1706,6 @@ function saveMeasurement() {
 
   const height = document.getElementById("m_height").value;
   const weight = document.getElementById("m_weight").value;
-  const method = document.getElementById("m_method").value;
 
   if (!height) {
     alert("身長を入力してください");
@@ -1725,14 +1717,10 @@ function saveMeasurement() {
     return;
   }
 
-  if (!method) {
-    alert("採寸方法を選択してください");
-    return;
-  }
 
   measurementData.common.height = height;
   measurementData.common.weight = weight;
-  measurementData.common.method = method;
+  measurementData.common.method = "ヌード寸法";
 
   measurementData.upper.A = document.getElementById("m_A").value;
   measurementData.upper.B = document.getElementById("m_B").value;
@@ -1895,9 +1883,8 @@ function buildMeasurementPayload(common) {
 
     "身長": measurementData.common.height,
     "体重": measurementData.common.weight,
-    "採寸方法": measurementData.common.method,
 
-    "上衣入力済": upperDone ? "TRUE" : "FALSE",
+    "上衣入力済": upperDone ? 1 : 0,
     "A_衿回り": measurementData.upper.A,
     "B_肩巾": measurementData.upper.B,
     "C1_袖丈_半袖": measurementData.upper.C1,
@@ -1910,7 +1897,7 @@ function buildMeasurementPayload(common) {
     "H_着丈": measurementData.upper.H,
     "I_袖付回り": measurementData.upper.I,
 
-    "下衣入力済": lowerDone ? "TRUE" : "FALSE",
+    "下衣入力済": lowerDone ? 1 : 0,
     "a_胴回り": measurementData.lower.a,
     "b_腰回り": measurementData.lower.b,
     "c_股上": measurementData.lower.c,
