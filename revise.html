@@ -106,7 +106,7 @@ button {
     ※採寸番号欄は空欄にしてください。
   </div>
 
-  <label for="sei">氏</label>
+  <label for="sei">姓</label>
   <input id="sei">
 
   <label for="mei">名</label>
@@ -117,6 +117,10 @@ button {
 
   <label for="registrationNo">登録した4桁の数字</label>
   <input id="registrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
+
+  <label for="employeeNo">職員番号で検索する場合</label>
+  <input id="employeeNo" inputmode="latin" autocomplete="off" placeholder="職員番号が分かる場合のみ入力">
+  <div class="small">職員番号が入力されている場合は、氏名より職員番号を優先して検索します。</div>
 </div>
 
 <button type="button" onclick="searchRevision()">検索</button>
@@ -125,6 +129,7 @@ button {
 
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
+const SEARCH_FLOW_URL = "PA_ユニフォーム修正検索のHTTP URLをここに貼る";
 
 let currentData = null;
 let customerKey = "";
@@ -248,17 +253,23 @@ async function searchRevision() {
   const mei = document.getElementById("mei").value.trim();
   const job = document.getElementById("job").value.trim();
   const registrationNo = document.getElementById("registrationNo").value.trim();
+  const employeeNo = document.getElementById("employeeNo")
+    ? document.getElementById("employeeNo").value.trim()
+    : "";
 
   const payload = {
     searchOnly: true,
-    customerCode: customerCode
+    customerCode: customerCode,
+    publicKey: customerKey,
+    customerKey: customerKey,
+    customer: customerKey
   };
 
   if (measureNo) {
     payload.measureNo = measureNo;
   } else {
-    if (!sei || !mei || !job || !registrationNo) {
-      alert("採寸番号を入力するか、氏・名・職種・登録した4桁の数字を入力してください。");
+    if (!registrationNo) {
+      alert("採寸番号を入力するか、登録した4桁の数字を入力してください。");
       return;
     }
 
@@ -267,20 +278,31 @@ async function searchRevision() {
       return;
     }
 
-    payload.sei = sei;
-    payload.mei = mei;
-    payload.job = job;
-    payload.registrationNo = registrationNo;
+    if (employeeNo) {
+      payload.employeeNo = employeeNo;
+      payload.staffNo = employeeNo;
+      payload["職員番号"] = employeeNo;
+      payload.registrationNo = registrationNo;
+    } else {
+      if (!sei || !mei || !job) {
+        alert("採寸番号を入力するか、姓・名・職種・登録した4桁の数字を入力してください。\n職員番号で検索する場合は、職員番号と4桁の数字を入力してください。");
+        return;
+      }
+      payload.sei = sei;
+      payload.mei = mei;
+      payload.job = job;
+      payload.registrationNo = registrationNo;
+    }
   }
 
   resultArea.classList.remove("hidden");
   resultArea.innerText = "検索中...";
 
   try {
-    const res = await fetch(GAS_URL, {
+    const res = await fetch(SEARCH_FLOW_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "text/plain;charset=utf-8"
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(payload)
     });
@@ -330,7 +352,7 @@ function renderSearchResult(result) {
   html += `
     <div style="margin-top:12px;">
       <div>採寸番号：<strong>${escapeHtml(result.measureNo || "")}</strong></div>
-      <div>氏名：${escapeHtml(first["氏"] || first.sei || "")} ${escapeHtml(first["名"] || first.mei || "")}</div>
+      <div>氏名：${escapeHtml(first["姓"] || first["氏"] || first.sei || "")} ${escapeHtml(first["名"] || first.mei || "")}</div>
       <div>性別：${escapeHtml(first["性別"] || first.gender || "")}</div>
       <div>職種：${escapeHtml(first["職種"] || first.job || "")}</div>
       <div>部署：${escapeHtml(first["部署"] || first.department || "なし")}</div>
@@ -345,8 +367,8 @@ function renderSearchResult(result) {
     orders.forEach(item => {
       html += `
         <div class="item">
-          <div><strong>${escapeHtml(item["商品名"] || item.product || "")}</strong> ${escapeHtml(item["商品コード"] || item.productCode || "")}</div>
-          <div>色：${escapeHtml(item["色"] || item.color || "")}</div>
+          <div><strong>${escapeHtml(item["カタログ品名"] || item["商品名"] || item.product || "")}</strong> ${escapeHtml(item["カタログ品番"] || item["商品コード"] || item.productCode || "")}</div>
+          <div>色：${escapeHtml(item["色柄"] || item["色"] || item.color || "")}</div>
           <div>サイズ：${escapeHtml(item["サイズ"] || item.size || "")}</div>
           <div>数量：${escapeHtml(item["数量"] || item.qty || "")}</div>
         </div>
@@ -354,7 +376,7 @@ function renderSearchResult(result) {
     });
   }
 
-  html += `<h3>採寸入力内容</h3>`;
+  html += `<h3>別寸サイズ採寸入力内容</h3>`;
 
   if (!measurement) {
     html += `<div>採寸入力なし</div>`;
@@ -371,13 +393,46 @@ function renderSearchResult(result) {
   resultArea.innerHTML = html;
 }
 
+const REVISION_MEASUREMENT_UNIT_MAP = {
+  "身長": "cm",
+  "体重": "kg",
+  "A_衿回り": "cm",
+  "B_肩巾": "cm",
+  "C1_袖丈_半袖": "cm",
+  "C2_袖丈_七分袖": "cm",
+  "C3_袖丈_長袖": "cm",
+  "D_胸回り": "cm",
+  "E_胴回り": "cm",
+  "F_腰回り": "cm",
+  "G_背丈": "cm",
+  "H_着丈": "cm",
+  "I_袖付回り": "cm",
+  "a_胴回り": "cm",
+  "b_腰回り": "cm",
+  "c_股上": "cm",
+  "d_股下": "cm",
+  "e_総丈": "cm",
+  "f_太股回り": "cm"
+};
+function formatRevisionMeasurementValue(key, value) {
+  const text = String(value ?? "").trim();
+  if (!text) return "";
+  const unit = REVISION_MEASUREMENT_UNIT_MAP[key] || "";
+  if (!unit) return text;
+  if (text.endsWith(unit)) return text;
+  return text + unit;
+}
+
 function renderMeasurementSummary(measurement) {
   const hiddenKeys = [
     "登録ID",
     "顧客コード",
     "顧客名",
     "氏",
+    "姓",
     "名",
+    "セイ",
+    "メイ",
     "性別",
     "職種",
     "部署",
@@ -401,7 +456,7 @@ function renderMeasurementSummary(measurement) {
     if (hiddenKeys.includes(key)) return;
     if (value === "" || value === null || value === undefined) return;
 
-    html += `<div>${escapeHtml(key)}：${escapeHtml(value)}</div>`;
+    html += `<div>${escapeHtml(key)}：${escapeHtml(formatRevisionMeasurementValue(key, value))}</div>`;
   });
 
   if (!html) {
