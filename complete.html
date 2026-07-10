@@ -101,41 +101,72 @@ document.getElementById("email").addEventListener("input", checkEmail);
 document.getElementById("emailConfirm").addEventListener("input", checkEmail);
 
 /* 控えメール用に送信データを整える */
+const MAIL_MEASUREMENT_HIDE_KEYS = new Set([
+  "登録ID",
+  "顧客コード",
+  "顧客名",
+  "publicKey",
+  "customerKey",
+  "customer",
+  "採寸方法",
+  "上衣入力済",
+  "下衣入力済",
+  "登録日時",
+  "更新日時",
+  "登録番号",
+  "登録区分",
+  "有効フラグ",
+  "修正用番号",
+  "employeeNo",
+  "staffNo",
+  "measurementNo",
+  "registrationNo",
+  "entryType",
+  "activeFlag",
+  "contactPin"
+]);
+
+const MAIL_MEASUREMENT_UNIT_MAP = {
+  "身長": "cm",
+  "体重": "kg",
+  "A_衿回り": "cm",
+  "B_肩巾": "cm",
+  "C1_袖丈_半袖": "cm",
+  "C2_袖丈_七分袖": "cm",
+  "C3_袖丈_長袖": "cm",
+  "D_胸回り": "cm",
+  "E_胴回り": "cm",
+  "F_腰回り": "cm",
+  "G_背丈": "cm",
+  "H_着丈": "cm",
+  "I_袖付回り": "cm",
+  "a_胴回り": "cm",
+  "b_腰回り": "cm",
+  "c_股上": "cm",
+  "d_股下": "cm",
+  "e_総丈": "cm",
+  "f_太股回り": "cm"
+};
+
+function formatMailMeasurementValue(key, value) {
+  const text = String(value ?? "").trim();
+  if (!text) return "";
+  const unit = MAIL_MEASUREMENT_UNIT_MAP[key] || "";
+  if (!unit) return text;
+  if (text.endsWith(unit)) return text;
+  return text + unit;
+}
+
 function prepareMailDraftForMail(mailDraft) {
   const orders = Array.isArray(mailDraft.orders)
     ? JSON.parse(JSON.stringify(mailDraft.orders))
     : [];
 
   const firstOrder = orders[0] || {};
-
   let measurement = mailDraft.measurement
     ? JSON.parse(JSON.stringify(mailDraft.measurement))
     : null;
 
-  // 採寸入力内容メールに表示不要な内部キーを削除する
-  if (measurement) {
-    delete measurement.publicKey;
-    delete measurement.customerKey;
-    delete measurement.customer;
-    delete measurement["採寸方法"];
-
-    // 念のため、名がmeasurementに無い場合は商品明細側から補完する
-    measurement["姓"] = measurement["姓"] || measurement.sei || measurement["氏"] || firstOrder["姓"] || firstOrder.sei || firstOrder["氏"] || "";
-    measurement["名"] = measurement["名"] || measurement.mei || firstOrder["名"] || firstOrder.mei || "";
-    measurement["セイ"] = measurement["セイ"] || measurement.seiKana || measurement["シ"] || firstOrder["セイ"] || firstOrder.seiKana || firstOrder["シ"] || "";
-    measurement["メイ"] = measurement["メイ"] || measurement.meiKana || firstOrder["メイ"] || firstOrder.meiKana || "";
-
-    // 旧項目名が混ざる場合はメール表示用から削除する
-    delete measurement.sei;
-    delete measurement.mei;
-    delete measurement.seiKana;
-    delete measurement.meiKana;
-    delete measurement["氏"];
-    delete measurement["シ"];
-  }
-
-  // 控えメール本文の基本情報でフリガナを出すため、
-  // GASメール送信側が参照しやすい旧項目名もメール送信用データだけに補完する。
   orders.forEach(o => {
     o["姓"] = o["姓"] || o.sei || o["氏"] || "";
     o["名"] = o["名"] || o.mei || "";
@@ -153,6 +184,34 @@ function prepareMailDraftForMail(mailDraft) {
     delete o.customer;
   });
 
+  if (measurement) {
+    measurement["姓"] = measurement["姓"] || measurement.sei || measurement["氏"] || firstOrder["姓"] || firstOrder.sei || firstOrder["氏"] || "";
+    measurement["名"] = measurement["名"] || measurement.mei || firstOrder["名"] || firstOrder.mei || "";
+    measurement["セイ"] = measurement["セイ"] || measurement.seiKana || measurement["シ"] || firstOrder["セイ"] || firstOrder.seiKana || firstOrder["シ"] || "";
+    measurement["メイ"] = measurement["メイ"] || measurement.meiKana || firstOrder["メイ"] || firstOrder.meiKana || "";
+
+    Object.keys(measurement).forEach(key => {
+      if (MAIL_MEASUREMENT_HIDE_KEYS.has(key)) {
+        delete measurement[key];
+        return;
+      }
+      const value = measurement[key];
+      if (value === null || value === undefined || String(value).trim() === "") {
+        delete measurement[key];
+        return;
+      }
+      measurement[key] = formatMailMeasurementValue(key, value);
+    });
+
+    // 旧項目名が混ざる場合はメール表示用から削除する
+    delete measurement.sei;
+    delete measurement.mei;
+    delete measurement.seiKana;
+    delete measurement.meiKana;
+    delete measurement["氏"];
+    delete measurement["シ"];
+  }
+
   const firstAfterNormalize = orders[0] || {};
 
   return {
@@ -166,6 +225,7 @@ function prepareMailDraftForMail(mailDraft) {
     ].filter(Boolean).join(" ")
   };
 }
+
 
 /* メール送信 */
 document.getElementById("mailBtn").addEventListener("click", async () => {
