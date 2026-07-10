@@ -1363,6 +1363,7 @@ function createTable(data, selectedJob, selectedGender) {
        let row = `<tr
   data-product-code="${p.productCode}"
   data-product-category="${p.productCategory}"
+  data-measurement-group="${p.measurementGroup || ''}"
   data-inseam-alterable="${p.inseamAlterable || 0}"
   class="product-row row-theme-${productIndex % 2}"
 >
@@ -1430,7 +1431,7 @@ toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
         </td>`;
 
 	row += `<td class="cell-inseam">
-  ${buildInseamAreaHtml(p.productCategory, p.inseamAlterable || 0)}
+  ${buildInseamAreaHtml(p.productCategory, p.measurementGroup || "", p.inseamAlterable || 0)}
 </td>`;
 
  	row += `<td class="cell-measure">
@@ -1555,7 +1556,18 @@ function checkSpecialSize(select) {
   if (select.value === "別寸") {
     bespokeArea.classList.remove("hidden");
 
-    const type = getMeasurementTypeByCategory(row.dataset.productCategory);
+    const type = getMeasurementTypeByRow(row);
+
+    if (!type) {
+      bespokeArea.classList.add("hidden");
+      buttons.forEach(btn => {
+        btn.classList.add("hidden");
+        btn.innerText = "採寸";
+      });
+      updateInseamAreaForProduct(row);
+      return;
+    }
+
     const buttonText = isMeasurementCompleteForType(type) ? "採寸済" : "採寸";
 
     buttons.forEach(btn => {
@@ -1574,29 +1586,48 @@ function checkSpecialSize(select) {
 updateInseamAreaForProduct(row);
 }
 
-function getMeasurementTypeByCategory(category) {
+function getMeasurementTypeByGroup(measurementGroup) {
 
-  const upperCategories = ["上衣", "ベスト", "ブラウス"];
-  const lowerCategories = ["下衣", "パンツ", "スカート"];
-  const fullCategories = ["ワンピース"];
+  const group = String(measurementGroup || "").trim();
 
-  if (fullCategories.includes(category)) return "全身";
-  if (upperCategories.includes(category)) return "上衣";
-  if (lowerCategories.includes(category)) return "下衣";
+  if (group === "上衣") return "上衣";
+  if (group === "下衣") return "下衣";
+  if (group === "全身") return "全身";
 
   return "";
+}
+
+function getMeasurementTypeByCategory(category) {
+
+  // 旧JSON互換用。新JSONでは measurementGroup を優先する。
+  const categoryText = String(category || "").trim();
+
+  if (categoryText === "ワンピース") return "全身";
+  if (categoryText === "上衣" || categoryText === "ベスト" || categoryText === "ブラウス") return "上衣";
+  if (categoryText === "下衣" || categoryText === "パンツ" || categoryText === "スカート" || categoryText === "ズボン") return "下衣";
+
+  return "";
+}
+
+function getMeasurementTypeByRow(row) {
+
+  if (!row) return "";
+
+  const byGroup = getMeasurementTypeByGroup(row.dataset.measurementGroup);
+  if (byGroup) return byGroup;
+
+  return getMeasurementTypeByRow(row);
 }
 
 function openMeasurement(button) {
 
   const row = button.closest("tr");
-  const category = row.dataset.productCategory;
 
-  currentMeasurementType = getMeasurementTypeByCategory(category);
+  currentMeasurementType = getMeasurementTypeByRow(row);
   currentMeasurementButton = button;
 
   if (!currentMeasurementType) {
-    alert("この商品カテゴリの採寸区分が設定されていません。");
+    alert("この商品の採寸グループが未設定、または採寸対象外です。商品マスタの採寸グループを確認してください。");
     return;
   }
 
@@ -1796,9 +1827,9 @@ function hasBespokeWithoutMeasurement() {
 
     if (sizeInfo.size === "別寸") {
 
-      const type = getMeasurementTypeByCategory(row.dataset.productCategory);
+      const type = getMeasurementTypeByRow(row);
 
-      if (!isMeasurementCompleteForType(type)) {
+      if (type && !isMeasurementCompleteForType(type)) {
         missing = true;
       }
     }
@@ -1828,7 +1859,13 @@ function updateAllMeasurementButtons() {
         return;
       }
 
-      const type = getMeasurementTypeByCategory(row.dataset.productCategory);
+      const type = getMeasurementTypeByRow(row);
+
+      if (!type) {
+        btn.innerText = "採寸";
+        btn.classList.add("hidden");
+        return;
+      }
 
       btn.classList.remove("hidden");
 
@@ -1986,15 +2023,19 @@ function getRowSizeInfo(row) {
   };
 }
 
-function isInseamTargetCategory(productCategory) {
+function isInseamTargetCategory(productCategory, measurementGroup) {
+  const group = String(measurementGroup || "").trim();
+  if (group === "下衣") return true;
+
+  // 旧JSON互換用。新JSONでは measurementGroup を優先する。
   const category = String(productCategory || "").trim();
   return ["下衣", "パンツ", "スカート", "ズボン"].includes(category);
 }
 
-function buildInseamAreaHtml(productCategory, inseamAlterable) {
+function buildInseamAreaHtml(productCategory, measurementGroup, inseamAlterable) {
   const canAlter = String(inseamAlterable || "").trim() === "1";
 
-  if (!isInseamTargetCategory(productCategory)) {
+  if (!isInseamTargetCategory(productCategory, measurementGroup)) {
     return "";
   }
 
@@ -2076,6 +2117,7 @@ function updateInseamAreaForProduct(row) {
 
   baseCell.innerHTML = buildInseamAreaHtml(
     baseRow.dataset.productCategory,
+    baseRow.dataset.measurementGroup || "",
     baseRow.dataset.inseamAlterable || 0
   );
 
@@ -2584,6 +2626,7 @@ data.push({
   bespokeText: sizeInfo.bespokeText,
   qty,
   productCategory: row.dataset.productCategory,
+  measurementGroup: row.dataset.measurementGroup || "",
   inseamAlterable: inseamAlterable,
   inseamCm: inseamCm,
   "股下加工可能": inseamAlterable,
