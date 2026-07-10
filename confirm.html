@@ -685,6 +685,10 @@ payload.rosterMismatchInfo = duplicateAlreadyConfirmed
     payload.measurement["職員番号"] = payload.measurement.employeeNo;
   }
 
+if (!payload.measurement) {
+  delete payload.measurement;
+}
+
 normalizePayloadForPowerAutomate(payload);
 
   try {
