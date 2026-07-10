@@ -134,16 +134,36 @@ function prepareMailDraftForMail(mailDraft) {
     delete measurement["シ"];
   }
 
-  // 念のため商品明細側の内部キーも削除する
+  // 控えメール本文の基本情報でフリガナを出すため、
+  // GASメール送信側が参照しやすい旧項目名もメール送信用データだけに補完する。
   orders.forEach(o => {
+    o["姓"] = o["姓"] || o.sei || o["氏"] || "";
+    o["名"] = o["名"] || o.mei || "";
+    o["セイ"] = o["セイ"] || o.seiKana || o["シ"] || "";
+    o["メイ"] = o["メイ"] || o.meiKana || o["メイ"] || "";
+
+    // GASメール送信互換用。Lists登録用データには影響しない。
+    o["氏"] = o["氏"] || o["姓"];
+    o["シ"] = o["シ"] || o["セイ"];
+    o.seiKana = o.seiKana || o["セイ"];
+    o.meiKana = o.meiKana || o["メイ"];
+
     delete o.publicKey;
     delete o.customerKey;
     delete o.customer;
   });
 
+  const firstAfterNormalize = orders[0] || {};
+
   return {
     orders,
-    measurement
+    measurement,
+    seiKana: firstAfterNormalize["セイ"] || firstAfterNormalize["シ"] || firstAfterNormalize.seiKana || "",
+    meiKana: firstAfterNormalize["メイ"] || firstAfterNormalize.meiKana || "",
+    kanaName: [
+      firstAfterNormalize["セイ"] || firstAfterNormalize["シ"] || firstAfterNormalize.seiKana || "",
+      firstAfterNormalize["メイ"] || firstAfterNormalize.meiKana || ""
+    ].filter(Boolean).join(" ")
   };
 }
 
@@ -176,7 +196,10 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
     measureNo: info.measureNo || "",
     registrationNo: info.registrationNo || "",
     orders: preparedMailDraft.orders,
-    measurement: preparedMailDraft.measurement
+    measurement: preparedMailDraft.measurement,
+    seiKana: preparedMailDraft.seiKana,
+    meiKana: preparedMailDraft.meiKana,
+    kanaName: preparedMailDraft.kanaName
   };
 
   mailBtn.disabled = true;
