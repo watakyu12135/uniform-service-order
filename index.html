@@ -702,6 +702,7 @@ tr.product-row.extra-size-row-3 {
 <script>
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
+const ROSTER_CHECK_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/d5ee07df145049e4a60655f02035b009/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kxmBOK-tVp6ts4sKgsWUd2NhIQNZbNlG1AK6hNlnpTA";
 
 function getCustomer() {
   const url = new URL(window.location.href);
@@ -2455,7 +2456,39 @@ function isFullWidthKatakana(value) {
   return /^[ァ-ヶー　]+$/.test(text);
 }
 
-function submitData() {
+async function checkRosterDuplicate(common) {
+  const checkPayload = {
+    duplicateCheckOnly: true,
+    customerCode: common.customerCode || "",
+    customerName: common.customerName || "",
+    employeeNo: common.employeeNo || "",
+    sei: common.sei || "",
+    mei: common.mei || "",
+    seiKana: common.seiKana || "",
+    meiKana: common.meiKana || "",
+    gender: common.gender || "",
+    job: common.job || ""
+  };
+  const res = await fetch(ROSTER_CHECK_FLOW_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(checkPayload)
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(text || "名簿重複チェックに失敗しました。");
+  if (!text) throw new Error("名簿重複チェックの応答が空です。");
+  const json = JSON.parse(text);
+  if (json.result !== "ok") throw new Error(json.message || "名簿重複チェックに失敗しました。");
+  return json;
+}
+function setConfirmTransitionBusy(busy) {
+  const button = document.getElementById("submitButton");
+  if (!button) return;
+  button.disabled = busy;
+  button.innerText = busy ? "名簿確認中..." : "確認";
+}
+
+async function submitData() {
   const employeeNo = document.getElementById("employeeNo")
     ? document.getElementById("employeeNo").value.trim()
     : "";
@@ -2686,10 +2719,20 @@ if (hasBespokeWithoutMeasurement()) {
   }
 
   console.log(payload);
-
-  sessionStorage.setItem("uniformCustomer", customerKey);
-  sessionStorage.setItem("uniformDraft", JSON.stringify(payload));
-  location.href = "confirm.html?customer=" + encodeURIComponent(customerKey);
+  setConfirmTransitionBusy(true);
+  try {
+    if (isEditMode) {
+      payload.rosterCheck = { skipped: true, reason: "revision" };
+    } else {
+      payload.rosterCheck = await checkRosterDuplicate(common);
+    }
+    sessionStorage.setItem("uniformCustomer", customerKey);
+    sessionStorage.setItem("uniformDraft", JSON.stringify(payload));
+    location.href = "confirm.html?customer=" + encodeURIComponent(customerKey);
+  } catch (err) {
+    alert("名簿の重複チェック中にエラーが発生しました。\n通信環境を確認して、もう一度『確認』を押してください。\n\n" + err.message);
+    setConfirmTransitionBusy(false);
+  }
 }
 </script>
 
