@@ -78,6 +78,10 @@ label { font-weight: bold; display: block; margin-top: 10px; }
   <div class="small">例：2486</div>
 </div>
 
+<div id="rosterResultArea" class="section hidden">
+  <h3>名簿確認結果</h3>
+  <div id="rosterResultMessage" class="notice"></div>
+</div>
 <div id="duplicateWarningArea" class="section hidden">
   <h3>登録確認</h3>
 
@@ -193,7 +197,7 @@ document.getElementById("fullNameKana").innerText =
     document.getElementById("submitBtn").innerText = "修正内容を登録する";
   }
 
-  checkDuplicateOnLoad();
+  renderRosterCheckResult();
 }
 
 function renderOrders(orders) {
@@ -340,9 +344,18 @@ function renderMeasurement(measurement, orders) {
 }
 
 /* チェックが入るまで登録不可 */
-document.getElementById("confirmCheck").addEventListener("change", e => {
-  document.getElementById("submitBtn").disabled = !e.target.checked;
-});
+function updateSubmitButtonState() {
+  const submitBtn = document.getElementById("submitBtn");
+  const confirmCheck = document.getElementById("confirmCheck");
+  const duplicateArea = document.getElementById("duplicateWarningArea");
+  const duplicateCheck = document.getElementById("duplicateConfirmCheck");
+  const basicConfirmed = !!(confirmCheck && confirmCheck.checked);
+  const duplicateRequired = !!(duplicateArea && !duplicateArea.classList.contains("hidden"));
+  const duplicateConfirmed = !duplicateRequired || !!(duplicateCheck && duplicateCheck.checked);
+  submitBtn.disabled = !(basicConfirmed && duplicateConfirmed) || submitInProgress;
+}
+document.getElementById("confirmCheck").addEventListener("change", updateSubmitButtonState);
+document.getElementById("duplicateConfirmCheck").addEventListener("change", updateSubmitButtonState);
 
 
 function generateMeasurementNo() {
@@ -364,6 +377,40 @@ function validatePin() {
     return false;
   }
   return true;
+}
+
+function renderRosterCheckResult() {
+  const resultArea = document.getElementById("rosterResultArea");
+  const resultMessage = document.getElementById("rosterResultMessage");
+  const duplicateArea = document.getElementById("duplicateWarningArea");
+  const duplicateCheck = document.getElementById("duplicateConfirmCheck");
+  const reviseLink = document.getElementById("duplicateReviseLink");
+  if (duplicateArea) duplicateArea.classList.add("hidden");
+  if (resultArea) resultArea.classList.add("hidden");
+  if (duplicateCheck) duplicateCheck.checked = false;
+  if (!draft || draft.editMode === true) { updateSubmitButtonState(); return; }
+  const rosterCheck = draft.rosterCheck || null;
+  if (!rosterCheck || rosterCheck.result !== "ok") {
+    if (resultArea && resultMessage) {
+      resultArea.classList.remove("hidden");
+      resultMessage.innerText = "名簿確認結果を取得できませんでした。入力画面へ戻ってやり直してください。";
+    }
+    updateSubmitButtonState(); return;
+  }
+  const matchType = String(rosterCheck.matchType || "");
+  if (matchType === "complete" || rosterCheck.requiresConfirmation === true) {
+    if (duplicateArea) duplicateArea.classList.remove("hidden");
+    if (reviseLink) reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomerKey());
+    updateSubmitButtonState(); return;
+  }
+  let message = "";
+  if (matchType === "name_only") message = "名簿と氏名は一致しましたが、シメイに差異があります。入力内容をご確認ください。";
+  else if (matchType === "kana_only") message = "名簿とシメイは一致しましたが、氏名に差異があります。入力内容をご確認ください。";
+  else if (matchType === "none") message = "一致する名簿はありませんでした。新規登録として処理します。";
+  if (message && resultArea && resultMessage) {
+    resultArea.classList.remove("hidden"); resultMessage.innerText = message;
+  }
+  updateSubmitButtonState();
 }
 
 async function checkDuplicateBeforeSubmit(payload) {
@@ -491,7 +538,7 @@ function resetSubmitButton(isEdit) {
   const confirmCheck = document.getElementById("confirmCheck");
   submitInProgress = false;
   submitBtn.innerText = isEdit ? "修正内容を登録する" : "登録する";
-  submitBtn.disabled = !(confirmCheck && confirmCheck.checked);
+  updateSubmitButtonState();
 }
 
 function normalizePayloadForPowerAutomate(payload){
@@ -713,10 +760,17 @@ if (!isEdit) {
   payload.entryType = registrationType;
   payload.activeFlag = 1;
   payload.contactPin = registrationNo;
+const rosterCheck = payload.rosterCheck || {};
+const rosterMatchType = String(rosterCheck.matchType || "");
+let rosterMismatchInfo = "";
+if (!isEdit) {
+  if (rosterMatchType === "complete" && duplicateAlreadyConfirmed) rosterMismatchInfo = "同姓同名同音あり（確認後登録）";
+  else rosterMismatchInfo = String(rosterCheck.mismatchInfo || "");
+}
 payload.overrideDuplicate = duplicateAlreadyConfirmed;
-payload.rosterMismatchInfo = duplicateAlreadyConfirmed
-  ? "同姓同名同音あり（確認後登録）"
-  : "";
+payload.rosterMatchType = isEdit ? "revision_skip" : rosterMatchType;
+payload.rosterMismatchInfo = rosterMismatchInfo;
+payload.rosterCheckSkipped = isEdit;
 
 
   payload.orders?.forEach(o => {
@@ -735,9 +789,8 @@ payload.rosterMismatchInfo = duplicateAlreadyConfirmed
   o.customer = customerKey;
 
   o.overrideDuplicate = duplicateAlreadyConfirmed;
-  o.rosterMismatchInfo = duplicateAlreadyConfirmed
-    ? "同姓同名同音あり（確認後登録）"
-    : "";
+  o.rosterMatchType = payload.rosterMatchType;
+  o.rosterMismatchInfo = rosterMismatchInfo;
 });
 
   if (payload.measurement) {
@@ -759,6 +812,8 @@ payload.rosterMismatchInfo = duplicateAlreadyConfirmed
     payload.measurement.employeeNo = payload.measurement.employeeNo || payload.measurement.staffNo || payload.measurement["職員番号"] || payload.employeeNo || "";
     payload.measurement.staffNo = payload.measurement.employeeNo;
     payload.measurement["職員番号"] = payload.measurement.employeeNo;
+    payload.measurement.rosterMatchType = payload.rosterMatchType;
+    payload.measurement.rosterMismatchInfo = rosterMismatchInfo;
   }
 
 if (!payload.measurement) {
