@@ -385,31 +385,63 @@ function renderRosterCheckResult() {
   const duplicateArea = document.getElementById("duplicateWarningArea");
   const duplicateCheck = document.getElementById("duplicateConfirmCheck");
   const reviseLink = document.getElementById("duplicateReviseLink");
+
   if (duplicateArea) duplicateArea.classList.add("hidden");
   if (resultArea) resultArea.classList.add("hidden");
   if (duplicateCheck) duplicateCheck.checked = false;
-  if (!draft || draft.editMode === true) { updateSubmitButtonState(); return; }
+  if (resultMessage) resultMessage.innerText = "";
+
+  // 修正時は名簿・重複チェックを行わない
+  if (!draft || draft.editMode === true) {
+    updateSubmitButtonState();
+    return;
+  }
+
   const rosterCheck = draft.rosterCheck || null;
   if (!rosterCheck || rosterCheck.result !== "ok") {
     if (resultArea && resultMessage) {
       resultArea.classList.remove("hidden");
-      resultMessage.innerText = "名簿確認結果を取得できませんでした。入力画面へ戻ってやり直してください。";
+      resultMessage.innerText =
+        "名簿確認結果を取得できませんでした。入力画面へ戻ってやり直してください。";
     }
-    updateSubmitButtonState(); return;
+    updateSubmitButtonState();
+    return;
   }
-  const matchType = String(rosterCheck.matchType || "");
-  if (matchType === "complete" || rosterCheck.requiresConfirmation === true) {
-    if (duplicateArea) duplicateArea.classList.remove("hidden");
-    if (reviseLink) reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomerKey());
-    updateSubmitButtonState(); return;
+
+  const matchType = String(rosterCheck.rosterMatchType || "");
+  const duplicateFound = rosterCheck.duplicateFound === true;
+  const requiresConfirmation = rosterCheck.requiresConfirmation === true;
+
+  // 登録済みデータとの重複確認は、名簿一致結果とは別軸で判定する
+  if (duplicateFound || requiresConfirmation) {
+    if (duplicateArea) {
+      duplicateArea.classList.remove("hidden");
+    }
+    if (reviseLink) {
+      reviseLink.href =
+        "revise.html?customer=" + encodeURIComponent(getCustomerKey());
+    }
+    updateSubmitButtonState();
+    return;
   }
+
   let message = "";
-  if (matchType === "name_only") message = "名簿と氏名は一致しましたが、シメイに差異があります。入力内容をご確認ください。";
-  else if (matchType === "kana_only") message = "名簿とシメイは一致しましたが、氏名に差異があります。入力内容をご確認ください。";
-  else if (matchType === "none") message = "一致する名簿はありませんでした。新規登録として処理します。";
-  if (message && resultArea && resultMessage) {
-    resultArea.classList.remove("hidden"); resultMessage.innerText = message;
+  if (matchType === "name_only") {
+    message =
+      "名簿と氏名は一致しましたが、シメイに差異があります。入力内容をご確認ください。";
+  } else if (matchType === "kana_only") {
+    message =
+      "名簿とシメイは一致しましたが、氏名に差異があります。入力内容をご確認ください。";
+  } else if (matchType === "none") {
+    message =
+      "一致する名簿はありませんでした。新規登録として処理します。";
   }
+
+  if (message && resultArea && resultMessage) {
+    resultArea.classList.remove("hidden");
+    resultMessage.innerText = message;
+  }
+
   updateSubmitButtonState();
 }
 
@@ -761,11 +793,11 @@ if (!isEdit) {
   payload.activeFlag = 1;
   payload.contactPin = registrationNo;
 const rosterCheck = payload.rosterCheck || {};
-const rosterMatchType = String(rosterCheck.matchType || "");
+const rosterMatchType = String(rosterCheck.rosterMatchType || "");
 let rosterMismatchInfo = "";
 if (!isEdit) {
   if (rosterMatchType === "complete" && duplicateAlreadyConfirmed) rosterMismatchInfo = "同姓同名同音あり（確認後登録）";
-  else rosterMismatchInfo = String(rosterCheck.mismatchInfo || "");
+  else rosterMismatchInfo = String(rosterCheck.rosterMismatchInfo || "");
 }
 payload.overrideDuplicate = duplicateAlreadyConfirmed;
 payload.rosterMatchType = isEdit ? "revision_skip" : rosterMatchType;
