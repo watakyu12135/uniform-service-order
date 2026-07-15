@@ -73,6 +73,16 @@ try {
 
 document.getElementById("measureNo").innerText = info.measureNo || "----";
 
+/* HTMLメールへ安全に文字を埋め込む */
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 /* メール入力一致チェック */
 function checkEmail() {
   const e1 = document.getElementById("email").value.trim();
@@ -308,7 +318,7 @@ function buildMailHtml(preparedMailDraft) {
         <div style="margin:0 0 22px;padding:14px 16px;background:#fff7e6;border-left:4px solid #f5a623;">
           <div style="font-size:13px;color:#555;">採寸番号</div>
           <div style="font-size:26px;font-weight:700;letter-spacing:1px;color:#c00;">${escapeHtml(info.measureNo || "")}</div>
-          <div style="margin-top:8px;font-size:13px;">修正時に必要なため、登録した4桁の数字とあわせて保管してください。</div>
+          <div style="margin-top:8px;font-size:13px;">登録内容の修正時に必要なため、大切に保管してください。</div>
         </div>
 
         <h3 style="margin:0 0 10px;color:#234f7d;">基本情報</h3>
