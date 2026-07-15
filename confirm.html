@@ -114,7 +114,6 @@ label { font-weight: bold; display: block; margin-top: 10px; }
 
 <script>
 const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
 const FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/2fadd75538814f6eb11f426aee74c62e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r_0adeV2uMpNHxM0OzPQUcI8StgIf6zMICtxq4y2cG0";  
 let draft = null;
 
@@ -469,117 +468,6 @@ function renderRosterCheckResult() {
   updateSubmitButtonState();
 }
 
-async function checkDuplicateBeforeSubmit(payload) {
-  const orders = payload.orders || [];
-  const first = orders[0] || {};
-  const registrationNo = document.getElementById("pin").value.trim();
-
-  const customerKey = getCustomerKey();
-  const checkPayload = {
-    duplicateCheckOnly: true,
-    publicKey: customerKey,
-    customerKey: customerKey,
-    customer: customerKey,
-    customerCode: first.customerCode || first["顧客コード"] || "",
-    employeeNo: first.employeeNo || first.staffNo || first["職員番号"] || "",
-    staffNo: first.employeeNo || first.staffNo || first["職員番号"] || "",
-    "職員番号": first.employeeNo || first.staffNo || first["職員番号"] || "",
-    sei: first.sei || first["姓"] || "",
-    mei: first.mei || first["名"] || "",
-    seiKana: first.seiKana || first["セイ"] || "",
-    meiKana: first.meiKana || first["メイ"] || "",
-    registrationNo: registrationNo
-  };
-
-  const res = await fetch(GAS_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8"
-    },
-    body: JSON.stringify(checkPayload)
-  });
-
-  const text = await res.text();
-  const json = JSON.parse(text);
-
-  if (json.result !== "ok") {
-    throw new Error(json.message || "重複チェックに失敗しました。");
-  }
-
-  return json;
-}
-
-async function checkDuplicateOnLoad() {
-return;
-
-  if (!draft || draft.editMode === true) {
-    return;
-  }
-
-  const orders = draft.orders || [];
-  const first = orders[0] || {};
-
-  const customerKey = getCustomerKey();
-  const checkPayload = {
-    duplicateCheckOnly: true,
-    publicKey: customerKey,
-    customerKey: customerKey,
-    customer: customerKey,
-    customerCode: first.customerCode || first["顧客コード"] || "",
-    employeeNo: first.employeeNo || first.staffNo || first["職員番号"] || "",
-    staffNo: first.employeeNo || first.staffNo || first["職員番号"] || "",
-    "職員番号": first.employeeNo || first.staffNo || first["職員番号"] || "",
-    sei: first.sei || first["姓"] || "",
-    mei: first.mei || first["名"] || "",
-    seiKana: first.seiKana || first["セイ"] || "",
-    meiKana: first.meiKana || first["メイ"] || "",
-    registrationNo: ""
-  };
-
-  try {
-    const res = await fetch(GAS_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify(checkPayload)
-    });
-
-    const text = await res.text();
-    const json = JSON.parse(text);
-
-    if (json.result === "ok" && json.duplicateNameFound) {
-      showDuplicateWarning();
-    }
-
-  } catch (err) {
-    console.warn("ページ表示時の重複チェックに失敗しました。", err);
-  }
-}
-
-function showDuplicateWarning() {
-  const area = document.getElementById("duplicateWarningArea");
-  const check = document.getElementById("duplicateConfirmCheck");
-  const reviseLink = document.getElementById("duplicateReviseLink");
-
-  if (area) {
-    area.classList.remove("hidden");
-  }
-
-  if (check) {
-    check.checked = false;
-  }
-
-  if (reviseLink) {
-    reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomerKey());
-  }
-
-  window.scrollTo({
-    top: area ? area.offsetTop - 20 : 0,
-    behavior: "smooth"
-  });
-}
-
 let submitInProgress = false;
 
 function lockSubmitButton(isEdit) {
@@ -759,35 +647,6 @@ const duplicateArea = document.getElementById("duplicateWarningArea");
     !duplicateArea.classList.contains("hidden") &&
     duplicateCheck &&
     duplicateCheck.checked;
-
-  /*
-if (!isEdit) {
-  try {
-    const tempPayload = JSON.parse(JSON.stringify(draft));
-    const duplicateResult = await checkDuplicateBeforeSubmit(tempPayload);
-    if (duplicateResult.duplicateNameFound && !duplicateAlreadyConfirmed) {
-      showDuplicateWarning();
-      alert("確認の上、このまま登録する場合はチェックを入れてください。");
-      resetSubmitButton(isEdit);
-      return;
-    }
-    if (
-      duplicateResult.duplicateNameFound &&
-      duplicateAlreadyConfirmed &&
-      duplicateResult.sameRegistrationNoFound
-    ) {
-      alert("その番号はすでに使われています。別番号で登録してください。");
-      resetSubmitButton(isEdit);
-      return;
-    }
-  } catch (err) {
-    alert("重複チェック中にエラーが発生しました。\n" + err.message);
-    resetSubmitButton(isEdit);
-    return;
-  }
-}
-*/
-
   const registrationNo = document.getElementById("pin").value.trim();
 
   const measurementNo = isEdit
@@ -819,7 +678,7 @@ if (!isEdit) {
   payload.measureNo = measurementNo;
   payload.registrationType = registrationType;
 
-  // 既存GAS互換用
+  // Power Automate送信用の共通項目
   payload.measurementNo = measurementNo;
   payload.registrationNo = registrationNo;
   payload.entryType = registrationType;
@@ -864,7 +723,7 @@ payload.rosterCheckSkipped = isEdit;
     payload.measurement["登録区分"] = registrationType;
     payload.measurement["有効フラグ"] = 1;
 
-    // 既存互換用
+    // Power Automate送信用の共通項目
     payload.measurement["修正用番号"] = registrationNo;
     payload.measurement.measurementNo = measurementNo;
     payload.measurement.registrationNo = registrationNo;
