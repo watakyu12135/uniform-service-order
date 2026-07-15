@@ -140,7 +140,10 @@ const MAIL_MEASUREMENT_HIDE_KEYS = new Set([
   "registrationNo",
   "entryType",
   "activeFlag",
-  "contactPin"
+  "contactPin",
+  "採寸番号",
+  "rosterMatchType",
+  "rosterMismatchInfo"
 ]);
 
 const MAIL_MEASUREMENT_UNIT_MAP = {
@@ -190,6 +193,11 @@ function prepareMailDraftForMail(mailDraft) {
     o["セイ"] = o["セイ"] || o.seiKana || o["シ"] || "";
     o["メイ"] = o["メイ"] || o.meiKana || o["メイ"] || "";
 
+    // GASメール送信互換用。Lists登録用データには影響しない。
+    o["氏"] = o["氏"] || o["姓"];
+    o["シ"] = o["シ"] || o["セイ"];
+    o.seiKana = o.seiKana || o["セイ"];
+    o.meiKana = o.meiKana || o["メイ"];
 
     delete o.publicKey;
     delete o.customerKey;
@@ -220,6 +228,8 @@ function prepareMailDraftForMail(mailDraft) {
     delete measurement.mei;
     delete measurement.seiKana;
     delete measurement.meiKana;
+    delete measurement["氏"];
+    delete measurement["シ"];
   }
 
   const firstAfterNormalize = orders[0] || {};
@@ -227,8 +237,10 @@ function prepareMailDraftForMail(mailDraft) {
   return {
     orders,
     measurement,
+    seiKana: firstAfterNormalize["セイ"] || firstAfterNormalize["シ"] || firstAfterNormalize.seiKana || "",
+    meiKana: firstAfterNormalize["メイ"] || firstAfterNormalize.meiKana || "",
     kanaName: [
-      firstAfterNormalize["セイ"] || firstAfterNormalize.seiKana || "",
+      firstAfterNormalize["セイ"] || firstAfterNormalize["シ"] || firstAfterNormalize.seiKana || "",
       firstAfterNormalize["メイ"] || firstAfterNormalize.meiKana || ""
     ].filter(Boolean).join(" ")
   };
@@ -369,7 +381,17 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
   const preparedMailDraft = prepareMailDraftForMail(mailDraft);
 
   const mailPayload = {
+    mailOnly: true,
     toEmail: email,
+    measureNo: info.measureNo || "",
+    registrationNo: info.registrationNo || "",
+    orders: preparedMailDraft.orders,
+    measurement: preparedMailDraft.measurement,
+    seiKana: preparedMailDraft.seiKana,
+    meiKana: preparedMailDraft.meiKana,
+    kanaName: preparedMailDraft.kanaName,
+    measurementTitle: "別寸サイズ採寸入力内容",
+    measurementHeading: "別寸サイズ採寸入力内容",
     mailSubject: "【ユニフォーム申請】登録内容の控え",
     mailHtml: buildMailHtml(preparedMailDraft)
   };
