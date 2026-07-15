@@ -167,6 +167,7 @@ button {
 <div id="resultArea" class="result-box hidden"></div>
 
 <script>
+const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
 const SEARCH_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/dc0e928adb2b4ef58cd09486a5cfdf71/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=AT_FwoPlrRofPBSLPRpuIjijIWwTbo9YvjgJXNkJE-g";
 
@@ -200,32 +201,37 @@ function escapeHtml(value) {
 }
 
 async function checkPageDeadline() {
-  const payload = {
-    deadlineOnly: true,
-    publicKey: getCustomer()
-  };
+  const publicKey = getCustomer();
 
-  const res = await fetch(GAS_URL, {
+  if (!HP_DEADLINE_FLOW_URL || HP_DEADLINE_FLOW_URL.includes("HTTP POST URLをここに貼る")) {
+    throw new Error("PA_HP有効期限チェックのHTTP POST URLが未設定です。");
+  }
+
+  const res = await fetch(HP_DEADLINE_FLOW_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8"
-    },
-    body: JSON.stringify(payload)
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      publicKey: publicKey,
+      customerKey: publicKey,
+      customer: publicKey
+    })
   });
 
   const text = await res.text();
-  const json = JSON.parse(text);
+  if (!res.ok) throw new Error(text || "HP公開期限チェックに失敗しました。");
+  if (!text) throw new Error("HP公開期限チェックの応答が空です。");
 
-  if (json.result !== "ok") {
-    location.href = "expired.html";
-    return false;
+  let json;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    throw new Error("HP公開期限チェックの応答形式が正しくありません。");
   }
 
-  if (!json.found || !json.active || json.expired) {
-    location.href = "expired.html";
+  if (json.result !== "ok" || json.found !== true || json.active !== true || json.expired === true) {
+    location.replace("expired.html");
     return false;
   }
-
   return true;
 }
 
