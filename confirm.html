@@ -113,6 +113,7 @@ label { font-weight: bold; display: block; margin-top: 10px; }
 <button type="button" onclick="history.back()">戻る</button>
 
 <script>
+const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
 const FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/2fadd75538814f6eb11f426aee74c62e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r_0adeV2uMpNHxM0OzPQUcI8StgIf6zMICtxq4y2cG0";  
 let draft = null;
@@ -142,6 +143,29 @@ function getCustomerKey() {
   }
 
   return customerKey;
+}
+
+async function checkPageDeadline() {
+  const publicKey = getCustomerKey();
+  if (!HP_DEADLINE_FLOW_URL || HP_DEADLINE_FLOW_URL.includes("HTTP POST URLをここに貼る")) {
+    throw new Error("PA_HP有効期限チェックのHTTP POST URLが未設定です。");
+  }
+  const res = await fetch(HP_DEADLINE_FLOW_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ publicKey, customerKey: publicKey, customer: publicKey })
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(text || "HP公開期限チェックに失敗しました。");
+  if (!text) throw new Error("HP公開期限チェックの応答が空です。");
+  let json;
+  try { json = JSON.parse(text); }
+  catch { throw new Error("HP公開期限チェックの応答形式が正しくありません。"); }
+  if (json.result !== "ok" || json.found !== true || json.active !== true || json.expired === true) {
+    location.replace("expired.html");
+    return false;
+  }
+  return true;
 }
 
 /* 読み込み */
@@ -714,6 +738,15 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
   // 二重押し防止のため、登録前チェックより先に即時ロックする
   lockSubmitButton(isEdit);
 
+  try {
+    const available = await checkPageDeadline();
+    if (!available) return;
+  } catch (err) {
+    console.error("登録前のHP公開期限チェックに失敗しました。", err);
+    location.replace("expired.html");
+    return;
+  }
+
   if (!validatePin()) {
     resetSubmitButton(isEdit);
     return;
@@ -911,7 +944,18 @@ normalizePayloadForPowerAutomate(payload);
 });
 
 
-loadDraft();
+async function initializeConfirmPage() {
+  try {
+    const available = await checkPageDeadline();
+    if (!available) return;
+    loadDraft();
+  } catch (err) {
+    console.error("HP公開期限チェックに失敗しました。", err);
+    location.replace("expired.html");
+  }
+}
+
+initializeConfirmPage();
 </script>
 </body>
 </html>
