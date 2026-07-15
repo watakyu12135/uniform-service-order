@@ -41,11 +41,35 @@ label {
   font-weight: bold;
 }
 
-input {
+input,
+select {
   font-size: 16px;
   padding: 8px;
   width: 100%;
   box-sizing: border-box;
+}
+
+.search-method {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #d6dce5;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.search-method h4 {
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #4a90e2;
+  color: #234f7d;
+  font-size: 17px;
+}
+
+.search-separator {
+  margin: 18px 0 4px;
+  text-align: center;
+  font-weight: bold;
+  color: #666;
 }
 
 button {
@@ -106,21 +130,36 @@ button {
     ※採寸番号欄は空欄にしてください。
   </div>
 
-  <label for="sei">姓</label>
-  <input id="sei">
+  <div class="search-method" id="nameSearchArea">
+    <h4>姓名＋職種＋4桁の数字で検索</h4>
 
-  <label for="mei">名</label>
-  <input id="mei">
+    <label for="sei">姓</label>
+    <input id="sei">
 
-  <label for="job">職種</label>
-  <input id="job" placeholder="例：看護師">
+    <label for="mei">名</label>
+    <input id="mei">
 
-  <label for="registrationNo">登録した4桁の数字</label>
-  <input id="registrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
+    <label for="job">職種</label>
+    <select id="job" disabled>
+      <option value="">顧客情報を読み込み中...</option>
+    </select>
 
-  <label for="employeeNo">職員番号で検索する場合</label>
-  <input id="employeeNo" inputmode="latin" autocomplete="off" placeholder="職員番号が分かる場合のみ入力">
-  <div class="small">職員番号が入力されている場合は、氏名より職員番号を優先して検索します。</div>
+    <label for="nameRegistrationNo">登録した4桁の数字</label>
+    <input id="nameRegistrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
+  </div>
+
+  <div id="employeeNoSearchArea" class="hidden">
+    <div class="search-separator">または</div>
+    <div class="search-method">
+      <h4>職員番号＋登録した4桁の数字で検索</h4>
+
+      <label for="employeeNo">職員番号</label>
+      <input id="employeeNo" inputmode="latin" autocomplete="off">
+
+      <label for="employeeRegistrationNo">登録した4桁の番号</label>
+      <input id="employeeRegistrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
+    </div>
+  </div>
 </div>
 
 <button type="button" onclick="searchRevision()">検索</button>
@@ -190,6 +229,51 @@ async function checkPageDeadline() {
   return true;
 }
 
+function isBasicInfoActive(name) {
+  const infos = currentData && Array.isArray(currentData.basicInfos)
+    ? currentData.basicInfos
+    : [];
+  const info = infos.find(item => String(item.name || "") === name);
+  return !!(
+    info &&
+    (info.active === true || info.active === 1 || String(info.active).toLowerCase() === "true")
+  );
+}
+
+function setupRevisionSearchOptions() {
+  const jobSelect = document.getElementById("job");
+  const employeeArea = document.getElementById("employeeNoSearchArea");
+  const employeeInput = document.getElementById("employeeNo");
+  const employeeRegistrationInput = document.getElementById("employeeRegistrationNo");
+
+  if (jobSelect) {
+    const jobs = Array.isArray(currentData?.jobs)
+      ? currentData.jobs
+          .map(item => String(item.job || "").trim())
+          .filter(Boolean)
+      : [];
+    const uniqueJobs = [...new Set(jobs)].sort((a, b) => a.localeCompare(b, "ja"));
+
+    jobSelect.innerHTML = '<option value="">選択</option>';
+    uniqueJobs.forEach(job => {
+      const option = document.createElement("option");
+      option.value = job;
+      option.textContent = job;
+      jobSelect.appendChild(option);
+    });
+    jobSelect.disabled = uniqueJobs.length === 0;
+  }
+
+  const employeeNoActive = isBasicInfoActive("職員番号");
+  if (employeeArea) {
+    employeeArea.classList.toggle("hidden", !employeeNoActive);
+  }
+  if (!employeeNoActive) {
+    if (employeeInput) employeeInput.value = "";
+    if (employeeRegistrationInput) employeeRegistrationInput.value = "";
+  }
+}
+
 function loadCustomerConfig() {
   customerKey = getCustomer();
 
@@ -222,6 +306,7 @@ function loadCustomerConfig() {
 
       document.getElementById("customerInfo").innerText =
         "顧客：" + (currentData.customerName || "");
+      setupRevisionSearchOptions();
 
       if (!customerCode) {
         document.getElementById("message").innerText =
@@ -252,9 +337,13 @@ async function searchRevision() {
   const sei = document.getElementById("sei").value.trim();
   const mei = document.getElementById("mei").value.trim();
   const job = document.getElementById("job").value.trim();
-  const registrationNo = document.getElementById("registrationNo").value.trim();
-  const employeeNo = document.getElementById("employeeNo")
+  const nameRegistrationNo = document.getElementById("nameRegistrationNo").value.trim();
+  const employeeNoActive = isBasicInfoActive("職員番号");
+  const employeeNo = employeeNoActive && document.getElementById("employeeNo")
     ? document.getElementById("employeeNo").value.trim()
+    : "";
+  const employeeRegistrationNo = employeeNoActive && document.getElementById("employeeRegistrationNo")
+    ? document.getElementById("employeeRegistrationNo").value.trim()
     : "";
 
   const payload = {
@@ -266,33 +355,40 @@ async function searchRevision() {
   };
 
   if (measureNo) {
+    payload.searchType = "measureNo";
     payload.measureNo = measureNo;
-  } else {
-    if (!registrationNo) {
-      alert("採寸番号を入力するか、登録した4桁の数字を入力してください。");
+  } else if (employeeNoActive && (employeeNo || employeeRegistrationNo)) {
+    if (!employeeNo || !employeeRegistrationNo) {
+      alert("職員番号検索では、職員番号と登録した4桁の番号を両方入力してください。");
       return;
     }
-
-    if (!/^\d{4}$/.test(registrationNo)) {
+    if (!/^[A-Za-z0-9]+$/.test(employeeNo)) {
+      alert("職員番号は半角英数字で入力してください。");
+      return;
+    }
+    if (!/^\d{4}$/.test(employeeRegistrationNo)) {
+      alert("登録した4桁の番号は半角数字4桁で入力してください。");
+      return;
+    }
+    payload.searchType = "employeeNo";
+    payload.employeeNo = employeeNo;
+    payload.staffNo = employeeNo;
+    payload["職員番号"] = employeeNo;
+    payload.registrationNo = employeeRegistrationNo;
+  } else {
+    if (!sei || !mei || !job || !nameRegistrationNo) {
+      alert("姓名検索では、姓・名・職種・登録した4桁の数字をすべて入力してください。");
+      return;
+    }
+    if (!/^\d{4}$/.test(nameRegistrationNo)) {
       alert("登録した4桁の数字は半角数字4桁で入力してください。");
       return;
     }
-
-    if (employeeNo) {
-      payload.employeeNo = employeeNo;
-      payload.staffNo = employeeNo;
-      payload["職員番号"] = employeeNo;
-      payload.registrationNo = registrationNo;
-    } else {
-      if (!sei || !mei || !job) {
-        alert("採寸番号を入力するか、姓・名・職種・登録した4桁の数字を入力してください。\n職員番号で検索する場合は、職員番号と4桁の数字を入力してください。");
-        return;
-      }
-      payload.sei = sei;
-      payload.mei = mei;
-      payload.job = job;
-      payload.registrationNo = registrationNo;
-    }
+    payload.searchType = "name";
+    payload.sei = sei;
+    payload.mei = mei;
+    payload.job = job;
+    payload.registrationNo = nameRegistrationNo;
   }
 
   resultArea.classList.remove("hidden");
