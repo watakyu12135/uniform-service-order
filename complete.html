@@ -54,7 +54,7 @@ button { margin-top: 16px; padding: 10px 18px; }
 <button onclick="finish()">OK</button>
 
 <script>
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
+const MAIL_FLOW_URL = "PA_控えメール送信のHTTP POST URLをここに貼る";
 
 /* 完了済み画面なので戻れないようにする */
 history.pushState(null, null, location.href);
@@ -275,15 +275,25 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
   mailBtn.innerText = "送信中...";
 
   try {
-    const res = await fetch(GAS_URL, {
+    if (!MAIL_FLOW_URL || MAIL_FLOW_URL.includes("HTTP POST URLをここに貼る")) {
+      throw new Error("PA_控えメール送信のHTTP POST URLが未設定です。");
+    }
+
+    const res = await fetch(MAIL_FLOW_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "text/plain;charset=utf-8"
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(mailPayload)
     });
 
     const text = await res.text();
+    if (!res.ok) {
+      throw new Error(text || "控えメール送信フローの呼び出しに失敗しました。");
+    }
+    if (!text) {
+      throw new Error("控えメール送信フローの応答が空です。");
+    }
     const json = JSON.parse(text);
 
     if (json.result !== "ok") {
