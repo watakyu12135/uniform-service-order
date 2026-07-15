@@ -510,9 +510,9 @@ tr.product-row.extra-size-row-3 {
 
 <body>
 
-<!-- プライバセイーポリセイー・免責事項リンク -->
+<!-- プライバシーポリシー・免責事項リンク -->
 <div id="policyLink">
-  <a href="privacy.html">プライバセイーポリセイー・免責事項</a>
+  <a href="privacy.html">プライバシーポリシー・免責事項</a>
 </div>
 
 <!-- 修正画面リンク -->
@@ -702,7 +702,7 @@ tr.product-row.extra-size-row-3 {
 <script>
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
-const ROSTER_CHECK_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/d5ee07df145049e4a60655f02035b009/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kxmBOK-tVp6ts4sKgsWUd2NhIQNZbNlG1AK6hNlnpTA";
+const ROSTER_CHECK_FLOW_URL = "PA_名簿重複チェックのHTTP URLをここに貼る";
 
 function getCustomer() {
   const url = new URL(window.location.href);
@@ -2487,6 +2487,11 @@ function setConfirmTransitionBusy(busy) {
   button.disabled = busy;
   button.innerText = busy ? "名簿確認中..." : "確認";
 }
+// confirm.htmlからブラウザの履歴で戻った場合、
+// bfcacheに保存された「名簿確認中...」状態を解除する。
+window.addEventListener("pageshow", () => {
+  setConfirmTransitionBusy(false);
+});
 
 async function submitData() {
   const employeeNo = document.getElementById("employeeNo")
