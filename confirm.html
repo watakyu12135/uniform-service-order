@@ -866,7 +866,20 @@ normalizePayloadForPowerAutomate(payload);
    const text = await res.text();
 
     if (!res.ok) {
-      alert("登録に失敗しました。時間をおいて再度お試しください。\n" + text);
+      let errorMessage = "登録に失敗しました。時間をおいて再度お試しください。";
+      try {
+        const errorJson = JSON.parse(text);
+        if (errorJson.errorCode === "duplicate_registration_no") {
+          errorMessage =
+            "その4桁番号は同じ登録者で既に使用中です。\n" +
+            "別の番号を入力してください。";
+        } else if (errorJson.message) {
+          errorMessage = errorJson.message;
+        }
+      } catch {
+        if (text) errorMessage += "\n" + text;
+      }
+      alert(errorMessage);
       resetSubmitButton(isEdit);
       return;
     }
