@@ -702,7 +702,8 @@ tr.product-row.extra-size-row-3 {
 <script>
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzifpGEKoydnvI9RAU6evgnHoWQh2YTx7WfXtqsi8O7tMoGbnyXzCC5bIVUY9QmUGZdlA/exec";
-const HP_DEADLINE_FLOW_URL = "PA_HP有効期限チェックのHTTP POST URLをここに貼る";
+const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1";
+
 const ROSTER_CHECK_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/d5ee07df145049e4a60655f02035b009/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kxmBOK-tVp6ts4sKgsWUd2NhIQNZbNlG1AK6hNlnpTA";
 
 function getCustomer() {
@@ -725,7 +726,7 @@ async function checkPageDeadline() {
 
   if (
     !HP_DEADLINE_FLOW_URL ||
-    HP_DEADLINE_FLOW_URL.includes("https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1")
+    HP_DEADLINE_FLOW_URL.includes("HTTP POST URLをここに貼る")
   ) {
     throw new Error("PA_HP有効期限チェックのHTTP POST URLが未設定です。");
   }
