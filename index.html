@@ -310,19 +310,19 @@ tr.product-row.extra-size-row-3 {
   font-size: 13px;
 }
 /* 採寸図上のタップ位置。画像サイズが変わっても割合で追従する */
-.hit-A { left: 12%; top: 11%; }
+.hit-A { left: 11.5%; top: 11.5%; }
 .hit-B { left: 47%; top: 12%; }
 .hit-C { left: 46%; top: 22%; }
-.hit-D { left: 20%; top: 21%; }
+.hit-D { left: 20%; top: 20.5%; }
 .hit-E-upper { left: 21%; top: 26%; }
 .hit-F-upper { left: 21%; top: 33%; }
-.hit-G { left: 65%; top: 22%; }
+.hit-G { left: 65%; top: 21.5%; }
 .hit-H { left: 87%; top: 26%; }
-.hit-I { left: 5%; top: 15%; }
-.hit-e-lower { left: 22%; top: 56%; }
+.hit-I { left: 4.5%; top: 15%; }
+.hit-e-lower { left: 22%; top: 55.5%; }
 .hit-f-lower { left: 22%; top: 62%; }
 .hit-J { left: 84%; top: 61%; }
-.hit-K { left: 81%; top: 78%; }
+.hit-K { left: 81.5%; top: 78%; }
 .hit-L { left: 89%; top: 74%; }
 .hit-M { left: 59%; top: 71%; }
 
@@ -714,12 +714,12 @@ tr.product-row.extra-size-row-3 {
       <button type="button" class="measure-hit hit-G" data-field="m_G" data-point="G" aria-label="G 背丈の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-H" data-field="m_H" data-point="H" aria-label="H 着丈の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-I" data-field="m_I" data-point="I" aria-label="I 袖付回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-e-lower" data-field="m_lower_e" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-f-lower" data-field="m_lower_f" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-J" data-field="m_J" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-K" data-field="m_K" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-L" data-field="m_L" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-M" data-field="m_M" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-e-lower" data-field="m_a" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-f-lower" data-field="m_b" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-J" data-field="m_c" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-K" data-field="m_d" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-L" data-field="m_e" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-M" data-field="m_f" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
     </div>
     <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
   </div>
@@ -1857,10 +1857,15 @@ function applyMeasurementMode(type) {
 
 function jumpToMeasurementField(fieldId) {
   const input = document.getElementById(fieldId);
-  if (!input || input.disabled) return;
-  input.scrollIntoView({ behavior: "smooth", block: "center" });
+  if (!input) return;
+
+  const target = input.closest(".measure-section") || input;
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
+
   window.setTimeout(() => {
-    input.focus({ preventScroll: true });
+    if (!input.disabled) {
+      input.focus({ preventScroll: true });
+    }
     input.classList.add("measure-input-highlight");
     window.setTimeout(() => input.classList.remove("measure-input-highlight"), 1600);
   }, 450);
@@ -1880,7 +1885,10 @@ function setupInteractiveMeasurementGuide() {
   document.querySelectorAll(".measure-hit").forEach(point => {
     if (point.dataset.guideReady === "1") return;
     point.dataset.guideReady = "1";
-    point.addEventListener("click", () => jumpToMeasurementField(point.dataset.field));
+    point.addEventListener("click", event => {
+      event.preventDefault();
+      jumpToMeasurementField(point.dataset.field);
+    });
   });
   document.querySelectorAll(".measure-jump-label").forEach(label => {
     if (label.dataset.guideReady === "1") return;
