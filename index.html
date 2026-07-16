@@ -309,6 +309,7 @@ tr.product-row.extra-size-row-3 {
   color: #555;
   font-size: 13px;
 }
+
 /* 採寸図上のタップ位置。画像サイズが変わっても割合で追従する */
 .hit-A { left: 11.5%; top: 11.5%; }
 .hit-B { left: 47%; top: 12%; }
@@ -714,12 +715,12 @@ tr.product-row.extra-size-row-3 {
       <button type="button" class="measure-hit hit-G" data-field="m_G" data-point="G" aria-label="G 背丈の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-H" data-field="m_H" data-point="H" aria-label="H 着丈の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-I" data-field="m_I" data-point="I" aria-label="I 袖付回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-e-lower" data-field="m_a" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-f-lower" data-field="m_b" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-J" data-field="m_c" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-K" data-field="m_d" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-L" data-field="m_e" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-M" data-field="m_f" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-e-lower" data-field="m_lower_e" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-f-lower" data-field="m_lower_f" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-J" data-field="m_J" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-K" data-field="m_K" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-L" data-field="m_L" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-M" data-field="m_M" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
     </div>
     <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
   </div>
@@ -1857,15 +1858,10 @@ function applyMeasurementMode(type) {
 
 function jumpToMeasurementField(fieldId) {
   const input = document.getElementById(fieldId);
-  if (!input) return;
-
-  const target = input.closest(".measure-section") || input;
-  target.scrollIntoView({ behavior: "smooth", block: "center" });
-
+  if (!input || input.disabled) return;
+  input.scrollIntoView({ behavior: "smooth", block: "center" });
   window.setTimeout(() => {
-    if (!input.disabled) {
-      input.focus({ preventScroll: true });
-    }
+    input.focus({ preventScroll: true });
     input.classList.add("measure-input-highlight");
     window.setTimeout(() => input.classList.remove("measure-input-highlight"), 1600);
   }, 450);
@@ -1885,10 +1881,7 @@ function setupInteractiveMeasurementGuide() {
   document.querySelectorAll(".measure-hit").forEach(point => {
     if (point.dataset.guideReady === "1") return;
     point.dataset.guideReady = "1";
-    point.addEventListener("click", event => {
-      event.preventDefault();
-      jumpToMeasurementField(point.dataset.field);
-    });
+    point.addEventListener("click", () => jumpToMeasurementField(point.dataset.field));
   });
   document.querySelectorAll(".measure-jump-label").forEach(label => {
     if (label.dataset.guideReady === "1") return;
@@ -1904,8 +1897,60 @@ function setupInteractiveMeasurementGuide() {
   });
 }
 
+function syncMeasurementPair(sourceId, targetId) {
+  const source = document.getElementById(sourceId);
+  const target = document.getElementById(targetId);
+  if (!source || !target) return;
+  target.value = source.value;
+}
+
+function setupMeasurementPairSync() {
+  const pairs = [
+    ["m_E", "m_a"],
+    ["m_F", "m_b"]
+  ];
+
+  pairs.forEach(([upperId, lowerId]) => {
+    const upper = document.getElementById(upperId);
+    const lower = document.getElementById(lowerId);
+    if (!upper || !lower) return;
+
+    if (upper.dataset.pairSyncReady !== "1") {
+      upper.dataset.pairSyncReady = "1";
+      upper.addEventListener("input", () => syncMeasurementPair(upperId, lowerId));
+      upper.addEventListener("change", () => syncMeasurementPair(upperId, lowerId));
+    }
+
+    if (lower.dataset.pairSyncReady !== "1") {
+      lower.dataset.pairSyncReady = "1";
+      lower.addEventListener("input", () => syncMeasurementPair(lowerId, upperId));
+      lower.addEventListener("change", () => syncMeasurementPair(lowerId, upperId));
+    }
+  });
+}
+
+function normalizeMeasurementPairValues() {
+  const upperE = document.getElementById("m_E");
+  const lowerE = document.getElementById("m_a");
+  const upperF = document.getElementById("m_F");
+  const lowerF = document.getElementById("m_b");
+
+  if (upperE && lowerE) {
+    const valueE = String(upperE.value || lowerE.value || "").trim();
+    upperE.value = valueE;
+    lowerE.value = valueE;
+  }
+
+  if (upperF && lowerF) {
+    const valueF = String(upperF.value || lowerF.value || "").trim();
+    upperF.value = valueF;
+    lowerF.value = valueF;
+  }
+}
+
 function loadMeasurementToForm() {
   setupInteractiveMeasurementGuide();
+  setupMeasurementPairSync();
 
   document.getElementById("m_height").value = measurementData.common.height;
   document.getElementById("m_weight").value = measurementData.common.weight;
@@ -1931,9 +1976,11 @@ function loadMeasurementToForm() {
 
   document.getElementById("m_specialNote").value = measurementData.specialNote;
   document.getElementById("m_memo").value = measurementData.memo;
+  normalizeMeasurementPairValues();
 }
 
 function saveMeasurement() {
+  normalizeMeasurementPairValues();
 
   const height = document.getElementById("m_height").value;
   const weight = document.getElementById("m_weight").value;
