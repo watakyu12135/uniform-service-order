@@ -239,40 +239,89 @@ tr.product-row.extra-size-row-3 {
 }
 
 .measurement-image {
-  max-width: 100%;
+  display: block;
+  width: 100%;
+  max-width: 555px;
   height: auto;
   margin-top: 8px;
   border: 1px solid #ccc;
   background: #fff;
 }
-.measurement-nude-notice {
-  margin: 18px 0 4px;
-  padding: 12px 16px;
-  border: 2px solid #d60000;
-  border-radius: 6px;
-  background: #fff4f4;
-  color: #c00000;
-  font-size: 22px;
-  line-height: 1.5;
-  font-weight: 700;
-  text-align: center;
-  animation: measurementNoticePulse 1.4s ease-in-out infinite;
+.measurement-image-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 555px;
 }
-@keyframes measurementNoticePulse {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 0 rgba(214, 0, 0, 0);
-  }
-  50% {
-    opacity: 0.55;
-    box-shadow: 0 0 12px rgba(214, 0, 0, 0.35);
-  }
+.measure-hit {
+  position: absolute;
+  width: 9%;
+  min-width: 34px;
+  max-width: 50px;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  margin: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  z-index: 3;
+  touch-action: manipulation;
 }
-@media (prefers-reduced-motion: reduce) {
-  .measurement-nude-notice {
-    animation: none;
-  }
+.measure-hit:hover,
+.measure-hit:focus-visible {
+  border-color: #ff9800;
+  background: rgba(255, 152, 0, 0.18);
+  outline: none;
 }
+.measure-hit.image-point-highlight {
+  border-color: #e65100;
+  background: rgba(255, 152, 0, 0.32);
+  box-shadow: 0 0 0 5px rgba(255, 152, 0, 0.22);
+}
+.measure-jump-label {
+  cursor: pointer;
+  color: #0b5797;
+  text-decoration: underline dotted;
+  text-underline-offset: 4px;
+}
+.measure-jump-label::after {
+  content: " 図を見る";
+  margin-left: 5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #eef5ff;
+  color: #0b5797;
+  font-size: 11px;
+  font-weight: normal;
+  white-space: nowrap;
+}
+.measure-input-highlight {
+  outline: 4px solid #ff9800 !important;
+  background: #fff4d6 !important;
+}
+.measurement-guide-note {
+  margin: 6px 0 0;
+  color: #555;
+  font-size: 13px;
+}
+/* 採寸図上のタップ位置。画像サイズが変わっても割合で追従する */
+.hit-A { left: 17%; top: 7%; }
+.hit-B { left: 47%; top: 12%; }
+.hit-C { left: 44%; top: 20%; }
+.hit-D { left: 20%; top: 19%; }
+.hit-E-upper { left: 21%; top: 26%; }
+.hit-F-upper { left: 21%; top: 33%; }
+.hit-G { left: 64%; top: 20%; }
+.hit-H { left: 86%; top: 28%; }
+.hit-I { left: 8%; top: 15%; }
+.hit-e-lower { left: 22%; top: 56%; }
+.hit-f-lower { left: 22%; top: 63%; }
+.hit-J { left: 84%; top: 59%; }
+.hit-K { left: 81%; top: 81%; }
+.hit-L { left: 89%; top: 72%; }
+.hit-M { left: 61%; top: 71%; }
 
 .measure-required-message {
   margin-top: 6px;
@@ -618,13 +667,27 @@ tr.product-row.extra-size-row-3 {
 
   <div id="measurementMessage"></div>
 
-  <div class="measurement-guide">
+  <div class="measurement-guide" id="measurementGuide">
     <strong>採寸図：</strong><br>
-    <img src="images/measurement-guide.png" alt="採寸図" class="measurement-image">
-  </div>
-
-  <div class="measurement-nude-notice" role="alert">
-    採寸はヌード寸法でご記入ください。
+    <div class="measurement-image-wrapper" id="measurementImageWrapper">
+      <img src="images/measurement-guide.png" alt="採寸図。図中のアルファベットをタップすると対応する入力欄へ移動します。" class="measurement-image">
+      <button type="button" class="measure-hit hit-A" data-field="m_A" data-point="A" aria-label="A 衿回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-B" data-field="m_B" data-point="B" aria-label="B 肩巾の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-C" data-field="m_C1" data-point="C" aria-label="C 袖丈の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-D" data-field="m_D" data-point="D" aria-label="D 胸回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-E-upper" data-field="m_E" data-point="E-upper" aria-label="上衣 E 胴回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-F-upper" data-field="m_F" data-point="F-upper" aria-label="上衣 F 腰回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-G" data-field="m_G" data-point="G" aria-label="G 背丈の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-H" data-field="m_H" data-point="H" aria-label="H 着丈の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-I" data-field="m_I" data-point="I" aria-label="I 袖付回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-e-lower" data-field="m_lower_e" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-f-lower" data-field="m_lower_f" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-J" data-field="m_J" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-K" data-field="m_K" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-L" data-field="m_L" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-M" data-field="m_M" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
+    </div>
+    <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
   </div>
 
   <section class="measure-section" id="measureCommon">
@@ -641,21 +704,21 @@ tr.product-row.extra-size-row-3 {
   <section class="measure-section" id="measureUpper">
     <h3>上衣採寸</h3>
 
-    <label>A_衿回り</label>
+    <label class="measure-jump-label" data-image-point="A" tabindex="0" role="button">A_衿回り</label>
     <input type="number" id="m_A"> cm
     <div class="measure-help">のどぼとけのすぐ下で測る。</div>
 
-    <label>B_肩巾</label>
+    <label class="measure-jump-label" data-image-point="B" tabindex="0" role="button">B_肩巾</label>
     <input type="number" id="m_B"> cm
     <div class="measure-help">左、右の肩先まで測る。</div>
 
-    <label>C1_袖丈_半袖</label>
+    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C1_袖丈_半袖</label>
     <input type="number" id="m_C1"> cm<br>
 
-    <label>C2_袖丈_七分袖</label>
+    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C2_袖丈_七分袖</label>
     <input type="number" id="m_C2"> cm<br>
 
-    <label>C3_袖丈_長袖</label>
+    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C3_袖丈_長袖</label>
     <input type="number" id="m_C3"> cm
 
     <div class="measure-help">
@@ -663,27 +726,27 @@ tr.product-row.extra-size-row-3 {
       ※半袖の商品を長袖で製作することはできません。
     </div>
 
-    <label>D_胸回り</label>
+    <label class="measure-jump-label" data-image-point="D" tabindex="0" role="button">D_胸回り</label>
     <input type="number" id="m_D"> cm
     <div class="measure-help">脇のすぐ下で水平にメジャーを回して測る。</div>
 
-    <label>E_胴回り</label>
+    <label class="measure-jump-label" data-image-point="E-upper" tabindex="0" role="button">E_胴回り</label>
     <input type="number" id="m_E"> cm
     <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
 
-    <label>F_腰回り</label>
+    <label class="measure-jump-label" data-image-point="F-upper" tabindex="0" role="button">F_腰回り</label>
     <input type="number" id="m_F"> cm
     <div class="measure-help">腰の一番張ったところを測る。</div>
 
-    <label>G_背丈</label>
+    <label class="measure-jump-label" data-image-point="G" tabindex="0" role="button">G_背丈</label>
     <input type="number" id="m_G"> cm
     <div class="measure-help">首の付け根の中心から胴回りの測定位置まで。</div>
 
-    <label>H_着丈</label>
+    <label class="measure-jump-label" data-image-point="H" tabindex="0" role="button">H_着丈</label>
     <input type="number" id="m_H"> cm
     <div class="measure-help">首の付け根の中心から本人希望の長さまで。</div>
 
-    <label>I_袖付回り</label>
+    <label class="measure-jump-label" data-image-point="I" tabindex="0" role="button">I_袖付回り</label>
     <input type="number" id="m_I"> cm
     <div class="measure-help">肩先から腕の付け根部分回りを測る。</div>
   </section>
@@ -691,27 +754,27 @@ tr.product-row.extra-size-row-3 {
   <section class="measure-section" id="measureLower">
     <h3>下衣採寸</h3>
 
-    <label>e_胴回り</label>
+    <label class="measure-jump-label" data-image-point="e-lower" tabindex="0" role="button">e_胴回り</label>
     <input type="number" id="m_a"> cm
     <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
 
-    <label>f_胴回り</label>
+    <label class="measure-jump-label" data-image-point="f-lower" tabindex="0" role="button">f_腰回り</label>
     <input type="number" id="m_b"> cm
     <div class="measure-help">腰の一番張ったところを測る。</div>
 
-    <label>J_股上</label>
+    <label class="measure-jump-label" data-image-point="J" tabindex="0" role="button">J_股上</label>
     <input type="number" id="m_c"> cm
     <div class="measure-help">胴回り位置から股下までを測る。</div>
 
-    <label>K_股下</label>
+    <label class="measure-jump-label" data-image-point="K" tabindex="0" role="button">K_股下</label>
     <input type="number" id="m_d"> cm
     <div class="measure-help">股下より本人希望の長さ。</div>
 
-    <label>L_総丈</label>
+    <label class="measure-jump-label" data-image-point="L" tabindex="0" role="button">L_総丈</label>
     <input type="number" id="m_e"> cm
     <div class="measure-help">胴回り位置からズボン裾まで。</div>
 
-    <label>M_太股周り</label>
+    <label class="measure-jump-label" data-image-point="M" tabindex="0" role="button">M_太股周り</label>
     <input type="number" id="m_f"> cm
     <div class="measure-help">股下より10cm下がった位置を測る。</div>
   </section>
@@ -1440,7 +1503,7 @@ updateCategorySummary();">
         });
 
         if (specialSizes.length > 0) {
-          row += `<option value="__OTHER__">別注</option>`;
+          row += `<option value="__OTHER__">その他</option>`;
         }
 
         row += `</select>`;
@@ -1449,7 +1512,7 @@ updateCategorySummary();">
           <select class="specialSize" onchange="checkSpecialSize(this); 
 toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
  updateCategorySummary();">
-            <option value="">別注サイズを選択</option>`;
+            <option value="">特注サイズを選択</option>`;
 
         specialSizes.forEach(size => {
           row += `<option value="${size.value}" data-size-type="${size.type}">
@@ -1758,7 +1821,49 @@ function applyMeasurementMode(type) {
   setSectionEnabled("measureLower", lowerEditable);
 }
 
+function jumpToMeasurementField(fieldId) {
+  const input = document.getElementById(fieldId);
+  if (!input || input.disabled) return;
+  input.scrollIntoView({ behavior: "smooth", block: "center" });
+  window.setTimeout(() => {
+    input.focus({ preventScroll: true });
+    input.classList.add("measure-input-highlight");
+    window.setTimeout(() => input.classList.remove("measure-input-highlight"), 1600);
+  }, 450);
+}
+
+function jumpToMeasurementImage(pointName) {
+  const point = document.querySelector(`.measure-hit[data-point="${pointName}"]`);
+  if (!point) return;
+  point.scrollIntoView({ behavior: "smooth", block: "center" });
+  window.setTimeout(() => {
+    point.classList.add("image-point-highlight");
+    window.setTimeout(() => point.classList.remove("image-point-highlight"), 1600);
+  }, 450);
+}
+
+function setupInteractiveMeasurementGuide() {
+  document.querySelectorAll(".measure-hit").forEach(point => {
+    if (point.dataset.guideReady === "1") return;
+    point.dataset.guideReady = "1";
+    point.addEventListener("click", () => jumpToMeasurementField(point.dataset.field));
+  });
+  document.querySelectorAll(".measure-jump-label").forEach(label => {
+    if (label.dataset.guideReady === "1") return;
+    label.dataset.guideReady = "1";
+    const openImage = () => jumpToMeasurementImage(label.dataset.imagePoint);
+    label.addEventListener("click", openImage);
+    label.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openImage();
+      }
+    });
+  });
+}
+
 function loadMeasurementToForm() {
+  setupInteractiveMeasurementGuide();
 
   document.getElementById("m_height").value = measurementData.common.height;
   document.getElementById("m_weight").value = measurementData.common.weight;
