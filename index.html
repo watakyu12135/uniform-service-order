@@ -304,6 +304,27 @@ tr.product-row.extra-size-row-3 {
   outline: 4px solid #ff9800 !important;
   background: #fff4d6 !important;
 }
+.measurement-nude-notice {
+  display: block;
+  margin: 16px 0 8px;
+  padding: 12px 14px;
+  border: 2px solid #d00000;
+  border-radius: 6px;
+  background: #fff2f2;
+  color: #d00000;
+  font-size: 24px;
+  line-height: 1.45;
+  font-weight: 700;
+  text-align: center;
+  animation: nudeNoticeBlink 1.4s ease-in-out infinite;
+}
+@keyframes nudeNoticeBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .measurement-nude-notice { animation: none; }
+}
 .measurement-guide-note {
   margin: 6px 0 0;
   color: #555;
@@ -725,6 +746,9 @@ tr.product-row.extra-size-row-3 {
     <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
   </div>
 
+  <div class="measurement-nude-notice" role="alert">
+    採寸はヌード寸法でご記入ください。
+  </div>
   <section class="measure-section" id="measureCommon">
     <h3>共通項目</h3>
 
@@ -1860,7 +1884,6 @@ function syncLinkedMeasurement(source, targetId) {
   const target = document.getElementById(targetId);
   if (!source || !target) return;
   target.value = source.value;
-
   if (source.id === "m_E" || targetId === "m_E") {
     measurementData.upper.E = source.value;
     measurementData.lower.a = source.value;
@@ -1874,10 +1897,8 @@ function syncLinkedMeasurement(source, targetId) {
 function jumpToMeasurementField(fieldId) {
   const input = document.getElementById(fieldId);
   if (!input) return;
-
   const target = input.closest(".measure-section") || input;
   target.scrollIntoView({ behavior: "smooth", block: "center" });
-
   window.setTimeout(() => {
     if (!input.disabled) input.focus({ preventScroll: true });
     input.classList.add("measure-input-highlight");
@@ -1999,7 +2020,6 @@ function loadMeasurementToForm() {
 
 function saveMeasurement() {
   normalizeMeasurementPairValues();
- normalizeMeasurementPairValues();
 
   const height = document.getElementById("m_height").value;
   const weight = document.getElementById("m_weight").value;
