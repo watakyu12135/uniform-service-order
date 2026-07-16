@@ -715,12 +715,12 @@ tr.product-row.extra-size-row-3 {
       <button type="button" class="measure-hit hit-G" data-field="m_G" data-point="G" aria-label="G 背丈の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-H" data-field="m_H" data-point="H" aria-label="H 着丈の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-I" data-field="m_I" data-point="I" aria-label="I 袖付回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-e-lower" data-field="m_lower_e" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-f-lower" data-field="m_lower_f" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-J" data-field="m_J" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-K" data-field="m_K" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-L" data-field="m_L" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-M" data-field="m_M" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-e-lower" data-field="m_a" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-f-lower" data-field="m_b" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-J" data-field="m_c" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-K" data-field="m_d" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-L" data-field="m_e" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-M" data-field="m_f" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
     </div>
     <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
   </div>
@@ -766,11 +766,11 @@ tr.product-row.extra-size-row-3 {
     <div class="measure-help">脇のすぐ下で水平にメジャーを回して測る。</div>
 
     <label class="measure-jump-label" data-image-point="E-upper" tabindex="0" role="button">E_胴回り</label>
-    <input type="number" id="m_E"> cm
+    <input type="number" id="m_E" oninput="syncLinkedMeasurement(this, 'm_a')" onchange="syncLinkedMeasurement(this, 'm_a')"> cm
     <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
 
     <label class="measure-jump-label" data-image-point="F-upper" tabindex="0" role="button">F_腰回り</label>
-    <input type="number" id="m_F"> cm
+    <input type="number" id="m_F" oninput="syncLinkedMeasurement(this, 'm_b')" onchange="syncLinkedMeasurement(this, 'm_b')"> cm
     <div class="measure-help">腰の一番張ったところを測る。</div>
 
     <label class="measure-jump-label" data-image-point="G" tabindex="0" role="button">G_背丈</label>
@@ -790,11 +790,11 @@ tr.product-row.extra-size-row-3 {
     <h3>下衣採寸</h3>
 
     <label class="measure-jump-label" data-image-point="e-lower" tabindex="0" role="button">e_胴回り</label>
-    <input type="number" id="m_a"> cm
+    <input type="number" id="m_a" oninput="syncLinkedMeasurement(this, 'm_E')" onchange="syncLinkedMeasurement(this, 'm_E')"> cm
     <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
 
     <label class="measure-jump-label" data-image-point="f-lower" tabindex="0" role="button">f_腰回り</label>
-    <input type="number" id="m_b"> cm
+    <input type="number" id="m_b" oninput="syncLinkedMeasurement(this, 'm_F')" onchange="syncLinkedMeasurement(this, 'm_F')"> cm
     <div class="measure-help">腰の一番張ったところを測る。</div>
 
     <label class="measure-jump-label" data-image-point="J" tabindex="0" role="button">J_股上</label>
@@ -1292,7 +1292,7 @@ function restoreMeasurementFromEditData(measurement) {
     measurement["採寸区分"] === "全身";
 
   measurementData.lower.a = measurement["e_胴回り"] || "";
-  measurementData.lower.b = measurement["f_胴回り"] || "";
+  measurementData.lower.b = measurement["f_腰回り"] || "";
   measurementData.lower.c = measurement["J_股上"] || "";
   measurementData.lower.d = measurement["K_股下"] || "";
   measurementData.lower.e = measurement["L_総丈"] || "";
@@ -1856,12 +1856,30 @@ function applyMeasurementMode(type) {
   setSectionEnabled("measureLower", lowerEditable);
 }
 
+function syncLinkedMeasurement(source, targetId) {
+  const target = document.getElementById(targetId);
+  if (!source || !target) return;
+  target.value = source.value;
+
+  if (source.id === "m_E" || targetId === "m_E") {
+    measurementData.upper.E = source.value;
+    measurementData.lower.a = source.value;
+  }
+  if (source.id === "m_F" || targetId === "m_F") {
+    measurementData.upper.F = source.value;
+    measurementData.lower.b = source.value;
+  }
+}
+
 function jumpToMeasurementField(fieldId) {
   const input = document.getElementById(fieldId);
-  if (!input || input.disabled) return;
-  input.scrollIntoView({ behavior: "smooth", block: "center" });
+  if (!input) return;
+
+  const target = input.closest(".measure-section") || input;
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
+
   window.setTimeout(() => {
-    input.focus({ preventScroll: true });
+    if (!input.disabled) input.focus({ preventScroll: true });
     input.classList.add("measure-input-highlight");
     window.setTimeout(() => input.classList.remove("measure-input-highlight"), 1600);
   }, 450);
@@ -1981,6 +1999,7 @@ function loadMeasurementToForm() {
 
 function saveMeasurement() {
   normalizeMeasurementPairValues();
+ normalizeMeasurementPairValues();
 
   const height = document.getElementById("m_height").value;
   const weight = document.getElementById("m_weight").value;
@@ -2183,7 +2202,7 @@ function buildMeasurementPayload(common) {
 
     "下衣入力済": lowerDone ? 1 : 0,
     "e_胴回り": measurementData.lower.a,
-    "f_胴回り": measurementData.lower.b,
+    "f_腰回り": measurementData.lower.b,
     "J_股上": measurementData.lower.c,
     "K_股下": measurementData.lower.d,
     "L_総丈": measurementData.lower.e,
