@@ -659,28 +659,28 @@ tr.product-row.extra-size-row-3 {
   <section class="measure-section" id="measureLower">
     <h3>下衣採寸</h3>
 
-    <label>a_胴回り</label>
-    <input type="number" id="m_a"> cm
+    <label>e_胴回り</label>
+    <input type="number" id="m_lower_e"> cm
     <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
 
-    <label>b_腰回り</label>
-    <input type="number" id="m_b"> cm
+    <label>f_腰回り</label>
+    <input type="number" id="m_lower_f"> cm
     <div class="measure-help">腰の一番張ったところを測る。</div>
 
-    <label>c_股上</label>
-    <input type="number" id="m_c"> cm
+    <label>J_股上</label>
+    <input type="number" id="m_J"> cm
     <div class="measure-help">胴回り位置から股下までを測る。</div>
 
-    <label>d_股下</label>
-    <input type="number" id="m_d"> cm
+    <label>K_股下</label>
+    <input type="number" id="m_K"> cm
     <div class="measure-help">股下より本人希望の長さ。</div>
 
-    <label>e_総丈</label>
-    <input type="number" id="m_e"> cm
+    <label>L_総丈</label>
+    <input type="number" id="m_L"> cm
     <div class="measure-help">胴回り位置からズボン裾まで。</div>
 
-    <label>f_太股回り</label>
-    <input type="number" id="m_f"> cm
+    <label>M_太股周り</label>
+    <input type="number" id="m_M"> cm
     <div class="measure-help">股下より10cm下がった位置を測る。</div>
   </section>
 
@@ -872,12 +872,12 @@ let measurementData = {
   },
   lower: {
     completed: false,
-    a: "",
-    b: "",
-    c: "",
-    d: "",
     e: "",
-    f: ""
+    f: "",
+    J: "",
+    K: "",
+    L: "",
+    M: ""
   },
   specialNote: "",
   memo: ""
@@ -1156,17 +1156,17 @@ function restoreMeasurementFromEditData(measurement) {
   measurementData.upper.H = measurement["H_着丈"] || "";
   measurementData.upper.I = measurement["I_袖付回り"] || "";
 
-  measurementData.lower.completed =
+  measurementData.lower.Jompleted =
     isTrueValue(measurement["下衣入力済"]) ||
     measurement["採寸区分"] === "下衣" ||
     measurement["採寸区分"] === "全身";
 
-  measurementData.lower.a = measurement["a_胴回り"] || "";
-  measurementData.lower.b = measurement["b_腰回り"] || "";
-  measurementData.lower.c = measurement["c_股上"] || "";
-  measurementData.lower.d = measurement["d_股下"] || "";
-  measurementData.lower.e = measurement["e_総丈"] || "";
-  measurementData.lower.f = measurement["f_太股回り"] || "";
+  measurementData.lower.e = measurement["e_胴回り"] || "";
+  measurementData.lower.f = measurement["f_腰回り"] || "";
+  measurementData.lower.J = measurement["J_股上"] || "";
+  measurementData.lower.K = measurement["K_股下"] || "";
+  measurementData.lower.L = measurement["L_総丈"] || "";
+  measurementData.lower.M = measurement["M_太股周り"] || "";
 
   measurementData.specialNote = measurement["特記事項"] || "";
   measurementData.memo = measurement["備考"] || "";
@@ -1719,11 +1719,52 @@ function applyMeasurementMode(type) {
   const lowerEditable =
     type === "下衣" ||
     type === "全身" ||
-    measurementData.lower.completed;
+    measurementData.lower.Jompleted;
 
   setSectionEnabled("measureCommon", true);
   setSectionEnabled("measureUpper", upperEditable);
   setSectionEnabled("measureLower", lowerEditable);
+}
+
+function setupMeasurementPairSync() {
+  const pairs = [
+    ["m_E", "m_lower_e", "E", "e"],
+    ["m_F", "m_lower_f", "F", "f"]
+  ];
+  pairs.forEach(([upperId, lowerId, upperKey, lowerKey]) => {
+    const upper = document.getElementById(upperId);
+    const lower = document.getElementById(lowerId);
+    if (!upper || !lower) return;
+    if (upper.dataset.syncReady !== "1") {
+      upper.dataset.syncReady = "1";
+      upper.addEventListener("input", () => {
+        lower.value = upper.value;
+        measurementData.upper[upperKey] = upper.value;
+        measurementData.lower[lowerKey] = upper.value;
+      });
+    }
+    if (lower.dataset.syncReady !== "1") {
+      lower.dataset.syncReady = "1";
+      lower.addEventListener("input", () => {
+        upper.value = lower.value;
+        measurementData.lower[lowerKey] = lower.value;
+        measurementData.upper[upperKey] = lower.value;
+      });
+    }
+  });
+}
+
+function normalizeMeasurementPairs() {
+  const eValue = String(document.getElementById("m_E")?.value || document.getElementById("m_lower_e")?.value || "").trim();
+  const fValue = String(document.getElementById("m_F")?.value || document.getElementById("m_lower_f")?.value || "").trim();
+  document.getElementById("m_E").value = eValue;
+  document.getElementById("m_lower_e").value = eValue;
+  document.getElementById("m_F").value = fValue;
+  document.getElementById("m_lower_f").value = fValue;
+  measurementData.upper.E = eValue;
+  measurementData.lower.e = eValue;
+  measurementData.upper.F = fValue;
+  measurementData.lower.f = fValue;
 }
 
 function loadMeasurementToForm() {
@@ -1743,18 +1784,21 @@ function loadMeasurementToForm() {
   document.getElementById("m_H").value = measurementData.upper.H;
   document.getElementById("m_I").value = measurementData.upper.I;
 
-  document.getElementById("m_a").value = measurementData.lower.a;
-  document.getElementById("m_b").value = measurementData.lower.b;
-  document.getElementById("m_c").value = measurementData.lower.c;
-  document.getElementById("m_d").value = measurementData.lower.d;
-  document.getElementById("m_e").value = measurementData.lower.e;
-  document.getElementById("m_f").value = measurementData.lower.f;
+  document.getElementById("m_lower_e").value = measurementData.lower.e;
+  document.getElementById("m_lower_f").value = measurementData.lower.f;
+  document.getElementById("m_J").value = measurementData.lower.J;
+  document.getElementById("m_K").value = measurementData.lower.K;
+  document.getElementById("m_L").value = measurementData.lower.L;
+  document.getElementById("m_M").value = measurementData.lower.M;
 
   document.getElementById("m_specialNote").value = measurementData.specialNote;
   document.getElementById("m_memo").value = measurementData.memo;
+  setupMeasurementPairSync();
+  normalizeMeasurementPairs();
 }
 
 function saveMeasurement() {
+  normalizeMeasurementPairs();
 
   const height = document.getElementById("m_height").value;
   const weight = document.getElementById("m_weight").value;
@@ -1786,12 +1830,12 @@ function saveMeasurement() {
   measurementData.upper.H = document.getElementById("m_H").value;
   measurementData.upper.I = document.getElementById("m_I").value;
 
-  measurementData.lower.a = document.getElementById("m_a").value;
-  measurementData.lower.b = document.getElementById("m_b").value;
-  measurementData.lower.c = document.getElementById("m_c").value;
-  measurementData.lower.d = document.getElementById("m_d").value;
-  measurementData.lower.e = document.getElementById("m_e").value;
-  measurementData.lower.f = document.getElementById("m_f").value;
+  measurementData.lower.e = document.getElementById("m_lower_e").value;
+  measurementData.lower.f = document.getElementById("m_lower_f").value;
+  measurementData.lower.J = document.getElementById("m_J").value;
+  measurementData.lower.K = document.getElementById("m_K").value;
+  measurementData.lower.L = document.getElementById("m_L").value;
+  measurementData.lower.M = document.getElementById("m_M").value;
 
   measurementData.specialNote = document.getElementById("m_specialNote").value;
   measurementData.memo = document.getElementById("m_memo").value;
@@ -1801,12 +1845,12 @@ function saveMeasurement() {
   }
 
   if (currentMeasurementType === "下衣") {
-    measurementData.lower.completed = true;
+    measurementData.lower.Jompleted = true;
   }
 
   if (currentMeasurementType === "全身") {
     measurementData.upper.completed = true;
-    measurementData.lower.completed = true;
+    measurementData.lower.Jompleted = true;
   }
 
   updateAllMeasurementButtons();
@@ -1821,11 +1865,11 @@ function isMeasurementCompleteForType(type) {
   }
 
   if (type === "下衣") {
-    return measurementData.lower.completed;
+    return measurementData.lower.Jompleted;
   }
 
   if (type === "全身") {
-    return measurementData.upper.completed && measurementData.lower.completed;
+    return measurementData.upper.completed && measurementData.lower.Jompleted;
   }
 
   return false;
@@ -1902,7 +1946,7 @@ function updateAllMeasurementButtons() {
 function buildMeasurementPayload(common) {
 
   const upperDone = measurementData.upper.completed;
-  const lowerDone = measurementData.lower.completed;
+  const lowerDone = measurementData.lower.Jompleted;
 
   if (!upperDone && !lowerDone) {
     return null;
@@ -1956,12 +2000,12 @@ function buildMeasurementPayload(common) {
     "I_袖付回り": measurementData.upper.I,
 
     "下衣入力済": lowerDone ? 1 : 0,
-    "a_胴回り": measurementData.lower.a,
-    "b_腰回り": measurementData.lower.b,
-    "c_股上": measurementData.lower.c,
-    "d_股下": measurementData.lower.d,
-    "e_総丈": measurementData.lower.e,
-    "f_太股回り": measurementData.lower.f,
+    "e_胴回り": measurementData.lower.e,
+    "f_腰回り": measurementData.lower.f,
+    "J_股上": measurementData.lower.J,
+    "K_股下": measurementData.lower.K,
+    "L_総丈": measurementData.lower.L,
+    "M_太股周り": measurementData.lower.M,
 
     "特記事項": measurementData.specialNote,
     "備考": measurementData.memo
