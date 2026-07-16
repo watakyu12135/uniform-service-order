@@ -741,7 +741,7 @@ tr.product-row.extra-size-row-3 {
       <button type="button" class="measure-hit hit-J" data-field="m_c" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-K" data-field="m_d" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-L" data-field="m_e" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-M" data-field="m_f" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-M" data-field="m_f" data-point="M" aria-label="M 太股回りの入力欄へ移動"></button>
     </div>
     <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
   </div>
@@ -833,7 +833,7 @@ tr.product-row.extra-size-row-3 {
     <input type="number" id="m_e"> cm
     <div class="measure-help">胴回り位置からズボン裾まで。</div>
 
-    <label class="measure-jump-label" data-image-point="M" tabindex="0" role="button">M_太股周り</label>
+    <label class="measure-jump-label" data-image-point="M" tabindex="0" role="button">M_太股回り</label>
     <input type="number" id="m_f"> cm
     <div class="measure-help">股下より10cm下がった位置を測る。</div>
   </section>
@@ -1320,7 +1320,7 @@ function restoreMeasurementFromEditData(measurement) {
   measurementData.lower.c = measurement["J_股上"] || "";
   measurementData.lower.d = measurement["K_股下"] || "";
   measurementData.lower.e = measurement["L_総丈"] || "";
-  measurementData.lower.f = measurement["M_太股周り"] || "";
+  measurementData.lower.f = measurement["M_太股回り"] || "";
 
   measurementData.specialNote = measurement["特記事項"] || "";
   measurementData.memo = measurement["備考"] || "";
@@ -2226,7 +2226,7 @@ function buildMeasurementPayload(common) {
     "J_股上": measurementData.lower.c,
     "K_股下": measurementData.lower.d,
     "L_総丈": measurementData.lower.e,
-    "M_太股周り": measurementData.lower.f,
+    "M_太股回り": measurementData.lower.f,
 
     "特記事項": measurementData.specialNote,
     "備考": measurementData.memo
