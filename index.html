@@ -301,48 +301,27 @@ tr.product-row.extra-size-row-3 {
   outline: 4px solid #ff9800 !important;
   background: #fff4d6 !important;
 }
-.measurement-nude-notice {
-  display: block;
-  margin: 16px 0 8px;
-  padding: 12px 14px;
-  border: 2px solid #d00000;
-  border-radius: 6px;
-  background: #fff2f2;
-  color: #d00000;
-  font-size: 24px;
-  line-height: 1.45;
-  font-weight: 700;
-  text-align: center;
-  animation: nudeNoticeBlink 1.4s ease-in-out infinite;
-}
-@keyframes nudeNoticeBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .measurement-nude-notice { animation: none; }
-}
 .measurement-guide-note {
   margin: 6px 0 0;
   color: #555;
   font-size: 13px;
 }
 /* 採寸図上のタップ位置。画像サイズが変わっても割合で追従する */
-.hit-A { left: 11%; top: 12%; }
-.hit-B { left: 47%; top: 13%; }
-.hit-C { left: 48%; top: 22%; }
-.hit-D { left: 21%; top: 21%; }
+.hit-A { left: 17%; top: 7%; }
+.hit-B { left: 47%; top: 12%; }
+.hit-C { left: 44%; top: 20%; }
+.hit-D { left: 20%; top: 19%; }
 .hit-E-upper { left: 21%; top: 26%; }
 .hit-F-upper { left: 21%; top: 33%; }
-.hit-G { left: 65%; top: 22%; }
-.hit-H { left: 88%; top: 27%; }
-.hit-I { left: 4%; top: 15%; }
-.hit-e-lower { left: 22%; top: 55%; }
-.hit-f-lower { left: 22%; top: 62%; }
-.hit-J { left: 83%; top: 61%; }
-.hit-K { left: 83%; top: 79%; }
-.hit-L { left: 88%; top: 74%; }
-.hit-M { left: 58%; top: 71%; }
+.hit-G { left: 64%; top: 20%; }
+.hit-H { left: 86%; top: 28%; }
+.hit-I { left: 8%; top: 15%; }
+.hit-e-lower { left: 22%; top: 56%; }
+.hit-f-lower { left: 22%; top: 63%; }
+.hit-J { left: 84%; top: 59%; }
+.hit-K { left: 81%; top: 81%; }
+.hit-L { left: 89%; top: 72%; }
+.hit-M { left: 61%; top: 71%; }
 
 .measure-required-message {
   margin-top: 6px;
@@ -511,6 +490,37 @@ tr.product-row.extra-size-row-3 {
   select,
   textarea {
     font-size: 16px;
+  }
+
+  /* スマホ用ボタン：性別・職種のプルダウンと同程度の押しやすさにする */
+  button:not(.measure-hit) {
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 1.3;
+    touch-action: manipulation;
+  }
+
+  /* 確認、採寸、保存して戻る、保存せず戻る */
+  #submitButton,
+  .measure,
+  #measurementArea > button {
+    min-width: 120px;
+  }
+
+  /* 採寸画面下部の2ボタンは、スマホでは押しやすく縦並びにする */
+  #measurementArea > button {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    margin: 10px auto 0;
+  }
+
+  /* 商品行内の採寸ボタン */
+  .measure-inline:not(.hidden),
+  .measure-table:not(.hidden) {
+    min-width: 96px;
   }
 
   .cell-qty input,
@@ -701,19 +711,16 @@ tr.product-row.extra-size-row-3 {
       <button type="button" class="measure-hit hit-G" data-field="m_G" data-point="G" aria-label="G 背丈の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-H" data-field="m_H" data-point="H" aria-label="H 着丈の入力欄へ移動"></button>
       <button type="button" class="measure-hit hit-I" data-field="m_I" data-point="I" aria-label="I 袖付回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-e-lower" data-field="m_a" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-f-lower" data-field="m_b" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-J" data-field="m_c" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-K" data-field="m_d" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-L" data-field="m_e" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-M" data-field="m_f" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-e-lower" data-field="m_lower_e" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-f-lower" data-field="m_lower_f" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-J" data-field="m_J" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-K" data-field="m_K" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-L" data-field="m_L" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
+      <button type="button" class="measure-hit hit-M" data-field="m_M" data-point="M" aria-label="M 太股周りの入力欄へ移動"></button>
     </div>
     <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
   </div>
 
-  <div class="measurement-nude-notice" role="alert">
-    採寸はヌード寸法でご記入ください。
-  </div>
   <section class="measure-section" id="measureCommon">
     <h3>共通項目</h3>
 
