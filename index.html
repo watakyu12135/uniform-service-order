@@ -301,27 +301,40 @@ tr.product-row.extra-size-row-3 {
   outline: 4px solid #ff9800 !important;
   background: #fff4d6 !important;
 }
+.measurement-nude-notice {
+  margin: 14px 0;
+  padding: 10px;
+  text-align: center;
+  color: #d00000;
+  font-size: 24px;
+  font-weight: bold;
+  animation: blinkNotice 1.2s infinite;
+}
+@keyframes blinkNotice {
+  50% { opacity: 0.45; }
+}
+
 .measurement-guide-note {
   margin: 6px 0 0;
   color: #555;
   font-size: 13px;
 }
 /* 採寸図上のタップ位置。画像サイズが変わっても割合で追従する */
-.hit-A { left: 17%; top: 7%; }
-.hit-B { left: 47%; top: 12%; }
-.hit-C { left: 44%; top: 20%; }
-.hit-D { left: 20%; top: 19%; }
+.hit-A { left: 13%; top: 14%; }
+.hit-B { left: 41%; top: 9%; }
+.hit-C { left: 37%; top: 18%; }
+.hit-D { left: 16%; top: 24%; }
 .hit-E-upper { left: 21%; top: 26%; }
 .hit-F-upper { left: 21%; top: 33%; }
-.hit-G { left: 64%; top: 20%; }
-.hit-H { left: 86%; top: 28%; }
-.hit-I { left: 8%; top: 15%; }
-.hit-e-lower { left: 22%; top: 56%; }
-.hit-f-lower { left: 22%; top: 63%; }
-.hit-J { left: 84%; top: 59%; }
-.hit-K { left: 81%; top: 81%; }
-.hit-L { left: 89%; top: 72%; }
-.hit-M { left: 61%; top: 71%; }
+.hit-G { left: 56%; top: 23%; }
+.hit-H { left: 84%; top: 26%; }
+.hit-I { left: 17%; top: 11%; }
+.hit-e-lower { left: 25%; top: 56%; }
+.hit-f-lower { left: 24%; top: 63%; }
+.hit-J { left: 79%; top: 63%; }
+.hit-K { left: 75%; top: 80%; }
+.hit-L { left: 83%; top: 69%; }
+.hit-M { left: 57%; top: 73%; }
 
 .measure-required-message {
   margin-top: 6px;
@@ -1503,7 +1516,7 @@ updateCategorySummary();">
         });
 
         if (specialSizes.length > 0) {
-          row += `<option value="__OTHER__">その他</option>`;
+          row += `<option value="__OTHER__">別注</option>`;
         }
 
         row += `</select>`;
@@ -1512,7 +1525,7 @@ updateCategorySummary();">
           <select class="specialSize" onchange="checkSpecialSize(this); 
 toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
  updateCategorySummary();">
-            <option value="">特注サイズを選択</option>`;
+            <option value="">別注サイズを選択</option>`;
 
         specialSizes.forEach(size => {
           row += `<option value="${size.value}" data-size-type="${size.type}">
