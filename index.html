@@ -1408,7 +1408,7 @@ updateCategorySummary();">
         });
 
         if (specialSizes.length > 0) {
-          row += `<option value="__OTHER__">その他</option>`;
+          row += `<option value="__OTHER__">別注</option>`;
         }
 
         row += `</select>`;
@@ -1417,7 +1417,7 @@ updateCategorySummary();">
           <select class="specialSize" onchange="checkSpecialSize(this); 
 toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
  updateCategorySummary();">
-            <option value="">特注サイズを選択</option>`;
+            <option value="">別注サイズを選択</option>`;
 
         specialSizes.forEach(size => {
           row += `<option value="${size.value}" data-size-type="${size.type}">
