@@ -114,7 +114,7 @@ document.getElementById("emailConfirm").addEventListener("input", checkEmail);
 const MAIL_MEASUREMENT_HIDE_KEYS = new Set([
   "登録ID",
   "顧客コード",
-  "顧客名",
+  "顧客名称",
   "姓",
   "名",
   "セイ",
@@ -245,7 +245,7 @@ function buildMailHtml(preparedMailDraft) {
   const first = orders[0] || {};
   const measurement = preparedMailDraft.measurement || null;
 
-  const customerName = first.customerName || first["顧客名"] || "";
+  const customerName = first.customerName || first["顧客名称"] || "";
   const employeeNo = first.employeeNo || first.staffNo || first["職員番号"] || "";
   const sei = first["姓"] || first.sei || first["氏"] || "";
   const mei = first["名"] || first.mei || "";
