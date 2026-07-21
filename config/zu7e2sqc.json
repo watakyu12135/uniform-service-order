@@ -25,7 +25,7 @@
           "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
-          "sizes": [{"value": "S,M,L,LL,BL", "label": "S,M,L,LL,BLサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         },
         {
           "productCode": "MPA3903-14",
@@ -36,7 +36,7 @@
           "measurementGroup": "下衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 1,
-          "sizes": [{"value": "SS,S,M,L,LL,BL", "label": "SS,S,M,L,LL,BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         }
       ],
       "categoryLimits": [
@@ -81,7 +81,7 @@
           "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
-          "sizes": [{"value": "SS,S,M,L,LL,BL", "label": "SS,S,M,L,LL,BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         },
         {
           "productCode": "MPA3908-135",
@@ -92,7 +92,7 @@
           "measurementGroup": "下衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 1,
-          "sizes": [{"value": "S,M,L,LL,EL", "label": "S,M,L,LL,ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         }
       ],
       "categoryLimits": [
@@ -137,7 +137,7 @@
           "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
-          "sizes": [{"value": "SS,S,M,L,LL,BL", "label": "SS,S,M,L,LL,BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         },
         {
           "productCode": "MPA3903-135",
@@ -148,7 +148,7 @@
           "measurementGroup": "下衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 1,
-          "sizes": [{"value": "S,M,L,LL,BL", "label": "S,M,L,LL,BLサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         }
       ],
       "categoryLimits": [
@@ -193,7 +193,7 @@
           "measurementGroup": "上衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 0,
-          "sizes": [{"value": "S,M,L,LL,EL", "label": "S,M,L,LL,ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         },
         {
           "productCode": "LH6203-66",
@@ -204,7 +204,7 @@
           "measurementGroup": "下衣",
           "sizeSuffix": "サイズ",
           "inseamAlterable": 1,
-          "sizes": [{"value": "S,M,L,LL,EL", "label": "S,M,L,LL,ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         }
       ],
       "categoryLimits": [
