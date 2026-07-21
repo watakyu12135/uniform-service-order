@@ -2398,14 +2398,16 @@ function updateInseamAreaForProduct(row) {
     cell.innerHTML = "";
   });
 
-  // 股下加工欄は、同じ商品の最初の行に表示する
-  // 追加サイズ行の背景色に巻き込まれないようにする
+  // 股下加工欄は、同じ商品の全サイズ行の後に表示する。
+  // スマホ表示で「1行目 → 股下加工欄 → 追加サイズ行」とならないよう、
+  // 常に同じ商品の最後の行へ移動する。
   const baseRow = productRows[0];
-  const baseCell = baseRow.querySelector(".cell-inseam");
+  const displayRow = productRows[productRows.length - 1];
+  const displayCell = displayRow.querySelector(".cell-inseam");
 
-  if (!baseCell) return;
+  if (!displayCell) return;
 
-  baseCell.innerHTML = buildInseamAreaHtml(
+  displayCell.innerHTML = buildInseamAreaHtml(
     baseRow.dataset.productCategory,
     baseRow.dataset.measurementGroup || "",
     baseRow.dataset.inseamAlterable || 0
