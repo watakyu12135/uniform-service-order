@@ -1444,13 +1444,17 @@ function updateDepartmentOptions() {
     return;
   }
 
-  const departments = currentData.departments
-    .filter(d =>
-      d.active !== false &&
-      d.job === job &&
-      (!d.gender || d.gender === gender)
-    )
-    .sort((a, b) => (a.displayOrder || 9999) - (b.displayOrder || 9999));
+const departments = currentData.departments
+  .filter(d =>
+    d.active !== false &&
+    d.job === job &&
+    (!d.gender || d.gender === gender || d.gender === "兼用")
+  )
+  .sort((a, b) => (a.displayOrder || 9999) - (b.displayOrder || 9999))
+  .filter((d, index, array) =>
+    array.findIndex(x => x.department === d.department) === index
+  );
+
 
   if (departments.length === 0) {
     departmentSelect.innerHTML =
@@ -1802,7 +1806,7 @@ function openMeasurement(button) {
   currentMeasurementButton = button;
 
   if (!currentMeasurementType) {
-    alert("この商品の採寸グループが未設定、または採寸対象外です。商品マスタの採寸グループを確認してください。");
+    alert("この商品の採寸カテゴリが未設定、または採寸対象外です。商品マスタの採寸カテゴリを確認してください。");
     return;
   }
 
