@@ -2751,8 +2751,17 @@ function restoreInseamFromEditData(orders) {
   const restored = {};
 
   orders.forEach(order => {
-    const productCode = String(order["カタログ品番"] || order.productCode || "");
-    const inseamCm = String(order["股下cm"] || order.inseamCm || "").trim();
+    const productCode = String(
+      order["カタログ品番"] ||
+      order["商品コード"] ||
+      order.productCode ||
+      ""
+    ).trim();
+    const inseamCm = String(
+      order["股下cm"] ??
+      order.inseamCm ??
+      ""
+    ).trim();
 
     if (!productCode || !inseamCm) return;
     if (restored[productCode]) return;
