@@ -191,6 +191,12 @@ tr.product-row.extra-size-row-3 {
   border-left: 6px solid #e57373;
 }
 
+/* 商品単位の股下加工専用行。追加サイズ行の色とは切り離す */
+tr.inseam-row, tr.inseam-row td { background: #fff !important; }
+tr.inseam-row td { padding: 8px; text-align: left; border-top: 0; }
+tr.inseam-row .cell-inseam { width: 100%; box-sizing: border-box; }
+tr.inseam-row.inseam-row-empty { display: none; }
+
 /* 採寸画面 */
 .measurement-area {
   margin-top: 20px;
@@ -460,6 +466,9 @@ tr.product-row.extra-size-row-3 {
     grid-area: qty;
   }
 
+tr.inseam-row { display: table-row; background: #fff !important; }
+tr.inseam-row td { display: table-cell; width: 100%; padding: 8px; background: #fff !important; text-align: left; }
+tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; border: 0 !important; }
 .cell-inseam {
   grid-area: inseam;
   display: block !important;
@@ -1908,9 +1917,7 @@ toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
           </div>
         </td>`;
 
-	row += `<td class="cell-inseam">
-  ${buildInseamAreaHtml(p.productCategory, p.measurementGroup || "", p.inseamAlterable || 0)}
-</td>`;
+	row += `<td class="cell-inseam"></td>`;
 
  	row += `<td class="cell-measure">
           <button class="measure measure-table hidden" onclick="openMeasurement(this)">採寸</button>
@@ -1919,6 +1926,11 @@ toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
         row += `</tr>`;
 
         html += row;
+        html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
+          <td colspan="7" class="cell-inseam">
+            ${buildInseamAreaHtml(p.productCategory, p.measurementGroup || "", p.inseamAlterable || 0)}
+          </td>
+        </tr>`;
       });
     });
 
@@ -1997,7 +2009,9 @@ clone.querySelectorAll(".cell-inseam").forEach(cell => {
   cell.innerHTML = "";
 });
 
-  productRows[productRows.length - 1].after(clone);
+  const inseamRow = getProductInseamRow(productCode);
+  if (inseamRow) inseamRow.before(clone);
+  else productRows[productRows.length - 1].after(clone);
 updateCategorySummary();
 updateInseamAreaForProduct(row);
 }
@@ -2668,61 +2682,39 @@ function getRowsByProductCode(productCode) {
   );
 }
 
-function getProductInseamInput(productCode) {
-  const rows = getRowsByProductCode(productCode);
-
-  for (const row of rows) {
-    const input = row.querySelector(".inseamCmInput");
-    if (input) {
-      return input;
-    }
-  }
-
-  return null;
+function getProductInseamRow(productCode) {
+  const target = String(productCode || "").trim();
+  return Array.from(document.querySelectorAll("tr.inseam-row[data-inseam-row-for]")).find(row =>
+    String(row.dataset.inseamRowFor || "").trim() === target
+  ) || null;
 }
-
+function getProductInseamInput(productCode) {
+  const inseamRow = getProductInseamRow(productCode);
+  return inseamRow ? inseamRow.querySelector(".inseamCmInput") : null;
+}
 function updateInseamAreaForProduct(row) {
   if (!row || !row.dataset.productCode) return;
-
-  const productCode = row.dataset.productCode;
+  const productCode = String(row.dataset.productCode || "").trim();
   const productRows = getRowsByProductCode(productCode);
-
   if (productRows.length === 0) return;
-
-  const currentInput = getProductInseamInput(productCode);
-  const currentInseamCm = currentInput ? currentInput.value.trim() : "";
-
-  // 同じ商品の股下加工欄はいったん全部消す
-  productRows.forEach(r => {
-    const cell = r.querySelector(".cell-inseam");
-    if (!cell) return;
-    cell.innerHTML = "";
-  });
-
-  // 股下加工欄は、同じ商品の全サイズ行の後に表示する。
-  // スマホ表示で「1行目 → 股下加工欄 → 追加サイズ行」とならないよう、
-  // 常に同じ商品の最後の行へ移動する。
   const baseRow = productRows[0];
-  const displayRow = productRows[productRows.length - 1];
-  const displayCell = displayRow.querySelector(".cell-inseam");
-
-  if (!displayCell) return;
-
-  displayCell.innerHTML = buildInseamAreaHtml(
+  const inseamRow = getProductInseamRow(productCode);
+  if (!inseamRow) return;
+  const oldInput = inseamRow.querySelector(".inseamCmInput");
+  const currentInseamCm = oldInput ? oldInput.value.trim() : "";
+  const cell = inseamRow.querySelector(".cell-inseam");
+  if (!cell) return;
+  const areaHtml = buildInseamAreaHtml(
     baseRow.dataset.productCategory,
     baseRow.dataset.measurementGroup || "",
     baseRow.dataset.inseamAlterable || 0
   );
-
-  const newInput = getProductInseamInput(productCode);
-
-  if (newInput && currentInseamCm) {
-    newInput.value = currentInseamCm;
-  }
-
+  cell.innerHTML = areaHtml;
+  inseamRow.classList.toggle("inseam-row-empty", !areaHtml.trim());
+  const newInput = inseamRow.querySelector(".inseamCmInput");
+  if (newInput && currentInseamCm) newInput.value = currentInseamCm;
   updateInseamInputStateForProduct(productCode);
 }
-
 function updateAllInseamAreas() {
   const rows = Array.from(document.querySelectorAll("#table tr[data-product-code]"));
   const productCodes = [...new Set(rows.map(row => row.dataset.productCode))];
