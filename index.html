@@ -2622,7 +2622,8 @@ function isInseamTargetCategory(productCategory, measurementGroup) {
 }
 
 function buildInseamAreaHtml(productCategory, measurementGroup, inseamAlterable) {
-  const canAlter = String(inseamAlterable || "").trim() === "1";
+  const alterValue = String(inseamAlterable ?? "").trim().toLowerCase();
+  const canAlter = alterValue === "1" || alterValue === "true";
 
   if (!isInseamTargetCategory(productCategory, measurementGroup)) {
     return "";
@@ -2661,8 +2662,9 @@ function isInseamAlterable(row) {
 }
 
 function getRowsByProductCode(productCode) {
-  return Array.from(
-    document.querySelectorAll(`tr[data-product-code="${productCode}"]`)
+  const target = String(productCode || "").trim();
+  return Array.from(document.querySelectorAll("tr[data-product-code]")).filter(row =>
+    String(row.dataset.productCode || "").trim() === target
   );
 }
 
@@ -2743,6 +2745,34 @@ function getInseamCmForProduct(productCode) {
   return input.value.trim();
 }
 
+
+function getRegisteredInseamCm(item) {
+  if (!item || typeof item !== "object") return "";
+
+  const directKeys = [
+    "股下cm", "股下CM", "股下ＣＭ", "股下加工cm", "股下加工CM",
+    "股下加工寸法", "股下寸法", "inseamCm", "inseam", "InseamCm"
+  ];
+
+  for (const key of directKeys) {
+    const value = item[key];
+    if (value !== undefined && value !== null && String(value).trim() !== "") {
+      return String(value).replace(/\s*cm\s*$/i, "").trim();
+    }
+  }
+
+  for (const [key, value] of Object.entries(item)) {
+    const normalizedKey = String(key).replace(/[\s　_＿・()（）]/g, "").toLowerCase();
+    if (!normalizedKey.includes("股下")) continue;
+    if (normalizedKey.includes("可能") || normalizedKey.includes("フラグ")) continue;
+    if (value === undefined || value === null || String(value).trim() === "") continue;
+    const text = String(value).replace(/\s*cm\s*$/i, "").trim();
+    if (/^\d+(?:\.\d+)?$/.test(text)) return text;
+  }
+
+  return "";
+}
+
 function restoreInseamFromEditData(orders) {
   if (!orders || orders.length === 0) return;
 
@@ -2757,11 +2787,7 @@ function restoreInseamFromEditData(orders) {
       order.productCode ||
       ""
     ).trim();
-    const inseamCm = String(
-      order["股下cm"] ??
-      order.inseamCm ??
-      ""
-    ).trim();
+    const inseamCm = getRegisteredInseamCm(order);
 
     if (!productCode || !inseamCm) return;
     if (restored[productCode]) return;
@@ -2769,8 +2795,11 @@ function restoreInseamFromEditData(orders) {
     const input = getProductInseamInput(productCode);
 
     if (input) {
-      input.value = inseamCm;
-      restored[productCode] = true;
+      updateInseamInputStateForProduct(productCode);
+      if (!input.disabled) {
+        input.value = inseamCm;
+        restored[productCode] = true;
+      }
     }
   });
 }
