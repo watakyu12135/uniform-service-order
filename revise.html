@@ -633,6 +633,10 @@ function startEdit() {
     return;
   }
 
+  sessionStorage.removeItem("uniformDraft");
+  sessionStorage.removeItem("uniformDraftPending");
+  sessionStorage.removeItem("uniformReturnToIndex");
+  sessionStorage.removeItem("uniformConfirmPin");
   sessionStorage.setItem("uniformEditData", JSON.stringify(lastSearchResult));
   sessionStorage.setItem("uniformEditCustomer", customerKey);
 
