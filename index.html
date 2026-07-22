@@ -1120,6 +1120,7 @@ let currentData;
 const urlParams = new URLSearchParams(location.search);
 const isEditMode = urlParams.get("mode") === "edit";
 
+let effectiveEditMode = isEditMode;
 let editData = null;
 let editMeasureNo = "";
 /* ======================== */
@@ -1317,6 +1318,8 @@ function applyConfirmReturnData() {
   const base = returnDraft.orders[0] || {};
   const returnEditMode = returnDraft.editMode === true;
 
+  effectiveEditMode = returnEditMode;
+
   editData = {
     found: true,
     measureNo: returnDraft.measureNo || base["採寸番号"] || "",
@@ -1489,7 +1492,12 @@ function restoreOrdersFromEditData(orders) {
   const grouped = {};
 
   orders.forEach(order => {
-    const productCode = String(order["カタログ品番"] || "");
+    const productCode = String(
+      order["カタログ品番"] ||
+      order["商品コード"] ||
+      order.productCode ||
+      ""
+    ).trim();
 
     if (!productCode) return;
 
@@ -1540,8 +1548,8 @@ updateCategorySummary();
 
 function setProductRowValue(row, order) {
 
-  const size = String(order["サイズ"] || "");
-  const qty = order["数量"] || "";
+  const size = String(order["サイズ"] || order.size || "");
+  const qty = order["数量"] ?? order.qty ?? "";
 
   const mainSizeSelect = row.querySelector(".mainSize");
   const specialSizeSelect = row.querySelector(".specialSize");
@@ -3296,9 +3304,9 @@ if (hasBespokeWithoutMeasurement()) {
   const payload = {
     orders: data,
     measurement: measurementPayload,
-    editMode: isEditMode,
-    measureNo: isEditMode ? editMeasureNo : "",
-    registrationType: isEditMode ? "修正" : "新規",
+    editMode: effectiveEditMode,
+    measureNo: effectiveEditMode ? editMeasureNo : "",
+    registrationType: effectiveEditMode ? "修正" : "新規",
     publicKey: customerKey,
     customerKey: customerKey,
     customer: customerKey
@@ -3319,7 +3327,7 @@ if (hasBespokeWithoutMeasurement()) {
   console.log(payload);
   setConfirmTransitionBusy(true);
   try {
-    if (isEditMode) {
+    if (effectiveEditMode) {
       payload.rosterCheck = { skipped: true, reason: "revision" };
     } else {
       payload.rosterCheck = await checkRosterDuplicate(common);
