@@ -77,33 +77,6 @@ button {
   padding: 10px 16px;
   width: 100%;
 }
-.page-actions {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.page-actions button {
-  margin-top: 0;
-  width: auto;
-  min-width: 140px;
-  border: 1px solid #7b8794;
-  border-radius: 7px;
-  background: #fff;
-  color: #263547;
-  font-weight: bold;
-  cursor: pointer;
-}
-.page-actions button:hover,
-.page-actions button:focus-visible {
-  background: #eef3f8;
-  outline: 3px solid rgba(74, 144, 226, .2);
-}
-@media (max-width: 600px) {
-  .page-actions button {
-    width: 100%;
-    min-height: 44px;
-  }
-}
 
 .hidden {
   display: none;
@@ -127,10 +100,38 @@ button {
   font-size: 13px;
   color: #555;
 }
+
+.back-to-application {
+  position: sticky;
+  top: 10px;
+  z-index: 1000;
+  display: block;
+  width: 100%;
+  margin: 0 0 18px;
+  padding: 13px 16px;
+  border: 2px solid #2f6fae;
+  border-radius: 8px;
+  background: #eef6ff;
+  color: #174f86;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 3px 10px rgba(30, 79, 128, .15);
+  cursor: pointer;
+}
+.back-to-application:hover,
+.back-to-application:focus-visible {
+  background: #dcecff;
+  outline: 3px solid rgba(47,111,174,.22);
+}
 </style>
 </head>
 
 <body>
+<button id="backToApplicationButton" class="back-to-application" type="button">
+  ← ユニフォーム申請画面に戻る
+</button>
 
 <h2>採寸内容修正</h2>
 
@@ -195,23 +196,37 @@ button {
 
 <script>
 
-/* ブラウザの戻る操作を抑止する */
-(function preventBrowserBack() {
-  history.replaceState({ appGuard: true }, "", location.href);
-  history.pushState({ appGuard: true }, "", location.href);
+/* 通常のブラウザ「戻る」を抑止し、画面内ボタンだけで遷移させる */
+let allowApplicationNavigation = false;
+(function installBackGuard() {
+  const keepCurrentPage = () => {
+    try {
+      history.pushState({ uniformPageGuard: true }, "", location.href);
+    } catch (e) {
+      console.warn("履歴制御を設定できませんでした。", e);
+    }
+  };
+
+  history.replaceState({ uniformPageGuard: true }, "", location.href);
+  keepCurrentPage();
+
   window.addEventListener("popstate", () => {
-    history.pushState({ appGuard: true }, "", location.href);
+    if (allowApplicationNavigation) return;
+    setTimeout(keepCurrentPage, 0);
   });
+
   window.addEventListener("pageshow", event => {
-    if (event.persisted) {
-      history.pushState({ appGuard: true }, "", location.href);
+    if (event.persisted && !allowApplicationNavigation) {
+      setTimeout(keepCurrentPage, 0);
     }
   });
 })();
-function returnToApplication() {
+document.getElementById("backToApplicationButton").addEventListener("click", () => {
+  allowApplicationNavigation = true;
   const customer = getCustomer();
   location.replace("index.html?customer=" + encodeURIComponent(customer));
-}
+});
+
 const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
 const SEARCH_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/dc0e928adb2b4ef58cd09486a5cfdf71/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=AT_FwoPlrRofPBSLPRpuIjijIWwTbo9YvjgJXNkJE-g";
 
