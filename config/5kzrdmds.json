@@ -70,7 +70,7 @@
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         },
         {
-          "productCode": "RT5402-53",
+          "productCode": "RT5402-35",
           "name": "男女兼用スクラブ",
           "color": "スカイブルー",
           "gender": "兼用",
@@ -243,7 +243,7 @@
           "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
         },
         {
-          "productCode": "RT5402-53",
+          "productCode": "RT5402-35",
           "name": "男女兼用スクラブ",
           "color": "スカイブルー",
           "gender": "兼用",
