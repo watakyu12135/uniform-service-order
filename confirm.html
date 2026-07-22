@@ -97,6 +97,12 @@ label { font-weight: bold; display: block; margin-top: 10px; }
 #privacyCloseButton { margin: 0; }
 body.modal-open { overflow: hidden; }
 
+.sending-overlay { position: fixed; inset: 0; z-index: 20000; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,.68); text-align: center; }
+.sending-overlay.hidden { display: none; }
+.sending-panel { width: min(90vw, 460px); padding: 34px 24px; border-radius: 14px; background: #fff; box-shadow: 0 14px 44px rgba(0,0,0,.38); }
+.sending-wait, .sending-warning { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.6; }
+.sending-status { min-height: 38px; margin: 22px 0; color: #174f86; font-size: 26px; font-weight: 800; letter-spacing: .04em; }
+body.sending-locked { overflow: hidden; }
 .hidden {
   display: none;
 }
@@ -173,7 +179,7 @@ body.modal-open { overflow: hidden; }
   <label>
     <input type="checkbox" id="confirmCheck" disabled>
     <span id="newConfirmText">
-      <button id="privacyOpenButton" class="privacy-link-button" type="button">プライバシーポリシー</button>を確認の上、入力内容を確認しました
+      <button id="privacyOpenButton" class="privacy-link-button" type="button">プライバシーポリシー</button>に同意し、入力内容に間違いがないことを確認しました
     </span>
     <span id="editConfirmText" class="hidden">修正内容を確認しました</span>
   </label>
@@ -191,9 +197,16 @@ body.modal-open { overflow: hidden; }
       <iframe id="privacyFrame" class="privacy-frame" title="プライバシーポリシー・免責事項"></iframe>
     </div>
     <div class="privacy-dialog-footer">
-      <p id="privacyScrollMessage" class="privacy-scroll-message">最後までスクロールすると閉じるボタンが有効になります。</p>
-      <button id="privacyCloseButton" type="button" disabled>最後まで確認して閉じる</button>
+      <p id="privacyScrollMessage" class="privacy-scroll-message">画面を閉じるには最後までスクロールしてください。</p>
+      <button id="privacyCloseButton" type="button" disabled>確認して閉じる</button>
     </div>
+  </div>
+</div>
+<div id="sendingOverlay" class="sending-overlay hidden" role="alert" aria-live="assertive" aria-busy="true">
+  <div class="sending-panel">
+    <p class="sending-wait">しばらくお待ち下さい。</p>
+    <div id="sendingStatus" class="sending-status">送信中.</div>
+    <p class="sending-warning">画面を閉じたり戻ったりしないで下さい。</p>
   </div>
 </div>
 <button id="submitBtn" disabled>登録する</button>
@@ -212,6 +225,7 @@ function markReturnToInput() {
 }
 window.addEventListener("pagehide", markReturnToInput);
 document.getElementById("returnToInputButton").addEventListener("click", () => {
+  if (submitInProgress) return;
   if (!draft) {
     alert("戻す入力内容がありません。入力画面からやり直してください。");
     return;
@@ -517,7 +531,7 @@ function resetPrivacyModalState() {
   const closeButton = document.getElementById("privacyCloseButton");
   const message = document.getElementById("privacyScrollMessage");
   closeButton.disabled = true;
-  message.innerText = "最後までスクロールすると閉じるボタンが有効になります。";
+  message.innerText = "画面を閉じるには最後までスクロールしてください。";
 }
 
 function watchPrivacyFrameScroll() {
@@ -535,7 +549,7 @@ function watchPrivacyFrameScroll() {
         privacyFrameReady = true;
         document.getElementById("privacyCloseButton").disabled = false;
         document.getElementById("privacyScrollMessage").innerText =
-          "最後まで確認しました。閉じるボタンを押してください。";
+          "確認が完了しました。";
       }
     };
     frameWindow.addEventListener("scroll", checkBottom, { passive: true });
@@ -683,18 +697,48 @@ function renderRosterCheckResult() {
 }
 
 let submitInProgress = false;
+let sendingAnimationTimer = null;
 
-function lockSubmitButton(isEdit) {
-  const submitBtn = document.getElementById("submitBtn");
-  submitInProgress = true;
-  submitBtn.disabled = true;
-  submitBtn.innerText = "送信中...";
+function startSendingAnimation() {
+  const status = document.getElementById("sendingStatus");
+  let dotCount = 1;
+  if (sendingAnimationTimer) clearInterval(sendingAnimationTimer);
+  status.innerText = "送信中.";
+  sendingAnimationTimer = setInterval(() => {
+    dotCount = dotCount >= 3 ? 1 : dotCount + 1;
+    status.innerText = "送信中" + ".".repeat(dotCount);
+  }, 500);
 }
-
+function stopSendingAnimation() {
+  if (sendingAnimationTimer) {
+    clearInterval(sendingAnimationTimer);
+    sendingAnimationTimer = null;
+  }
+}
+function lockSubmitButton(isEdit) {
+  submitInProgress = true;
+  document.getElementById("submitBtn").disabled = true;
+  const returnButton = document.getElementById("returnToInputButton");
+  returnButton.disabled = true;
+  returnButton.classList.add("hidden");
+  document.getElementById("confirmCheck").disabled = true;
+  document.getElementById("duplicateConfirmCheck").disabled = true;
+  document.getElementById("sendingOverlay").classList.remove("hidden");
+  document.body.classList.add("sending-locked");
+  startSendingAnimation();
+}
 function resetSubmitButton(isEdit) {
-  const submitBtn = document.getElementById("submitBtn");
-  const confirmCheck = document.getElementById("confirmCheck");
   submitInProgress = false;
+  stopSendingAnimation();
+  document.getElementById("sendingOverlay").classList.add("hidden");
+  document.body.classList.remove("sending-locked");
+  const returnButton = document.getElementById("returnToInputButton");
+  returnButton.disabled = false;
+  returnButton.classList.remove("hidden");
+  document.getElementById("duplicateConfirmCheck").disabled = false;
+  const confirmCheck = document.getElementById("confirmCheck");
+  confirmCheck.disabled = !(draft && draft.editMode === true) && !privacyReviewed;
+  const submitBtn = document.getElementById("submitBtn");
   submitBtn.innerText = isEdit ? "修正内容を登録する" : "登録する";
   updateSubmitButtonState();
 }
