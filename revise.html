@@ -532,12 +532,6 @@ function renderSearchResult(result) {
           <div>色：${escapeHtml(item["色柄"] || item["色"] || item.color || "")}</div>
           <div>サイズ：${escapeHtml(item["サイズ"] || item.size || "")}</div>
           <div>数量：${escapeHtml(item["数量"] || item.qty || "")}</div>
-          ${(() => {
-            const inseamCm = String(item["股下cm"] ?? item.inseamCm ?? "").trim();
-            return inseamCm
-              ? `<div>股下加工：${escapeHtml(inseamCm)}cm</div>`
-              : "";
-          })()}
         </div>
       `;
     });
