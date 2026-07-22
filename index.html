@@ -193,17 +193,26 @@ tr.product-row.extra-size-row-3 {
 
 /* 商品単位の股下加工専用行。追加サイズ行の色とは切り離す */
 tr.inseam-row, tr.inseam-row td { background: #fff !important; }
-tr.inseam-row td { padding: 4px; border-top: 0; }
-tr.inseam-row .inseam-spacer,
-tr.inseam-row .inseam-measure-spacer { padding: 0; }
-tr.inseam-row .cell-inseam {
-  box-sizing: border-box;
-  text-align: left;
-  vertical-align: top;
-}
-tr.inseam-row .inseam-box,
-tr.inseam-row .inseam-message { margin-top: 0; }
+tr.inseam-row td { padding: 8px; text-align: left; border-top: 0; }
+tr.inseam-row .cell-inseam { width: 100%; box-sizing: border-box; }
+tr.inseam-row.inseam-row-empty { display: none; }
 
+
+/* 股下加工欄のPC・スマホ配置切替 */
+@media (min-width: 601px) {
+  tr.inseam-row {
+    display: none !important;
+  }
+  tr.product-row > .cell-inseam {
+    display: table-cell;
+    vertical-align: top;
+    text-align: left;
+  }
+  tr.product-row > .cell-inseam .inseam-box,
+  tr.product-row > .cell-inseam .inseam-message {
+    margin-top: 0;
+  }
+}
 
 /* 採寸画面 */
 .measurement-area {
@@ -474,25 +483,9 @@ tr.inseam-row .inseam-message { margin-top: 0; }
     grid-area: qty;
   }
 
-tr.inseam-row {
-  display: block;
-  width: 100%;
-  margin: -8px 0 8px;
-  background: #fff !important;
-}
-tr.inseam-row .inseam-spacer,
-tr.inseam-row .inseam-measure-spacer { display: none !important; }
-tr.inseam-row .cell-inseam {
-  display: block !important;
-  width: 100%;
-  margin: 0;
-  padding: 8px;
-  border: 1px solid #ccc !important;
-  border-top: 0 !important;
-  background: #fff !important;
-  text-align: left;
-  box-sizing: border-box;
-}
+tr.inseam-row { display: table-row; background: #fff !important; }
+tr.inseam-row td { display: table-cell; width: 100%; padding: 8px; background: #fff !important; text-align: left; }
+tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; border: 0 !important; }
 .cell-inseam {
   grid-area: inseam;
   display: block !important;
@@ -1950,18 +1943,11 @@ toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
         row += `</tr>`;
 
         html += row;
-        const inseamAreaHtml = buildInseamAreaHtml(
-          p.productCategory,
-          p.measurementGroup || "",
-          p.inseamAlterable || 0
-        );
-        if (inseamAreaHtml.trim()) {
-          html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
-            <td colspan="5" class="inseam-spacer" aria-hidden="true"></td>
-            <td class="cell-inseam">${inseamAreaHtml}</td>
-            <td class="inseam-measure-spacer" aria-hidden="true"></td>
-          </tr>`;
-        }
+        html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
+          <td colspan="7" class="cell-inseam">
+            ${buildInseamAreaHtml(p.productCategory, p.measurementGroup || "", p.inseamAlterable || 0)}
+          </td>
+        </tr>`;
       });
     });
 
@@ -2045,6 +2031,7 @@ clone.querySelectorAll(".cell-inseam").forEach(cell => {
   else productRows[productRows.length - 1].after(clone);
 updateCategorySummary();
 updateInseamAreaForProduct(row);
+placeInseamAreaForProduct(productCode);
 }
 
 function checkMainSize(select) {
@@ -2713,6 +2700,36 @@ function getRowsByProductCode(productCode) {
   );
 }
 
+
+function placeInseamAreaForProduct(productCode) {
+  const productRows = getRowsByProductCode(productCode);
+  const inseamRow = getProductInseamRow(productCode);
+  if (productRows.length === 0 || !inseamRow) return;
+
+  const desktopCell = productRows[0].querySelector(':scope > .cell-inseam');
+  const mobileCell = inseamRow.querySelector(':scope > .cell-inseam');
+  const area =
+    productRows[0].querySelector('.inseam-box, .inseam-message') ||
+    inseamRow.querySelector('.inseam-box, .inseam-message');
+
+  if (!desktopCell || !mobileCell || !area) return;
+
+  if (window.matchMedia('(max-width: 600px)').matches) {
+    if (area.parentElement !== mobileCell) mobileCell.appendChild(area);
+  } else {
+    if (area.parentElement !== desktopCell) desktopCell.appendChild(area);
+  }
+}
+
+function placeAllInseamAreas() {
+  const productCodes = [...new Set(
+    Array.from(document.querySelectorAll('#table tr[data-product-code]'))
+      .map(row => String(row.dataset.productCode || '').trim())
+      .filter(Boolean)
+  )];
+  productCodes.forEach(placeInseamAreaForProduct);
+}
+
 function getProductInseamRow(productCode) {
   const target = String(productCode || "").trim();
   return Array.from(document.querySelectorAll("tr.inseam-row[data-inseam-row-for]")).find(row =>
@@ -2720,6 +2737,11 @@ function getProductInseamRow(productCode) {
   ) || null;
 }
 function getProductInseamInput(productCode) {
+  const productRows = getRowsByProductCode(productCode);
+  for (const row of productRows) {
+    const input = row.querySelector(".inseamCmInput");
+    if (input) return input;
+  }
   const inseamRow = getProductInseamRow(productCode);
   return inseamRow ? inseamRow.querySelector(".inseamCmInput") : null;
 }
@@ -2741,7 +2763,9 @@ function updateInseamAreaForProduct(row) {
     baseRow.dataset.inseamAlterable || 0
   );
   cell.innerHTML = areaHtml;
-  const newInput = inseamRow.querySelector(".inseamCmInput");
+  inseamRow.classList.toggle("inseam-row-empty", !areaHtml.trim());
+  placeInseamAreaForProduct(productCode);
+  const newInput = getProductInseamInput(productCode);
   if (newInput && currentInseamCm) newInput.value = currentInseamCm;
   updateInseamInputStateForProduct(productCode);
 }
@@ -3144,6 +3168,13 @@ window.addEventListener("pageshow", () => {
   if (currentData && shouldRestoreConfirmDraft()) {
     applyConfirmReturnData();
   }
+});
+
+
+let inseamLayoutTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(inseamLayoutTimer);
+  inseamLayoutTimer = setTimeout(placeAllInseamAreas, 120);
 });
 
 async function submitData() {
