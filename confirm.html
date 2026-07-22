@@ -110,9 +110,27 @@ label { font-weight: bold; display: block; margin-top: 10px; }
 </div>
 
 <button id="submitBtn" disabled>登録する</button>
-<button type="button" onclick="history.back()">戻る</button>
+<button type="button" onclick="returnToInput()">入力画面に戻る</button>
 
 <script>
+
+/* ブラウザの戻る操作を抑止する */
+(function preventBrowserBack() {
+  history.replaceState({ appGuard: true }, "", location.href);
+  history.pushState({ appGuard: true }, "", location.href);
+  window.addEventListener("popstate", () => {
+    history.pushState({ appGuard: true }, "", location.href);
+  });
+  window.addEventListener("pageshow", event => {
+    if (event.persisted) {
+      history.pushState({ appGuard: true }, "", location.href);
+    }
+  });
+})();
+function returnToInput() {
+  // 入力内容を保持したまま、直前の入力画面へ戻す。
+  history.go(-2);
+}
 const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
 const FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/2fadd75538814f6eb11f426aee74c62e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r_0adeV2uMpNHxM0OzPQUcI8StgIf6zMICtxq4y2cG0";  
 let draft = null;
