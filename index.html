@@ -638,265 +638,75 @@ tr.product-row.extra-size-row-3 {
   font-size: 15px;
 }
 
-
-/* ===== 受付ページ上部・基本情報カード ===== */
-.page-shell {
-  width: min(100%, 980px);
-  margin: 0 auto;
-}
-.site-header {
-  margin-bottom: 26px;
-}
-.brand-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
-}
-.company-logo {
-  display: block;
-  width: min(360px, 48vw);
-  max-height: 82px;
-  object-fit: contain;
-  object-position: left center;
-}
-.logo-fallback {
-  display: none;
-  color: #333;
-  font-size: 18px;
-  font-weight: 700;
-}
-#policyLink {
-  position: static;
-  flex: 0 0 auto;
-  font-size: 15px;
-  font-weight: 700;
-}
-.page-heading {
-  text-align: center;
-  margin: 0 0 24px;
-}
-.customer-page-name {
-  margin: 0 0 6px;
-  font-size: clamp(20px, 3vw, 30px);
-  font-weight: 700;
-}
-#pageTitle {
-  margin: 0;
-  font-size: clamp(30px, 5vw, 48px);
-  line-height: 1.25;
-}
-.revise-card {
-  display: block;
-  max-width: 680px;
-  margin: 0 auto 26px;
-  padding: 15px 20px;
-  border: 2px solid #e69a26;
-  border-left-width: 8px;
-  border-radius: 10px;
-  background: #fff8e8;
-  color: #402b08 !important;
-  text-decoration: none !important;
-  box-sizing: border-box;
-  box-shadow: 0 4px 12px rgba(83, 57, 13, 0.12);
-  transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
-  animation: revise-card-pulse 2.2s ease-in-out infinite;
-}
-.revise-card:hover,
-.revise-card:focus-visible {
-  transform: translateY(-2px);
-  background: #fff0ca;
-  box-shadow: 0 7px 18px rgba(83, 57, 13, 0.2);
-  outline: 3px solid rgba(230, 154, 38, .25);
-}
-.revise-card-kicker {
-  display: block;
-  margin-bottom: 3px;
-  font-size: 14px;
-  font-weight: 700;
-}
-.revise-card-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 20px;
-  font-weight: 800;
-}
-@keyframes revise-card-pulse {
-  0%, 100% { background: #fff8e8; }
-  50% { background: #ffe7ac; }
-}
-.basic-info-card {
-  max-width: 760px;
-  margin: 0 auto 28px;
-  padding: 22px 24px 12px;
-  border: 2px solid #cfd6df;
-  border-radius: 12px;
-  background: #fff;
-  box-sizing: border-box;
-  box-shadow: 0 4px 14px rgba(34, 55, 78, 0.08);
-}
-.basic-info-title {
-  margin: 0 0 22px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #dfe5ec;
-  text-align: center;
-  font-size: 24px;
-}
-.basic-select-field {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 20px;
-}
-.basic-select-field > label {
-  min-width: 80px;
-  font-weight: 700;
-}
-.basic-select-field select {
-  min-width: 170px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .revise-card { animation: none; }
-}
-@media (max-width: 600px) {
-  body { padding: 14px; }
-  .site-header { margin-bottom: 20px; }
-  .brand-row {
-    display: block;
-    margin-bottom: 22px;
-  }
-  .company-logo {
-    width: min(270px, 82vw);
-    max-height: 65px;
-    margin-bottom: 18px;
-  }
-  #policyLink {
-    text-align: right;
-    font-size: 14px;
-  }
-  .page-heading {
-    margin-bottom: 20px;
-  }
-  .customer-page-name {
-    font-size: 21px;
-  }
-  #pageTitle {
-    font-size: 32px;
-  }
-  .revise-card {
-    width: 100%;
-    margin-bottom: 22px;
-    padding: 14px 15px;
-  }
-  .revise-card-action {
-    font-size: 18px;
-  }
-  .basic-info-card {
-    width: 100%;
-    padding: 18px 14px 8px;
-    border-radius: 10px;
-  }
-  .basic-info-title {
-    margin-bottom: 18px;
-    font-size: 22px;
-  }
-  .basic-select-field {
-    margin-bottom: 18px;
-  }
-  .basic-select-field > label {
-    min-width: 64px;
-  }
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="page-shell">
-  <header class="site-header">
-    <div class="brand-row">
-      <div>
-        <img
-          class="company-logo"
-          src="images/company-logo.png"
-          alt="ワタキューセイモア株式会社"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-        >
-        <div class="logo-fallback">ワタキューセイモア株式会社</div>
-      </div>
-      <div id="policyLink">
-        <a href="privacy.html">プライバシーポリシー・免責事項</a>
-      </div>
-    </div>
+<!-- プライバシーポリシー・免責事項リンク -->
+<div id="policyLink">
+  <a href="privacy.html">プライバシーポリシー・免責事項</a>
+</div>
 
-    <div class="page-heading">
-      <div id="customerInfo" class="customer-page-name">読み込み中... 様専用</div>
-      <h1 id="pageTitle">ユニフォーム申請受付</h1>
-    </div>
+<!-- 修正画面リンク -->
+<div class="top-links">
+  <a id="reviseLink" href="revise.html">入力済みの採寸情報を修正する方はこちら</a>
+</div>
 
-    <a id="reviseLink" class="revise-card" href="revise.html">
-      <span class="revise-card-kicker">すでに申請済みの方</span>
-      <span class="revise-card-action">
-        <span>✎ 入力内容の修正はこちら</span>
-        <span aria-hidden="true">›</span>
-      </span>
-    </a>
-  </header>
+<h2>ユニフォーム申請</h2>
 
-  <section class="basic-info-card" aria-labelledby="basicInfoTitle">
-    <h2 id="basicInfoTitle" class="basic-info-title">基本情報の入力</h2>
+<div id="customerInfo">顧客：読み込み中...</div>
+<br>
 
-    <div id="employeeNoArea" class="basic-field hidden">
-      <label for="employeeNo">職員番号</label>
-      <input id="employeeNo" inputmode="latin" autocomplete="off" maxlength="30" oninput="normalizeEmployeeNoInput(this)">
-    </div>
+<div id="employeeNoArea" class="basic-field hidden">
+  <label for="employeeNo">職員番号</label>
+  <input id="employeeNo" inputmode="latin" autocomplete="off" maxlength="30" oninput="normalizeEmployeeNoInput(this)">
+</div>
 
-    <div class="name-area">
-      <div class="name-field">
-        <label for="sei">姓</label>
-        <input id="sei" inputmode="text" autocomplete="family-name">
-      </div>
-      <div class="name-field">
-        <label for="mei">名</label>
-        <input id="mei" inputmode="text" autocomplete="given-name">
-      </div>
-      <div class="name-field">
-        <label for="seiKana">セイ</label>
-        <input id="seiKana" inputmode="katakana" autocomplete="off">
-      </div>
-      <div class="name-field">
-        <label for="meiKana">メイ</label>
-        <input id="meiKana" inputmode="katakana" autocomplete="off">
-      </div>
-    </div>
+<div class="name-area">
+  <div class="name-field">
+    <label for="sei">姓</label>
+    <input id="sei" inputmode="text" autocomplete="family-name">
+  </div>
 
-    <div class="basic-select-field">
-      <label for="gender">性別</label>
-      <select id="gender" onchange="changeGender()">
-        <option value="">選択</option>
-        <option value="男性">男性</option>
-        <option value="女性">女性</option>
-      </select>
-    </div>
+  <div class="name-field">
+    <label for="mei">名</label>
+    <input id="mei" inputmode="text" autocomplete="given-name">
+  </div>
 
-    <div class="basic-select-field">
-      <label for="job">職種</label>
-      <select id="job" onchange="changeJob()">
-        <option value="">選択</option>
-      </select>
-    </div>
+  <div class="name-field">
+    <label for="seiKana">セイ</label>
+    <input id="seiKana" inputmode="katakana" autocomplete="off">
+  </div>
 
-    <div id="departmentArea" class="basic-select-field hidden">
-      <label for="department">部署</label>
-      <select id="department">
-        <option value="">選択</option>
-      </select>
-    </div>
-  </section>
+  <div class="name-field">
+    <label for="meiKana">メイ</label>
+    <input id="meiKana" inputmode="katakana" autocomplete="off">
+  </div>
+</div>
+
+
+性別：
+<select id="gender" onchange="changeGender()">
+  <option value="">選択</option>
+  <option value="男性">男性</option>
+  <option value="女性">女性</option>
+</select><br><br>
+
+
+職種：
+<select id="job" onchange="changeJob()">
+  <option value="">選択</option>
+</select><br><br>
+
+<div id="departmentArea" class="hidden">
+  部署：
+  <select id="department">
+    <option value="">選択</option>
+  </select>
+  <br><br>
+</div>
+
 <div id="limitDeclarationArea"></div>
 
 <div class="table-wrap">
@@ -907,7 +717,6 @@ tr.product-row.extra-size-row-3 {
 
 <button id="submitButton" onclick="submitData()">確認</button>
 
-</div>
 <div id="measurementArea" class="hidden measurement-area">
 
   <h2>別寸採寸表入力</h2>
@@ -1254,7 +1063,7 @@ currentData = data;
 setupBasicInfoVisibility();
 
 document.getElementById("customerInfo").innerText =
-  currentData.customerName + " 様専用";
+  "顧客：" + currentData.customerName;
 
     const reviseLink = document.getElementById("reviseLink");
     if (reviseLink) {
@@ -1268,7 +1077,11 @@ document.getElementById("customerInfo").innerText =
 
     updateJobOptions();
 
-    if (isEditMode) {
+    const returnedFromConfirm = sessionStorage.getItem("uniformReturnToIndex") === "1";
+    if (returnedFromConfirm) {
+      sessionStorage.removeItem("uniformReturnToIndex");
+      applyConfirmReturnData();
+    } else if (isEditMode) {
       applyEditModeData();
     }
   })
@@ -1276,6 +1089,82 @@ document.getElementById("customerInfo").innerText =
     document.getElementById("table").innerHTML =
       "<tr><td colspan='7'>読み込みに失敗しました：" + error.message + "</td></tr>";
   });
+
+function getFirstValue(source, keys) {
+  if (!source) return "";
+  for (const key of keys) {
+    const value = source[key];
+    if (value !== undefined && value !== null && String(value).trim() !== "") {
+      return String(value);
+    }
+  }
+  return "";
+}
+
+function applyConfirmReturnData() {
+  let returnDraft = null;
+  try {
+    returnDraft = JSON.parse(sessionStorage.getItem("uniformDraft") || "null");
+  } catch (e) {
+    returnDraft = null;
+  }
+  if (!returnDraft || !Array.isArray(returnDraft.orders) || returnDraft.orders.length === 0) {
+    alert("確認画面の入力内容を復元できませんでした。もう一度入力してください。");
+    return;
+  }
+
+  const base = returnDraft.orders[0] || {};
+  const returnEditMode = returnDraft.editMode === true;
+
+  editData = {
+    found: true,
+    measureNo: returnDraft.measureNo || base["採寸番号"] || "",
+    orders: returnDraft.orders,
+    measurement: returnDraft.measurement || null
+  };
+  editMeasureNo = editData.measureNo;
+
+  const employeeNoInput = document.getElementById("employeeNo");
+  if (employeeNoInput) {
+    employeeNoInput.value = getFirstValue(base, ["職員番号", "employeeNo", "staffNo"]);
+  }
+  document.getElementById("sei").value = getFirstValue(base, ["姓", "氏", "sei"]);
+  document.getElementById("mei").value = getFirstValue(base, ["名", "mei"]);
+  document.getElementById("seiKana").value = getFirstValue(base, ["セイ", "シ", "seiKana"]);
+  document.getElementById("meiKana").value = getFirstValue(base, ["メイ", "meiKana"]);
+
+  const genderValue = getFirstValue(base, ["性別", "gender"]);
+  const jobValue = getFirstValue(base, ["職種", "job"]);
+  const departmentValue = getFirstValue(base, ["部署", "department"]);
+  document.getElementById("gender").value = genderValue;
+  updateJobOptions();
+  addMissingOption(document.getElementById("job"), jobValue);
+  document.getElementById("job").value = jobValue;
+  changeJob();
+
+  const departmentSelect = document.getElementById("department");
+  if (departmentSelect) {
+    addMissingOption(departmentSelect, departmentValue);
+    departmentSelect.value = departmentValue;
+  }
+
+  restoreMeasurementFromEditData(returnDraft.measurement);
+  restoreOrdersFromEditData(returnDraft.orders);
+
+  if (returnEditMode) {
+    const title = document.querySelector("h2");
+    if (title) title.innerText = "ユニフォーム申請（修正）";
+    const reviseLink = document.getElementById("reviseLink");
+    if (reviseLink) {
+      reviseLink.innerText = "修正対象を検索し直す";
+      reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
+    }
+    setBasicInfoReadOnly();
+  }
+  updateCategorySummary();
+  updateAllMeasurementButtons();
+  updateAllInseamAreas();
+}
 
 function applyEditModeData() {
 
@@ -1300,19 +1189,14 @@ function applyEditModeData() {
     return;
   }
 
-  const title = document.getElementById("pageTitle");
+  const title = document.querySelector("h2");
   if (title) {
-    title.innerText = "ユニフォーム申請受付（修正）";
+    title.innerText = "ユニフォーム申請（修正）";
   }
 
   const reviseLink = document.getElementById("reviseLink");
   if (reviseLink) {
-    reviseLink.innerHTML = `
-      <span class="revise-card-kicker">修正対象を変更する場合</span>
-      <span class="revise-card-action">
-        <span>✎ 修正対象を検索し直す</span>
-        <span aria-hidden="true">›</span>
-      </span>`;
+    reviseLink.innerText = "修正対象を検索し直す";
     reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
   }
 
@@ -1321,11 +1205,11 @@ function applyEditModeData() {
     employeeNoInput.value = base["職員番号"] || base.employeeNo || base.staffNo || "";
   }
 
-  document.getElementById("sei").value = base["姓"] || "";
-  document.getElementById("mei").value = base["名"] || "";
+  document.getElementById("sei").value = getFirstValue(base, ["姓", "氏", "sei"]);
+  document.getElementById("mei").value = getFirstValue(base, ["名", "mei"]);
 
-document.getElementById("seiKana").value = base["セイ"] || base.seiKana || "";
-document.getElementById("meiKana").value = base["メイ"] || base.meiKana || "";
+document.getElementById("seiKana").value = getFirstValue(base, ["セイ", "シ", "seiKana"]);
+document.getElementById("meiKana").value = getFirstValue(base, ["メイ", "meiKana"]);
 
   document.getElementById("gender").value = base["性別"] || "";
   updateJobOptions();
@@ -3143,6 +3027,14 @@ if (inseamAlterable === 1 && sizeInfo.size !== "別寸") {
 
 data.push({
   ...common,
+  "職員番号": common.employeeNo || "",
+  "姓": common.sei,
+  "名": common.mei,
+  "セイ": common.seiKana,
+  "メイ": common.meiKana,
+  "性別": common.gender,
+  "職種": common.job,
+  "部署": common.department,
   product,
   productCode,
   color,
