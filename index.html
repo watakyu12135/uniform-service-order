@@ -195,7 +195,7 @@ tr.product-row.extra-size-row-3 {
 tr.inseam-row, tr.inseam-row td { background: #fff !important; }
 tr.inseam-row td { padding: 8px; text-align: left; border-top: 0; }
 tr.inseam-row .cell-inseam { width: 100%; box-sizing: border-box; }
-tr.inseam-row.inseam-row-empty { display: none; }
+
 
 /* 採寸画面 */
 .measurement-area {
@@ -1926,11 +1926,16 @@ toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
         row += `</tr>`;
 
         html += row;
-        html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
-          <td colspan="7" class="cell-inseam">
-            ${buildInseamAreaHtml(p.productCategory, p.measurementGroup || "", p.inseamAlterable || 0)}
-          </td>
-        </tr>`;
+        const inseamAreaHtml = buildInseamAreaHtml(
+          p.productCategory,
+          p.measurementGroup || "",
+          p.inseamAlterable || 0
+        );
+        if (inseamAreaHtml.trim()) {
+          html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
+            <td colspan="7" class="cell-inseam">${inseamAreaHtml}</td>
+          </tr>`;
+        }
       });
     });
 
@@ -2710,7 +2715,6 @@ function updateInseamAreaForProduct(row) {
     baseRow.dataset.inseamAlterable || 0
   );
   cell.innerHTML = areaHtml;
-  inseamRow.classList.toggle("inseam-row-empty", !areaHtml.trim());
   const newInput = inseamRow.querySelector(".inseamCmInput");
   if (newInput && currentInseamCm) newInput.value = currentInseamCm;
   updateInseamInputStateForProduct(productCode);
