@@ -101,7 +101,23 @@ body.modal-open { overflow: hidden; }
 .sending-overlay.hidden { display: none; }
 .sending-panel { width: min(90vw, 460px); padding: 34px 24px; border-radius: 14px; background: #fff; box-shadow: 0 14px 44px rgba(0,0,0,.38); }
 .sending-wait, .sending-warning { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.6; }
-.sending-status { min-height: 38px; margin: 22px 0; color: #174f86; font-size: 26px; font-weight: 800; letter-spacing: .04em; }
+.sending-status {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  min-height: 38px;
+  margin: 22px 0;
+  color: #174f86;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.sending-dots {
+  display: inline-block;
+  width: 3ch;
+  text-align: left;
+  white-space: pre;
+}
 body.sending-locked { overflow: hidden; }
 .hidden {
   display: none;
@@ -205,7 +221,7 @@ body.sending-locked { overflow: hidden; }
 <div id="sendingOverlay" class="sending-overlay hidden" role="alert" aria-live="assertive" aria-busy="true">
   <div class="sending-panel">
     <p class="sending-wait">しばらくお待ち下さい。</p>
-    <div id="sendingStatus" class="sending-status">送信中.</div>
+    <div class="sending-status"><span>送信中</span><span id="sendingDots" class="sending-dots">.</span></div>
     <p class="sending-warning">画面を閉じたり戻ったりしないで下さい。</p>
   </div>
 </div>
@@ -700,13 +716,13 @@ let submitInProgress = false;
 let sendingAnimationTimer = null;
 
 function startSendingAnimation() {
-  const status = document.getElementById("sendingStatus");
+  const dots = document.getElementById("sendingDots");
   let dotCount = 1;
   if (sendingAnimationTimer) clearInterval(sendingAnimationTimer);
-  status.innerText = "送信中.";
+  dots.innerText = ".";
   sendingAnimationTimer = setInterval(() => {
     dotCount = dotCount >= 3 ? 1 : dotCount + 1;
-    status.innerText = "送信中" + ".".repeat(dotCount);
+    dots.innerText = ".".repeat(dotCount);
   }, 500);
 }
 function stopSendingAnimation() {
