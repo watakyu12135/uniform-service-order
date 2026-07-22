@@ -56,16 +56,28 @@ button { margin-top: 16px; padding: 10px 18px; }
 <script>
 const MAIL_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/00/workflows/7a69a2f1033b4d9e9d17e9a697da6dc3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bHBJudF_VqFv0Z9q2rWMSy1eP8eSkr8LRSoI2zR-_Z0";
 
-/* ブラウザの戻る操作を抑止する */
-(function preventBrowserBack() {
-  history.replaceState({ appGuard: true }, "", location.href);
-  history.pushState({ appGuard: true }, "", location.href);
+/* 通常のブラウザ「戻る」を抑止し、画面内ボタンだけで遷移させる */
+let allowApplicationNavigation = false;
+(function installBackGuard() {
+  const keepCurrentPage = () => {
+    try {
+      history.pushState({ uniformPageGuard: true }, "", location.href);
+    } catch (e) {
+      console.warn("履歴制御を設定できませんでした。", e);
+    }
+  };
+
+  history.replaceState({ uniformPageGuard: true }, "", location.href);
+  keepCurrentPage();
+
   window.addEventListener("popstate", () => {
-    history.pushState({ appGuard: true }, "", location.href);
+    if (allowApplicationNavigation) return;
+    setTimeout(keepCurrentPage, 0);
   });
+
   window.addEventListener("pageshow", event => {
-    if (event.persisted) {
-      history.pushState({ appGuard: true }, "", location.href);
+    if (event.persisted && !allowApplicationNavigation) {
+      setTimeout(keepCurrentPage, 0);
     }
   });
 })();
@@ -419,7 +431,8 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
     sessionStorage.removeItem("uniformMailDraft");
     sessionStorage.removeItem("uniformComplete");
 
-    location.href = "https://www.yahoo.co.jp/";
+    allowApplicationNavigation = true;
+    location.replace("https://www.yahoo.co.jp/");
 
   } catch (err) {
     alert("控えメール送信中にエラーが発生しました。\n通信環境を確認して、再度お試しください。\n\n" + err.message);
@@ -431,9 +444,11 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
 
 /* 完了後 */
 function finish() {
+  allowApplicationNavigation = true;
   sessionStorage.removeItem("uniformComplete");
   sessionStorage.removeItem("uniformMailDraft");
-  location.href = "https://www.yahoo.co.jp/";
+  allowApplicationNavigation = true;
+    location.replace("https://www.yahoo.co.jp/");
 }
 </script>
 </body>
