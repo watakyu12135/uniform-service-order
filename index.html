@@ -193,8 +193,16 @@ tr.product-row.extra-size-row-3 {
 
 /* 商品単位の股下加工専用行。追加サイズ行の色とは切り離す */
 tr.inseam-row, tr.inseam-row td { background: #fff !important; }
-tr.inseam-row td { padding: 8px; text-align: left; border-top: 0; }
-tr.inseam-row .cell-inseam { width: 100%; box-sizing: border-box; }
+tr.inseam-row td { padding: 4px; border-top: 0; }
+tr.inseam-row .inseam-spacer,
+tr.inseam-row .inseam-measure-spacer { padding: 0; }
+tr.inseam-row .cell-inseam {
+  box-sizing: border-box;
+  text-align: left;
+  vertical-align: top;
+}
+tr.inseam-row .inseam-box,
+tr.inseam-row .inseam-message { margin-top: 0; }
 
 
 /* 採寸画面 */
@@ -466,9 +474,25 @@ tr.inseam-row .cell-inseam { width: 100%; box-sizing: border-box; }
     grid-area: qty;
   }
 
-tr.inseam-row { display: table-row; background: #fff !important; }
-tr.inseam-row td { display: table-cell; width: 100%; padding: 8px; background: #fff !important; text-align: left; }
-tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; border: 0 !important; }
+tr.inseam-row {
+  display: block;
+  width: 100%;
+  margin: -8px 0 8px;
+  background: #fff !important;
+}
+tr.inseam-row .inseam-spacer,
+tr.inseam-row .inseam-measure-spacer { display: none !important; }
+tr.inseam-row .cell-inseam {
+  display: block !important;
+  width: 100%;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid #ccc !important;
+  border-top: 0 !important;
+  background: #fff !important;
+  text-align: left;
+  box-sizing: border-box;
+}
 .cell-inseam {
   grid-area: inseam;
   display: block !important;
@@ -1933,7 +1957,9 @@ toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
         );
         if (inseamAreaHtml.trim()) {
           html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
-            <td colspan="7" class="cell-inseam">${inseamAreaHtml}</td>
+            <td colspan="5" class="inseam-spacer" aria-hidden="true"></td>
+            <td class="cell-inseam">${inseamAreaHtml}</td>
+            <td class="inseam-measure-spacer" aria-hidden="true"></td>
           </tr>`;
         }
       });
