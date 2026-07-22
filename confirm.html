@@ -114,31 +114,16 @@ label { font-weight: bold; display: block; margin-top: 10px; }
 
 <script>
 
-/* 通常のブラウザ「戻る」を抑止し、画面内ボタンだけで遷移させる */
+/* 戻り方にかかわらず、index.htmlが確認直前の入力内容を復元できるようにする */
 let allowApplicationNavigation = false;
-(function installBackGuard() {
-  const keepCurrentPage = () => {
-    try {
-      history.pushState({ uniformPageGuard: true }, "", location.href);
-    } catch (e) {
-      console.warn("履歴制御を設定できませんでした。", e);
-    }
-  };
-
-  history.replaceState({ uniformPageGuard: true }, "", location.href);
-  keepCurrentPage();
-
-  window.addEventListener("popstate", () => {
-    if (allowApplicationNavigation) return;
-    setTimeout(keepCurrentPage, 0);
-  });
-
-  window.addEventListener("pageshow", event => {
-    if (event.persisted && !allowApplicationNavigation) {
-      setTimeout(keepCurrentPage, 0);
-    }
-  });
-})();
+let confirmRegistrationCompleted = false;
+function markReturnToInput() {
+  if (confirmRegistrationCompleted) return;
+  if (!sessionStorage.getItem("uniformDraft")) return;
+  sessionStorage.setItem("uniformReturnToIndex", "1");
+  sessionStorage.setItem("uniformDraftPending", "1");
+}
+window.addEventListener("pagehide", markReturnToInput);
 document.getElementById("returnToInputButton").addEventListener("click", () => {
   if (!draft) {
     alert("戻す入力内容がありません。入力画面からやり直してください。");
@@ -147,6 +132,7 @@ document.getElementById("returnToInputButton").addEventListener("click", () => {
   const pin = document.getElementById("pin");
   if (pin) sessionStorage.setItem("uniformConfirmPin", pin.value || "");
   sessionStorage.setItem("uniformReturnToIndex", "1");
+  sessionStorage.setItem("uniformDraftPending", "1");
   allowApplicationNavigation = true;
   const customerKey = getCustomerKey();
   const editQuery = draft.editMode === true ? "&mode=edit" : "";
@@ -821,6 +807,7 @@ normalizePayloadForPowerAutomate(payload);
       return;
     }
 
+    confirmRegistrationCompleted = true;
     sessionStorage.setItem("uniformComplete", JSON.stringify({
       measureNo: measurementNo,
       registrationNo: registrationNo,
