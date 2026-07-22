@@ -259,6 +259,34 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+
+function getRegisteredInseamCm(item) {
+  if (!item || typeof item !== "object") return "";
+
+  const directKeys = [
+    "股下cm", "股下CM", "股下ＣＭ", "股下加工cm", "股下加工CM",
+    "股下加工寸法", "股下寸法", "inseamCm", "inseam", "InseamCm"
+  ];
+
+  for (const key of directKeys) {
+    const value = item[key];
+    if (value !== undefined && value !== null && String(value).trim() !== "") {
+      return String(value).replace(/\s*cm\s*$/i, "").trim();
+    }
+  }
+
+  for (const [key, value] of Object.entries(item)) {
+    const normalizedKey = String(key).replace(/[\s　_＿・()（）]/g, "").toLowerCase();
+    if (!normalizedKey.includes("股下")) continue;
+    if (normalizedKey.includes("可能") || normalizedKey.includes("フラグ")) continue;
+    if (value === undefined || value === null || String(value).trim() === "") continue;
+    const text = String(value).replace(/\s*cm\s*$/i, "").trim();
+    if (/^\d+(?:\.\d+)?$/.test(text)) return text;
+  }
+
+  return "";
+}
+
 async function checkPageDeadline() {
   const publicKey = getCustomer();
 
@@ -533,7 +561,7 @@ function renderSearchResult(result) {
           <div>サイズ：${escapeHtml(item["サイズ"] || item.size || "")}</div>
           <div>数量：${escapeHtml(item["数量"] || item.qty || "")}</div>
           ${(() => {
-            const inseamCm = String(item["股下cm"] ?? item.inseamCm ?? "").trim();
+            const inseamCm = getRegisteredInseamCm(item);
             return inseamCm
               ? `<div>股下加工：${escapeHtml(inseamCm)}cm</div>`
               : "";
