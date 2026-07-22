@@ -1268,7 +1268,9 @@ document.getElementById("customerInfo").innerText =
 
     updateJobOptions();
 
-    if (isEditMode) {
+    if (shouldRestoreConfirmDraft()) {
+      applyConfirmReturnData();
+    } else if (isEditMode) {
       applyEditModeData();
     }
   })
@@ -1276,6 +1278,99 @@ document.getElementById("customerInfo").innerText =
     document.getElementById("table").innerHTML =
       "<tr><td colspan='7'>読み込みに失敗しました：" + error.message + "</td></tr>";
   });
+
+function getFirstStoredValue(source, keys) {
+  if (!source) return "";
+  for (const key of keys) {
+    const value = source[key];
+    if (value !== undefined && value !== null && String(value).trim() !== "") {
+      return String(value);
+    }
+  }
+  return "";
+}
+
+function getConfirmDraft() {
+  try {
+    const draft = JSON.parse(sessionStorage.getItem("uniformDraft") || "null");
+    if (!draft || !Array.isArray(draft.orders) || draft.orders.length === 0) return null;
+    return draft;
+  } catch (error) {
+    console.error("確認画面の入力内容を読み込めませんでした。", error);
+    return null;
+  }
+}
+
+function shouldRestoreConfirmDraft() {
+  const draft = getConfirmDraft();
+  if (!draft) return false;
+  const params = new URLSearchParams(location.search);
+  return params.get("from") === "confirm" ||
+    sessionStorage.getItem("uniformReturnToIndex") === "1" ||
+    sessionStorage.getItem("uniformDraftPending") === "1" ||
+    /(^|\/)confirm\.html(?:\?|$)/i.test(document.referrer || "");
+}
+
+function applyConfirmReturnData() {
+  const returnDraft = getConfirmDraft();
+  if (!returnDraft) return;
+  const base = returnDraft.orders[0] || {};
+  const returnEditMode = returnDraft.editMode === true;
+
+  editData = {
+    found: true,
+    measureNo: returnDraft.measureNo || base["採寸番号"] || "",
+    orders: returnDraft.orders,
+    measurement: returnDraft.measurement || null
+  };
+  editMeasureNo = editData.measureNo;
+
+  const employeeNoInput = document.getElementById("employeeNo");
+  if (employeeNoInput) employeeNoInput.value = getFirstStoredValue(base, ["職員番号", "employeeNo", "staffNo"]);
+  document.getElementById("sei").value = getFirstStoredValue(base, ["姓", "氏", "sei"]);
+  document.getElementById("mei").value = getFirstStoredValue(base, ["名", "mei"]);
+  document.getElementById("seiKana").value = getFirstStoredValue(base, ["セイ", "シ", "seiKana"]);
+  document.getElementById("meiKana").value = getFirstStoredValue(base, ["メイ", "meiKana"]);
+
+  const genderValue = getFirstStoredValue(base, ["性別", "gender"]);
+  const jobValue = getFirstStoredValue(base, ["職種", "job"]);
+  const departmentValue = getFirstStoredValue(base, ["部署", "department"]);
+  document.getElementById("gender").value = genderValue;
+  updateJobOptions();
+  addMissingOption(document.getElementById("job"), jobValue);
+  document.getElementById("job").value = jobValue;
+  changeJob();
+  const departmentSelect = document.getElementById("department");
+  if (departmentSelect) {
+    addMissingOption(departmentSelect, departmentValue);
+    departmentSelect.value = departmentValue;
+  }
+
+  restoreMeasurementFromEditData(returnDraft.measurement);
+  restoreOrdersFromEditData(returnDraft.orders);
+
+  if (returnEditMode) {
+    const title = document.getElementById("pageTitle");
+    if (title) title.innerText = "ユニフォーム申請受付（修正）";
+    const reviseLink = document.getElementById("reviseLink");
+    if (reviseLink) {
+      reviseLink.innerHTML = `
+        <span class="revise-card-kicker">修正対象を変更する場合</span>
+        <span class="revise-card-action">
+          <span>✎ 修正対象を検索し直す</span>
+          <span aria-hidden="true">›</span>
+        </span>`;
+      reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
+    }
+    setBasicInfoReadOnly();
+  }
+
+  sessionStorage.removeItem("uniformReturnToIndex");
+  sessionStorage.removeItem("uniformDraftPending");
+  updateCategorySummary();
+  updateAllMeasurementButtons();
+  updateAllInseamAreas();
+}
 
 function applyEditModeData() {
 
@@ -1321,11 +1416,11 @@ function applyEditModeData() {
     employeeNoInput.value = base["職員番号"] || base.employeeNo || base.staffNo || "";
   }
 
-  document.getElementById("sei").value = base["姓"] || "";
-  document.getElementById("mei").value = base["名"] || "";
+  document.getElementById("sei").value = getFirstStoredValue(base, ["姓", "氏", "sei"]);
+  document.getElementById("mei").value = getFirstStoredValue(base, ["名", "mei"]);
 
-document.getElementById("seiKana").value = base["セイ"] || base.seiKana || "";
-document.getElementById("meiKana").value = base["メイ"] || base.meiKana || "";
+document.getElementById("seiKana").value = getFirstStoredValue(base, ["セイ", "シ", "seiKana"]);
+document.getElementById("meiKana").value = getFirstStoredValue(base, ["メイ", "meiKana"]);
 
   document.getElementById("gender").value = base["性別"] || "";
   updateJobOptions();
@@ -2978,6 +3073,9 @@ function setConfirmTransitionBusy(busy) {
 // bfcacheに保存された「名簿確認中...」状態を解除する。
 window.addEventListener("pageshow", () => {
   setConfirmTransitionBusy(false);
+  if (currentData && shouldRestoreConfirmDraft()) {
+    applyConfirmReturnData();
+  }
 });
 
 async function submitData() {
@@ -3143,6 +3241,14 @@ if (inseamAlterable === 1 && sizeInfo.size !== "別寸") {
 
 data.push({
   ...common,
+  "職員番号": common.employeeNo || "",
+  "姓": common.sei,
+  "名": common.mei,
+  "セイ": common.seiKana,
+  "メイ": common.meiKana,
+  "性別": common.gender,
+  "職種": common.job,
+  "部署": common.department,
   product,
   productCode,
   color,
@@ -3220,6 +3326,7 @@ if (hasBespokeWithoutMeasurement()) {
     }
     sessionStorage.setItem("uniformCustomer", customerKey);
     sessionStorage.setItem("uniformDraft", JSON.stringify(payload));
+    sessionStorage.setItem("uniformDraftPending", "1");
     location.href = "confirm.html?customer=" + encodeURIComponent(customerKey);
   } catch (err) {
     alert("名簿の重複チェック中にエラーが発生しました。\n通信環境を確認して、もう一度『確認』を押してください。\n\n" + err.message);
