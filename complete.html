@@ -56,11 +56,19 @@ button { margin-top: 16px; padding: 10px 18px; }
 <script>
 const MAIL_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/00/workflows/7a69a2f1033b4d9e9d17e9a697da6dc3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bHBJudF_VqFv0Z9q2rWMSy1eP8eSkr8LRSoI2zR-_Z0";
 
-/* 完了済み画面なので戻れないようにする */
-history.pushState(null, null, location.href);
-window.onpopstate = () => {
-  history.go(1);
-};
+/* ブラウザの戻る操作を抑止する */
+(function preventBrowserBack() {
+  history.replaceState({ appGuard: true }, "", location.href);
+  history.pushState({ appGuard: true }, "", location.href);
+  window.addEventListener("popstate", () => {
+    history.pushState({ appGuard: true }, "", location.href);
+  });
+  window.addEventListener("pageshow", event => {
+    if (event.persisted) {
+      history.pushState({ appGuard: true }, "", location.href);
+    }
+  });
+})();
 
 /* 読み込み */
 const raw = sessionStorage.getItem("uniformComplete");
