@@ -140,9 +140,17 @@ let allowApplicationNavigation = false;
   });
 })();
 document.getElementById("returnToInputButton").addEventListener("click", () => {
-  // この画面内の戻るボタンだけは許可し、入力内容を保持した直前画面へ戻す。
+  if (!draft) {
+    alert("戻す入力内容がありません。入力画面からやり直してください。");
+    return;
+  }
+  const pin = document.getElementById("pin");
+  if (pin) sessionStorage.setItem("uniformConfirmPin", pin.value || "");
+  sessionStorage.setItem("uniformReturnToIndex", "1");
   allowApplicationNavigation = true;
-  history.go(-2);
+  const customerKey = getCustomerKey();
+  const editQuery = draft.editMode === true ? "&mode=edit" : "";
+  location.replace("index.html?customer=" + encodeURIComponent(customerKey) + editQuery + "&from=confirm");
 });
 
 const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
@@ -216,6 +224,11 @@ function loadDraft() {
     return;
   }
 
+  const savedPin = sessionStorage.getItem("uniformConfirmPin");
+  if (savedPin !== null) {
+    const pinInput = document.getElementById("pin");
+    if (pinInput) pinInput.value = savedPin;
+  }
   const customerKey = getCustomerKey();
   if (customerKey) {
     draft.publicKey = customerKey;
@@ -819,6 +832,7 @@ normalizePayloadForPowerAutomate(payload);
     sessionStorage.setItem("uniformMailDraft", JSON.stringify(payload));
 
     sessionStorage.removeItem("uniformDraft");
+    sessionStorage.removeItem("uniformConfirmPin");
 
     if (isEdit) {
       sessionStorage.removeItem("uniformEditData");
