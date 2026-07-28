@@ -423,9 +423,29 @@ tr.inseam-row.inseam-row-empty { display: none; }
 /* スマホ表示 */
 @media (max-width: 600px) {
 
-  table {
+  /* iPhone Safari対策
+     table内のtrをgrid化した状態でselectを変更すると、Safariが列幅を
+     再計算して複数の商品行を横並びにすることがある。
+     スマホではtable/tbodyをblock化し、各行を常に横幅100%に固定する。 */
+  table,
+  #table,
+  #table tbody {
+    display: block;
     min-width: 0;
     width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    box-sizing: border-box;
+  }
+
+  #table tr.category-header,
+  #table tr.product-row,
+  #table tr.inseam-row {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    clear: both;
+    float: none;
   }
 
   .product-header {
@@ -483,8 +503,8 @@ tr.inseam-row.inseam-row-empty { display: none; }
     grid-area: qty;
   }
 
-tr.inseam-row { display: table-row; background: #fff !important; }
-tr.inseam-row td { display: table-cell; width: 100%; padding: 8px; background: #fff !important; text-align: left; }
+tr.inseam-row { display: block; width: 100%; background: #fff !important; }
+tr.inseam-row td { display: block; width: 100%; padding: 8px; background: #fff !important; text-align: left; box-sizing: border-box; }
 tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; border: 0 !important; }
 .cell-inseam {
   grid-area: inseam;
@@ -1943,11 +1963,20 @@ toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
         row += `</tr>`;
 
         html += row;
-        html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
-          <td colspan="7" class="cell-inseam">
-            ${buildInseamAreaHtml(p.productCategory, p.measurementGroup || "", p.inseamAlterable || 0)}
-          </td>
-        </tr>`;
+        const inseamAreaHtml = buildInseamAreaHtml(
+          p.productCategory,
+          p.measurementGroup || "",
+          p.inseamAlterable || 0
+        );
+        // 股下対象の商品だけ専用行を生成する。
+        // 上衣などに空のtrを作らないことで、iPhone Safariの幅再計算崩れを防ぐ。
+        if (inseamAreaHtml.trim()) {
+          html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
+            <td colspan="7" class="cell-inseam">
+              ${inseamAreaHtml}
+            </td>
+          </tr>`;
+        }
       });
     });
 
@@ -2034,6 +2063,21 @@ updateInseamAreaForProduct(row);
 placeInseamAreaForProduct(productCode);
 }
 
+function stabilizeMobileProductLayout() {
+  if (!window.matchMedia("(max-width: 600px)").matches) return;
+  const table = document.getElementById("table");
+  if (!table) return;
+
+  requestAnimationFrame(() => {
+    // 横向きにした時と同様に幅を再計算させるが、画面方向は変更しない。
+    void table.offsetWidth;
+    table.style.maxWidth = "99.999%";
+    requestAnimationFrame(() => {
+      table.style.maxWidth = "100%";
+    });
+  });
+}
+
 function checkMainSize(select) {
 
   const row = select.closest("tr");
@@ -2055,6 +2099,7 @@ function checkMainSize(select) {
     });
   }
 updateInseamAreaForProduct(row);
+  stabilizeMobileProductLayout();
 }
 
 function checkSpecialSize(select) {
@@ -2094,6 +2139,7 @@ function checkSpecialSize(select) {
     });
   }
 updateInseamAreaForProduct(row);
+  stabilizeMobileProductLayout();
 }
 
 function getMeasurementTypeByGroup(measurementGroup) {
