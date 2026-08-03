@@ -422,6 +422,14 @@ tr.inseam-row.inseam-row-empty { display: none; }
 
 /* スマホ表示 */
 @media (max-width: 600px) {
+  html, body { width: 100%; max-width: 100%; margin: 0; overflow-x: hidden; box-sizing: border-box; }
+  .page-shell, .table-wrap { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+  .table-wrap { overflow-x: hidden; }
+  #table > tbody { display: block !important; width: 100% !important; max-width: 100% !important; }
+  #table tr.product-row { display: grid !important; width: 100% !important; max-width: 100% !important; }
+  #table tr.category-header, #table tr.inseam-row { display: block !important; width: 100% !important; max-width: 100% !important; }
+  #table tr.inseam-row > td { display: block !important; width: 100% !important; max-width: 100% !important; }
+
 
   /* iPhone Safari対策
      table内のtrをgrid化した状態でselectを変更すると、Safariが列幅を
@@ -997,7 +1005,7 @@ tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; b
 
 <div id="categoryStatus"></div>
 
-<button id="submitButton" onclick="submitData()">確認</button>
+<button type="button" id="submitButton" onclick="submitData(event)">確認</button>
 
 </div>
 <div id="measurementArea" class="hidden measurement-area">
@@ -3376,8 +3384,24 @@ window.addEventListener("resize", () => {
   clearTimeout(inseamLayoutTimer);
   inseamLayoutTimer = setTimeout(placeAllInseamAreas, 120);
 });
+window.addEventListener("orientationchange", () => {
+  clearTimeout(inseamLayoutTimer);
+  inseamLayoutTimer = setTimeout(() => {
+    placeAllInseamAreas();
+    stabilizeMobileProductLayout();
+  }, 250);
+});
 
-async function submitData() {
+function goToConfirmPage(customerKey) {
+  const targetUrl = new URL("confirm.html", window.location.href);
+  targetUrl.searchParams.set("customer", customerKey);
+  window.location.assign(targetUrl.href);
+}
+async function submitData(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
   const employeeNo = document.getElementById("employeeNo")
     ? document.getElementById("employeeNo").value.trim()
     : "";
@@ -3643,7 +3667,11 @@ if (hasBespokeWithoutMeasurement()) {
     sessionStorage.setItem("uniformCustomer", customerKey);
     sessionStorage.setItem("uniformDraft", JSON.stringify(payload));
     sessionStorage.setItem("uniformDraftPending", "1");
-    location.href = "confirm.html?customer=" + encodeURIComponent(customerKey);
+    const savedDraft = sessionStorage.getItem("uniformDraft");
+    if (!savedDraft) {
+      throw new Error("確認画面へ渡すデータを保存できませんでした。");
+    }
+    goToConfirmPage(customerKey);
   } catch (err) {
     alert("名簿の重複チェック中にエラーが発生しました。\n通信環境を確認して、もう一度『確認』を押してください。\n\n" + err.message);
     setConfirmTransitionBusy(false);
