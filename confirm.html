@@ -2,895 +2,125 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ユニフォーム申請</title>
+<title>登録内容確認</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body {
-  font-family: sans-serif;
-  padding: 20px;
-  overflow-x: hidden;
-}
-
-table {
-  border-collapse: collapse;
-  min-width: 600px;
-}
-
-.table-wrap {
-  overflow-x: auto;
-  width: 100%;
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 4px;
-  text-align: center;
-}
-
-.hidden {
-  display: none;
-}
-
-button {
-  margin-top: 10px;
-}
-
-.basic-field {
-  margin-bottom: 12px;
-  max-width: 520px;
-}
-.basic-field label {
-  font-weight: bold;
-  display: inline-block;
-  min-width: 80px;
-}
-.basic-field input {
-  width: 260px;
-  max-width: 100%;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-/* 姓名・フリガナ */
-.name-area {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 12px;
-  margin-bottom: 16px;
-  max-width: 520px;
-}
-
-.name-field {
-  display: grid;
-  grid-template-columns: 32px 1fr;
+body { font-family: sans-serif; padding: 20px; }
+.section { margin-top: 18px; padding: 14px; border: 1px solid #ccc; background: #fff; }
+.info-row { margin: 6px 0; }
+.notice { padding: 10px; background: #fff7e6; border-left: 4px solid #f5a623; }
+.error { color: #c00; font-weight: bold; }
+button { margin-top: 12px; margin-right: 8px; padding: 10px 16px; width: 100%; }
+input { font-size: 16px; padding: 6px; width: 100%; box-sizing: border-box; }
+label { font-weight: bold; display: block; margin-top: 10px; }
+.small { font-size: 13px; color: #555; }
+.category { font-weight: bold; margin-top: 14px; border-bottom: 1px solid #ccc; }
+.item { padding: 8px; background: #f9f9f9; margin-top: 6px; }
+.check-area { margin-top: 20px; }
+.check-area label {
+  display: flex;
   align-items: center;
   gap: 6px;
-}
-
-.name-field label {
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-.name-field input {
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-/* 貸与枚数 */
-#categoryStatus {
-  margin-top: 15px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
-}
-
-#limitDeclarationArea {
-  margin: 10px 0 14px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
-  font-weight: bold;
-  line-height: 1.6;
-}
-
-#limitDeclarationArea:empty {
-  display: none;
-}
-
-.category-ok {
-  color: green;
-  font-weight: bold;
-}
-
-.category-warning {
-  color: orange;
-  font-weight: bold;
-}
-
-.category-over {
-  color: red;
-  font-weight: bold;
-}
-
-.category-normal {
-  color: black;
-  font-weight: bold;
-}
-
-.category-heading {
-  margin-top: 18px;
-  padding: 10px;
-  background: #eef5ff;
-  border-left: 5px solid #4a90e2;
-  font-weight: bold;
-}
-
-.category-note {
-  margin: 6px 0 8px 0;
-  padding: 8px;
-  background: #fff7e6;
-  border-left: 4px solid #f5a623;
-  font-size: 14px;
-}
-
-.category-title {
-  font-weight: bold;
-}
-
-.category-count {
-  margin-left: 8px;
-  font-size: 14px;
-  color: #333;
-}
-
-.category-count-ok {
-  color: green;
-}
-
-.category-count-warning {
-  color: orange;
-}
-
-.category-count-over {
-  color: red;
-}
-
-/* 通常の商品行：色A・色Bの交互表示 */
-tr.product-row.row-theme-0,
-tr.product-row.row-theme-0 td {
-  background: #ffffff;
-}
-
-tr.product-row.row-theme-1,
-tr.product-row.row-theme-1 td {
-  background: #f7fbff;
-}
-
-/* 「他のサイズも選択する」で追加された行：色C・色D・色E */
-tr.product-row.extra-size-row-1,
-tr.product-row.extra-size-row-1 td {
-  background: #fff1f1 !important;
-}
-
-tr.product-row.extra-size-row-2,
-tr.product-row.extra-size-row-2 td {
-  background: #fff7e6 !important;
-}
-
-tr.product-row.extra-size-row-3,
-tr.product-row.extra-size-row-3 td {
-  background: #f1fff1 !important;
-}
-
-tr.product-row.extra-size-row-1,
-tr.product-row.extra-size-row-2,
-tr.product-row.extra-size-row-3 {
-  border-left: 6px solid #e57373;
-}
-
-/* 商品単位の股下加工専用行。追加サイズ行の色とは切り離す */
-tr.inseam-row, tr.inseam-row td { background: #fff !important; }
-tr.inseam-row td { padding: 8px; text-align: left; border-top: 0; }
-tr.inseam-row .cell-inseam { width: 100%; box-sizing: border-box; }
-tr.inseam-row.inseam-row-empty { display: none; }
-
-
-/* 股下加工欄のPC・スマホ配置切替 */
-@media (min-width: 601px) {
-  tr.inseam-row {
-    display: none !important;
-  }
-  tr.product-row > .cell-inseam {
-    display: table-cell;
-    vertical-align: top;
-    text-align: left;
-  }
-  tr.product-row > .cell-inseam .inseam-box,
-  tr.product-row > .cell-inseam .inseam-message {
-    margin-top: 0;
-  }
-}
-
-/* 採寸画面 */
-.measurement-area {
-  margin-top: 20px;
-  padding: 15px;
-  border: 2px solid #4a90e2;
-  background: #f7fbff;
-}
-
-.measure-section {
-  margin-top: 15px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  background: #fff;
-}
-
-.measure-section label {
-  display: inline-block;
-  min-width: 130px;
-  margin-top: 8px;
-  font-weight: bold;
-}
-
-.measure-section input,
-.measure-section select {
-  width: 120px;
-}
-
-.measure-help {
-  margin: 2px 0 8px 135px;
-  font-size: 13px;
-  color: #555;
-}
-
-.disabled-section {
-  opacity: 0.45;
-  background: #eee;
-}
-
-.guide-placeholder {
-  margin-top: 8px;
-  padding: 20px;
-  border: 1px dashed #999;
-  background: #fff;
-  text-align: center;
-  color: #666;
-}
-
-.measurement-image {
-  display: block;
-  width: 100%;
-  max-width: 555px;
-  height: auto;
-  margin-top: 0;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  background: #fff;
-}
-
-.measurement-image-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  max-width: 555px;
-  margin-top: 8px;
-}
-.measure-hit {
-  position: absolute;
-  width: 9%;
-  min-width: 34px;
-  max-width: 50px;
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
-  padding: 0;
-  margin: 0;
-  border: 2px solid transparent;
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  z-index: 3;
-  touch-action: manipulation;
-}
-.measure-hit:hover,
-.measure-hit:focus-visible {
-  border-color: #ff9800;
-  background: rgba(255, 152, 0, 0.18);
-  outline: none;
-}
-.measure-hit.image-point-highlight {
-  border-color: #e65100;
-  background: rgba(255, 152, 0, 0.32);
-  box-shadow: 0 0 0 5px rgba(255, 152, 0, 0.22);
-}
-.measure-jump-label {
-  cursor: pointer;
-  color: #0b5797;
-  text-decoration: underline dotted;
-  text-underline-offset: 4px;
-}
-.measure-jump-label::after {
-  content: " 図を見る";
-  margin-left: 5px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: #eef5ff;
-  color: #0b5797;
-  font-size: 11px;
   font-weight: normal;
-  white-space: nowrap;
-}
-.measure-input-highlight {
-  outline: 4px solid #ff9800 !important;
-  background: #fff4d6 !important;
-}
-.measurement-nude-notice {
-  display: block;
-  margin: 16px 0 8px;
-  padding: 12px 14px;
-  border: 2px solid #d00000;
-  border-radius: 6px;
-  background: #fff2f2;
-  color: #d00000;
-  font-size: 24px;
-  line-height: 1.45;
-  font-weight: 700;
-  text-align: center;
-  animation: nudeNoticeBlink 1.4s ease-in-out infinite;
-}
-@keyframes nudeNoticeBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .measurement-nude-notice { animation: none; }
-}
-.measurement-guide-note {
-  margin: 6px 0 0;
-  color: #555;
-  font-size: 13px;
+  margin-top: 0;
 }
 
-/* 採寸図上のタップ位置。画像サイズが変わっても割合で追従する */
-.hit-A { left: 11.5%; top: 11.5%; }
-.hit-B { left: 47%; top: 12%; }
-.hit-C { left: 46%; top: 22%; }
-.hit-D { left: 20%; top: 20.5%; }
-.hit-E-upper { left: 21%; top: 26%; }
-.hit-F-upper { left: 21%; top: 33%; }
-.hit-G { left: 65%; top: 21.5%; }
-.hit-H { left: 87%; top: 26%; }
-.hit-I { left: 4.5%; top: 15%; }
-.hit-e-lower { left: 22%; top: 55.5%; }
-.hit-f-lower { left: 22%; top: 62%; }
-.hit-J { left: 84%; top: 61%; }
-.hit-K { left: 81.5%; top: 78%; }
-.hit-L { left: 89%; top: 74%; }
-.hit-M { left: 59%; top: 71%; }
-
-.measure-required-message {
-  margin-top: 6px;
-  font-size: 13px;
-  color: #c00;
-  font-weight: bold;
-}
-
-.measure-inline {
-  display: none;
-}
-
-.cell-inseam {
-  font-size: 13px;
-  color: #333;
-}
-
-.inseam-box {
-  margin-top: 6px;
-  padding: 6px;
-  background: #fff7e6;
-  border-left: 4px solid #f5a623;
-}
-
-.inseam-box label {
-  font-weight: bold;
-}
-
-.inseam-box input {
-  width: 80px;
-  margin-top: 4px;
-}
-
-.inseam-message {
-  margin-top: 6px;
-  color: #c00;
-  font-weight: bold;
-}
-
-.inseam-box.disabled {
-  background: #eee;
-  border-left-color: #999;
-  color: #666;
-}
-
-.inseam-box.disabled input {
-  background: #ddd;
-  color: #666;
-}
-
-/* スマホ表示 */
-@media (max-width: 600px) {
-
-  /* iPhone Safari対策
-     table内のtrをgrid化した状態でselectを変更すると、Safariが列幅を
-     再計算して複数の商品行を横並びにすることがある。
-     スマホではtable/tbodyをblock化し、各行を常に横幅100%に固定する。 */
-  table,
-  #table,
-  #table tbody {
-    display: block;
-    min-width: 0;
-    width: 100%;
-    max-width: 100%;
-    table-layout: fixed;
-    box-sizing: border-box;
-  }
-
-  #table tr.category-header,
-  #table tr.product-row,
-  #table tr.inseam-row {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    clear: both;
-    float: none;
-  }
-
-  .product-header {
-    display: none;
-  }
-
-  tr.product-row {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr 1.2fr;
-    grid-template-areas:
-      "product code size"
-  "product color qty"
-  "inseam inseam inseam"
-  "measure measure measure";
-    border: 1px solid #ccc;
-    margin-bottom: 8px;
-    padding: 6px;
-    background: #fff;
-  }
-
-  tr.product-row td {
-    border: none;
-    padding: 4px;
-    text-align: left;
-  }
-
-  .cell-product {
-    grid-area: product;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    border-right: 1px solid #ddd !important;
-    padding-right: 8px;
-  }
-
-  .cell-code {
-    grid-area: code;
-    font-size: 12px;
-    border-right: 1px solid #ddd !important;
-    border-bottom: 1px solid #ddd !important;
-  }
-
-  .cell-color {
-    grid-area: color;
-    font-size: 12px;
-    border-right: 1px solid #ddd !important;
-  }
-
-  .cell-size {
-    grid-area: size;
-    border-bottom: 1px solid #ddd !important;
-  }
-
-  .cell-qty {
-    grid-area: qty;
-  }
-
-tr.inseam-row { display: block; width: 100%; background: #fff !important; }
-tr.inseam-row td { display: block; width: 100%; padding: 8px; background: #fff !important; text-align: left; box-sizing: border-box; }
-tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; border: 0 !important; }
-.cell-inseam {
-  grid-area: inseam;
-  display: block !important;
-  width: 100%;
-  box-sizing: border-box;
-  border-top: 1px solid #ddd !important;
-  margin-top: 6px;
-  padding-top: 8px;
-}
-
-.cell-inseam:empty {
-  display: none !important;
-}
-
-.cell-inseam .inseam-box {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.cell-inseam .inseam-message {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-  .cell-measure {
-    grid-area: measure;
-    text-align: right;
-    display: none;
-  }
-
-  .cell-size select,
-  .cell-qty input {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .category-header {
-    display: block;
-  }
-
-  .category-header td {
-    display: block;
-    width: 100%;
-  }
-
-  .category-heading {
-    margin-top: 14px;
-  }
-
-  input,
-  select,
-  textarea {
-    font-size: 16px;
-  }
-
-  /* スマホ用ボタン：性別・職種のプルダウンと同程度の押しやすさにする */
-  button:not(.measure-hit) {
-    min-height: 44px;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 16px;
-    line-height: 1.3;
-    touch-action: manipulation;
-  }
-
-  /* 確認、採寸、保存して戻る、保存せず戻る */
-  #submitButton,
-  .measure,
-  #measurementArea > button {
-    min-width: 120px;
-  }
-
-  /* 採寸画面下部の2ボタンは、スマホでは押しやすく縦並びにする */
-  #measurementArea > button {
-    display: block;
-    width: 100%;
-    max-width: 360px;
-    margin: 10px auto 0;
-  }
-
-  /* 商品行内の採寸ボタン */
-  .measure-inline:not(.hidden),
-  .measure-table:not(.hidden) {
-    min-width: 96px;
-  }
-
-  .cell-qty input,
-  .cell-size select,
-  .specialSize {
-    min-height: 36px;
-  }
-
-.name-area {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 8px;
-  width: 100%;
-  max-width: none;
-}
-
-.name-field {
-  display: grid;
-  grid-template-columns: 28px 1fr;
-  align-items: center;
-  gap: 4px;
-}
-
-.name-field label {
+.check-area input[type="checkbox"] {
   width: auto;
-  font-size: 14px;
-}
-
-.name-field input {
-  width: 100%;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-  .measure-inline:not(.hidden) {
-    display: inline-block;
-    margin-top: 6px;
-  }
-
-  .measure-section {
-    font-size: 14px;
-  }
-
-  .measure-section label {
-    min-width: 140px;
-    width: 140px;
-    display: inline-block;
-    margin-top: 10px;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-
-  .measure-section input[type="number"] {
-    width: 72px;
-    box-sizing: border-box;
-  }
-
-  .measure-section select {
-    width: 150px;
-    box-sizing: border-box;
-  }
-
-  .measure-help {
-    display: block;
-    margin: 4px 0 10px 0;
-    width: 100%;
-    font-size: 12px;
-    line-height: 1.4;
-    color: #555;
-  }
-}
-
-
-/* 上部リンク */
-#policyLink {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 13px;
-}
-
-#policyLink a,
-.top-links a {
-  color: #0066cc;
-  text-decoration: none;
-}
-
-.top-links {
-  margin: 10px 0 16px 0;
-  font-size: 15px;
-}
-
-
-/* ===== 受付ページ上部・基本情報カード ===== */
-.page-shell {
-  width: min(100%, 980px);
-  margin: 0 auto;
-}
-.site-header {
-  margin-bottom: 26px;
-}
-.brand-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
-}
-.company-logo {
-  display: block;
-  width: min(360px, 48vw);
-  max-height: 82px;
-  object-fit: contain;
-  object-position: left center;
-}
-.logo-fallback {
-  display: none;
-  color: #333;
-  font-size: 18px;
-  font-weight: 700;
-}
-#policyLink {
-  position: static;
-  flex: 0 0 auto;
-  font-size: 15px;
-  font-weight: 700;
-}
-.page-heading {
-  text-align: center;
-  margin: 0 0 24px;
-}
-.customer-page-name {
-  margin: 0 0 6px;
-  font-size: clamp(20px, 3vw, 30px);
-  font-weight: 700;
-}
-#pageTitle {
   margin: 0;
-  font-size: clamp(30px, 5vw, 48px);
-  line-height: 1.25;
 }
-.revise-card {
-  display: block;
-  max-width: 680px;
-  margin: 0 auto 26px;
-  padding: 15px 20px;
-  border: 2px solid #e69a26;
-  border-left-width: 8px;
-  border-radius: 10px;
-  background: #fff8e8;
-  color: #402b08 !important;
-  text-decoration: none !important;
-  box-sizing: border-box;
-  box-shadow: 0 4px 12px rgba(83, 57, 13, 0.12);
-  transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
-  animation: revise-card-pulse 2.2s ease-in-out infinite;
-}
-.revise-card:hover,
-.revise-card:focus-visible {
-  transform: translateY(-2px);
-  background: #fff0ca;
-  box-shadow: 0 7px 18px rgba(83, 57, 13, 0.2);
-  outline: 3px solid rgba(230, 154, 38, .25);
-}
-.revise-card-kicker {
-  display: block;
-  margin-bottom: 3px;
-  font-size: 14px;
-  font-weight: 700;
-}
-.revise-card-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 20px;
-  font-weight: 800;
-}
-@keyframes revise-card-pulse {
-  0%, 100% { background: #fff8e8; }
-  50% { background: #ffe7ac; }
-}
-.basic-info-card {
-  max-width: 760px;
-  margin: 0 auto 28px;
-  padding: 22px 24px 12px;
-  border: 2px solid #cfd6df;
-  border-radius: 12px;
-  background: #fff;
-  box-sizing: border-box;
-  box-shadow: 0 4px 14px rgba(34, 55, 78, 0.08);
-}
-.basic-info-title {
-  margin: 0 0 22px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #dfe5ec;
-  text-align: center;
-  font-size: 24px;
-}
-.basic-select-field {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 20px;
-}
-.basic-select-field > label {
-  min-width: 80px;
-  font-weight: 700;
-}
-.basic-select-field select {
-  min-width: 170px;
-}
-.pattern-field {
-  align-items: flex-start;
-}
-.pattern-options {
-  display: grid;
-  gap: 10px;
-  width: 100%;
-}
-.pattern-option {
-  display: block;
-  padding: 12px 14px;
-  border: 1px solid #cfd6df;
-  border-radius: 8px;
-  background: #f8fafc;
-  cursor: pointer;
-  box-sizing: border-box;
-}
-.pattern-option:hover,
-.pattern-option:focus-within {
-  border-color: #4a90e2;
-  background: #eef5ff;
-}
-.pattern-option input {
+
+.privacy-link-button {
+  display: inline;
   width: auto;
-  margin-right: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #0066cc;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
 }
-.pattern-name {
-  font-weight: 700;
+.privacy-link-button:hover,
+.privacy-link-button:focus-visible {
+  color: #004b99;
+  outline: 2px solid rgba(0,102,204,.25);
+  outline-offset: 2px;
 }
-.pattern-note {
-  display: block;
-  margin: 6px 0 0 28px;
+.privacy-check-note {
+  margin-top: 8px;
   color: #555;
   font-size: 13px;
-  line-height: 1.5;
 }
-@media (prefers-reduced-motion: reduce) {
-  .revise-card { animation: none; }
+.privacy-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0,0,0,.58);
 }
-@media (max-width: 600px) {
-  body { padding: 14px; }
-  .site-header { margin-bottom: 20px; }
-  .brand-row {
-    display: block;
-    margin-bottom: 22px;
-  }
-  .company-logo {
-    width: min(270px, 82vw);
-    max-height: 65px;
-    margin-bottom: 18px;
-  }
-  #policyLink {
-    text-align: right;
-    font-size: 14px;
-  }
-  .page-heading {
-    margin-bottom: 20px;
-  }
-  .customer-page-name {
-    font-size: 21px;
-  }
-  #pageTitle {
-    font-size: 32px;
-  }
-  .revise-card {
-    width: 100%;
-    margin-bottom: 22px;
-    padding: 14px 15px;
-  }
-  .revise-card-action {
-    font-size: 18px;
-  }
-  .basic-info-card {
-    width: 100%;
-    padding: 18px 14px 8px;
-    border-radius: 10px;
-  }
-  .basic-info-title {
-    margin-bottom: 18px;
-    font-size: 22px;
-  }
-  .basic-select-field {
-    margin-bottom: 18px;
-  }
-  .basic-select-field > label {
-    min-width: 64px;
-  }
+.privacy-modal.hidden { display: none; }
+.privacy-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(94vw, 760px);
+  height: min(88vh, 760px);
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 12px 38px rgba(0,0,0,.35);
+}
+.privacy-dialog-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ccc;
+  background: #f6f9fc;
+}
+.privacy-dialog-header h3 { margin: 0; }
+.privacy-dialog-body { flex: 1; min-height: 0; }
+.privacy-frame { display: block; width: 100%; height: 100%; border: 0; }
+.privacy-dialog-footer {
+  padding: 10px 14px 14px;
+  border-top: 1px solid #ccc;
+  background: #fff;
+}
+.privacy-scroll-message {
+  margin: 0 0 8px;
+  color: #c00;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+}
+#privacyCloseButton { margin: 0; }
+body.modal-open { overflow: hidden; }
+
+.sending-overlay { position: fixed; inset: 0; z-index: 20000; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,.68); text-align: center; }
+.sending-overlay.hidden { display: none; }
+.sending-panel { width: min(90vw, 460px); padding: 34px 24px; border-radius: 14px; background: #fff; box-shadow: 0 14px 44px rgba(0,0,0,.38); }
+.sending-wait, .sending-warning { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.6; }
+.sending-status {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  min-height: 38px;
+  margin: 22px 0;
+  color: #174f86;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.sending-dots {
+  display: inline-block;
+  width: 3ch;
+  text-align: left;
+  white-space: pre;
+}
+body.sending-locked { overflow: hidden; }
+.hidden {
+  display: none;
 }
 
 </style>
@@ -898,249 +128,158 @@ tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; b
 
 <body>
 
-<div class="page-shell">
-  <header class="site-header">
-    <div class="brand-row">
-      <div>
-        <img
-          class="company-logo"
-          src="images/company-logo.png"
-          alt="ワタキューセイモア株式会社"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-        >
-        <div class="logo-fallback">ワタキューセイモア株式会社</div>
-      </div>
-      <div id="policyLink">
-        <a href="privacy.html">プライバシーポリシー・免責事項</a>
-      </div>
-    </div>
+<h2>登録内容確認</h2>
+<div id="message" class="error"></div>
 
-    <div class="page-heading">
-      <div id="customerInfo" class="customer-page-name">読み込み中... 様専用</div>
-      <h1 id="pageTitle">ユニフォーム申請受付</h1>
-    </div>
-
-    <a id="reviseLink" class="revise-card" href="revise.html">
-      <span class="revise-card-kicker">すでに申請済みの方</span>
-      <span class="revise-card-action">
-        <span>✎ 入力内容の修正はこちら</span>
-        <span aria-hidden="true">›</span>
-      </span>
-    </a>
-  </header>
-
-  <section class="basic-info-card" aria-labelledby="basicInfoTitle">
-    <h2 id="basicInfoTitle" class="basic-info-title">基本情報の入力</h2>
-
-    <div id="employeeNoArea" class="basic-field hidden">
-      <label for="employeeNo">職員番号</label>
-      <input id="employeeNo" inputmode="latin" autocomplete="off" maxlength="30" oninput="normalizeEmployeeNoInput(this)">
-    </div>
-
-    <div class="name-area">
-      <div class="name-field">
-        <label for="sei">姓</label>
-        <input id="sei" inputmode="text" autocomplete="family-name">
-      </div>
-      <div class="name-field">
-        <label for="mei">名</label>
-        <input id="mei" inputmode="text" autocomplete="given-name">
-      </div>
-      <div class="name-field">
-        <label for="seiKana">セイ</label>
-        <input id="seiKana" inputmode="katakana" autocomplete="off">
-      </div>
-      <div class="name-field">
-        <label for="meiKana">メイ</label>
-        <input id="meiKana" inputmode="katakana" autocomplete="off">
-      </div>
-    </div>
-
-    <div class="basic-select-field">
-      <label for="gender">性別</label>
-      <select id="gender" onchange="changeGender()">
-        <option value="">選択</option>
-        <option value="男性">男性</option>
-        <option value="女性">女性</option>
-      </select>
-    </div>
-
-    <div class="basic-select-field">
-      <label for="job">職種</label>
-      <select id="job" onchange="changeJob()">
-        <option value="">選択</option>
-      </select>
-    </div>
-
-    <div id="departmentArea" class="basic-select-field hidden">
-      <label for="department">部署</label>
-      <select id="department">
-        <option value="">選択</option>
-      </select>
-    </div>
-    <div id="lendingPatternArea" class="basic-select-field pattern-field hidden">
-      <label>貸与パターン</label>
-      <div id="lendingPatternOptions" class="pattern-options"></div>
-    </div>
-  </section>
-<div id="limitDeclarationArea"></div>
-
-<div class="table-wrap">
-  <table id="table"></table>
+<!-- 基本情報 -->
+<div class="section">
+  <h3>基本情報</h3>
+  <div class="info-row">顧客：<span id="customerName"></span></div>
+  <div id="employeeNoRow" class="info-row hidden">職員番号：<span id="employeeNo"></span></div>
+  <div class="info-row">姓名：<span id="fullName"></span></div>
+<div class="info-row">フリガナ：<span id="fullNameKana"></span></div>
+  <div class="info-row">性別：<span id="gender"></span></div>
+  <div class="info-row">職種：<span id="job"></span></div>
+  <div class="info-row">部署：<span id="department"></span></div>
+  <div id="lendingPatternRow" class="info-row hidden">貸与パターン：<span id="lendingPattern"></span></div>
 </div>
 
-<div id="categoryStatus"></div>
-
-<button id="submitButton" onclick="submitData()">確認</button>
-
+<!-- 商品内容（縦並び） -->
+<div class="section">
+  <h3>商品選択内容</h3>
+  <div id="orderArea"></div>
 </div>
-<div id="measurementArea" class="hidden measurement-area">
 
-  <h2>別寸採寸表入力</h2>
+<!-- 採寸内容：別寸選択または採寸入力がある場合のみ表示 -->
+<div id="measurementSection" class="section hidden">
+  <h3>別寸サイズ採寸入力内容</h3>
+  <div id="measurementContent"></div>
+</div>
 
-  <div id="measurementMessage"></div>
-
-  <div class="measurement-guide" id="measurementGuide">
-    <strong>採寸図：</strong><br>
-    <div class="measurement-image-wrapper" id="measurementImageWrapper">
-      <img src="images/measurement-guide.png" alt="採寸図。図中のアルファベットをタップすると対応する入力欄へ移動します。" class="measurement-image">
-      <button type="button" class="measure-hit hit-A" data-field="m_A" data-point="A" aria-label="A 衿回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-B" data-field="m_B" data-point="B" aria-label="B 肩巾の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-C" data-field="m_C1" data-point="C" aria-label="C 袖丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-D" data-field="m_D" data-point="D" aria-label="D 胸回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-E-upper" data-field="m_E" data-point="E-upper" aria-label="上衣 E 胴回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-F-upper" data-field="m_F" data-point="F-upper" aria-label="上衣 F 腰回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-G" data-field="m_G" data-point="G" aria-label="G 背丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-H" data-field="m_H" data-point="H" aria-label="H 着丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-I" data-field="m_I" data-point="I" aria-label="I 袖付回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-e-lower" data-field="m_a" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-f-lower" data-field="m_b" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-J" data-field="m_c" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-K" data-field="m_d" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-L" data-field="m_e" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-M" data-field="m_f" data-point="M" aria-label="M 太股回りの入力欄へ移動"></button>
-    </div>
-    <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
+<!-- 任意4桁 -->
+<div class="section">
+  <h3>4桁の数字</h3>
+  <div class="notice">
+    任意の4桁の数字を入力してください。<br>
+    登録内容修正時に必要になります。
   </div>
-
-  <div class="measurement-nude-notice" role="alert">
-    採寸はヌード寸法でご記入ください。
-  </div>
-  <section class="measure-section" id="measureCommon">
-    <h3>共通項目</h3>
-
-    <label>身長</label>
-    <input type="number" id="m_height"> cm<br>
-
-    <label>体重</label>
-    <input type="number" id="m_weight"> kg<br>
-
-  </section>
-
-  <section class="measure-section" id="measureUpper">
-    <h3>上衣採寸</h3>
-
-    <label class="measure-jump-label" data-image-point="A" tabindex="0" role="button">A_衿回り</label>
-    <input type="number" id="m_A"> cm
-    <div class="measure-help">のどぼとけのすぐ下で測る。</div>
-
-    <label class="measure-jump-label" data-image-point="B" tabindex="0" role="button">B_肩巾</label>
-    <input type="number" id="m_B"> cm
-    <div class="measure-help">左、右の肩先まで測る。</div>
-
-    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C1_袖丈_半袖</label>
-    <input type="number" id="m_C1"> cm<br>
-
-    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C2_袖丈_七分袖</label>
-    <input type="number" id="m_C2"> cm<br>
-
-    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C3_袖丈_長袖</label>
-    <input type="number" id="m_C3"> cm
-
-    <div class="measure-help">
-      肩先から本人希望の長さ。該当する袖丈のみ入力してください。<br>
-      ※半袖の商品を長袖で製作することはできません。
-    </div>
-
-    <label class="measure-jump-label" data-image-point="D" tabindex="0" role="button">D_胸回り</label>
-    <input type="number" id="m_D"> cm
-    <div class="measure-help">脇のすぐ下で水平にメジャーを回して測る。</div>
-
-    <label class="measure-jump-label" data-image-point="E-upper" tabindex="0" role="button">E_胴回り</label>
-    <input type="number" id="m_E" oninput="syncLinkedMeasurement(this, 'm_a')" onchange="syncLinkedMeasurement(this, 'm_a')"> cm
-    <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="F-upper" tabindex="0" role="button">F_腰回り</label>
-    <input type="number" id="m_F" oninput="syncLinkedMeasurement(this, 'm_b')" onchange="syncLinkedMeasurement(this, 'm_b')"> cm
-    <div class="measure-help">腰の一番張ったところを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="G" tabindex="0" role="button">G_背丈</label>
-    <input type="number" id="m_G"> cm
-    <div class="measure-help">首の付け根の中心から胴回りの測定位置まで。</div>
-
-    <label class="measure-jump-label" data-image-point="H" tabindex="0" role="button">H_着丈</label>
-    <input type="number" id="m_H"> cm
-    <div class="measure-help">首の付け根の中心から本人希望の長さまで。</div>
-
-    <label class="measure-jump-label" data-image-point="I" tabindex="0" role="button">I_袖付回り</label>
-    <input type="number" id="m_I"> cm
-    <div class="measure-help">肩先から腕の付け根部分回りを測る。</div>
-  </section>
-
-  <section class="measure-section" id="measureLower">
-    <h3>下衣採寸</h3>
-
-    <label class="measure-jump-label" data-image-point="e-lower" tabindex="0" role="button">e_胴回り</label>
-    <input type="number" id="m_a" oninput="syncLinkedMeasurement(this, 'm_E')" onchange="syncLinkedMeasurement(this, 'm_E')"> cm
-    <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="f-lower" tabindex="0" role="button">f_腰回り</label>
-    <input type="number" id="m_b" oninput="syncLinkedMeasurement(this, 'm_F')" onchange="syncLinkedMeasurement(this, 'm_F')"> cm
-    <div class="measure-help">腰の一番張ったところを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="J" tabindex="0" role="button">J_股上</label>
-    <input type="number" id="m_c"> cm
-    <div class="measure-help">胴回り位置から股下までを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="K" tabindex="0" role="button">K_股下</label>
-    <input type="number" id="m_d"> cm
-    <div class="measure-help">股下より本人希望の長さ。</div>
-
-    <label class="measure-jump-label" data-image-point="L" tabindex="0" role="button">L_総丈</label>
-    <input type="number" id="m_e"> cm
-    <div class="measure-help">胴回り位置からズボン裾まで。</div>
-
-    <label class="measure-jump-label" data-image-point="M" tabindex="0" role="button">M_太股回り</label>
-    <input type="number" id="m_f"> cm
-    <div class="measure-help">股下より10cm下がった位置を測る。</div>
-  </section>
-
-  <section class="measure-section">
-    <h3>特記事項・備考</h3>
-
-    <label>特記事項</label><br>
-    <textarea id="m_specialNote" rows="3"></textarea><br>
-
-    <label>備考</label><br>
-    <textarea id="m_memo" rows="3"></textarea>
-  </section>
-
-  <button onclick="saveMeasurement()">採寸表を保存して戻る</button>
-  <button onclick="cancelMeasurement()">保存せず戻る</button>
-
+  <label for="pin">4桁の数字</label>
+  <input id="pin" inputmode="numeric" maxlength="4" autocomplete="off">
+  <div class="small">例：2486</div>
 </div>
+
+<div id="rosterResultArea" class="section hidden">
+  <h3>名簿確認結果</h3>
+  <div id="rosterResultMessage" class="notice"></div>
+</div>
+<div id="duplicateWarningArea" class="section hidden">
+  <h3>登録確認</h3>
+
+<div class="notice">
+  入力された情報と一致した登録があります。<br><br>
+  修正の場合は
+  <a id="duplicateReviseLink" href="revise.html">こちら</a>
+  をご利用ください。<br><br>
+  このまま登録する場合は、チェックを入れて進んでください。
+</div>
+
+  <div class="check-area">
+    <label>
+      <input type="checkbox" id="duplicateConfirmCheck">
+      確認の上、このまま登録する
+    </label>
+  </div>
+</div>
+
+<!-- 確認チェック --->
+<div class="check-area">
+  <label>
+    <input type="checkbox" id="confirmCheck" disabled>
+    <span id="newConfirmText">
+      <button id="privacyOpenButton" class="privacy-link-button" type="button">プライバシーポリシー</button>に同意し、入力内容に間違いがないことを確認しました
+    </span>
+    <span id="editConfirmText" class="hidden">修正内容を確認しました</span>
+  </label>
+  <div id="privacyCheckNote" class="privacy-check-note">
+    プライバシーポリシーを開き、最後までスクロールして閉じるとチェックできます。
+  </div>
+</div>
+
+<div id="privacyModal" class="privacy-modal hidden" role="dialog" aria-modal="true" aria-labelledby="privacyDialogTitle">
+  <div class="privacy-dialog">
+    <div class="privacy-dialog-header">
+      <h3 id="privacyDialogTitle">プライバシーポリシー・免責事項</h3>
+    </div>
+    <div class="privacy-dialog-body">
+      <iframe id="privacyFrame" class="privacy-frame" title="プライバシーポリシー・免責事項"></iframe>
+    </div>
+    <div class="privacy-dialog-footer">
+      <p id="privacyScrollMessage" class="privacy-scroll-message">画面を閉じるには最後までスクロールしてください。</p>
+      <button id="privacyCloseButton" type="button" disabled>確認して閉じる</button>
+    </div>
+  </div>
+</div>
+<div id="sendingOverlay" class="sending-overlay hidden" role="alert" aria-live="assertive" aria-busy="true">
+  <div class="sending-panel">
+    <p class="sending-wait">しばらくお待ち下さい。</p>
+    <div class="sending-status"><span>送信中</span><span id="sendingDots" class="sending-dots">.</span></div>
+    <p class="sending-warning">画面を閉じたり戻ったりしないで下さい。</p>
+  </div>
+</div>
+<button id="submitBtn" disabled>登録する</button>
+<button id="returnToInputButton" type="button">入力画面に戻る</button>
 
 <script>
 
-const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
-const ROSTER_CHECK_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/d5ee07df145049e4a60655f02035b009/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kxmBOK-tVp6ts4sKgsWUd2NhIQNZbNlG1AK6hNlnpTA";
+/* 戻り方にかかわらず、index.htmlが確認直前の入力内容を復元できるようにする */
+let allowApplicationNavigation = false;
+let confirmRegistrationCompleted = false;
+function markReturnToInput() {
+  if (confirmRegistrationCompleted) return;
+  if (!sessionStorage.getItem("uniformDraft")) return;
+  sessionStorage.setItem("uniformReturnToIndex", "1");
+  sessionStorage.setItem("uniformDraftPending", "1");
+}
+window.addEventListener("pagehide", markReturnToInput);
+document.getElementById("returnToInputButton").addEventListener("click", () => {
+  if (submitInProgress) return;
+  if (!draft) {
+    alert("戻す入力内容がありません。入力画面からやり直してください。");
+    return;
+  }
+  const pin = document.getElementById("pin");
+  if (pin) sessionStorage.setItem("uniformConfirmPin", pin.value || "");
+  sessionStorage.setItem("uniformReturnToIndex", "1");
+  sessionStorage.setItem("uniformDraftPending", "1");
+  allowApplicationNavigation = true;
+  const customerKey = getCustomerKey();
+  const editQuery = draft.editMode === true ? "&mode=edit" : "";
+  location.replace("index.html?customer=" + encodeURIComponent(customerKey) + editQuery + "&from=confirm");
+});
 
-function getCustomer() {
+const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
+const FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/2fadd75538814f6eb11f426aee74c62e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r_0adeV2uMpNHxM0OzPQUcI8StgIf6zMICtxq4y2cG0";  
+let draft = null;
+
+/* HTMLエスケープ */
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function getCustomerKey() {
   const url = new URL(window.location.href);
   const customerKey =
     url.searchParams.get("customer") ||
     sessionStorage.getItem("uniformCustomer") ||
-    "gvhp8hex";
+    draft?.publicKey ||
+    draft?.customerKey ||
+    draft?.customer ||
+    "";
 
   if (customerKey) {
     sessionStorage.setItem("uniformCustomer", customerKey);
@@ -1149,2500 +288,822 @@ function getCustomer() {
   return customerKey;
 }
 
-
 async function checkPageDeadline() {
-  const publicKey = getCustomer();
-
-  if (
-    !HP_DEADLINE_FLOW_URL ||
-    HP_DEADLINE_FLOW_URL.includes("HTTP POST URLをここに貼る")
-  ) {
+  const publicKey = getCustomerKey();
+  if (!HP_DEADLINE_FLOW_URL || HP_DEADLINE_FLOW_URL.includes("HTTP POST URLをここに貼る")) {
     throw new Error("PA_HP有効期限チェックのHTTP POST URLが未設定です。");
   }
-
   const res = await fetch(HP_DEADLINE_FLOW_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      publicKey: publicKey,
-      customerKey: publicKey,
-      customer: publicKey
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ publicKey, customerKey: publicKey, customer: publicKey })
   });
-
   const text = await res.text();
-  if (!res.ok) {
-    throw new Error(text || "HP公開期限チェックに失敗しました。");
-  }
-  if (!text) {
-    throw new Error("HP公開期限チェックの応答が空です。");
-  }
-
+  if (!res.ok) throw new Error(text || "HP公開期限チェックに失敗しました。");
+  if (!text) throw new Error("HP公開期限チェックの応答が空です。");
   let json;
+  try { json = JSON.parse(text); }
+  catch { throw new Error("HP公開期限チェックの応答形式が正しくありません。"); }
+  if (json.result !== "ok" || json.found !== true || json.active !== true || json.expired === true) {
+    location.replace("expired.html");
+    return false;
+  }
+  return true;
+}
+
+/* 読み込み */
+function loadDraft() {
+  const raw = sessionStorage.getItem("uniformDraft");
+  if (!raw) {
+    document.getElementById("message").innerText =
+      "確認する登録内容がありません。入力画面からやり直してください。";
+    return;
+  }
+
   try {
-    json = JSON.parse(text);
+    draft = JSON.parse(raw);
   } catch {
-    throw new Error("HP公開期限チェックの応答形式が正しくありません。");
-  }
-
-  if (
-    json.result !== "ok" ||
-    json.found !== true ||
-    json.active !== true ||
-    json.expired === true
-  ) {
-    location.href = "expired.html";
-    return false;
-  }
-
-  return true;
-}
-
-let currentData;
-
-/* ===== 修正モード用 ===== */
-const urlParams = new URLSearchParams(location.search);
-const isEditMode = urlParams.get("mode") === "edit";
-
-let effectiveEditMode = isEditMode;
-let editData = null;
-let editMeasureNo = "";
-/* ======================== */
-
-function getBasicInfoSetting(name) {
-  const infos = currentData && Array.isArray(currentData.basicInfos)
-    ? currentData.basicInfos
-    : [];
-  return infos.find(info => String(info.name || "") === name) || null;
-}
-
-function isBasicInfoActive(name) {
-  const info = getBasicInfoSetting(name);
-  if (["姓名", "性別", "職種"].includes(name)) return true;
-  if (!info) return false;
-  return info.active === true || info.active === 1 || String(info.active).toLowerCase() === "true";
-}
-
-function isEmployeeNoActive() {
-  return isBasicInfoActive("職員番号");
-}
-
-function isDepartmentActive() {
-  return isBasicInfoActive("部署");
-}
-function isLendingPatternActive() {
-  return isBasicInfoActive("貸与パターン");
-}
-function getSelectedJobBaseData() {
-  const job = document.getElementById("job").value;
-  const gender = document.getElementById("gender").value;
-  if (!currentData || !job || !gender) return null;
-  return currentData.jobs.find(j => j.job === job && j.gender === gender) || null;
-}
-function getSelectedLendingPatternCode() {
-  const checked = document.querySelector('input[name="lendingPattern"]:checked');
-  return checked ? checked.value : "";
-}
-function getSelectedLendingPattern() {
-  const jobData = getSelectedJobBaseData();
-  if (!jobData) return null;
-  const code = getSelectedLendingPatternCode();
-  return (jobData.lendingPatterns || []).find(p => p.code === code) || null;
-}
-function getLendingPatternName() {
-  const pattern = getSelectedLendingPattern();
-  return pattern ? pattern.name : "";
-}
-function clearCurrentProductSelection() {
-  measurementData = {
-    common: { height: "", weight: "", method: "ヌード寸法" },
-    upper: { completed: false, A: "", B: "", C1: "", C2: "", C3: "", D: "", E: "", F: "", G: "", H: "", I: "" },
-    lower: { completed: false, a: "", b: "", c: "", d: "", e: "", f: "" },
-    specialNote: "",
-    memo: ""
-  };
-}
-function updateLendingPatternOptions(selectedCode = "") {
-  const area = document.getElementById("lendingPatternArea");
-  const optionsArea = document.getElementById("lendingPatternOptions");
-  if (!area || !optionsArea) return false;
-  const jobData = getSelectedJobBaseData();
-  const patterns = jobData && isLendingPatternActive() && Array.isArray(jobData.lendingPatterns)
-    ? [...jobData.lendingPatterns].sort((a, b) => (a.displayOrder || 9999) - (b.displayOrder || 9999))
-    : [];
-  optionsArea.innerHTML = "";
-  if (patterns.length === 0) {
-    area.classList.add("hidden");
-    return false;
-  }
-  area.classList.remove("hidden");
-  patterns.forEach(pattern => {
-    const label = document.createElement("label");
-    label.className = "pattern-option";
-    const input = document.createElement("input");
-    input.type = "radio";
-    input.name = "lendingPattern";
-    input.value = pattern.code;
-    input.checked = pattern.code === selectedCode;
-    input.addEventListener("change", changeLendingPattern);
-    const name = document.createElement("span");
-    name.className = "pattern-name";
-    name.textContent = pattern.name;
-    label.appendChild(input);
-    label.appendChild(name);
-    if (pattern.note) {
-      const note = document.createElement("span");
-      note.className = "pattern-note";
-      note.textContent = pattern.note;
-      label.appendChild(note);
-    }
-    optionsArea.appendChild(label);
-  });
-  return true;
-}
-function changeLendingPattern() {
-  clearCurrentProductSelection();
-  const jobData = getSelectedJobBaseData();
-  const pattern = getSelectedLendingPattern();
-  if (!jobData || !pattern) {
-    document.getElementById("table").innerHTML = "<tr><td colspan='7'>貸与パターンを選択してください</td></tr>";
-    document.getElementById("categoryStatus").innerHTML = "";
-    document.getElementById("limitDeclarationArea").innerHTML = "";
-    return;
-  }
-  createTable(currentData, jobData.job, jobData.gender);
-}
-
-
-function setupBasicInfoVisibility() {
-  const employeeArea = document.getElementById("employeeNoArea");
-  const employeeInput = document.getElementById("employeeNo");
-
-  if (employeeArea) {
-    if (isEmployeeNoActive()) {
-      employeeArea.classList.remove("hidden");
-    } else {
-      employeeArea.classList.add("hidden");
-
-      if (employeeInput) {
-        employeeInput.value = "";
-      }
-    }
-  }
-
-  const departmentArea = document.getElementById("departmentArea");
-  const departmentSelect = document.getElementById("department");
-
-  if (departmentArea && departmentSelect) {
-    if (isDepartmentActive()) {
-      departmentArea.classList.remove("hidden");
-
-      if (!departmentSelect.value && departmentSelect.options.length <= 1) {
-        departmentSelect.innerHTML =
-          '<option value="">性別と職種を選択してください</option>';
-        departmentSelect.disabled = true;
-      }
-    } else {
-      departmentArea.classList.add("hidden");
-      departmentSelect.innerHTML = '<option value="">選択</option>';
-      departmentSelect.disabled = false;
-    }
-  }
-}
-
-function normalizeEmployeeNoInput(input) {
-  if (!input) return;
-  input.value = String(input.value || "").replace(/[^A-Za-z0-9]/g, "");
-}
-
-function validateEmployeeNoValue(value) {
-  return /^[A-Za-z0-9]+$/.test(String(value || "").trim());
-}
-
-let currentMeasurementType = "";
-let currentMeasurementButton = null;
-
-let measurementData = {
-  common: {
-    height: "",
-    weight: "",
-    method: "ヌード寸法"
-  },
-  upper: {
-    completed: false,
-    A: "",
-    B: "",
-    C1: "",
-    C2: "",
-    C3: "",
-    D: "",
-    E: "",
-    F: "",
-    G: "",
-    H: "",
-    I: ""
-  },
-  lower: {
-    completed: false,
-    a: "",
-    b: "",
-    c: "",
-    d: "",
-    e: "",
-    f: ""
-  },
-  specialNote: "",
-  memo: ""
-};
-
-checkPageDeadline()
-  .then(ok => {
-    if (!ok) {
-      return null;
-    }
-
-    return fetch(`config/${getCustomer()}.json?ts=${Date.now()}`);
-  })
-  .then(res => {
-    if (!res) {
-      return null;
-    }
-    if (!res.ok) {
-      throw new Error("JSONファイルが見つかりません");
-    }
-    return res.json();
-  })
-  .then(data => {
-    if (!data) {
-      return;
-    }
-
-currentData = data;
-setupBasicInfoVisibility();
-
-document.getElementById("customerInfo").innerText =
-  currentData.customerName + " 様専用";
-
-    const reviseLink = document.getElementById("reviseLink");
-    if (reviseLink) {
-      reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
-    }
-
-    document.getElementById("table").innerHTML =
-      "<tr><td colspan='7'>性別と職種を選択してください</td></tr>";
-
-    document.getElementById("categoryStatus").innerHTML = "";
-
-    updateJobOptions();
-
-    if (shouldRestoreConfirmDraft()) {
-      applyConfirmReturnData();
-    } else if (isEditMode) {
-      applyEditModeData();
-    }
-  })
-  .catch(error => {
-    document.getElementById("table").innerHTML =
-      "<tr><td colspan='7'>読み込みに失敗しました：" + error.message + "</td></tr>";
-  });
-
-function getFirstStoredValue(source, keys) {
-  if (!source) return "";
-  for (const key of keys) {
-    const value = source[key];
-    if (value !== undefined && value !== null && String(value).trim() !== "") {
-      return String(value);
-    }
-  }
-  return "";
-}
-
-function getConfirmDraft() {
-  try {
-    const draft = JSON.parse(sessionStorage.getItem("uniformDraft") || "null");
-    if (!draft || !Array.isArray(draft.orders) || draft.orders.length === 0) return null;
-    return draft;
-  } catch (error) {
-    console.error("確認画面の入力内容を読み込めませんでした。", error);
-    return null;
-  }
-}
-
-function shouldRestoreConfirmDraft() {
-  const draft = getConfirmDraft();
-  if (!draft) return false;
-  const params = new URLSearchParams(location.search);
-  return params.get("from") === "confirm" ||
-    sessionStorage.getItem("uniformReturnToIndex") === "1" ||
-    sessionStorage.getItem("uniformDraftPending") === "1" ||
-    /(^|\/)confirm\.html(?:\?|$)/i.test(document.referrer || "");
-}
-
-function applyConfirmReturnData() {
-  const returnDraft = getConfirmDraft();
-  if (!returnDraft) return;
-  const base = returnDraft.orders[0] || {};
-  const returnEditMode = returnDraft.editMode === true;
-
-  effectiveEditMode = returnEditMode;
-
-  editData = {
-    found: true,
-    measureNo: returnDraft.measureNo || base["採寸番号"] || "",
-    orders: returnDraft.orders,
-    measurement: returnDraft.measurement || null
-  };
-  editMeasureNo = editData.measureNo;
-
-  const employeeNoInput = document.getElementById("employeeNo");
-  if (employeeNoInput) employeeNoInput.value = getFirstStoredValue(base, ["職員番号", "employeeNo", "staffNo"]);
-  document.getElementById("sei").value = getFirstStoredValue(base, ["姓", "氏", "sei"]);
-  document.getElementById("mei").value = getFirstStoredValue(base, ["名", "mei"]);
-  document.getElementById("seiKana").value = getFirstStoredValue(base, ["セイ", "シ", "seiKana"]);
-  document.getElementById("meiKana").value = getFirstStoredValue(base, ["メイ", "meiKana"]);
-
-  const genderValue = getFirstStoredValue(base, ["性別", "gender"]);
-  const jobValue = getFirstStoredValue(base, ["職種", "job"]);
-  const departmentValue = getFirstStoredValue(base, ["部署", "department"]);
-  const lendingPatternCode = getFirstStoredValue(base, ["貸与パターンコード", "lendingPatternCode"]);
-  document.getElementById("gender").value = genderValue;
-  updateJobOptions();
-  addMissingOption(document.getElementById("job"), jobValue);
-  document.getElementById("job").value = jobValue;
-  changeJob();
-  updateLendingPatternOptions(lendingPatternCode);
-  if (lendingPatternCode) changeLendingPattern();
-  const departmentSelect = document.getElementById("department");
-  if (departmentSelect) {
-    addMissingOption(departmentSelect, departmentValue);
-    departmentSelect.value = departmentValue;
-  }
-
-  restoreMeasurementFromEditData(returnDraft.measurement);
-  restoreOrdersFromEditData(returnDraft.orders);
-
-  if (returnEditMode) {
-    const title = document.getElementById("pageTitle");
-    if (title) title.innerText = "ユニフォーム申請受付（修正）";
-    const reviseLink = document.getElementById("reviseLink");
-    if (reviseLink) {
-      reviseLink.innerHTML = `
-        <span class="revise-card-kicker">修正対象を変更する場合</span>
-        <span class="revise-card-action">
-          <span>✎ 修正対象を検索し直す</span>
-          <span aria-hidden="true">›</span>
-        </span>`;
-      reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
-    }
-    setBasicInfoReadOnly();
-  }
-
-  sessionStorage.removeItem("uniformReturnToIndex");
-  sessionStorage.removeItem("uniformDraftPending");
-  updateCategorySummary();
-  updateAllMeasurementButtons();
-  updateAllInseamAreas();
-}
-
-function applyEditModeData() {
-
-  editData = JSON.parse(sessionStorage.getItem("uniformEditData") || "null");
-
-  if (!editData || !editData.found || !editData.orders || editData.orders.length === 0) {
-    alert("修正対象データが見つかりません。もう一度検索してください。");
-    location.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
+    document.getElementById("message").innerText =
+      "登録内容の読み込みに失敗しました。入力画面からやり直してください。";
     return;
   }
 
-  const base = editData.orders[0];
-
-  editMeasureNo =
-    editData.measureNo ||
-    base["採寸番号"] ||
-    "";
-
-  if (!editMeasureNo) {
-    alert("採寸番号が取得できませんでした。もう一度検索してください。");
-    location.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
-    return;
+  const savedPin = sessionStorage.getItem("uniformConfirmPin");
+  if (savedPin !== null) {
+    const pinInput = document.getElementById("pin");
+    if (pinInput) pinInput.value = savedPin;
+  }
+  const customerKey = getCustomerKey();
+  if (customerKey) {
+    draft.publicKey = customerKey;
+    draft.customerKey = customerKey;
+    draft.customer = customerKey;
   }
 
-  const title = document.getElementById("pageTitle");
-  if (title) {
-    title.innerText = "ユニフォーム申請受付（修正）";
+  const orders = draft.orders || [];
+  const first = orders[0] || {};
+  const employeeNo = first.employeeNo || first.staffNo || first["職員番号"] || "";
+  const employeeNoRow = document.getElementById("employeeNoRow");
+  const employeeNoSpan = document.getElementById("employeeNo");
+  if (employeeNoRow && employeeNoSpan && employeeNo) {
+    employeeNoRow.classList.remove("hidden");
+    employeeNoSpan.innerText = employeeNo;
+  } else if (employeeNoRow) {
+    employeeNoRow.classList.add("hidden");
   }
 
-  const reviseLink = document.getElementById("reviseLink");
-  if (reviseLink) {
-    reviseLink.innerHTML = `
-      <span class="revise-card-kicker">修正対象を変更する場合</span>
-      <span class="revise-card-action">
-        <span>✎ 修正対象を検索し直す</span>
-        <span aria-hidden="true">›</span>
-      </span>`;
-    reviseLink.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
-  }
-
-  const employeeNoInput = document.getElementById("employeeNo");
-  if (employeeNoInput) {
-    employeeNoInput.value = base["職員番号"] || base.employeeNo || base.staffNo || "";
-  }
-
-  document.getElementById("sei").value = getFirstStoredValue(base, ["姓", "氏", "sei"]);
-  document.getElementById("mei").value = getFirstStoredValue(base, ["名", "mei"]);
-
-document.getElementById("seiKana").value = getFirstStoredValue(base, ["セイ", "シ", "seiKana"]);
-document.getElementById("meiKana").value = getFirstStoredValue(base, ["メイ", "meiKana"]);
-
-  const lendingPatternCode = getFirstStoredValue(base, ["貸与パターンコード", "lendingPatternCode"]);
-  document.getElementById("gender").value = base["性別"] || "";
-  updateJobOptions();
-
-  addMissingOption(document.getElementById("job"), base["職種"]);
-  document.getElementById("job").value = base["職種"] || "";
-
-  changeJob();
-  updateLendingPatternOptions(lendingPatternCode);
-  if (lendingPatternCode) changeLendingPattern();
-
-  const departmentSelect = document.getElementById("department");
-  if (departmentSelect) {
-    addMissingOption(departmentSelect, base["部署"]);
-    departmentSelect.value = base["部署"] || "";
-  }
-
-  restoreMeasurementFromEditData(editData.measurement);
-  restoreOrdersFromEditData(editData.orders);
-
-  setBasicInfoReadOnly();
-
-  updateCategorySummary();
-  updateAllMeasurementButtons();
-  
-}
-
-function addMissingOption(select, value) {
-
-  if (!select || !value) return;
-
-  const exists = Array.from(select.options).some(option => option.value === value);
-
-  if (!exists) {
-    const option = document.createElement("option");
-    option.value = value;
-    option.textContent = value;
-    select.appendChild(option);
-  }
-}
-
-function setBasicInfoReadOnly() {
-
-  const ids = [
-  "employeeNo",
-  "sei",
-  "mei",
-  "seiKana",
-  "meiKana",
-  "gender",
-  "job",
-  "department"
-];
-
-  ids.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.disabled = true;
-      el.style.backgroundColor = "#eee";
-    }
-  });
-  document.querySelectorAll('input[name="lendingPattern"]').forEach(input => {
-    input.disabled = true;
-  });
-}
-
-function restoreOrdersFromEditData(orders) {
-
-  if (!orders || orders.length === 0) return;
-
-  const grouped = {};
-
-  orders.forEach(order => {
-    const productCode = String(
-      order["カタログ品番"] ||
-      order["商品コード"] ||
-      order.productCode ||
-      ""
-    ).trim();
-
-    if (!productCode) return;
-
-    if (!grouped[productCode]) {
-      grouped[productCode] = [];
-    }
-
-    grouped[productCode].push(order);
-  });
-
-  Object.keys(grouped).forEach(productCode => {
-
-    const orderList = grouped[productCode];
-
-    orderList.forEach((order, index) => {
-
-      let productRows = Array.from(
-        document.querySelectorAll(`tr[data-product-code="${productCode}"]`)
-      );
-
-      if (productRows.length === 0) return;
-
-      if (index >= productRows.length) {
-        const addButton = productRows[0].querySelector(".addSizeBtn");
-
-        if (addButton) {
-          addSameProductRow(addButton);
-        }
-
-        productRows = Array.from(
-          document.querySelectorAll(`tr[data-product-code="${productCode}"]`)
-        );
-      }
-
-      const row = productRows[index];
-
-      if (!row) return;
-
-      setProductRowValue(row, order);
-    });
-  });
-
-updateCategorySummary();
-  updateAllMeasurementButtons();
-  updateAllInseamAreas();
-  restoreInseamFromEditData(orders);
-}
-
-function setProductRowValue(row, order) {
-
-  const size = String(order["サイズ"] || order.size || "");
-  const qty = order["数量"] ?? order.qty ?? "";
-
-  const mainSizeSelect = row.querySelector(".mainSize");
-  const specialSizeSelect = row.querySelector(".specialSize");
-  const qtyInput = row.querySelector(".cell-qty input");
-
-  if (!mainSizeSelect || !qtyInput) return;
-
-  const mainMatch = Array.from(mainSizeSelect.options).some(option => option.value === size);
-
-  if (mainMatch) {
-    mainSizeSelect.value = size;
-    checkMainSize(mainSizeSelect);
+  document.getElementById("customerName").innerText = first.customerName || "";
+  document.getElementById("fullName").innerText =
+    `${first.sei || ""} ${first.mei || ""}`.trim();
+document.getElementById("fullNameKana").innerText =
+  `${first.seiKana || first["セイ"] || ""} ${first.meiKana || first["メイ"] || ""}`.trim();
+  document.getElementById("gender").innerText = first.gender || "";
+  document.getElementById("job").innerText = first.job || "";
+  document.getElementById("department").innerText = first.department || "なし";
+  const lendingPattern = first["貸与パターン"] || first.lendingPatternName || "";
+  const lendingPatternRow = document.getElementById("lendingPatternRow");
+  if (lendingPattern) {
+    document.getElementById("lendingPattern").innerText = lendingPattern;
+    lendingPatternRow.classList.remove("hidden");
   } else {
-    mainSizeSelect.value = "__OTHER__";
-    checkMainSize(mainSizeSelect);
-
-    if (specialSizeSelect) {
-      const specialMatch = Array.from(specialSizeSelect.options).some(option => option.value === size);
-
-      if (specialMatch) {
-        specialSizeSelect.value = size;
-      } else if (size) {
-        addMissingOption(specialSizeSelect, size);
-        specialSizeSelect.value = size;
-      }
-
-      checkSpecialSize(specialSizeSelect);
-    }
+    lendingPatternRow.classList.add("hidden");
   }
 
-  qtyInput.value = qty;
-  toggleAddSizeButton(qtyInput);
+  renderOrders(orders);
+  renderMeasurement(draft.measurement, orders);
+
+  if (draft.editMode) {
+    document.querySelector("h2").innerText = "登録内容確認（修正）";
+    document.getElementById("submitBtn").innerText = "修正内容を登録する";
+  }
+  setupConfirmationAgreement();
+  renderRosterCheckResult();
 }
 
-function restoreMeasurementFromEditData(measurement) {
-
-  if (!measurement) return;
-
-  measurementData.common.height = measurement["身長"] || "";
-  measurementData.common.weight = measurement["体重"] || "";
-  measurementData.common.method = measurement["採寸方法"] || "ヌード寸法";
-
-  measurementData.upper.completed =
-    isTrueValue(measurement["上衣入力済"]) ||
-    measurement["採寸区分"] === "上衣" ||
-    measurement["採寸区分"] === "全身";
-
-  measurementData.upper.A = measurement["A_衿回り"] || "";
-  measurementData.upper.B = measurement["B_肩巾"] || "";
-  measurementData.upper.C1 = measurement["C1_袖丈_半袖"] || "";
-  measurementData.upper.C2 = measurement["C2_袖丈_七分袖"] || "";
-  measurementData.upper.C3 = measurement["C3_袖丈_長袖"] || "";
-  measurementData.upper.D = measurement["D_胸回り"] || "";
-  measurementData.upper.E = measurement["E_胴回り"] || "";
-  measurementData.upper.F = measurement["F_腰回り"] || "";
-  measurementData.upper.G = measurement["G_背丈"] || "";
-  measurementData.upper.H = measurement["H_着丈"] || "";
-  measurementData.upper.I = measurement["I_袖付回り"] || "";
-
-  measurementData.lower.completed =
-    isTrueValue(measurement["下衣入力済"]) ||
-    measurement["採寸区分"] === "下衣" ||
-    measurement["採寸区分"] === "全身";
-
-  measurementData.lower.a = measurement["e_胴回り"] || "";
-  measurementData.lower.b = measurement["f_腰回り"] || "";
-  measurementData.lower.c = measurement["J_股上"] || "";
-  measurementData.lower.d = measurement["K_股下"] || "";
-  measurementData.lower.e = measurement["L_総丈"] || "";
-  measurementData.lower.f = measurement["M_太股回り"] || "";
-
-  measurementData.specialNote = measurement["特記事項"] || "";
-  measurementData.memo = measurement["備考"] || "";
-}
-
-function isTrueValue(value) {
-
-  if (value === true) return true;
-  if (value === 1) return true;
-
-  const text = String(value || "").toUpperCase();
-
-  return text === "TRUE" || text === "1";
-}
-
-function changeGender() {
-  updateJobOptions();
-  changeJob();
-}
-
-function updateJobOptions() {
-
-  const gender = document.getElementById("gender").value;
-  const jobSelect = document.getElementById("job");
-
-  jobSelect.innerHTML = '<option value="">選択</option>';
-
-  if (!currentData || !gender) {
-    return;
-  }
-
-  const jobs = currentData.jobs
-    .filter(j => j.gender === gender)
-    .map(j => j.job);
-
-  const uniqueJobs = [...new Set(jobs)];
-
-  if (uniqueJobs.length === 0) {
-    const option = document.createElement("option");
-    option.value = "";
-    option.textContent = "該当する職種なし";
-    jobSelect.appendChild(option);
-    return;
-  }
-
-  uniqueJobs.forEach(job => {
-    const option = document.createElement("option");
-    option.value = job;
-    option.textContent = job;
-    jobSelect.appendChild(option);
-  });
-}
-
-function changeJob() {
-  const job = document.getElementById("job").value;
-  const gender = document.getElementById("gender").value;
-
-  if (!job || !gender) {
-    document.getElementById("table").innerHTML =
-      "<tr><td colspan='7'>性別と職種を選択してください</td></tr>";
-    document.getElementById("categoryStatus").innerHTML = "";
-
-    const limitArea = document.getElementById("limitDeclarationArea");
-    if (limitArea) {
-      limitArea.innerHTML = "";
-    }
-
-    const patternArea = document.getElementById("lendingPatternArea");
-    const patternOptions = document.getElementById("lendingPatternOptions");
-    if (patternArea) patternArea.classList.add("hidden");
-    if (patternOptions) patternOptions.innerHTML = "";
-    const departmentArea = document.getElementById("departmentArea");
-    const departmentSelect = document.getElementById("department");
-
-    if (departmentArea && departmentSelect) {
-      if (isDepartmentActive()) {
-        departmentArea.classList.remove("hidden");
-        departmentSelect.innerHTML =
-          '<option value="">性別と職種を選択してください</option>';
-        departmentSelect.disabled = true;
-      } else {
-        departmentArea.classList.add("hidden");
-        departmentSelect.innerHTML = '<option value="">選択</option>';
-        departmentSelect.disabled = false;
-      }
-    }
-
-    return;
-  }
-
-  if (!currentData) {
-    document.getElementById("table").innerHTML =
-      "<tr><td colspan='7'>データ読み込み中です</td></tr>";
-    return;
-  }
-
-  updateDepartmentOptions();
-  const hasPatterns = updateLendingPatternOptions();
-  if (hasPatterns) {
-    document.getElementById("table").innerHTML =
-      "<tr><td colspan='7'>貸与パターンを選択してください</td></tr>";
-    document.getElementById("categoryStatus").innerHTML = "";
-    document.getElementById("limitDeclarationArea").innerHTML = "";
-  } else {
-    createTable(currentData, job, gender);
-  }
-}
-
-function updateDepartmentOptions() {
-  const departmentArea = document.getElementById("departmentArea");
-  const departmentSelect = document.getElementById("department");
-
-  if (!departmentArea || !departmentSelect) return;
-
-  if (!isDepartmentActive()) {
-    departmentArea.classList.add("hidden");
-    departmentSelect.innerHTML = '<option value="">選択</option>';
-    departmentSelect.disabled = false;
-    return;
-  }
-
-  departmentArea.classList.remove("hidden");
-
-  const job = document.getElementById("job").value;
-  const gender = document.getElementById("gender").value;
-
-  departmentSelect.innerHTML = '<option value="">選択</option>';
-
-  if (!currentData || !currentData.departments || !job || !gender) {
-    departmentSelect.innerHTML =
-      '<option value="">性別と職種を選択してください</option>';
-    departmentSelect.disabled = true;
-    return;
-  }
-
-const departments = currentData.departments
-  .filter(d =>
-    d.active !== false &&
-    d.job === job &&
-    (!d.gender || d.gender === gender || d.gender === "兼用")
-  )
-  .sort((a, b) => (a.displayOrder || 9999) - (b.displayOrder || 9999))
-  .filter((d, index, array) =>
-    array.findIndex(x => x.department === d.department) === index
-  );
-
-
-  if (departments.length === 0) {
-    departmentSelect.innerHTML =
-      '<option value="">該当する部署なし</option>';
-    departmentSelect.disabled = true;
-    return;
-  }
-
-  departmentSelect.disabled = false;
-
-  departments.forEach(d => {
-    const option = document.createElement("option");
-    option.value = d.department;
-    option.textContent = d.department;
-    departmentSelect.appendChild(option);
-  });
-}
-
-function createTable(data, selectedJob, selectedGender) {
-
-  const table = document.getElementById("table");
-
-  const jobData = getSelectedJobData();
-
-  if (!jobData) {
-    table.innerHTML = "<tr><td colspan='7'>該当データなし</td></tr>";
-    document.getElementById("categoryStatus").innerHTML = "";
+function renderOrders(orders) {
+  const area = document.getElementById("orderArea");
+  if (orders.length === 0) {
+    area.innerText = "商品選択なし";
     return;
   }
 
   let html = "";
+  let currentCategory = "";
 
-  let categoryDisplay = jobData.categoryDisplay || [];
-
-  if (categoryDisplay.length === 0) {
-    const categoryNames = [...new Set(jobData.products.map(p => p.productCategory))];
-
-    categoryDisplay = categoryNames.map((cat, index) => ({
-      productCategory: cat,
-      displayOrder: index + 1,
-      heading: cat + "を選んで下さい",
-      note: ""
-    }));
-  }
-
-  categoryDisplay
-    .sort((a, b) => a.displayOrder - b.displayOrder)
-    .forEach(categoryInfo => {
-
-      const category = categoryInfo.productCategory;
-
-      const products = jobData.products.filter(p =>
-        p.productCategory === category
-      );
-
-      if (products.length === 0) return;
-
-      html += `<tr class="category-header">
-        <td colspan="7">
-          <div class="category-heading" data-category-heading="${category}">
-            <span class="category-title">${category}を選択</span>
-            <span class="category-count"></span>
-          </div>`;
-
-      if (categoryInfo.note) {
-        html += `<div class="category-note">${categoryInfo.note}</div>`;
-      }
-
-      html += `</td></tr>`;
-
-      html += `<tr class="product-header">
-  <th>商品</th>
-  <th>品番</th>
-  <th>色</th>
-  <th>サイズ</th>
-  <th>数量</th>
-  <th>股下加工</th>
-  <th>採寸</th>
-</tr>`;
-
-      products.forEach((p, productIndex) => {
-
-       let row = `<tr
-  data-product-code="${p.productCode}"
-  data-product-category="${p.productCategory}"
-  data-measurement-group="${p.measurementGroup || ''}"
-  data-inseam-alterable="${p.inseamAlterable || 0}"
-  class="product-row row-theme-${productIndex % 2}"
->
-          <td class="cell-product">${p.name}</td>
-          <td class="cell-code">${p.productCode}</td>
-          <td class="cell-color">${p.color}</td>`;
-
-        const standardSizes = p.sizes.filter(size => size.type === "standard");
-        const specialSizes = p.sizes.filter(size => size.type !== "standard");
-
-        row += `<td class="cell-size">
-          <select class="mainSize" onchange="checkMainSize(this); 
-toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input')); 
-updateCategorySummary();">
-            <option value="">選択</option>`;
-
-        standardSizes.forEach(size => {
-          row += `<option value="${size.value}" data-size-type="${size.type}">
-            ${size.label}
-          </option>`;
-        });
-
-        if (specialSizes.length > 0) {
-          row += `<option value="__OTHER__">別注</option>`;
-        }
-
-        row += `</select>`;
-
-        row += `<div class="specialSizeArea hidden" style="margin-top:6px;">
-          <select class="specialSize" onchange="checkSpecialSize(this); 
-toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
- updateCategorySummary();">
-            <option value="">別注サイズを選択</option>`;
-
-        specialSizes.forEach(size => {
-          row += `<option value="${size.value}" data-size-type="${size.type}">
-            ${size.label}
-          </option>`;
-        });
-
-        row += `</select>
-
-          <div class="bespokeInputArea hidden measure-required-message">
-            採寸表への入力が必要です<br>
-            <button type="button" class="measure measure-inline hidden" onclick="openMeasurement(this)">採寸</button>
-          </div>
-        </div>`;
-
-        row += `</td>`;
-
-        row += `<td class="cell-qty">
-          <input
-            type="number"
-            min="0"
-            step="1"
-            inputmode="numeric"
-            pattern="[0-9]*"
-            oninput="this.value=this.value.replace(/[^0-9]/g,''); toggleAddSizeButton(this); updateCategorySummary()"
-          >
-          <div>
-            <button type="button" class="addSizeBtn hidden" onclick="addSameProductRow(this)">
-              他のサイズも選択する
-            </button>
-          </div>
-        </td>`;
-
-	row += `<td class="cell-inseam"></td>`;
-
- 	row += `<td class="cell-measure">
-          <button class="measure measure-table hidden" onclick="openMeasurement(this)">採寸</button>
-        </td>`;
-
-        row += `</tr>`;
-
-        html += row;
-        const inseamAreaHtml = buildInseamAreaHtml(
-          p.productCategory,
-          p.measurementGroup || "",
-          p.inseamAlterable || 0
-        );
-        // 股下対象の商品だけ専用行を生成する。
-        // 上衣などに空のtrを作らないことで、iPhone Safariの幅再計算崩れを防ぐ。
-        if (inseamAreaHtml.trim()) {
-          html += `<tr class="inseam-row" data-inseam-row-for="${p.productCode}">
-            <td colspan="7" class="cell-inseam">
-              ${inseamAreaHtml}
-            </td>
-          </tr>`;
-        }
-      });
-    });
-
-table.innerHTML = html;
-updateLimitDeclarationArea();
-updateCategorySummary();
-}
-
-
-function toggleAddSizeButton(input) {
-  if (!input) return;
-
-  const row = input.closest("tr");
-  const qty = Number(input.value) || 0;
-  const sizeInfo = getRowSizeInfo(row);
-  const button = row.querySelector(".addSizeBtn");
-
-  if (!button) return;
-
-  if (qty > 0 && sizeInfo.valid) {
-    button.classList.remove("hidden");
-  } else {
-    button.classList.add("hidden");
-  }
-}
-
-function addSameProductRow(button) {
-  const row = button.closest("tr");
-  const productCode = row.dataset.productCode;
-
-  const productRows = Array.from(
-    document.querySelectorAll(`tr[data-product-code="${productCode}"]`)
-  );
-
-  if (productRows.length >= 3) {
-    alert("同じ商品のサイズ選択は最大3行までです。");
-    return;
-  }
-
-const clone = row.cloneNode(true);
-
-const extraIndex = productRows.length;
-clone.classList.remove(
-  "extra-size-row",
-  "extra-size-row-1",
-  "extra-size-row-2",
-  "extra-size-row-3"
-);
-clone.classList.add("extra-size-row-" + extraIndex);
-
-  clone.querySelectorAll("input").forEach(input => {
-    input.value = "";
-  });
-
-  clone.querySelectorAll("select").forEach(select => {
-    select.selectedIndex = 0;
-  });
-
-  clone.querySelectorAll(".addSizeBtn").forEach(addButton => {
-    addButton.classList.add("hidden");
-  });
-
-  clone.querySelectorAll(".specialSizeArea").forEach(area => {
-    area.classList.add("hidden");
-  });
-
-  clone.querySelectorAll(".bespokeInputArea").forEach(area => {
-    area.classList.add("hidden");
-  });
-
-  clone.querySelectorAll(".measure").forEach(measureButton => {
-    measureButton.classList.add("hidden");
-    measureButton.innerText = "採寸";
-  });
-clone.querySelectorAll(".cell-inseam").forEach(cell => {
-  cell.innerHTML = "";
-});
-
-  const inseamRow = getProductInseamRow(productCode);
-  if (inseamRow) inseamRow.before(clone);
-  else productRows[productRows.length - 1].after(clone);
-updateCategorySummary();
-updateInseamAreaForProduct(row);
-placeInseamAreaForProduct(productCode);
-}
-
-function stabilizeMobileProductLayout() {
-  if (!window.matchMedia("(max-width: 600px)").matches) return;
-  const table = document.getElementById("table");
-  if (!table) return;
-
-  requestAnimationFrame(() => {
-    // 横向きにした時と同様に幅を再計算させるが、画面方向は変更しない。
-    void table.offsetWidth;
-    table.style.maxWidth = "99.999%";
-    requestAnimationFrame(() => {
-      table.style.maxWidth = "100%";
-    });
-  });
-}
-
-function checkMainSize(select) {
-
-  const row = select.closest("tr");
-  const specialArea = row.querySelector(".specialSizeArea");
-  const specialSelect = row.querySelector(".specialSize");
-  const bespokeArea = row.querySelector(".bespokeInputArea");
-
-  if (select.value === "__OTHER__") {
-    specialArea.classList.remove("hidden");
-  } else {
-    specialArea.classList.add("hidden");
-
-    if (specialSelect) specialSelect.value = "";
-    if (bespokeArea) bespokeArea.classList.add("hidden");
-
-    row.querySelectorAll(".measure").forEach(btn => {
-      btn.classList.add("hidden");
-      btn.innerText = "採寸";
-    });
-  }
-updateInseamAreaForProduct(row);
-  stabilizeMobileProductLayout();
-}
-
-function checkSpecialSize(select) {
-
-  const row = select.closest("tr");
-  const bespokeArea = row.querySelector(".bespokeInputArea");
-  const buttons = row.querySelectorAll(".measure");
-
-  if (select.value === "別寸") {
-    bespokeArea.classList.remove("hidden");
-
-    const type = getMeasurementTypeByRow(row);
-
-    if (!type) {
-      bespokeArea.classList.add("hidden");
-      buttons.forEach(btn => {
-        btn.classList.add("hidden");
-        btn.innerText = "採寸";
-      });
-      updateInseamAreaForProduct(row);
-      return;
+  orders.forEach(o => {
+    if (o.productCategory !== currentCategory) {
+      currentCategory = o.productCategory;
+      html += `<div class="category">${escapeHtml(currentCategory)}</div>`;
     }
-
-    const buttonText = isMeasurementCompleteForType(type) ? "採寸済" : "採寸";
-
-    buttons.forEach(btn => {
-      btn.classList.remove("hidden");
-      btn.innerText = buttonText;
-    });
-
-  } else {
-    bespokeArea.classList.add("hidden");
-
-    buttons.forEach(btn => {
-      btn.classList.add("hidden");
-      btn.innerText = "採寸";
-    });
-  }
-updateInseamAreaForProduct(row);
-  stabilizeMobileProductLayout();
-}
-
-function getMeasurementTypeByGroup(measurementGroup) {
-
-  const group = String(measurementGroup || "").trim();
-
-  if (group === "上衣") return "上衣";
-  if (group === "下衣") return "下衣";
-  if (group === "全身") return "全身";
-
-  return "";
-}
-
-function getMeasurementTypeByCategory(category) {
-
-  // 旧JSON互換用。新JSONでは measurementGroup を優先する。
-  const categoryText = String(category || "").trim();
-
-  if (categoryText === "ワンピース") return "全身";
-  if (categoryText === "上衣" || categoryText === "ベスト" || categoryText === "ブラウス") return "上衣";
-  if (categoryText === "下衣" || categoryText === "パンツ" || categoryText === "スカート" || categoryText === "ズボン") return "下衣";
-
-  return "";
-}
-
-function getMeasurementTypeByRow(row) {
-
-  if (!row) return "";
-
-  const byGroup = getMeasurementTypeByGroup(row.dataset.measurementGroup);
-  if (byGroup) return byGroup;
-
-  return getMeasurementTypeByCategory(row.dataset.productCategory);
-}
-
-function openMeasurement(button) {
-
-  const row = button.closest("tr");
-
-  currentMeasurementType = getMeasurementTypeByRow(row);
-  currentMeasurementButton = button;
-
-  if (!currentMeasurementType) {
-    alert("この商品の採寸カテゴリが未設定、または採寸対象外です。商品マスタの採寸カテゴリを確認してください。");
-    return;
-  }
-
-  loadMeasurementToForm();
-  applyMeasurementMode(currentMeasurementType);
-
-  document.querySelector(".table-wrap").classList.add("hidden");
-  document.getElementById("categoryStatus").classList.add("hidden");
-  document.getElementById("submitButton").classList.add("hidden");
-  document.getElementById("measurementArea").classList.remove("hidden");
-
-  document.getElementById("measurementMessage").innerText =
-    "採寸区分：" + currentMeasurementType;
-}
-
-function closeMeasurement() {
-
-  document.getElementById("measurementArea").classList.add("hidden");
-  document.querySelector(".table-wrap").classList.remove("hidden");
-  document.getElementById("categoryStatus").classList.remove("hidden");
-  document.getElementById("submitButton").classList.remove("hidden");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-function cancelMeasurement() {
-
-  const ok = confirm("入力した内容は保存されません。\n戻ってもよろしいですか？");
-
-  if (!ok) {
-    return;
-  }
-
-  closeMeasurement();
-}
-
-function setSectionEnabled(sectionId, enabled) {
-
-  const section = document.getElementById(sectionId);
-
-  if (!section) {
-    return;
-  }
-
-  const inputs = section.querySelectorAll("input, select, textarea");
-
-  if (enabled) {
-    section.classList.remove("disabled-section");
-  } else {
-    section.classList.add("disabled-section");
-  }
-
-  inputs.forEach(input => {
-    input.disabled = !enabled;
-  });
-}
-
-function applyMeasurementMode(type) {
-
-  const upperEditable =
-    type === "上衣" ||
-    type === "全身" ||
-    measurementData.upper.completed;
-
-  const lowerEditable =
-    type === "下衣" ||
-    type === "全身" ||
-    measurementData.lower.completed;
-
-  setSectionEnabled("measureCommon", true);
-  setSectionEnabled("measureUpper", upperEditable);
-  setSectionEnabled("measureLower", lowerEditable);
-}
-
-function syncLinkedMeasurement(source, targetId) {
-  const target = document.getElementById(targetId);
-  if (!source || !target) return;
-  target.value = source.value;
-  if (source.id === "m_E" || targetId === "m_E") {
-    measurementData.upper.E = source.value;
-    measurementData.lower.a = source.value;
-  }
-  if (source.id === "m_F" || targetId === "m_F") {
-    measurementData.upper.F = source.value;
-    measurementData.lower.b = source.value;
-  }
-}
-
-function jumpToMeasurementField(fieldId) {
-  const input = document.getElementById(fieldId);
-  if (!input) return;
-  const target = input.closest(".measure-section") || input;
-  target.scrollIntoView({ behavior: "smooth", block: "center" });
-  window.setTimeout(() => {
-    if (!input.disabled) input.focus({ preventScroll: true });
-    input.classList.add("measure-input-highlight");
-    window.setTimeout(() => input.classList.remove("measure-input-highlight"), 1600);
-  }, 450);
-}
-
-function jumpToMeasurementImage(pointName) {
-  const point = document.querySelector(`.measure-hit[data-point="${pointName}"]`);
-  if (!point) return;
-  point.scrollIntoView({ behavior: "smooth", block: "center" });
-  window.setTimeout(() => {
-    point.classList.add("image-point-highlight");
-    window.setTimeout(() => point.classList.remove("image-point-highlight"), 1600);
-  }, 450);
-}
-
-function setupInteractiveMeasurementGuide() {
-  document.querySelectorAll(".measure-hit").forEach(point => {
-    if (point.dataset.guideReady === "1") return;
-    point.dataset.guideReady = "1";
-    point.addEventListener("click", () => jumpToMeasurementField(point.dataset.field));
-  });
-  document.querySelectorAll(".measure-jump-label").forEach(label => {
-    if (label.dataset.guideReady === "1") return;
-    label.dataset.guideReady = "1";
-    const openImage = () => jumpToMeasurementImage(label.dataset.imagePoint);
-    label.addEventListener("click", openImage);
-    label.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openImage();
-      }
-    });
-  });
-}
-
-function syncMeasurementPair(sourceId, targetId) {
-  const source = document.getElementById(sourceId);
-  const target = document.getElementById(targetId);
-  if (!source || !target) return;
-  target.value = source.value;
-}
-
-function setupMeasurementPairSync() {
-  const pairs = [
-    ["m_E", "m_a"],
-    ["m_F", "m_b"]
-  ];
-
-  pairs.forEach(([upperId, lowerId]) => {
-    const upper = document.getElementById(upperId);
-    const lower = document.getElementById(lowerId);
-    if (!upper || !lower) return;
-
-    if (upper.dataset.pairSyncReady !== "1") {
-      upper.dataset.pairSyncReady = "1";
-      upper.addEventListener("input", () => syncMeasurementPair(upperId, lowerId));
-      upper.addEventListener("change", () => syncMeasurementPair(upperId, lowerId));
-    }
-
-    if (lower.dataset.pairSyncReady !== "1") {
-      lower.dataset.pairSyncReady = "1";
-      lower.addEventListener("input", () => syncMeasurementPair(lowerId, upperId));
-      lower.addEventListener("change", () => syncMeasurementPair(lowerId, upperId));
-    }
-  });
-}
-
-function normalizeMeasurementPairValues() {
-  const upperE = document.getElementById("m_E");
-  const lowerE = document.getElementById("m_a");
-  const upperF = document.getElementById("m_F");
-  const lowerF = document.getElementById("m_b");
-
-  if (upperE && lowerE) {
-    const valueE = String(upperE.value || lowerE.value || "").trim();
-    upperE.value = valueE;
-    lowerE.value = valueE;
-  }
-
-  if (upperF && lowerF) {
-    const valueF = String(upperF.value || lowerF.value || "").trim();
-    upperF.value = valueF;
-    lowerF.value = valueF;
-  }
-}
-
-function loadMeasurementToForm() {
-  setupInteractiveMeasurementGuide();
-  setupMeasurementPairSync();
-
-  document.getElementById("m_height").value = measurementData.common.height;
-  document.getElementById("m_weight").value = measurementData.common.weight;
-
-  document.getElementById("m_A").value = measurementData.upper.A;
-  document.getElementById("m_B").value = measurementData.upper.B;
-  document.getElementById("m_C1").value = measurementData.upper.C1;
-  document.getElementById("m_C2").value = measurementData.upper.C2;
-  document.getElementById("m_C3").value = measurementData.upper.C3;
-  document.getElementById("m_D").value = measurementData.upper.D;
-  document.getElementById("m_E").value = measurementData.upper.E;
-  document.getElementById("m_F").value = measurementData.upper.F;
-  document.getElementById("m_G").value = measurementData.upper.G;
-  document.getElementById("m_H").value = measurementData.upper.H;
-  document.getElementById("m_I").value = measurementData.upper.I;
-
-  document.getElementById("m_a").value = measurementData.lower.a;
-  document.getElementById("m_b").value = measurementData.lower.b;
-  document.getElementById("m_c").value = measurementData.lower.c;
-  document.getElementById("m_d").value = measurementData.lower.d;
-  document.getElementById("m_e").value = measurementData.lower.e;
-  document.getElementById("m_f").value = measurementData.lower.f;
-
-  document.getElementById("m_specialNote").value = measurementData.specialNote;
-  document.getElementById("m_memo").value = measurementData.memo;
-  normalizeMeasurementPairValues();
-}
-
-function saveMeasurement() {
-  normalizeMeasurementPairValues();
-
-  const height = document.getElementById("m_height").value;
-  const weight = document.getElementById("m_weight").value;
-
-  if (!height) {
-    alert("身長を入力してください");
-    return;
-  }
-
-  if (!weight) {
-    alert("体重を入力してください");
-    return;
-  }
-
-
-  measurementData.common.height = height;
-  measurementData.common.weight = weight;
-  measurementData.common.method = "ヌード寸法";
-
-  measurementData.upper.A = document.getElementById("m_A").value;
-  measurementData.upper.B = document.getElementById("m_B").value;
-  measurementData.upper.C1 = document.getElementById("m_C1").value;
-  measurementData.upper.C2 = document.getElementById("m_C2").value;
-  measurementData.upper.C3 = document.getElementById("m_C3").value;
-  measurementData.upper.D = document.getElementById("m_D").value;
-  measurementData.upper.E = document.getElementById("m_E").value;
-  measurementData.upper.F = document.getElementById("m_F").value;
-  measurementData.upper.G = document.getElementById("m_G").value;
-  measurementData.upper.H = document.getElementById("m_H").value;
-  measurementData.upper.I = document.getElementById("m_I").value;
-
-  measurementData.lower.a = document.getElementById("m_a").value;
-  measurementData.lower.b = document.getElementById("m_b").value;
-  measurementData.lower.c = document.getElementById("m_c").value;
-  measurementData.lower.d = document.getElementById("m_d").value;
-  measurementData.lower.e = document.getElementById("m_e").value;
-  measurementData.lower.f = document.getElementById("m_f").value;
-
-  measurementData.specialNote = document.getElementById("m_specialNote").value;
-  measurementData.memo = document.getElementById("m_memo").value;
-
-  if (currentMeasurementType === "上衣") {
-    measurementData.upper.completed = true;
-  }
-
-  if (currentMeasurementType === "下衣") {
-    measurementData.lower.completed = true;
-  }
-
-  if (currentMeasurementType === "全身") {
-    measurementData.upper.completed = true;
-    measurementData.lower.completed = true;
-  }
-
-  updateAllMeasurementButtons();
-
-  closeMeasurement();
-}
-
-function isMeasurementCompleteForType(type) {
-
-  if (type === "上衣") {
-    return measurementData.upper.completed;
-  }
-
-  if (type === "下衣") {
-    return measurementData.lower.completed;
-  }
-
-  if (type === "全身") {
-    return measurementData.upper.completed && measurementData.lower.completed;
-  }
-
-  return false;
-}
-
-function hasBespokeWithoutMeasurement() {
-
-  const rows = document.querySelectorAll("#table tr");
-  let missing = false;
-
-  rows.forEach(row => {
-
-    if (!row.dataset.productCategory) return;
-
-    const sizeInfo = getRowSizeInfo(row);
-    const qtyInput = row.querySelector(".cell-qty input");
-    const qty = Number(qtyInput.value) || 0;
-
-    if (qty <= 0) return;
-
-    if (sizeInfo.size === "別寸") {
-
-      const type = getMeasurementTypeByRow(row);
-
-      if (type && !isMeasurementCompleteForType(type)) {
-        missing = true;
-      }
-    }
-  });
-
-  return missing;
-}
-
-function updateAllMeasurementButtons() {
-
-  const rows = document.querySelectorAll("#table tr");
-
-  rows.forEach(row => {
-
-    if (!row.dataset.productCategory) return;
-
-    const buttons = row.querySelectorAll(".measure");
-    if (buttons.length === 0) return;
-
-    const sizeInfo = getRowSizeInfo(row);
-
-    buttons.forEach(btn => {
-
-      if (sizeInfo.size !== "別寸") {
-        btn.innerText = "採寸";
-        btn.classList.add("hidden");
-        return;
-      }
-
-      const type = getMeasurementTypeByRow(row);
-
-      if (!type) {
-        btn.innerText = "採寸";
-        btn.classList.add("hidden");
-        return;
-      }
-
-      btn.classList.remove("hidden");
-
-      if (isMeasurementCompleteForType(type)) {
-        btn.innerText = "採寸済";
-      } else {
-        btn.innerText = "採寸";
-      }
-    });
-  });
-}
-
-function buildMeasurementPayload(common) {
-
-  const upperDone = measurementData.upper.completed;
-  const lowerDone = measurementData.lower.completed;
-
-  if (!upperDone && !lowerDone) {
-    return null;
-  }
-
-  let measurementType = "";
-
-  if (upperDone && lowerDone) {
-    measurementType = "全身";
-  } else if (upperDone) {
-    measurementType = "上衣";
-  } else if (lowerDone) {
-    measurementType = "下衣";
-  }
-
- return {
-  "登録ID": common.id,
-  "顧客コード": common.customerCode,
-  "顧客名称": common.customerName,
-  "職員番号": common.employeeNo || "",
-  employeeNo: common.employeeNo || "",
-  staffNo: common.employeeNo || "",
-  publicKey: common.publicKey || "",
-  customerKey: common.customerKey || "",
-  customer: common.customer || "",
-  "姓": common.sei,
-"名": common.mei,
-"セイ": common.seiKana,
-"メイ": common.meiKana,
-"性別": common.gender,
-  "職種": common.job,
-  "部署": common.department,
-  "採寸区分": measurementType,
-    "登録日時": common.createdAt,
-    "更新日時": common.updatedAt,
-
-    "身長": measurementData.common.height,
-    "体重": measurementData.common.weight,
-
-    "上衣入力済": upperDone ? 1 : 0,
-    "A_衿回り": measurementData.upper.A,
-    "B_肩巾": measurementData.upper.B,
-    "C1_袖丈_半袖": measurementData.upper.C1,
-    "C2_袖丈_七分袖": measurementData.upper.C2,
-    "C3_袖丈_長袖": measurementData.upper.C3,
-    "D_胸回り": measurementData.upper.D,
-    "E_胴回り": measurementData.upper.E,
-    "F_腰回り": measurementData.upper.F,
-    "G_背丈": measurementData.upper.G,
-    "H_着丈": measurementData.upper.H,
-    "I_袖付回り": measurementData.upper.I,
-
-    "下衣入力済": lowerDone ? 1 : 0,
-    "e_胴回り": measurementData.lower.a,
-    "f_腰回り": measurementData.lower.b,
-    "J_股上": measurementData.lower.c,
-    "K_股下": measurementData.lower.d,
-    "L_総丈": measurementData.lower.e,
-    "M_太股回り": measurementData.lower.f,
-
-    "特記事項": measurementData.specialNote,
-    "備考": measurementData.memo
-  };
-}
-
-function getSelectedJobData() {
-  const jobData = getSelectedJobBaseData();
-  if (!jobData) return null;
-  const patterns = Array.isArray(jobData.lendingPatterns) ? jobData.lendingPatterns : [];
-  if (isLendingPatternActive() && patterns.length > 0) {
-    const pattern = getSelectedLendingPattern();
-    if (!pattern) return null;
-    return {
-      ...jobData,
-      selectedLendingPatternCode: pattern.code,
-      selectedLendingPatternName: pattern.name,
-      categoryLimits: pattern.categoryLimits || [],
-      conversionRules: pattern.conversionRules || [],
-      categoryDisplay: pattern.categoryDisplay || []
-    };
-  }
-  return jobData;
-}
-
-
-function getRowSizeInfo(row) {
-
-  const mainSizeSelect = row.querySelector(".mainSize");
-  const specialSizeSelect = row.querySelector(".specialSize");
-
-  let size = "";
-  let sizeType = "";
-  let bespokeText = "";
-
-  if (!mainSizeSelect) {
-    return {
-      size: "",
-      sizeType: "",
-      bespokeText: "",
-      valid: false
-    };
-  }
-
-  if (mainSizeSelect.value === "__OTHER__") {
-
-    if (!specialSizeSelect || !specialSizeSelect.value) {
-      return {
-        size: "",
-        sizeType: "",
-        bespokeText: "",
-        valid: false
-      };
-    }
-
-    size = specialSizeSelect.value;
-
-    if (size === "別寸") {
-      sizeType = "bespoke";
-      bespokeText = "";
-    } else {
-      sizeType = "custom";
-    }
-
-  } else {
-
-    size = mainSizeSelect.value;
-
-    if (!size) {
-      return {
-        size: "",
-        sizeType: "",
-        bespokeText: "",
-        valid: false
-      };
-    }
-
-    sizeType = "standard";
-  }
-
-  return {
-    size,
-    sizeType,
-    bespokeText,
-    valid: true
-  };
-}
-
-function isInseamTargetCategory(productCategory, measurementGroup) {
-  const group = String(measurementGroup || "").trim();
-  if (group === "下衣") return true;
-
-  // 旧JSON互換用。新JSONでは measurementGroup を優先する。
-  const category = String(productCategory || "").trim();
-  return ["下衣", "パンツ", "スカート", "ズボン"].includes(category);
-}
-
-function buildInseamAreaHtml(productCategory, measurementGroup, inseamAlterable) {
-  const alterValue = String(inseamAlterable ?? "").trim().toLowerCase();
-  const canAlter = alterValue === "1" || alterValue === "true";
-
-  if (!isInseamTargetCategory(productCategory, measurementGroup)) {
-    return "";
-  }
-
-  if (canAlter) {
-    return `
-      <div class="inseam-box">
-        <label>股下加工寸法</label><br>
-        <input
-  type="number"
-  class="inseamCmInput"
-  step="1"
-  inputmode="numeric"
-  placeholder="cm"
-  oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-> cm
-        <div class="small inseam-help">股下加工が必要な場合のみ入力してください。</div>
+    const inseamCm = o["股下cm"] || o.inseamCm || "";
+
+    html += `
+      <div class="item">
+        <div><strong>${escapeHtml(o.product)}</strong> ${escapeHtml(o.productCode)}</div>
+        <div>色：${escapeHtml(o.color)} ／ サイズ：${escapeHtml(o.size)} ／ 数量：${escapeHtml(o.qty)}</div>
+        ${inseamCm ? `<div>股下加工：${escapeHtml(inseamCm)}cm</div>` : ""}
       </div>
     `;
-  }
-
-  return `
-    <div class="inseam-message">
-      股下加工のできない商品です
-    </div>
-  `;
-}
-
-function isInseamAlterable(row) {
-  if (!row) return false;
-
-  const value = String(row.dataset.inseamAlterable || "").trim();
-
-  return value === "1" || value.toLowerCase() === "true";
-}
-
-function getRowsByProductCode(productCode) {
-  const target = String(productCode || "").trim();
-  return Array.from(document.querySelectorAll("tr[data-product-code]")).filter(row =>
-    String(row.dataset.productCode || "").trim() === target
-  );
-}
-
-
-function placeInseamAreaForProduct(productCode) {
-  const productRows = getRowsByProductCode(productCode);
-  const inseamRow = getProductInseamRow(productCode);
-  if (productRows.length === 0 || !inseamRow) return;
-
-  const desktopCell = productRows[0].querySelector(':scope > .cell-inseam');
-  const mobileCell = inseamRow.querySelector(':scope > .cell-inseam');
-  const area =
-    productRows[0].querySelector('.inseam-box, .inseam-message') ||
-    inseamRow.querySelector('.inseam-box, .inseam-message');
-
-  if (!desktopCell || !mobileCell || !area) return;
-
-  if (window.matchMedia('(max-width: 600px)').matches) {
-    if (area.parentElement !== mobileCell) mobileCell.appendChild(area);
-  } else {
-    if (area.parentElement !== desktopCell) desktopCell.appendChild(area);
-  }
-}
-
-function placeAllInseamAreas() {
-  const productCodes = [...new Set(
-    Array.from(document.querySelectorAll('#table tr[data-product-code]'))
-      .map(row => String(row.dataset.productCode || '').trim())
-      .filter(Boolean)
-  )];
-  productCodes.forEach(placeInseamAreaForProduct);
-}
-
-function getProductInseamRow(productCode) {
-  const target = String(productCode || "").trim();
-  return Array.from(document.querySelectorAll("tr.inseam-row[data-inseam-row-for]")).find(row =>
-    String(row.dataset.inseamRowFor || "").trim() === target
-  ) || null;
-}
-function getProductInseamInput(productCode) {
-  const productRows = getRowsByProductCode(productCode);
-  for (const row of productRows) {
-    const input = row.querySelector(".inseamCmInput");
-    if (input) return input;
-  }
-  const inseamRow = getProductInseamRow(productCode);
-  return inseamRow ? inseamRow.querySelector(".inseamCmInput") : null;
-}
-function updateInseamAreaForProduct(row) {
-  if (!row || !row.dataset.productCode) return;
-  const productCode = String(row.dataset.productCode || "").trim();
-  const productRows = getRowsByProductCode(productCode);
-  if (productRows.length === 0) return;
-  const baseRow = productRows[0];
-  const inseamRow = getProductInseamRow(productCode);
-  if (!inseamRow) return;
-  const oldInput = inseamRow.querySelector(".inseamCmInput");
-  const currentInseamCm = oldInput ? oldInput.value.trim() : "";
-  const cell = inseamRow.querySelector(".cell-inseam");
-  if (!cell) return;
-  const areaHtml = buildInseamAreaHtml(
-    baseRow.dataset.productCategory,
-    baseRow.dataset.measurementGroup || "",
-    baseRow.dataset.inseamAlterable || 0
-  );
-  cell.innerHTML = areaHtml;
-  inseamRow.classList.toggle("inseam-row-empty", !areaHtml.trim());
-  placeInseamAreaForProduct(productCode);
-  const newInput = getProductInseamInput(productCode);
-  if (newInput && currentInseamCm) newInput.value = currentInseamCm;
-  updateInseamInputStateForProduct(productCode);
-}
-function updateAllInseamAreas() {
-  const rows = Array.from(document.querySelectorAll("#table tr[data-product-code]"));
-  const productCodes = [...new Set(rows.map(row => row.dataset.productCode))];
-
-  productCodes.forEach(productCode => {
-    const productRows = getRowsByProductCode(productCode);
-    if (productRows.length > 0) {
-      updateInseamAreaForProduct(productRows[0]);
-    }
-  });
-}
-
-function getInseamCmForProduct(productCode) {
-  const input = getProductInseamInput(productCode);
-
-  if (!input) {
-    return "";
-  }
-
-  return input.value.trim();
-}
-
-
-function getRegisteredInseamCm(item) {
-  if (!item || typeof item !== "object") return "";
-
-  const directKeys = [
-    "股下cm", "股下CM", "股下ＣＭ", "股下加工cm", "股下加工CM",
-    "股下加工寸法", "股下寸法", "inseamCm", "inseam", "InseamCm"
-  ];
-
-  for (const key of directKeys) {
-    const value = item[key];
-    if (value !== undefined && value !== null && String(value).trim() !== "") {
-      return String(value).replace(/\s*cm\s*$/i, "").trim();
-    }
-  }
-
-  for (const [key, value] of Object.entries(item)) {
-    const normalizedKey = String(key).replace(/[\s　_＿・()（）]/g, "").toLowerCase();
-    if (!normalizedKey.includes("股下")) continue;
-    if (normalizedKey.includes("可能") || normalizedKey.includes("フラグ")) continue;
-    if (value === undefined || value === null || String(value).trim() === "") continue;
-    const text = String(value).replace(/\s*cm\s*$/i, "").trim();
-    if (/^\d+(?:\.\d+)?$/.test(text)) return text;
-  }
-
-  return "";
-}
-
-function restoreInseamFromEditData(orders) {
-  if (!orders || orders.length === 0) return;
-
-  updateAllInseamAreas();
-
-  const restored = {};
-
-  orders.forEach(order => {
-    const productCode = String(
-      order["カタログ品番"] ||
-      order["商品コード"] ||
-      order.productCode ||
-      ""
-    ).trim();
-    const inseamCm = getRegisteredInseamCm(order);
-
-    if (!productCode || !inseamCm) return;
-    if (restored[productCode]) return;
-
-    const input = getProductInseamInput(productCode);
-
-    if (input) {
-      updateInseamInputStateForProduct(productCode);
-      if (!input.disabled) {
-        input.value = inseamCm;
-        restored[productCode] = true;
-      }
-    }
-  });
-}
-
-function updateInseamInputStateForProduct(productCode) {
-  const productRows = getRowsByProductCode(productCode);
-  if (productRows.length === 0) return;
-
-  const input = getProductInseamInput(productCode);
-  if (!input) return;
-
-  const box = input.closest(".inseam-box");
-
-  let hasBespoke = false;
-  let hasNonBespokeSelected = false;
-
-  productRows.forEach(row => {
-    const sizeInfo = getRowSizeInfo(row);
-
-    if (!sizeInfo.valid) return;
-
-    if (sizeInfo.size === "別寸") {
-      hasBespoke = true;
-    } else {
-      hasNonBespokeSelected = true;
-    }
-  });
-
-  // 別寸のみ選択されている場合は入力不可にする
-  if (hasBespoke && !hasNonBespokeSelected) {
-    input.value = "";
-    input.disabled = true;
-
-    if (box) {
-      box.classList.add("disabled");
-    }
-
-    return;
-  }
-
-  // 未選択、または別寸以外が選択されている場合は入力可能
-  input.disabled = false;
-
-  if (box) {
-    box.classList.remove("disabled");
-  }
-}
-
-function buildLimitDeclarationHtml(jobData) {
-  if (!jobData || !jobData.categoryLimits || jobData.categoryLimits.length === 0) {
-    return "";
-  }
-
-  let html = `
-    <div>
-      <strong>貸与枚数は以下のとおりです</strong><br>
-  `;
-
-  jobData.categoryLimits.forEach(rule => {
-    html += `${rule.productCategory} ${rule.limit}枚<br>`;
-  });
-
-  html += `</div>`;
-
-  return html;
-}
-
-function updateLimitDeclarationArea() {
-  const area = document.getElementById("limitDeclarationArea");
-  if (!area) return;
-
-  const jobData = getSelectedJobData();
-
-  if (!jobData) {
-    area.innerHTML = "";
-    return;
-  }
-
-  area.innerHTML = buildLimitDeclarationHtml(jobData);
-}
-
-function updateCategorySummary() {
-
-  const jobData = getSelectedJobData();
-  const area = document.getElementById("categoryStatus");
-
-  if (!jobData) {
-    area.innerHTML = "";
-    return;
-  }
-
-  const counts = {};
-  const limits = {};
-  const selectedByProductCategory = {};
-
-  jobData.categoryLimits.forEach(rule => {
-    limits[rule.productCategory] = rule.limit;
-    counts[rule.productCategory] = 0;
-  });
-
-  const rows = document.querySelectorAll("#table tr");
-
-  rows.forEach(row => {
-
-    const productCategory = row.dataset.productCategory;
-
-    if (!productCategory) return;
-
-    const qtyInput = row.querySelector(".cell-qty input");
-    const qty = Number(qtyInput.value) || 0;
-
-    if (qty <= 0) return;
-
-    const sizeInfo = getRowSizeInfo(row);
-    if (!sizeInfo.valid) return;
-
-    if (selectedByProductCategory[productCategory] === undefined) {
-      selectedByProductCategory[productCategory] = 0;
-    }
-
-    selectedByProductCategory[productCategory] += qty;
-
-    const rules = jobData.conversionRules.filter(r =>
-      r.fromProductCategory === productCategory
-    );
-
-    rules.forEach(rule => {
-
-      if (counts[rule.toConsumptionCategory] === undefined) {
-        counts[rule.toConsumptionCategory] = 0;
-      }
-
-      counts[rule.toConsumptionCategory] += qty * rule.qty;
-    });
-  });
-
-  let html = "";
-html += "<h3>現在の選択枚数</h3>";
-
-  Object.keys(limits).forEach(category => {
-
-    const current = counts[category] || 0;
-    const limit = limits[category];
-
-    let className = "category-normal";
-
-    if (current > limit) {
-      className = "category-over";
-    } else if (current === limit) {
-      className = "category-ok";
-    } else if (limit - current === 1) {
-      className = "category-warning";
-    }
-
-    html += `<div class="${className}">
-      ${category}：${current} / ${limit}
-    </div>`;
   });
 
   area.innerHTML = html;
-
-  const headingElements = document.querySelectorAll("[data-category-heading]");
-
-  headingElements.forEach(el => {
-
-    const category = el.dataset.categoryHeading;
-    const countSpan = el.querySelector(".category-count");
-
-    if (!countSpan) return;
-
-    const limit = limits[category];
-    const current = counts[category] || 0;
-    const selected = selectedByProductCategory[category] || 0;
-
-    countSpan.classList.remove(
-      "category-count-ok",
-      "category-count-warning",
-      "category-count-over"
-    );
-
-    if (limit !== undefined) {
-
-      countSpan.innerText = `（合計${limit}枚） 選択中 ${current}/${limit}`;
-
-      if (current > limit) {
-        countSpan.classList.add("category-count-over");
-      } else if (current === limit) {
-        countSpan.classList.add("category-count-ok");
-      } else if (limit - current === 1) {
-        countSpan.classList.add("category-count-warning");
-      }
-
-    } else {
-
-      if (selected > 0) {
-        countSpan.innerText = `選択中 ${selected}枚`;
-      } else {
-        countSpan.innerText = "";
-      }
-    }
-  });
 }
 
-function validateCategoryLimitsBeforeSubmit() {
-  const jobData = getSelectedJobData();
+/* 採寸入力内容の表示用設定 */
+const MEASUREMENT_HIDE_KEYS = new Set([
+  "登録ID",
+  "顧客コード",
+  "顧客名称",
+  "姓",
+  "名",
+  "セイ",
+  "メイ",
+  "性別",
+  "職種",
+  "部署",
+  "publicKey",
+  "customerKey",
+  "customer",
+  "採寸方法",
+  "上衣入力済",
+  "下衣入力済",
+  "登録日時",
+  "更新日時",
+  "登録番号",
+  "登録区分",
+  "有効フラグ",
+  "修正用番号",
+  "employeeNo",
+  "staffNo",
+  "measurementNo",
+  "registrationNo",
+  "entryType",
+  "activeFlag",
+  "contactPin"
+]);
 
-  if (!jobData || !jobData.categoryLimits || jobData.categoryLimits.length === 0) {
-    return "";
-  }
-
-  const counts = {};
-  const limits = {};
-
-  jobData.categoryLimits.forEach(rule => {
-    limits[rule.productCategory] = Number(rule.limit) || 0;
-    counts[rule.productCategory] = 0;
-  });
-
-  const rows = document.querySelectorAll("#table tr");
-
-  rows.forEach(row => {
-    const productCategory = row.dataset.productCategory;
-    if (!productCategory) return;
-
-    const qtyInput = row.querySelector(".cell-qty input");
-    const qty = Number(qtyInput ? qtyInput.value : 0) || 0;
-    if (qty <= 0) return;
-
-    const sizeInfo = getRowSizeInfo(row);
-    if (!sizeInfo.valid) return;
-
-    const rules = jobData.conversionRules.filter(r =>
-      r.fromProductCategory === productCategory
-    );
-
-    rules.forEach(rule => {
-      if (counts[rule.toConsumptionCategory] === undefined) {
-        counts[rule.toConsumptionCategory] = 0;
-      }
-
-      counts[rule.toConsumptionCategory] += qty * rule.qty;
-    });
-  });
-
-  const messages = [];
-
-  Object.keys(limits).forEach(category => {
-    const current = counts[category] || 0;
-    const limit = limits[category];
-
-    if (current !== limit) {
-      messages.push(category + "：現在 " + current + " / 必要 " + limit);
-    }
-  });
-
-  if (messages.length > 0) {
-    return "貸与枚数が合っていません。\n\n" + messages.join("\n");
-  }
-
-  return "";
-}
-
-function isFullWidthText(value) {
-  const text = String(value || "").trim();
-
-  if (!text) {
-    return false;
-  }
-
-  // 半角ASCII・半角カナを含まない = 全角のみ
-  return !/[\x00-\x7F\uFF61-\uFF9F]/.test(text);
-}
-
-function isFullWidthKatakana(value) {
-  const text = String(value || "").trim();
-
-  if (!text) {
-    return false;
-  }
-
-  // 全角カタカナ、長音、全角スペースのみ許可
-  return /^[ァ-ヶー　]+$/.test(text);
-}
-
-async function checkRosterDuplicate(common) {
-  const checkPayload = {
-    duplicateCheckOnly: true,
-    customerCode: common.customerCode || "",
-    customerName: common.customerName || "",
-    employeeNo: common.employeeNo || "",
-    sei: common.sei || "",
-    mei: common.mei || "",
-    seiKana: common.seiKana || "",
-    meiKana: common.meiKana || "",
-    gender: common.gender || "",
-    job: common.job || ""
-  };
-  const res = await fetch(ROSTER_CHECK_FLOW_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(checkPayload)
-  });
-  const text = await res.text();
-  if (!res.ok) throw new Error(text || "名簿重複チェックに失敗しました。");
-  if (!text) throw new Error("名簿重複チェックの応答が空です。");
-  const json = JSON.parse(text);
-  if (json.result !== "ok") throw new Error(json.message || "名簿重複チェックに失敗しました。");
-  return json;
-}
-function setConfirmTransitionBusy(busy) {
-  const button = document.getElementById("submitButton");
-  if (!button) return;
-  button.disabled = busy;
-  button.innerText = busy ? "名簿確認中..." : "確認";
-}
-// confirm.htmlからブラウザの履歴で戻った場合、
-// bfcacheに保存された「名簿確認中...」状態を解除する。
-window.addEventListener("pageshow", () => {
-  setConfirmTransitionBusy(false);
-  if (currentData && shouldRestoreConfirmDraft()) {
-    applyConfirmReturnData();
-  }
-});
-
-
-let inseamLayoutTimer = null;
-window.addEventListener("resize", () => {
-  clearTimeout(inseamLayoutTimer);
-  inseamLayoutTimer = setTimeout(placeAllInseamAreas, 120);
-});
-
-async function submitData() {
-  const employeeNo = document.getElementById("employeeNo")
-    ? document.getElementById("employeeNo").value.trim()
-    : "";
-  if (isEmployeeNoActive()) {
-    if (!employeeNo) {
-      alert("職員番号を入力してください");
-      return;
-    }
-    if (!validateEmployeeNoValue(employeeNo)) {
-      alert("職員番号は半角英数字で入力してください");
-      return;
-    }
-  }
-
-  const sei = document.getElementById("sei").value.trim();
-  const mei = document.getElementById("mei").value.trim();
-  const seiKana = document.getElementById("seiKana").value.trim();
-  const meiKana = document.getElementById("meiKana").value.trim();
-
-  if (!sei) {
-    alert("姓を入力してください");
-    return;
-  }
-
-  if (!mei) {
-    alert("名を入力してください");
-    return;
-  }
-
-  if (!seiKana) {
-    alert("セイを入力してください");
-    return;
-  }
-
-  if (!meiKana) {
-    alert("メイを入力してください");
-    return;
-  }
-
-  if (!isFullWidthText(sei)) {
-    alert("姓は全角で入力してください");
-    return;
-  }
-
-  if (!isFullWidthText(mei)) {
-    alert("名は全角で入力してください");
-    return;
-  }
-
-  if (!isFullWidthKatakana(seiKana)) {
-    alert("セイは全角カタカナで入力してください");
-    return;
-  }
-
-  if (!isFullWidthKatakana(meiKana)) {
-    alert("メイは全角カタカナで入力してください");
-    return;
-  }
-
-  if (!document.getElementById("gender").value) {
-    alert("性別を選択してください");
-    return;
-  }
-
-  if (!document.getElementById("job").value) {
-    alert("職種を選択してください");
-    return;
-  }
-  const selectedJobBaseData = getSelectedJobBaseData();
-  const patternRequired = !!(
-    isLendingPatternActive() &&
-    selectedJobBaseData &&
-    Array.isArray(selectedJobBaseData.lendingPatterns) &&
-    selectedJobBaseData.lendingPatterns.length > 0
-  );
-  if (patternRequired && !getSelectedLendingPatternCode()) {
-    alert("貸与パターンを選択してください");
-    return;
-  }
-
-  const departmentArea = document.getElementById("departmentArea");
-  const departmentSelect = document.getElementById("department");
-
-  if (
-    departmentArea &&
-    departmentSelect &&
-    !departmentArea.classList.contains("hidden") &&
-    !departmentSelect.value
-  ) {
-    alert("部署を選択してください");
-    return;
-  }
-
-  const now = new Date();
-
-  const common = {
-  id: Date.now(),
-  createdAt: now.toLocaleString("ja-JP"),
-  updatedAt: now.toLocaleString("ja-JP"),
-  customerCode: currentData.customerCode,
-  customerName: currentData.customerName,
-  employeeNo: employeeNo,
-  staffNo: employeeNo,
-  "職員番号": employeeNo,
-  publicKey: getCustomer(),
-  customerKey: getCustomer(),
-  customer: getCustomer(),
-sei: sei,
-mei: mei,
-seiKana: seiKana,
-meiKana: meiKana,
-  gender: document.getElementById("gender").value,
-  job: document.getElementById("job").value,
-  department: departmentSelect ? departmentSelect.value : "",
-  lendingPatternCode: getSelectedLendingPatternCode(),
-  lendingPatternName: getLendingPatternName()
+const MEASUREMENT_UNIT_MAP = {
+  "身長": "cm",
+  "体重": "kg",
+  "A_衿回り": "cm",
+  "B_肩巾": "cm",
+  "C1_袖丈_半袖": "cm",
+  "C2_袖丈_七分袖": "cm",
+  "C3_袖丈_長袖": "cm",
+  "D_胸回り": "cm",
+  "E_胴回り": "cm",
+  "F_腰回り": "cm",
+  "G_背丈": "cm",
+  "H_着丈": "cm",
+  "I_袖付回り": "cm",
+  "e_胴回り": "cm",
+  "f_腰回り": "cm",
+  "J_股上": "cm",
+  "K_股下": "cm",
+  "L_総丈": "cm",
+  "M_太股回り": "cm"
 };
 
+function hasDisplayValue(value) {
+  return value !== null && value !== undefined && String(value).trim() !== "";
+}
 
-  const rows = document.querySelectorAll("#table tr");
-  let data = [];
-  const duplicateCheck = {};
-  let errorMessage = "";
+function formatMeasurementValue(key, value) {
+  const text = String(value ?? "").trim();
+  if (!text) return "";
+  const unit = MEASUREMENT_UNIT_MAP[key] || "";
+  if (!unit) return text;
+  if (text.endsWith(unit)) return text;
+  return text + unit;
+}
 
-  rows.forEach(row => {
+function hasBespokeOrder(orders) {
+  return (orders || []).some(o => {
+    const size = String(o.size || o["サイズ"] || "").trim();
+    const sizeType = String(o.sizeType || o["サイズ区分"] || "").trim();
+    return size === "別寸" || sizeType === "bespoke";
+  });
+}
 
-    if (!row.dataset.productCategory) return;
+function renderMeasurement(measurement, orders) {
+  const section = document.getElementById("measurementSection");
+  const area = document.getElementById("measurementContent");
+  const hasBespoke = hasBespokeOrder(orders);
 
-    const cells = row.querySelectorAll("td");
+  if (!section || !area) return;
 
-    const product = cells[0].innerText;
-    const productCode = cells[1].innerText;
-    const color = cells[2].innerText;
-
-    const qtyInput = row.querySelector(".cell-qty input");
-const qty = Number(qtyInput ? qtyInput.value : 0) || 0;
-
-    if (qty <= 0) return;
-
-    const sizeInfo = getRowSizeInfo(row);
-
-    if (!sizeInfo.valid) {
-      errorMessage = product + " のサイズを選択してください";
-      return;
+  if (!measurement) {
+    if (hasBespoke) {
+      section.classList.remove("hidden");
+      area.innerText = "採寸情報はありません";
+    } else {
+      section.classList.add("hidden");
+      area.innerHTML = "";
     }
-
-    const duplicateKey = productCode + "|" + sizeInfo.size;
-
-    if (duplicateCheck[duplicateKey]) {
-      errorMessage = product + " は同じサイズを複数登録できません。";
-      return;
-    }
-
-    duplicateCheck[duplicateKey] = true;
-
-    const inseamAlterable = isInseamAlterable(row) ? 1 : 0;
-let inseamCm = "";
-
-// 股下加工可能商品で、別寸以外なら入力値を取得する
-// 数字が入力されていればOKとする
-if (inseamAlterable === 1 && sizeInfo.size !== "別寸") {
-  const inseamInput = getProductInseamInput(productCode);
-
-  if (inseamInput && !inseamInput.disabled) {
-    inseamCm = inseamInput.value.trim();
+    return;
   }
 
-  if (inseamCm && !/^\d+$/.test(inseamCm)) {
-    errorMessage = product + " の股下加工寸法は数字で入力してください。";
+  const entries = Object.entries(measurement)
+    .filter(([key, value]) => !MEASUREMENT_HIDE_KEYS.has(key) && hasDisplayValue(value));
+
+  if (entries.length === 0) {
+    if (hasBespoke) {
+      section.classList.remove("hidden");
+      area.innerText = "採寸情報はありません";
+    } else {
+      section.classList.add("hidden");
+      area.innerHTML = "";
+    }
     return;
+  }
+
+  section.classList.remove("hidden");
+  area.innerHTML = entries.map(([key, value]) =>
+    `<div>${escapeHtml(key)}：${escapeHtml(formatMeasurementValue(key, value))}</div>`
+  ).join("");
+}
+
+let privacyReviewed = false;
+let privacyFrameReady = false;
+
+function setupConfirmationAgreement() {
+  const isEdit = !!(draft && draft.editMode === true);
+  const confirmCheck = document.getElementById("confirmCheck");
+  const newText = document.getElementById("newConfirmText");
+  const editText = document.getElementById("editConfirmText");
+  const note = document.getElementById("privacyCheckNote");
+
+  confirmCheck.checked = false;
+  if (isEdit) {
+    privacyReviewed = true;
+    confirmCheck.disabled = false;
+    newText.classList.add("hidden");
+    editText.classList.remove("hidden");
+    note.classList.add("hidden");
+  } else {
+    privacyReviewed = false;
+    confirmCheck.disabled = true;
+    newText.classList.remove("hidden");
+    editText.classList.add("hidden");
+    note.classList.remove("hidden");
+    note.innerText = "プライバシーポリシーを開き、最後までスクロールして閉じるとチェックできます。";
+  }
+  updateSubmitButtonState();
+}
+
+function resetPrivacyModalState() {
+  privacyFrameReady = false;
+  const closeButton = document.getElementById("privacyCloseButton");
+  const message = document.getElementById("privacyScrollMessage");
+  closeButton.disabled = true;
+  message.innerText = "画面を閉じるには最後までスクロールしてください。";
+}
+
+function watchPrivacyFrameScroll() {
+  const frame = document.getElementById("privacyFrame");
+  try {
+    const frameWindow = frame.contentWindow;
+    const frameDocument = frame.contentDocument || frameWindow.document;
+    const checkBottom = () => {
+      const doc = frameDocument.documentElement;
+      const body = frameDocument.body;
+      const scrollTop = frameWindow.pageYOffset || doc.scrollTop || body.scrollTop || 0;
+      const clientHeight = frameWindow.innerHeight || doc.clientHeight || 0;
+      const scrollHeight = Math.max(doc.scrollHeight, body.scrollHeight, doc.offsetHeight, body.offsetHeight);
+      if (scrollTop + clientHeight >= scrollHeight - 8) {
+        privacyFrameReady = true;
+        document.getElementById("privacyCloseButton").disabled = false;
+        document.getElementById("privacyScrollMessage").innerText =
+          "確認が完了しました。";
+      }
+    };
+    frameWindow.addEventListener("scroll", checkBottom, { passive: true });
+    frameWindow.addEventListener("resize", checkBottom);
+    checkBottom();
+  } catch (error) {
+    console.error("プライバシーポリシーのスクロール確認を設定できませんでした。", error);
   }
 }
 
-data.push({
-  ...common,
-  "職員番号": common.employeeNo || "",
-  "姓": common.sei,
-  "名": common.mei,
-  "セイ": common.seiKana,
-  "メイ": common.meiKana,
-  "性別": common.gender,
-  "職種": common.job,
-  "部署": common.department,
-  "貸与パターン": common.lendingPatternName,
-  "貸与パターンコード": common.lendingPatternCode,
-  lendingPatternCode: common.lendingPatternCode,
-  lendingPatternName: common.lendingPatternName,
-  product,
-  productCode,
-  color,
-  size: sizeInfo.size,
-  sizeType: sizeInfo.sizeType,
-  bespokeText: sizeInfo.bespokeText,
-  qty,
-  productCategory: row.dataset.productCategory,
-  measurementGroup: row.dataset.measurementGroup || "",
-  inseamAlterable: inseamAlterable,
-  inseamCm: inseamCm,
-  "股下加工可能": inseamAlterable,
-  "股下cm": inseamCm
+function openPrivacyModal() {
+  if (draft && draft.editMode === true) return;
+  const modal = document.getElementById("privacyModal");
+  const frame = document.getElementById("privacyFrame");
+  resetPrivacyModalState();
+  modal.classList.remove("hidden");
+  document.body.classList.add("modal-open");
+  frame.onload = watchPrivacyFrameScroll;
+  frame.src = "privacy.html?view=modal&ts=" + Date.now();
+}
+
+function closePrivacyModal() {
+  if (!privacyFrameReady) return;
+  document.getElementById("privacyModal").classList.add("hidden");
+  document.getElementById("privacyFrame").src = "about:blank";
+  document.body.classList.remove("modal-open");
+  privacyReviewed = true;
+  const confirmCheck = document.getElementById("confirmCheck");
+  confirmCheck.disabled = false;
+  document.getElementById("privacyCheckNote").innerText =
+    "プライバシーポリシーの確認が完了しました。チェックを入れてください。";
+  confirmCheck.focus();
+  updateSubmitButtonState();
+}
+
+document.getElementById("privacyOpenButton").addEventListener("click", openPrivacyModal);
+document.getElementById("privacyCloseButton").addEventListener("click", closePrivacyModal);
+document.addEventListener("keydown", event => {
+  const modal = document.getElementById("privacyModal");
+  if (event.key === "Escape" && !modal.classList.contains("hidden")) {
+    event.preventDefault();
+  }
 });
-  });
 
-  if (errorMessage) {
-    alert(errorMessage);
+/* チェックが入るまで登録不可 */
+function updateSubmitButtonState() {
+  const submitBtn = document.getElementById("submitBtn");
+  const confirmCheck = document.getElementById("confirmCheck");
+  const duplicateArea = document.getElementById("duplicateWarningArea");
+  const duplicateCheck = document.getElementById("duplicateConfirmCheck");
+  const basicConfirmed = !!(privacyReviewed && confirmCheck && !confirmCheck.disabled && confirmCheck.checked);
+  const duplicateRequired = !!(duplicateArea && !duplicateArea.classList.contains("hidden"));
+  const duplicateConfirmed = !duplicateRequired || !!(duplicateCheck && duplicateCheck.checked);
+  submitBtn.disabled = !(basicConfirmed && duplicateConfirmed) || submitInProgress;
+}
+document.getElementById("confirmCheck").addEventListener("change", updateSubmitButtonState);
+document.getElementById("duplicateConfirmCheck").addEventListener("change", updateSubmitButtonState);
+
+
+function generateMeasurementNo() {
+  const letters = "ABCDEFGHJKMNPQRSTUVWXYZ";
+  const letter = letters[Math.floor(Math.random() * letters.length)];
+  const number = String(Math.floor(Math.random() * 900000) + 100000);
+  return letter + number;
+}
+
+/* 4桁チェック */
+function validatePin() {
+  const pin = document.getElementById("pin").value.trim();
+  if (!/^\d{4}$/.test(pin)) {
+    alert("4桁の数字を入力してください。");
+    return false;
+  }
+  if (/^(\d)\1{3}$/.test(pin)) {
+    alert("同じ数字4つは使用できません。");
+    return false;
+  }
+  return true;
+}
+
+function renderRosterCheckResult() {
+  const resultArea = document.getElementById("rosterResultArea");
+  const resultMessage = document.getElementById("rosterResultMessage");
+  const duplicateArea = document.getElementById("duplicateWarningArea");
+  const duplicateCheck = document.getElementById("duplicateConfirmCheck");
+  const reviseLink = document.getElementById("duplicateReviseLink");
+
+  if (duplicateArea) duplicateArea.classList.add("hidden");
+  if (resultArea) resultArea.classList.add("hidden");
+  if (duplicateCheck) duplicateCheck.checked = false;
+  if (resultMessage) resultMessage.innerText = "";
+
+  // 修正時は名簿・重複チェックを行わない
+  if (!draft || draft.editMode === true) {
+    updateSubmitButtonState();
     return;
   }
 
- if (data.length === 0) {
-  alert("商品が入力されていません（サイズ・数量）");
-  return;
-}
-
-const categoryLimitError = validateCategoryLimitsBeforeSubmit();
-
-if (categoryLimitError) {
-  alert(categoryLimitError);
-  return;
-}
-
-if (hasBespokeWithoutMeasurement()) {
-    const ok = confirm("採寸表の登録がありません。このまま登録しますか？");
-
-    if (!ok) {
-      return;
+  const rosterCheck = draft.rosterCheck || null;
+  if (!rosterCheck || rosterCheck.result !== "ok") {
+    if (resultArea && resultMessage) {
+      resultArea.classList.remove("hidden");
+      resultMessage.innerText =
+        "名簿確認結果を取得できませんでした。入力画面へ戻ってやり直してください。";
     }
+    updateSubmitButtonState();
+    return;
   }
 
-  const measurementPayload = buildMeasurementPayload(common);
+  const matchType = String(rosterCheck.rosterMatchType || "");
+  const duplicateFound = rosterCheck.duplicateFound === true;
+  const requiresConfirmation = rosterCheck.requiresConfirmation === true;
 
-  const customerKey = getCustomer();
-  const payload = {
-    orders: data,
-    measurement: measurementPayload,
-    editMode: effectiveEditMode,
-    measureNo: effectiveEditMode ? editMeasureNo : "",
-    registrationType: effectiveEditMode ? "修正" : "新規",
-    publicKey: customerKey,
-    customerKey: customerKey,
-    customer: customerKey
-  };
+  // 登録済みデータとの重複確認は、名簿一致結果とは別軸で判定する
+  if (duplicateFound || requiresConfirmation) {
+    if (duplicateArea) {
+      duplicateArea.classList.remove("hidden");
+    }
+    if (reviseLink) {
+      reviseLink.href =
+        "revise.html?customer=" + encodeURIComponent(getCustomerKey());
+    }
+    updateSubmitButtonState();
+    return;
+  }
 
-  payload.orders.forEach(o => {
-    o.publicKey = customerKey;
-    o.customerKey = customerKey;
-    o.customer = customerKey;
+  let message = "";
+  if (matchType === "name_only") {
+    message =
+      "名簿と氏名は一致しましたが、シメイに差異があります。入力内容をご確認ください。";
+  } else if (matchType === "kana_only") {
+    message =
+      "名簿とシメイは一致しましたが、氏名に差異があります。入力内容をご確認ください。";
+  } else if (matchType === "none") {
+    message =
+      "一致する名簿はありませんでした。新規登録として処理します。";
+  }
+
+  if (message && resultArea && resultMessage) {
+    resultArea.classList.remove("hidden");
+    resultMessage.innerText = message;
+  }
+
+  updateSubmitButtonState();
+}
+
+let submitInProgress = false;
+let sendingAnimationTimer = null;
+
+function startSendingAnimation() {
+  const dots = document.getElementById("sendingDots");
+  let dotCount = 1;
+  if (sendingAnimationTimer) clearInterval(sendingAnimationTimer);
+  dots.innerText = ".";
+  sendingAnimationTimer = setInterval(() => {
+    dotCount = dotCount >= 3 ? 1 : dotCount + 1;
+    dots.innerText = ".".repeat(dotCount);
+  }, 500);
+}
+function stopSendingAnimation() {
+  if (sendingAnimationTimer) {
+    clearInterval(sendingAnimationTimer);
+    sendingAnimationTimer = null;
+  }
+}
+function lockSubmitButton(isEdit) {
+  submitInProgress = true;
+  document.getElementById("submitBtn").disabled = true;
+  const returnButton = document.getElementById("returnToInputButton");
+  returnButton.disabled = true;
+  returnButton.classList.add("hidden");
+  document.getElementById("confirmCheck").disabled = true;
+  document.getElementById("duplicateConfirmCheck").disabled = true;
+  document.getElementById("sendingOverlay").classList.remove("hidden");
+  document.body.classList.add("sending-locked");
+  startSendingAnimation();
+}
+function resetSubmitButton(isEdit) {
+  submitInProgress = false;
+  stopSendingAnimation();
+  document.getElementById("sendingOverlay").classList.add("hidden");
+  document.body.classList.remove("sending-locked");
+  const returnButton = document.getElementById("returnToInputButton");
+  returnButton.disabled = false;
+  returnButton.classList.remove("hidden");
+  document.getElementById("duplicateConfirmCheck").disabled = false;
+  const confirmCheck = document.getElementById("confirmCheck");
+  confirmCheck.disabled = !(draft && draft.editMode === true) && !privacyReviewed;
+  const submitBtn = document.getElementById("submitBtn");
+  submitBtn.innerText = isEdit ? "修正内容を登録する" : "登録する";
+  updateSubmitButtonState();
+}
+
+function normalizePayloadForPowerAutomate(payload){
+
+  const orders = payload.orders || [];
+
+  orders.forEach(o => {
+
+    o["顧客コード"] = o["顧客コード"] || o.customerCode || "";
+    o["顧客名称"] = o["顧客名称"] || o.customerName || "";
+
+    o["職員番号"] =
+      o["職員番号"] ||
+      o.employeeNo ||
+      o.staffNo ||
+      "";
+
+    o["姓"] =
+      o["姓"] ||
+      o.sei ||
+      o["姓"] ||
+      "";
+
+    o["名"] =
+      o["名"] ||
+      o.mei ||
+      "";
+
+    o["セイ"] =
+      o["セイ"] ||
+      o.seiKana ||
+      o["セイ"] ||
+      "";
+
+    o["メイ"] =
+      o["メイ"] ||
+      o.meiKana ||
+      o["メイ"] ||
+      "";
+
+    o["性別"] = o["性別"] || o.gender || "";
+    o["職種"] = o["職種"] || o.job || "";
+    o["部署"] = o["部署"] || o.department || "";
+    o["貸与パターン"] = o["貸与パターン"] || o.lendingPatternName || "";
+    o["貸与パターンコード"] = o["貸与パターンコード"] || o.lendingPatternCode || "";
+    o.lendingPatternName = o.lendingPatternName || o["貸与パターン"] || "";
+    o.lendingPatternCode = o.lendingPatternCode || o["貸与パターンコード"] || "";
+
+    o["股下加工可能"] =
+      o["股下加工可能"] === undefined || o["股下加工可能"] === ""
+        ? 0
+        : Number(o["股下加工可能"]);
+
+    o["股下cm"] =
+      o["股下cm"] === undefined
+        ? ""
+        : o["股下cm"];
+
+    o["有効フラグ"] =
+      o["有効フラグ"] === undefined || o["有効フラグ"] === ""
+        ? 1
+        : Number(o["有効フラグ"]);
+
   });
+
+  if(payload.measurement){
+
+    const m = payload.measurement;
+
+    m["顧客コード"] = m["顧客コード"] || m.customerCode || "";
+    m["顧客名称"] = m["顧客名称"] || m.customerName || "";
+
+    m["職員番号"] =
+      m["職員番号"] ||
+      m.employeeNo ||
+      m.staffNo ||
+      "";
+
+    m["姓"] =
+      m["姓"] ||
+      m.sei ||
+      m["姓"] ||
+      "";
+
+    m["名"] =
+      m["名"] ||
+      m.mei ||
+      "";
+
+    m["セイ"] =
+      m["セイ"] ||
+      m.seiKana ||
+      m["セイ"] ||
+      "";
+
+    m["メイ"] =
+      m["メイ"] ||
+      m.meiKana ||
+      m["メイ"] ||
+      "";
+
+    m["性別"] = m["性別"] || m.gender || "";
+    m["職種"] = m["職種"] || m.job || "";
+    m["部署"] = m["部署"] || m.department || "";
+
+    const measurementType = String(m["採寸区分"] || "").trim();
+
+    const upperFlag =
+      m["上衣入力済"] === true ||
+      m["上衣入力済"] === 1 ||
+      String(m["上衣入力済"]).toUpperCase() === "TRUE" ||
+      String(m["上衣入力済"]).trim() === "1" ||
+      measurementType === "上衣" ||
+      measurementType === "全身";
+
+    const lowerFlag =
+      m["下衣入力済"] === true ||
+      m["下衣入力済"] === 1 ||
+      String(m["下衣入力済"]).toUpperCase() === "TRUE" ||
+      String(m["下衣入力済"]).trim() === "1" ||
+      measurementType === "下衣" ||
+      measurementType === "全身";
+
+    m["上衣入力済"] = upperFlag ? 1 : 0;
+    m["下衣入力済"] = lowerFlag ? 1 : 0;
+
+    m["有効フラグ"] =
+      m["有効フラグ"] === undefined || m["有効フラグ"] === ""
+        ? 1
+        : Number(m["有効フラグ"]);
+
+  }
+
+  return payload;
+}
+
+document.getElementById("submitBtn").addEventListener("click", async () => {
+  if (submitInProgress) {
+    return;
+  }
+
+  const submitBtn = document.getElementById("submitBtn");
+  const isEdit = draft && draft.editMode === true;
+
+  // 二重押し防止のため、登録前チェックより先に即時ロックする
+  lockSubmitButton(isEdit);
+
+  try {
+    const available = await checkPageDeadline();
+    if (!available) return;
+  } catch (err) {
+    console.error("登録前のHP公開期限チェックに失敗しました。", err);
+    location.replace("expired.html");
+    return;
+  }
+
+  if (!validatePin()) {
+    resetSubmitButton(isEdit);
+    return;
+  }
+
+const duplicateArea = document.getElementById("duplicateWarningArea");
+  const duplicateCheck = document.getElementById("duplicateConfirmCheck");
+  const duplicateAlreadyConfirmed =
+    duplicateArea &&
+    !duplicateArea.classList.contains("hidden") &&
+    duplicateCheck &&
+    duplicateCheck.checked;
+  const registrationNo = document.getElementById("pin").value.trim();
+
+  const measurementNo = isEdit
+    ? draft.measureNo
+    : generateMeasurementNo();
+
+  const registrationType = isEdit
+    ? "修正"
+    : "新規";
+  if (isEdit && !measurementNo) {
+    alert("修正対象の採寸番号が取得できません。もう一度検索からやり直してください。");
+    resetSubmitButton(isEdit);
+    return;
+  }
+
+  const payload = JSON.parse(JSON.stringify(draft));
+  const customerKey = getCustomerKey();
+  payload.publicKey = customerKey;
+  payload.customerKey = customerKey;
+  payload.customer = customerKey;
+
+
+  payload["採寸番号"] = measurementNo;
+  payload["登録番号"] = registrationNo;
+  payload["登録区分"] = registrationType;
+  payload["有効フラグ"] = 1;
+
+  payload.editMode = isEdit;
+  payload.measureNo = measurementNo;
+  payload.registrationType = registrationType;
+
+  // Power Automate送信用の共通項目
+  payload.measurementNo = measurementNo;
+  payload.registrationNo = registrationNo;
+  payload.entryType = registrationType;
+  payload.activeFlag = 1;
+  payload.contactPin = registrationNo;
+const rosterCheck = payload.rosterCheck || {};
+const rosterMatchType = String(rosterCheck.rosterMatchType || "");
+let rosterMismatchInfo = "";
+if (!isEdit) {
+  if (rosterMatchType === "complete" && duplicateAlreadyConfirmed) rosterMismatchInfo = "同姓同名同音あり（確認後登録）";
+  else rosterMismatchInfo = String(rosterCheck.rosterMismatchInfo || "");
+}
+payload.overrideDuplicate = duplicateAlreadyConfirmed;
+payload.rosterMatchType = isEdit ? "revision_skip" : rosterMatchType;
+payload.rosterMismatchInfo = rosterMismatchInfo;
+payload.rosterCheckSkipped = isEdit;
+
+
+  payload.orders?.forEach(o => {
+  o["採寸番号"] = measurementNo;
+  o["登録番号"] = registrationNo;
+  o["登録区分"] = registrationType;
+  o["有効フラグ"] = 1;
+
+  o.measurementNo = measurementNo;
+  o.registrationNo = registrationNo;
+  o.entryType = registrationType;
+  o.activeFlag = 1;
+  o.contactPin = registrationNo;
+  o.publicKey = customerKey;
+  o.customerKey = customerKey;
+  o.customer = customerKey;
+
+  o.overrideDuplicate = duplicateAlreadyConfirmed;
+  o.rosterMatchType = payload.rosterMatchType;
+  o.rosterMismatchInfo = rosterMismatchInfo;
+});
 
   if (payload.measurement) {
+    payload.measurement["採寸番号"] = measurementNo;
+    payload.measurement["登録番号"] = registrationNo;
+    payload.measurement["登録区分"] = registrationType;
+    payload.measurement["有効フラグ"] = 1;
+
+    // Power Automate送信用の共通項目
+    payload.measurement["修正用番号"] = registrationNo;
+    payload.measurement.measurementNo = measurementNo;
+    payload.measurement.registrationNo = registrationNo;
+    payload.measurement.entryType = registrationType;
+    payload.measurement.activeFlag = 1;
+    payload.measurement.contactPin = registrationNo;
     payload.measurement.publicKey = customerKey;
     payload.measurement.customerKey = customerKey;
     payload.measurement.customer = customerKey;
+    payload.measurement.employeeNo = payload.measurement.employeeNo || payload.measurement.staffNo || payload.measurement["職員番号"] || payload.employeeNo || "";
+    payload.measurement.staffNo = payload.measurement.employeeNo;
+    payload.measurement["職員番号"] = payload.measurement.employeeNo;
+    payload.measurement.rosterMatchType = payload.rosterMatchType;
+    payload.measurement.rosterMismatchInfo = rosterMismatchInfo;
   }
 
-  console.log(payload);
-  setConfirmTransitionBusy(true);
+if (!payload.measurement) {
+  delete payload.measurement;
+}
+
+normalizePayloadForPowerAutomate(payload);
+
   try {
-    if (effectiveEditMode) {
-      payload.rosterCheck = { skipped: true, reason: "revision" };
-    } else {
-      payload.rosterCheck = await checkRosterDuplicate(common);
+    const res = await fetch(FLOW_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+   const text = await res.text();
+
+    if (!res.ok) {
+      let errorMessage = "登録に失敗しました。時間をおいて再度お試しください。";
+      try {
+        const errorJson = JSON.parse(text);
+        if (errorJson.errorCode === "duplicate_registration_no") {
+          errorMessage =
+            "その4桁番号は同じ登録者で既に使用中です。\n" +
+            "別の番号を入力してください。";
+        } else if (errorJson.message) {
+          errorMessage = errorJson.message;
+        }
+      } catch {
+        if (text) errorMessage += "\n" + text;
+      }
+      alert(errorMessage);
+      resetSubmitButton(isEdit);
+      return;
     }
-    sessionStorage.setItem("uniformCustomer", customerKey);
-    sessionStorage.setItem("uniformDraft", JSON.stringify(payload));
-    sessionStorage.setItem("uniformDraftPending", "1");
-    location.href = "confirm.html?customer=" + encodeURIComponent(customerKey);
+
+    confirmRegistrationCompleted = true;
+    sessionStorage.setItem("uniformComplete", JSON.stringify({
+      measureNo: measurementNo,
+      registrationNo: registrationNo,
+      editMode: isEdit,
+      registrationType: registrationType,
+      customerKey: customerKey
+    }));
+
+    sessionStorage.setItem("uniformMailDraft", JSON.stringify(payload));
+
+    sessionStorage.removeItem("uniformDraft");
+    sessionStorage.removeItem("uniformConfirmPin");
+
+    if (isEdit) {
+      sessionStorage.removeItem("uniformEditData");
+      sessionStorage.removeItem("uniformEditCustomer");
+    }
+
+    location.href = "complete.html";
+
   } catch (err) {
-    alert("名簿の重複チェック中にエラーが発生しました。\n通信環境を確認して、もう一度『確認』を押してください。\n\n" + err.message);
-    setConfirmTransitionBusy(false);
+    alert("登録送信中にエラーが発生しました。\n通信環境を確認して、再度お試しください。\n\n" + err.message);
+
+    resetSubmitButton(isEdit);
+  }
+});
+
+
+async function initializeConfirmPage() {
+  try {
+    const available = await checkPageDeadline();
+    if (!available) return;
+    loadDraft();
+  } catch (err) {
+    console.error("HP公開期限チェックに失敗しました。", err);
+    location.replace("expired.html");
   }
 }
-</script>
 
+initializeConfirmPage();
+</script>
 </body>
 </html>
