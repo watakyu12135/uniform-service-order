@@ -1,0 +1,2002 @@
+﻿{
+  "customerCode": "31010634",
+  "customerName": "ピストル研究会病院",
+  "basicInfos": [
+    {"name": "氏名", "displayOrder": 0, "active": true},
+    {"name": "性別", "displayOrder": 0, "active": true},
+    {"name": "職員番号", "displayOrder": 0, "active": false},
+    {"name": "職種", "displayOrder": 0, "active": true},
+    {"name": "部署", "displayOrder": 0, "active": true},
+    {"name": "貸与パターン", "displayOrder": 0, "active": true}
+  ],
+  "departments": [
+    {"job": "医師", "department": "ゲノム研究部", "gender": "兼用", "displayOrder": 1, "active": true},
+    {"job": "医師", "department": "ゲノム診療部", "gender": "兼用", "displayOrder": 2, "active": true},
+    {"job": "医師", "department": "診療予約室", "gender": "兼用", "displayOrder": 3, "active": true},
+    {"job": "医師", "department": "医師事務作業支援", "gender": "兼用", "displayOrder": 4, "active": true},
+    {"job": "医師", "department": "画像診断部", "gender": "兼用", "displayOrder": 5, "active": true},
+    {"job": "医師", "department": "形成外科", "gender": "兼用", "displayOrder": 6, "active": true},
+    {"job": "医師", "department": "血液腫瘍科", "gender": "兼用", "displayOrder": 7, "active": true},
+    {"job": "医師", "department": "呼吸器外科", "gender": "兼用", "displayOrder": 8, "active": true},
+    {"job": "医師", "department": "細胞診断部", "gender": "兼用", "displayOrder": 9, "active": true},
+    {"job": "医師", "department": "施設管理課", "gender": "兼用", "displayOrder": 10, "active": true},
+    {"job": "医師", "department": "消化器化学療法科", "gender": "兼用", "displayOrder": 11, "active": true},
+    {"job": "医師", "department": "消化器外科", "gender": "兼用", "displayOrder": 12, "active": true},
+    {"job": "医師", "department": "上部消化管内科", "gender": "兼用", "displayOrder": 13, "active": true},
+    {"job": "医師", "department": "診療情報管理室", "gender": "兼用", "displayOrder": 14, "active": true},
+    {"job": "医師", "department": "整形外科", "gender": "兼用", "displayOrder": 15, "active": true},
+    {"job": "医師", "department": "先進がん運営管理", "gender": "兼用", "displayOrder": 16, "active": true},
+    {"job": "医師", "department": "先進がん経理室", "gender": "兼用", "displayOrder": 17, "active": true},
+    {"job": "医師", "department": "先端医療開発科", "gender": "兼用", "displayOrder": 18, "active": true},
+    {"job": "医師", "department": "乳腺外科", "gender": "兼用", "displayOrder": 19, "active": true},
+    {"job": "医師", "department": "乳腺内科", "gender": "兼用", "displayOrder": 20, "active": true},
+    {"job": "医師", "department": "入退院支援室", "gender": "兼用", "displayOrder": 21, "active": true},
+    {"job": "医師", "department": "婦人科", "gender": "兼用", "displayOrder": 22, "active": true},
+    {"job": "医師", "department": "放射線治療部", "gender": "兼用", "displayOrder": 23, "active": true},
+    {"job": "医師", "department": "薬剤部", "gender": "兼用", "displayOrder": 24, "active": true},
+    {"job": "医師", "department": "画像診断センター", "gender": "兼用", "displayOrder": 25, "active": true},
+    {"job": "医師", "department": "外来化学療法部", "gender": "兼用", "displayOrder": 26, "active": true},
+    {"job": "医師", "department": "核医学部", "gender": "兼用", "displayOrder": 27, "active": true},
+    {"job": "医師", "department": "感染症科", "gender": "兼用", "displayOrder": 28, "active": true},
+    {"job": "医師", "department": "緩和ケアセンター", "gender": "兼用", "displayOrder": 29, "active": true},
+    {"job": "医師", "department": "緩和治療科", "gender": "兼用", "displayOrder": 30, "active": true},
+    {"job": "医師", "department": "肝胆膵外科", "gender": "兼用", "displayOrder": 31, "active": true},
+    {"job": "医師", "department": "肝胆膵内科", "gender": "兼用", "displayOrder": 32, "active": true},
+    {"job": "医師", "department": "眼科", "gender": "兼用", "displayOrder": 33, "active": true},
+    {"job": "医師", "department": "健診センター", "gender": "兼用", "displayOrder": 34, "active": true},
+    {"job": "医師", "department": "呼吸器センター", "gender": "兼用", "displayOrder": 35, "active": true},
+    {"job": "医師", "department": "呼吸器内科", "gender": "兼用", "displayOrder": 36, "active": true},
+    {"job": "医師", "department": "腫瘍精神科", "gender": "兼用", "displayOrder": 37, "active": true},
+    {"job": "医師", "department": "集中治療部", "gender": "兼用", "displayOrder": 38, "active": true},
+    {"job": "医師", "department": "消化器内科", "gender": "兼用", "displayOrder": 39, "active": true},
+    {"job": "医師", "department": "食道外科", "gender": "兼用", "displayOrder": 40, "active": true},
+    {"job": "医師", "department": "早期臨床開発部", "gender": "兼用", "displayOrder": 41, "active": true},
+    {"job": "医師", "department": "総合腫瘍科", "gender": "兼用", "displayOrder": 42, "active": true},
+    {"job": "医師", "department": "総合診療部", "gender": "兼用", "displayOrder": 43, "active": true},
+    {"job": "医師", "department": "大腸外科", "gender": "兼用", "displayOrder": 44, "active": true},
+    {"job": "医師", "department": "超音波診断ＩＶＲ", "gender": "兼用", "displayOrder": 45, "active": true},
+    {"job": "医師", "department": "糖尿病代謝内分泌", "gender": "兼用", "displayOrder": 46, "active": true},
+    {"job": "医師", "department": "頭頸科", "gender": "兼用", "displayOrder": 47, "active": true},
+    {"job": "医師", "department": "脳腫瘍外科", "gender": "兼用", "displayOrder": 48, "active": true},
+    {"job": "医師", "department": "泌尿器科", "gender": "兼用", "displayOrder": 49, "active": true},
+    {"job": "医師", "department": "皮膚腫瘍科", "gender": "兼用", "displayOrder": 50, "active": true},
+    {"job": "医師", "department": "病理部", "gender": "兼用", "displayOrder": 51, "active": true},
+    {"job": "医師", "department": "品質管理部", "gender": "兼用", "displayOrder": 52, "active": true},
+    {"job": "医師", "department": "分子標的病理ＰＪ", "gender": "兼用", "displayOrder": 53, "active": true},
+    {"job": "医師", "department": "麻酔科", "gender": "兼用", "displayOrder": 54, "active": true},
+    {"job": "医師", "department": "名誉院長室", "gender": "兼用", "displayOrder": 55, "active": true},
+    {"job": "医師", "department": "臨教：泌尿器科", "gender": "兼用", "displayOrder": 56, "active": true},
+    {"job": "医師", "department": "臨教：皮膚腫瘍科", "gender": "兼用", "displayOrder": 57, "active": true},
+    {"job": "医師", "department": "臨床遺伝医療部", "gender": "兼用", "displayOrder": 58, "active": true},
+    {"job": "医師", "department": "臨床教育研修Ｃ", "gender": "兼用", "displayOrder": 59, "active": true},
+    {"job": "医師", "department": "臨床検査センター", "gender": "兼用", "displayOrder": 60, "active": true},
+    {"job": "医師非常勤", "department": "カウンセリング", "gender": "兼用", "displayOrder": 1, "active": true},
+    {"job": "医師非常勤", "department": "画像診断部", "gender": "兼用", "displayOrder": 2, "active": true},
+    {"job": "医師非常勤", "department": "核医学部", "gender": "兼用", "displayOrder": 3, "active": true},
+    {"job": "医師非常勤", "department": "緩和治療科", "gender": "兼用", "displayOrder": 4, "active": true},
+    {"job": "医師非常勤", "department": "形成外科", "gender": "兼用", "displayOrder": 5, "active": true},
+    {"job": "医師非常勤", "department": "健診センター", "gender": "兼用", "displayOrder": 6, "active": true},
+    {"job": "医師非常勤", "department": "検診部", "gender": "兼用", "displayOrder": 7, "active": true},
+    {"job": "医師非常勤", "department": "腫瘍循環器循環器", "gender": "兼用", "displayOrder": 8, "active": true},
+    {"job": "医師非常勤", "department": "腫瘍精神科", "gender": "兼用", "displayOrder": 9, "active": true},
+    {"job": "医師非常勤", "department": "消化器化学療法科", "gender": "兼用", "displayOrder": 10, "active": true},
+    {"job": "医師非常勤", "department": "神経内科", "gender": "兼用", "displayOrder": 11, "active": true},
+    {"job": "医師非常勤", "department": "腎臓内科", "gender": "兼用", "displayOrder": 12, "active": true},
+    {"job": "医師非常勤", "department": "先端医療開発科", "gender": "兼用", "displayOrder": 13, "active": true},
+    {"job": "医師非常勤", "department": "総合腫瘍科", "gender": "兼用", "displayOrder": 14, "active": true},
+    {"job": "医師非常勤", "department": "総合診療部", "gender": "兼用", "displayOrder": 15, "active": true},
+    {"job": "医師非常勤", "department": "大腸外科", "gender": "兼用", "displayOrder": 16, "active": true},
+    {"job": "医師非常勤", "department": "超音波診断ＩＶＲ", "gender": "兼用", "displayOrder": 17, "active": true},
+    {"job": "医師非常勤", "department": "糖尿病代謝内分泌", "gender": "兼用", "displayOrder": 18, "active": true},
+    {"job": "医師非常勤", "department": "乳腺外科", "gender": "兼用", "displayOrder": 19, "active": true},
+    {"job": "医師非常勤", "department": "乳腺内科", "gender": "兼用", "displayOrder": 20, "active": true},
+    {"job": "医師非常勤", "department": "泌尿器科", "gender": "兼用", "displayOrder": 21, "active": true},
+    {"job": "医師非常勤", "department": "品質管理部", "gender": "兼用", "displayOrder": 22, "active": true},
+    {"job": "医師非常勤", "department": "婦人科", "gender": "兼用", "displayOrder": 23, "active": true},
+    {"job": "医師非常勤", "department": "肝胆膵内科", "gender": "兼用", "displayOrder": 24, "active": true},
+    {"job": "医師非常勤", "department": "検体検査部", "gender": "兼用", "displayOrder": 25, "active": true},
+    {"job": "医師非常勤", "department": "歯科", "gender": "兼用", "displayOrder": 26, "active": true},
+    {"job": "医師非常勤", "department": "先進がん医工連携", "gender": "兼用", "displayOrder": 27, "active": true},
+    {"job": "医師非常勤", "department": "頭頸科", "gender": "兼用", "displayOrder": 28, "active": true},
+    {"job": "医師非常勤", "department": "名誉院長室", "gender": "兼用", "displayOrder": 29, "active": true},
+    {"job": "看護師外来", "department": "１０番外来", "gender": "兼用", "displayOrder": 1, "active": true},
+    {"job": "看護師外来", "department": "２０番外来", "gender": "兼用", "displayOrder": 2, "active": true},
+    {"job": "看護師外来", "department": "３０番外来", "gender": "兼用", "displayOrder": 3, "active": true},
+    {"job": "看護師外来", "department": "５０番外来", "gender": "兼用", "displayOrder": 4, "active": true},
+    {"job": "看護師外来", "department": "ＡＴＣ", "gender": "兼用", "displayOrder": 5, "active": true},
+    {"job": "看護師外来", "department": "ＴＣＣ", "gender": "兼用", "displayOrder": 6, "active": true},
+    {"job": "看護師外来", "department": "ＴＣＣリンパケア", "gender": "兼用", "displayOrder": 7, "active": true},
+    {"job": "看護師外来", "department": "ＷＯＣ支援室", "gender": "兼用", "displayOrder": 8, "active": true},
+    {"job": "看護師外来", "department": "がん相談支援", "gender": "兼用", "displayOrder": 9, "active": true},
+    {"job": "看護師外来", "department": "医療安全管理部", "gender": "兼用", "displayOrder": 10, "active": true},
+    {"job": "看護師外来", "department": "医療連携部", "gender": "兼用", "displayOrder": 11, "active": true},
+    {"job": "看護師外来", "department": "画像診断部", "gender": "兼用", "displayOrder": 12, "active": true},
+    {"job": "看護師外来", "department": "外来", "gender": "兼用", "displayOrder": 13, "active": true},
+    {"job": "看護師外来", "department": "外来統括部", "gender": "兼用", "displayOrder": 14, "active": true},
+    {"job": "看護師外来", "department": "看護部", "gender": "兼用", "displayOrder": 15, "active": true},
+    {"job": "看護師外来", "department": "教育担当", "gender": "兼用", "displayOrder": 16, "active": true},
+    {"job": "看護師外来", "department": "健診センター", "gender": "兼用", "displayOrder": 17, "active": true},
+    {"job": "看護師外来", "department": "地域連携室", "gender": "兼用", "displayOrder": 18, "active": true},
+    {"job": "看護師外来", "department": "入退院支援室", "gender": "兼用", "displayOrder": 19, "active": true},
+    {"job": "看護師外来", "department": "放射線・画像診断", "gender": "兼用", "displayOrder": 20, "active": true},
+    {"job": "看護師手術部", "department": "中央手術部", "gender": "兼用", "displayOrder": 1, "active": true},
+    {"job": "看護師手術部", "department": "内視鏡診療部", "gender": "兼用", "displayOrder": 2, "active": true},
+    {"job": "看護師手術部", "department": "内視鏡治療部", "gender": "兼用", "displayOrder": 3, "active": true},
+    {"job": "看護師手術部", "department": "放射線・画像診断", "gender": "兼用", "displayOrder": 4, "active": true},
+    {"job": "看護師病棟", "department": "５東", "gender": "兼用", "displayOrder": 1, "active": true},
+    {"job": "看護師病棟", "department": "６西", "gender": "兼用", "displayOrder": 2, "active": true},
+    {"job": "看護師病棟", "department": "６東", "gender": "兼用", "displayOrder": 3, "active": true},
+    {"job": "看護師病棟", "department": "７西", "gender": "兼用", "displayOrder": 4, "active": true},
+    {"job": "看護師病棟", "department": "７東", "gender": "兼用", "displayOrder": 5, "active": true},
+    {"job": "看護師病棟", "department": "８西", "gender": "兼用", "displayOrder": 6, "active": true},
+    {"job": "看護師病棟", "department": "８東", "gender": "兼用", "displayOrder": 7, "active": true},
+    {"job": "看護師病棟", "department": "９西", "gender": "兼用", "displayOrder": 8, "active": true},
+    {"job": "看護師病棟", "department": "９東", "gender": "兼用", "displayOrder": 9, "active": true},
+    {"job": "看護師病棟", "department": "１０東", "gender": "兼用", "displayOrder": 10, "active": true},
+    {"job": "看護師病棟", "department": "１１西", "gender": "兼用", "displayOrder": 11, "active": true},
+    {"job": "看護師病棟", "department": "１１東", "gender": "兼用", "displayOrder": 12, "active": true},
+    {"job": "看護師病棟", "department": "１２西", "gender": "兼用", "displayOrder": 13, "active": true},
+    {"job": "看護師病棟", "department": "１２東", "gender": "兼用", "displayOrder": 14, "active": true},
+    {"job": "看護師病棟", "department": "３０番外来", "gender": "兼用", "displayOrder": 15, "active": true},
+    {"job": "看護師病棟", "department": "５０番外来", "gender": "兼用", "displayOrder": 16, "active": true},
+    {"job": "看護師病棟", "department": "ＡＴＣ", "gender": "兼用", "displayOrder": 17, "active": true},
+    {"job": "看護師病棟", "department": "ＩＣＵ", "gender": "兼用", "displayOrder": 18, "active": true},
+    {"job": "看護師病棟", "department": "ＷＯＣ支援室", "gender": "兼用", "displayOrder": 19, "active": true},
+    {"job": "看護師病棟", "department": "院内感染対策部", "gender": "兼用", "displayOrder": 20, "active": true},
+    {"job": "看護師病棟", "department": "患者家族支援室", "gender": "兼用", "displayOrder": 21, "active": true},
+    {"job": "看護師病棟", "department": "看護部", "gender": "兼用", "displayOrder": 22, "active": true},
+    {"job": "看護師病棟", "department": "緩和ケアセンター", "gender": "兼用", "displayOrder": 23, "active": true},
+    {"job": "看護師病棟", "department": "教育担当", "gender": "兼用", "displayOrder": 24, "active": true},
+    {"job": "看護師病棟", "department": "教育担当室", "gender": "兼用", "displayOrder": 25, "active": true},
+    {"job": "看護師病棟", "department": "健診センター", "gender": "兼用", "displayOrder": 26, "active": true},
+    {"job": "看護師病棟", "department": "入退院支援室", "gender": "兼用", "displayOrder": 27, "active": true},
+    {"job": "看護師病棟", "department": "放射線・画像診断", "gender": "兼用", "displayOrder": 28, "active": true},
+    {"job": "看護助手", "department": "５東", "gender": "兼用", "displayOrder": 1, "active": true},
+    {"job": "看護助手", "department": "６西", "gender": "兼用", "displayOrder": 2, "active": true},
+    {"job": "看護助手", "department": "７西", "gender": "兼用", "displayOrder": 3, "active": true},
+    {"job": "看護助手", "department": "８西", "gender": "兼用", "displayOrder": 4, "active": true},
+    {"job": "看護助手", "department": "９西", "gender": "兼用", "displayOrder": 5, "active": true},
+    {"job": "看護助手", "department": "１０西", "gender": "兼用", "displayOrder": 6, "active": true},
+    {"job": "看護助手", "department": "１１西", "gender": "兼用", "displayOrder": 7, "active": true},
+    {"job": "看護助手", "department": "１２西", "gender": "兼用", "displayOrder": 8, "active": true},
+    {"job": "看護助手", "department": "２０番外来", "gender": "兼用", "displayOrder": 9, "active": true},
+    {"job": "看護助手", "department": "ＡＴＣ", "gender": "兼用", "displayOrder": 10, "active": true},
+    {"job": "看護助手", "department": "ＣＲＣ室", "gender": "兼用", "displayOrder": 11, "active": true},
+    {"job": "看護助手", "department": "ＩＣＵ", "gender": "兼用", "displayOrder": 12, "active": true},
+    {"job": "看護助手", "department": "健診センター", "gender": "兼用", "displayOrder": 13, "active": true},
+    {"job": "看護助手", "department": "内視鏡診療部", "gender": "兼用", "displayOrder": 14, "active": true},
+    {"job": "看護助手", "department": "内視鏡治療部", "gender": "兼用", "displayOrder": 15, "active": true},
+    {"job": "看護助手手術部", "department": "中央手術部", "gender": "兼用", "displayOrder": 1, "active": true}
+  ],
+  "jobs": [
+    {
+      "gender": "女性",
+      "job": "医師",
+      "products": [
+        {
+          "productCode": "CO6012",
+          "name": "レディスニットコート",
+          "color": "ホワイト",
+          "gender": "女性",
+          "productCategory": "診察衣",
+          "measurementGroup": "全身",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "BR1115",
+          "name": "ジャケット",
+          "color": "ホワイト×ネイビー",
+          "gender": "女性",
+          "productCategory": "ケーシー",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "HS9819",
+          "name": "スクラブ",
+          "color": "ダークネイビー×モーニングミストブルー",
+          "gender": "女性",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PO2039",
+          "name": "パンツ",
+          "color": "ダークネイビー",
+          "gender": "女性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "8L", "label": "8Lサイズ", "type": "custom"},{"value": "9L", "label": "9Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+        {
+          "code": "A",
+          "name": "診察衣５枚",
+          "note": "",
+          "displayOrder": 1,
+          "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 5
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "B",
+          "name": "診察衣２枚・ケーシー１枚・スクラブ２枚・パンツ2枚",
+          "note": "上衣は3枚・パンツは2枚の貸与となります。",
+          "displayOrder": 2,
+          "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 2
+        },
+        {
+          "productCategory": "ケーシー",
+          "limit": 1
+        },
+        {
+          "productCategory": "スクラブ",
+          "limit": 2
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 2
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1},
+        {"fromProductCategory": "ケーシー", "toConsumptionCategory": "ケーシー", "qty": 1},
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "ケーシー",
+          "displayOrder": 2,
+          "heading": "ケーシーを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 3,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 4,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "C",
+          "name": "診察衣2枚・スクラブ3枚・パンツ3枚",
+          "note": "",
+          "displayOrder": 3,
+          "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 2
+        },
+        {
+          "productCategory": "スクラブ",
+          "limit": 3
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 3
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1},
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 2,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "D",
+          "name": "診察衣2枚・ケーシー3枚・（パンツ無し）",
+          "note": "パンツの貸与はありません",
+          "displayOrder": 4,
+          "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 2
+        },
+        {
+          "productCategory": "ケーシー",
+          "limit": 3
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1},
+        {"fromProductCategory": "ケーシー", "toConsumptionCategory": "ケーシー", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "ケーシー",
+          "displayOrder": 2,
+          "heading": "ケーシーを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "E",
+          "name": "ケーシー5枚（パンツ無し）",
+          "note": "パンツの貸与はありません",
+          "displayOrder": 5,
+          "categoryLimits": [
+        {
+          "productCategory": "ケーシー",
+          "limit": 5
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "ケーシー", "toConsumptionCategory": "ケーシー", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "ケーシー",
+          "displayOrder": 1,
+          "heading": "ケーシーを選んで下さい",
+          "note": ""
+        }
+      ]
+        }
+      ],
+      "categoryLimits": [
+
+      ],
+      "conversionRules": [
+
+      ],
+      "categoryDisplay": [
+
+      ]
+    },
+    {
+      "gender": "男性",
+      "job": "医師",
+      "products": [
+        {
+          "productCode": "CO6011",
+          "name": "メンズニットコート",
+          "color": "ホワイト",
+          "gender": "男性",
+          "productCategory": "診察衣",
+          "measurementGroup": "全身",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "BR4010",
+          "name": "メンズジャケット",
+          "color": "ホワイト×ネイビー",
+          "gender": "男性",
+          "productCategory": "ケーシー",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "HS9819",
+          "name": "スクラブ",
+          "color": "ダークネイビー×モーニングミストブルー",
+          "gender": "男性",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PR5028",
+          "name": "男性用パンツ",
+          "color": "ネイビー",
+          "gender": "男性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "4S", "label": "4Sサイズ", "type": "custom"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+        {
+          "code": "A",
+          "name": "診察衣５枚",
+          "note": "",
+          "displayOrder": 1,
+          "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 5
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "B",
+          "name": "診察衣２枚・ケーシー１枚・スクラブ２枚・パンツ2枚",
+          "note": "上衣は3枚・パンツは2枚の貸与となります。",
+          "displayOrder": 2,
+          "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 2
+        },
+        {
+          "productCategory": "ケーシー",
+          "limit": 1
+        },
+        {
+          "productCategory": "スクラブ",
+          "limit": 2
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 2
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1},
+        {"fromProductCategory": "ケーシー", "toConsumptionCategory": "ケーシー", "qty": 1},
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "ケーシー",
+          "displayOrder": 2,
+          "heading": "ケーシーを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 3,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 4,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "C",
+          "name": "診察衣2枚・スクラブ3枚・パンツ3枚",
+          "note": "",
+          "displayOrder": 3,
+          "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 2
+        },
+        {
+          "productCategory": "スクラブ",
+          "limit": 3
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 3
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1},
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 2,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 3,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "D",
+          "name": "診察衣2枚・ケーシー3枚・（パンツ無し）",
+          "note": "パンツの貸与はありません",
+          "displayOrder": 4,
+          "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 2
+        },
+        {
+          "productCategory": "ケーシー",
+          "limit": 3
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1},
+        {"fromProductCategory": "ケーシー", "toConsumptionCategory": "ケーシー", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "ケーシー",
+          "displayOrder": 2,
+          "heading": "ケーシーを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "E",
+          "name": "ケーシー5枚（パンツ無し）",
+          "note": "パンツの貸与はありません",
+          "displayOrder": 5,
+          "categoryLimits": [
+        {
+          "productCategory": "ケーシー",
+          "limit": 5
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "ケーシー", "toConsumptionCategory": "ケーシー", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "ケーシー",
+          "displayOrder": 1,
+          "heading": "ケーシーを選んで下さい",
+          "note": ""
+        }
+      ]
+        }
+      ],
+      "categoryLimits": [
+
+      ],
+      "conversionRules": [
+
+      ],
+      "categoryDisplay": [
+
+      ]
+    },
+    {
+      "gender": "女性",
+      "job": "医師非常勤",
+      "products": [
+        {
+          "productCode": "CO9811",
+          "name": "診察衣　長袖",
+          "color": "Ｔネイビー",
+          "gender": "女性",
+          "productCategory": "診察衣",
+          "measurementGroup": "全身",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+
+      ],
+      "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 3
+        }
+      ],
+      "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1}
+      ],
+      "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "gender": "男性",
+      "job": "医師非常勤",
+      "products": [
+        {
+          "productCode": "CO9814",
+          "name": "診察衣　長袖",
+          "color": "Ｔネイビー",
+          "gender": "男性",
+          "productCategory": "診察衣",
+          "measurementGroup": "全身",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+
+      ],
+      "categoryLimits": [
+        {
+          "productCategory": "診察衣",
+          "limit": 3
+        }
+      ],
+      "conversionRules": [
+        {"fromProductCategory": "診察衣", "toConsumptionCategory": "診察衣", "qty": 1}
+      ],
+      "categoryDisplay": [
+        {
+          "productCategory": "診察衣",
+          "displayOrder": 1,
+          "heading": "診察衣を選んで下さい",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "gender": "女性",
+      "job": "看護師外来",
+      "products": [
+        {
+          "productCode": "OP9442",
+          "name": "ワンピース半袖",
+          "color": "Ｔネイビー",
+          "gender": "女性",
+          "productCategory": "ワンピース",
+          "measurementGroup": "全身",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "BR9135",
+          "name": "ジャケット",
+          "color": "ホワイト×ダークネイビー",
+          "gender": "女性",
+          "productCategory": "上衣",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "8L", "label": "8Lサイズ", "type": "custom"},{"value": "9L", "label": "9Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PO2039",
+          "name": "パンツ",
+          "color": "ダークネイビー",
+          "gender": "女性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "8L", "label": "8Lサイズ", "type": "custom"},{"value": "9L", "label": "9Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "HS9817",
+          "name": "スクラブ",
+          "color": "ホワイト×ダークネイビー",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+        {
+          "code": "A",
+          "name": "ワンピース6枚",
+          "note": "",
+          "displayOrder": 1,
+          "categoryLimits": [
+        {
+          "productCategory": "ワンピース",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "ワンピース", "toConsumptionCategory": "ワンピース", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "ワンピース",
+          "displayOrder": 1,
+          "heading": "ワンピースを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "B",
+          "name": "ツーピース上下6枚",
+          "note": "",
+          "displayOrder": 2,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "C",
+          "name": "スクラブ上下6枚",
+          "note": "",
+          "displayOrder": 3,
+          "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "D",
+          "name": "ツーピース上下3枚・スクラブ上下3枚",
+          "note": "",
+          "displayOrder": 4,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 3
+        },
+        {
+          "productCategory": "スクラブ",
+          "limit": 3
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 2,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 3,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "E",
+          "name": "ワンピース3枚・ツーピース上下3枚",
+          "note": "",
+          "displayOrder": 5,
+          "categoryLimits": [
+        {
+          "productCategory": "ワンピース",
+          "limit": 3
+        },
+        {
+          "productCategory": "上衣",
+          "limit": 3
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 3
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "ワンピース", "toConsumptionCategory": "ワンピース", "qty": 1},
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "ワンピース",
+          "displayOrder": 1,
+          "heading": "ワンピースを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "上衣",
+          "displayOrder": 2,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 3,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        }
+      ],
+      "categoryLimits": [
+
+      ],
+      "conversionRules": [
+
+      ],
+      "categoryDisplay": [
+
+      ]
+    },
+    {
+      "gender": "男性",
+      "job": "看護師外来",
+      "products": [
+        {
+          "productCode": "HS9817",
+          "name": "スクラブ",
+          "color": "ホワイト×ダークネイビー",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "BR4010",
+          "name": "メンズジャケット",
+          "color": "ホワイト×ネイビー",
+          "gender": "男性",
+          "productCategory": "上衣",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PR5028",
+          "name": "男性用パンツ",
+          "color": "ネイビー",
+          "gender": "男性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "4S", "label": "4Sサイズ", "type": "custom"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+        {
+          "code": "A",
+          "name": "ツーピース上下6枚",
+          "note": "",
+          "displayOrder": 1,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "B",
+          "name": "スクラブ上下6枚",
+          "note": "",
+          "displayOrder": 2,
+          "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "C",
+          "name": "ツーピース上下3枚・スクラブ上下3枚",
+          "note": "",
+          "displayOrder": 3,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 3
+        },
+        {
+          "productCategory": "スクラブ",
+          "limit": 3
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 2,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 3,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        }
+      ],
+      "categoryLimits": [
+
+      ],
+      "conversionRules": [
+
+      ],
+      "categoryDisplay": [
+
+      ]
+    },
+    {
+      "gender": "女性",
+      "job": "看護師病棟",
+      "products": [
+        {
+          "productCode": "OP9442",
+          "name": "ワンピース半袖",
+          "color": "Ｔネイビー",
+          "gender": "女性",
+          "productCategory": "ワンピース",
+          "measurementGroup": "全身",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "BR9135",
+          "name": "ジャケット",
+          "color": "ホワイト×ダークネイビー",
+          "gender": "女性",
+          "productCategory": "上衣",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "8L", "label": "8Lサイズ", "type": "custom"},{"value": "9L", "label": "9Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PO2039",
+          "name": "パンツ",
+          "color": "ダークネイビー",
+          "gender": "女性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "8L", "label": "8Lサイズ", "type": "custom"},{"value": "9L", "label": "9Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "HS9817",
+          "name": "スクラブ",
+          "color": "ホワイト×ダークネイビー",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+        {
+          "code": "A",
+          "name": "ワンピース6枚",
+          "note": "",
+          "displayOrder": 1,
+          "categoryLimits": [
+        {
+          "productCategory": "ワンピース",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "ワンピース", "toConsumptionCategory": "ワンピース", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "ワンピース",
+          "displayOrder": 1,
+          "heading": "ワンピースを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "B",
+          "name": "ツーピース上下6枚",
+          "note": "",
+          "displayOrder": 2,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "C",
+          "name": "スクラブ上下6枚",
+          "note": "",
+          "displayOrder": 3,
+          "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "D",
+          "name": "ツーピース上下3枚・スクラブ上下3枚",
+          "note": "",
+          "displayOrder": 4,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 3
+        },
+        {
+          "productCategory": "スクラブ",
+          "limit": 3
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 2,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 3,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "E",
+          "name": "ワンピース3枚・ツーピース上下3枚",
+          "note": "",
+          "displayOrder": 5,
+          "categoryLimits": [
+        {
+          "productCategory": "ワンピース",
+          "limit": 3
+        },
+        {
+          "productCategory": "上衣",
+          "limit": 3
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 3
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "ワンピース", "toConsumptionCategory": "ワンピース", "qty": 1},
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "ワンピース",
+          "displayOrder": 1,
+          "heading": "ワンピースを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "上衣",
+          "displayOrder": 2,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 3,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        }
+      ],
+      "categoryLimits": [
+
+      ],
+      "conversionRules": [
+
+      ],
+      "categoryDisplay": [
+
+      ]
+    },
+    {
+      "gender": "男性",
+      "job": "看護師病棟",
+      "products": [
+        {
+          "productCode": "HS9817",
+          "name": "スクラブ",
+          "color": "ホワイト×ダークネイビー",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "BR4010",
+          "name": "メンズジャケット",
+          "color": "ホワイト×ネイビー",
+          "gender": "男性",
+          "productCategory": "上衣",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PR5028",
+          "name": "男性用パンツ",
+          "color": "ネイビー",
+          "gender": "男性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "4S", "label": "4Sサイズ", "type": "custom"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+        {
+          "code": "A",
+          "name": "ツーピース上下6枚",
+          "note": "",
+          "displayOrder": 1,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "B",
+          "name": "スクラブ上下6枚",
+          "note": "",
+          "displayOrder": 2,
+          "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "C",
+          "name": "ツーピース上下3枚・スクラブ上下3枚",
+          "note": "",
+          "displayOrder": 3,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 3
+        },
+        {
+          "productCategory": "スクラブ",
+          "limit": 3
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 2,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 3,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        }
+      ],
+      "categoryLimits": [
+
+      ],
+      "conversionRules": [
+
+      ],
+      "categoryDisplay": [
+
+      ]
+    },
+    {
+      "gender": "女性",
+      "job": "看護師手術部",
+      "products": [
+        {
+          "productCode": "OP9442",
+          "name": "ワンピース半袖",
+          "color": "Ｔネイビー",
+          "gender": "女性",
+          "productCategory": "ワンピース",
+          "measurementGroup": "全身",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "HS9817",
+          "name": "スクラブ",
+          "color": "ホワイト×ダークネイビー",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PO2039",
+          "name": "パンツ",
+          "color": "ダークネイビー",
+          "gender": "女性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "8L", "label": "8Lサイズ", "type": "custom"},{"value": "9L", "label": "9Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+        {
+          "code": "A",
+          "name": "ワンピース2枚",
+          "note": "",
+          "displayOrder": 1,
+          "categoryLimits": [
+        {
+          "productCategory": "ワンピース",
+          "limit": 2
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "ワンピース", "toConsumptionCategory": "ワンピース", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "ワンピース",
+          "displayOrder": 1,
+          "heading": "ワンピースを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "B",
+          "name": "スクラブ上下2枚",
+          "note": "",
+          "displayOrder": 2,
+          "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 2
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 2
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        }
+      ],
+      "categoryLimits": [
+
+      ],
+      "conversionRules": [
+
+      ],
+      "categoryDisplay": [
+
+      ]
+    },
+    {
+      "gender": "男性",
+      "job": "看護師手術部",
+      "products": [
+        {
+          "productCode": "HS9817",
+          "name": "スクラブ",
+          "color": "ホワイト×ダークネイビー",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "BR4010",
+          "name": "メンズジャケット",
+          "color": "Ｔネイビー",
+          "gender": "男性",
+          "productCategory": "上衣",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "SS", "label": "SSサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PR5028",
+          "name": "男性用パンツ",
+          "color": "ネイビー",
+          "gender": "男性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "4S", "label": "4Sサイズ", "type": "custom"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+        {
+          "code": "A",
+          "name": "ツーピース上下2枚",
+          "note": "",
+          "displayOrder": 1,
+          "categoryLimits": [
+        {
+          "productCategory": "上衣",
+          "limit": 2
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 2
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "上衣", "toConsumptionCategory": "上衣", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "上衣",
+          "displayOrder": 1,
+          "heading": "上衣を選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        },
+        {
+          "code": "B",
+          "name": "スクラブ上下2枚",
+          "note": "",
+          "displayOrder": 2,
+          "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 2
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 2
+        }
+      ],
+          "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+          "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+        }
+      ],
+      "categoryLimits": [
+
+      ],
+      "conversionRules": [
+
+      ],
+      "categoryDisplay": [
+
+      ]
+    },
+    {
+      "gender": "女性",
+      "job": "看護助手",
+      "products": [
+        {
+          "productCode": "HS8077",
+          "name": "スクラブ",
+          "color": "ディープレッド",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PO2039",
+          "name": "パンツ",
+          "color": "ダークネイビー",
+          "gender": "女性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "8L", "label": "8Lサイズ", "type": "custom"},{"value": "9L", "label": "9Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+
+      ],
+      "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+      "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+      "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "gender": "男性",
+      "job": "看護助手",
+      "products": [
+        {
+          "productCode": "HS8077",
+          "name": "スクラブ",
+          "color": "ディープレッド",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PR5028",
+          "name": "男性用パンツ",
+          "color": "ネイビー",
+          "gender": "男性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "4S", "label": "4Sサイズ", "type": "custom"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+
+      ],
+      "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 6
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 6
+        }
+      ],
+      "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+      "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "gender": "女性",
+      "job": "看護助手手術部",
+      "products": [
+        {
+          "productCode": "HS8077",
+          "name": "スクラブ",
+          "color": "ディープレッド",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PO2039",
+          "name": "パンツ",
+          "color": "ダークネイビー",
+          "gender": "女性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "8L", "label": "8Lサイズ", "type": "custom"},{"value": "9L", "label": "9Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+
+      ],
+      "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 2
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 2
+        }
+      ],
+      "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+      "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "gender": "男性",
+      "job": "看護助手手術部",
+      "products": [
+        {
+          "productCode": "HS8077",
+          "name": "スクラブ",
+          "color": "ディープレッド",
+          "gender": "兼用",
+          "productCategory": "スクラブ",
+          "measurementGroup": "上衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 0,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        },
+        {
+          "productCode": "PR5028",
+          "name": "男性用パンツ",
+          "color": "ネイビー",
+          "gender": "男性",
+          "productCategory": "パンツ",
+          "measurementGroup": "下衣",
+          "sizeSuffix": "サイズ",
+          "inseamAlterable": 1,
+          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "4S", "label": "4Sサイズ", "type": "custom"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "4L", "label": "4Lサイズ", "type": "custom"},{"value": "5L", "label": "5Lサイズ", "type": "custom"},{"value": "6L", "label": "6Lサイズ", "type": "custom"},{"value": "7L", "label": "7Lサイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
+        }
+      ],
+      "lendingPatterns": [
+
+      ],
+      "categoryLimits": [
+        {
+          "productCategory": "スクラブ",
+          "limit": 2
+        },
+        {
+          "productCategory": "パンツ",
+          "limit": 2
+        }
+      ],
+      "conversionRules": [
+        {"fromProductCategory": "スクラブ", "toConsumptionCategory": "スクラブ", "qty": 1},
+        {"fromProductCategory": "パンツ", "toConsumptionCategory": "パンツ", "qty": 1}
+      ],
+      "categoryDisplay": [
+        {
+          "productCategory": "スクラブ",
+          "displayOrder": 1,
+          "heading": "スクラブを選んで下さい",
+          "note": ""
+        },
+        {
+          "productCategory": "パンツ",
+          "displayOrder": 2,
+          "heading": "パンツを選んで下さい",
+          "note": ""
+        }
+      ]
+    }
+  ]
+}
