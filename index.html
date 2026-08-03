@@ -804,6 +804,42 @@ tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; b
 .basic-select-field select {
   min-width: 170px;
 }
+.pattern-field {
+  align-items: flex-start;
+}
+.pattern-options {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+.pattern-option {
+  display: block;
+  padding: 12px 14px;
+  border: 1px solid #cfd6df;
+  border-radius: 8px;
+  background: #f8fafc;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.pattern-option:hover,
+.pattern-option:focus-within {
+  border-color: #4a90e2;
+  background: #eef5ff;
+}
+.pattern-option input {
+  width: auto;
+  margin-right: 8px;
+}
+.pattern-name {
+  font-weight: 700;
+}
+.pattern-note {
+  display: block;
+  margin: 6px 0 0 28px;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.5;
+}
 @media (prefers-reduced-motion: reduce) {
   .revise-card { animation: none; }
 }
@@ -941,6 +977,10 @@ tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; b
       <select id="department">
         <option value="">選択</option>
       </select>
+    </div>
+    <div id="lendingPatternArea" class="basic-select-field pattern-field hidden">
+      <label>貸与パターン</label>
+      <div id="lendingPatternOptions" class="pattern-options"></div>
     </div>
   </section>
 <div id="limitDeclarationArea"></div>
@@ -1192,6 +1232,88 @@ function isEmployeeNoActive() {
 function isDepartmentActive() {
   return isBasicInfoActive("部署");
 }
+function isLendingPatternActive() {
+  return isBasicInfoActive("貸与パターン");
+}
+function getSelectedJobBaseData() {
+  const job = document.getElementById("job").value;
+  const gender = document.getElementById("gender").value;
+  if (!currentData || !job || !gender) return null;
+  return currentData.jobs.find(j => j.job === job && j.gender === gender) || null;
+}
+function getSelectedLendingPatternCode() {
+  const checked = document.querySelector('input[name="lendingPattern"]:checked');
+  return checked ? checked.value : "";
+}
+function getSelectedLendingPattern() {
+  const jobData = getSelectedJobBaseData();
+  if (!jobData) return null;
+  const code = getSelectedLendingPatternCode();
+  return (jobData.lendingPatterns || []).find(p => p.code === code) || null;
+}
+function getLendingPatternName() {
+  const pattern = getSelectedLendingPattern();
+  return pattern ? pattern.name : "";
+}
+function clearCurrentProductSelection() {
+  measurementData = {
+    common: { height: "", weight: "", method: "ヌード寸法" },
+    upper: { completed: false, A: "", B: "", C1: "", C2: "", C3: "", D: "", E: "", F: "", G: "", H: "", I: "" },
+    lower: { completed: false, a: "", b: "", c: "", d: "", e: "", f: "" },
+    specialNote: "",
+    memo: ""
+  };
+}
+function updateLendingPatternOptions(selectedCode = "") {
+  const area = document.getElementById("lendingPatternArea");
+  const optionsArea = document.getElementById("lendingPatternOptions");
+  if (!area || !optionsArea) return false;
+  const jobData = getSelectedJobBaseData();
+  const patterns = jobData && isLendingPatternActive() && Array.isArray(jobData.lendingPatterns)
+    ? [...jobData.lendingPatterns].sort((a, b) => (a.displayOrder || 9999) - (b.displayOrder || 9999))
+    : [];
+  optionsArea.innerHTML = "";
+  if (patterns.length === 0) {
+    area.classList.add("hidden");
+    return false;
+  }
+  area.classList.remove("hidden");
+  patterns.forEach(pattern => {
+    const label = document.createElement("label");
+    label.className = "pattern-option";
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "lendingPattern";
+    input.value = pattern.code;
+    input.checked = pattern.code === selectedCode;
+    input.addEventListener("change", changeLendingPattern);
+    const name = document.createElement("span");
+    name.className = "pattern-name";
+    name.textContent = pattern.name;
+    label.appendChild(input);
+    label.appendChild(name);
+    if (pattern.note) {
+      const note = document.createElement("span");
+      note.className = "pattern-note";
+      note.textContent = pattern.note;
+      label.appendChild(note);
+    }
+    optionsArea.appendChild(label);
+  });
+  return true;
+}
+function changeLendingPattern() {
+  clearCurrentProductSelection();
+  const jobData = getSelectedJobBaseData();
+  const pattern = getSelectedLendingPattern();
+  if (!jobData || !pattern) {
+    document.getElementById("table").innerHTML = "<tr><td colspan='7'>貸与パターンを選択してください</td></tr>";
+    document.getElementById("categoryStatus").innerHTML = "";
+    document.getElementById("limitDeclarationArea").innerHTML = "";
+    return;
+  }
+  createTable(currentData, jobData.job, jobData.gender);
+}
 
 
 function setupBasicInfoVisibility() {
@@ -1384,11 +1506,14 @@ function applyConfirmReturnData() {
   const genderValue = getFirstStoredValue(base, ["性別", "gender"]);
   const jobValue = getFirstStoredValue(base, ["職種", "job"]);
   const departmentValue = getFirstStoredValue(base, ["部署", "department"]);
+  const lendingPatternCode = getFirstStoredValue(base, ["貸与パターンコード", "lendingPatternCode"]);
   document.getElementById("gender").value = genderValue;
   updateJobOptions();
   addMissingOption(document.getElementById("job"), jobValue);
   document.getElementById("job").value = jobValue;
   changeJob();
+  updateLendingPatternOptions(lendingPatternCode);
+  if (lendingPatternCode) changeLendingPattern();
   const departmentSelect = document.getElementById("department");
   if (departmentSelect) {
     addMissingOption(departmentSelect, departmentValue);
@@ -1471,6 +1596,7 @@ function applyEditModeData() {
 document.getElementById("seiKana").value = getFirstStoredValue(base, ["セイ", "シ", "seiKana"]);
 document.getElementById("meiKana").value = getFirstStoredValue(base, ["メイ", "meiKana"]);
 
+  const lendingPatternCode = getFirstStoredValue(base, ["貸与パターンコード", "lendingPatternCode"]);
   document.getElementById("gender").value = base["性別"] || "";
   updateJobOptions();
 
@@ -1478,6 +1604,8 @@ document.getElementById("meiKana").value = getFirstStoredValue(base, ["メイ", 
   document.getElementById("job").value = base["職種"] || "";
 
   changeJob();
+  updateLendingPatternOptions(lendingPatternCode);
+  if (lendingPatternCode) changeLendingPattern();
 
   const departmentSelect = document.getElementById("department");
   if (departmentSelect) {
@@ -1528,6 +1656,9 @@ function setBasicInfoReadOnly() {
       el.disabled = true;
       el.style.backgroundColor = "#eee";
     }
+  });
+  document.querySelectorAll('input[name="lendingPattern"]').forEach(input => {
+    input.disabled = true;
   });
 }
 
@@ -1733,6 +1864,10 @@ function changeJob() {
       limitArea.innerHTML = "";
     }
 
+    const patternArea = document.getElementById("lendingPatternArea");
+    const patternOptions = document.getElementById("lendingPatternOptions");
+    if (patternArea) patternArea.classList.add("hidden");
+    if (patternOptions) patternOptions.innerHTML = "";
     const departmentArea = document.getElementById("departmentArea");
     const departmentSelect = document.getElementById("department");
 
@@ -1758,8 +1893,16 @@ function changeJob() {
     return;
   }
 
-  createTable(currentData, job, gender);
   updateDepartmentOptions();
+  const hasPatterns = updateLendingPatternOptions();
+  if (hasPatterns) {
+    document.getElementById("table").innerHTML =
+      "<tr><td colspan='7'>貸与パターンを選択してください</td></tr>";
+    document.getElementById("categoryStatus").innerHTML = "";
+    document.getElementById("limitDeclarationArea").innerHTML = "";
+  } else {
+    createTable(currentData, job, gender);
+  }
 }
 
 function updateDepartmentOptions() {
@@ -1822,9 +1965,7 @@ function createTable(data, selectedJob, selectedGender) {
 
   const table = document.getElementById("table");
 
-  const jobData = data.jobs.find(j =>
-    j.job === selectedJob && j.gender === selectedGender
-  );
+  const jobData = getSelectedJobData();
 
   if (!jobData) {
     table.innerHTML = "<tr><td colspan='7'>該当データなし</td></tr>";
@@ -2615,18 +2756,24 @@ function buildMeasurementPayload(common) {
 }
 
 function getSelectedJobData() {
-
-  const job = document.getElementById("job").value;
-  const gender = document.getElementById("gender").value;
-
-  if (!currentData || !job || !gender) {
-    return null;
+  const jobData = getSelectedJobBaseData();
+  if (!jobData) return null;
+  const patterns = Array.isArray(jobData.lendingPatterns) ? jobData.lendingPatterns : [];
+  if (isLendingPatternActive() && patterns.length > 0) {
+    const pattern = getSelectedLendingPattern();
+    if (!pattern) return null;
+    return {
+      ...jobData,
+      selectedLendingPatternCode: pattern.code,
+      selectedLendingPatternName: pattern.name,
+      categoryLimits: pattern.categoryLimits || [],
+      conversionRules: pattern.conversionRules || [],
+      categoryDisplay: pattern.categoryDisplay || []
+    };
   }
-
-  return currentData.jobs.find(j =>
-    j.job === job && j.gender === gender
-  );
+  return jobData;
 }
+
 
 function getRowSizeInfo(row) {
 
@@ -3292,6 +3439,17 @@ async function submitData() {
     alert("職種を選択してください");
     return;
   }
+  const selectedJobBaseData = getSelectedJobBaseData();
+  const patternRequired = !!(
+    isLendingPatternActive() &&
+    selectedJobBaseData &&
+    Array.isArray(selectedJobBaseData.lendingPatterns) &&
+    selectedJobBaseData.lendingPatterns.length > 0
+  );
+  if (patternRequired && !getSelectedLendingPatternCode()) {
+    alert("貸与パターンを選択してください");
+    return;
+  }
 
   const departmentArea = document.getElementById("departmentArea");
   const departmentSelect = document.getElementById("department");
@@ -3326,7 +3484,9 @@ seiKana: seiKana,
 meiKana: meiKana,
   gender: document.getElementById("gender").value,
   job: document.getElementById("job").value,
-  department: departmentSelect ? departmentSelect.value : ""
+  department: departmentSelect ? departmentSelect.value : "",
+  lendingPatternCode: getSelectedLendingPatternCode(),
+  lendingPatternName: getLendingPatternName()
 };
 
 
@@ -3394,6 +3554,10 @@ data.push({
   "性別": common.gender,
   "職種": common.job,
   "部署": common.department,
+  "貸与パターン": common.lendingPatternName,
+  "貸与パターンコード": common.lendingPatternCode,
+  lendingPatternCode: common.lendingPatternCode,
+  lendingPatternName: common.lendingPatternName,
   product,
   productCode,
   color,
