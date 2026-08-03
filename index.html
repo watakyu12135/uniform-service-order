@@ -2122,6 +2122,7 @@ toggleAddSizeButton(this.closest('tr').querySelector('.cell-qty input'));
     });
 
 table.innerHTML = html;
+placeAllInseamAreas();
 updateLimitDeclarationArea();
 updateCategorySummary();
 }
@@ -3189,7 +3190,7 @@ html += "<h3>現在の選択枚数</h3>";
       className = "category-over";
     } else if (current === limit) {
       className = "category-ok";
-    } else if (limit - current === 1) {
+    } else if (current > 0 && limit - current === 1) {
       className = "category-warning";
     }
 
@@ -3227,7 +3228,7 @@ html += "<h3>現在の選択枚数</h3>";
         countSpan.classList.add("category-count-over");
       } else if (current === limit) {
         countSpan.classList.add("category-count-ok");
-      } else if (limit - current === 1) {
+      } else if (current > 0 && limit - current === 1) {
         countSpan.classList.add("category-count-warning");
       }
 
