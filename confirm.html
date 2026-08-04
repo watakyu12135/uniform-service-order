@@ -360,7 +360,7 @@ document.getElementById("fullNameKana").innerText =
   document.getElementById("gender").innerText = first.gender || "";
   document.getElementById("job").innerText = first.job || "";
   document.getElementById("department").innerText = first.department || "なし";
-  const lendingPattern = first["貸与パターン"] || first.lendingPatternName || "";
+  const lendingPattern = first["貸与パターン名"] || "";
   const lendingPatternRow = document.getElementById("lendingPatternRow");
   if (lendingPattern) {
     document.getElementById("lendingPattern").innerText = lendingPattern;
@@ -809,10 +809,8 @@ function normalizePayloadForPowerAutomate(payload){
     o["性別"] = o["性別"] || o.gender || "";
     o["職種"] = o["職種"] || o.job || "";
     o["部署"] = o["部署"] || o.department || "";
-    o["貸与パターン"] = o["貸与パターン"] || o.lendingPatternName || "";
-    o["貸与パターンコード"] = o["貸与パターンコード"] || o.lendingPatternCode || "";
-    o.lendingPatternName = o.lendingPatternName || o["貸与パターン"] || "";
-    o.lendingPatternCode = o.lendingPatternCode || o["貸与パターンコード"] || "";
+    o["貸与パターンコード"] = o["貸与パターンコード"] || "";
+    o["貸与パターン名"] = o["貸与パターン名"] || "";
 
     o["股下加工可能"] =
       o["股下加工可能"] === undefined || o["股下加工可能"] === ""
