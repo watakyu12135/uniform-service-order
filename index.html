@@ -1232,6 +1232,7 @@ const isEditMode = urlParams.get("mode") === "edit";
 let effectiveEditMode = isEditMode;
 let editData = null;
 let editMeasureNo = "";
+let originalRegistrationNo = "";
 let lastAcceptedLendingPatternCode = "";
 let lendingPatternChangeInProgress = false;
 /* ======================== */
@@ -1545,6 +1546,10 @@ function applyConfirmReturnData() {
   };
   editMeasureNo = editData.measureNo;
 
+  originalRegistrationNo = getFirstStoredValue(
+    base,
+    ["登録番号", "registrationNo"]
+  ) || String(returnDraft.registrationNo || "").trim();
   const employeeNoInput = document.getElementById("employeeNo");
   if (employeeNoInput) employeeNoInput.value = getFirstStoredValue(base, ["職員番号", "employeeNo", "staffNo"]);
   document.getElementById("sei").value = getFirstStoredValue(base, ["姓", "氏", "sei"]);
@@ -1613,6 +1618,10 @@ function applyEditModeData() {
     base["採寸番号"] ||
     "";
 
+  originalRegistrationNo = getFirstStoredValue(
+    base,
+    ["登録番号", "registrationNo"]
+  );
   if (!editMeasureNo) {
     alert("採寸番号が取得できませんでした。もう一度検索してください。");
     location.href = "revise.html?customer=" + encodeURIComponent(getCustomer());
@@ -2791,6 +2800,8 @@ function buildMeasurementPayload(common) {
 "性別": common.gender,
   "職種": common.job,
   "部署": common.department,
+  "登録番号": common["登録番号"],
+  registrationNo: common.registrationNo,
   "採寸区分": measurementType,
     "登録日時": common.createdAt,
     "更新日時": common.updatedAt,
@@ -3570,6 +3581,8 @@ meiKana: meiKana,
   gender: document.getElementById("gender").value,
   job: document.getElementById("job").value,
   department: departmentSelect ? departmentSelect.value : "",
+  registrationNo: effectiveEditMode ? originalRegistrationNo : "",
+  "登録番号": effectiveEditMode ? originalRegistrationNo : "",
   "貸与パターンコード": getSelectedLendingPatternCode(),
   "貸与パターン名": getLendingPatternName()
 };
@@ -3694,6 +3707,7 @@ if (hasBespokeWithoutMeasurement()) {
     measurement: measurementPayload,
     editMode: effectiveEditMode,
     measureNo: effectiveEditMode ? editMeasureNo : "",
+    registrationNo: effectiveEditMode ? originalRegistrationNo : "",
     registrationType: effectiveEditMode ? "修正" : "新規",
     publicKey: customerKey,
     customerKey: customerKey,
