@@ -1343,10 +1343,9 @@ function changeLendingPattern(event = null) {
     );
     if (!ok) {
       lendingPatternChangeInProgress = true;
-      const previous = document.querySelector(
-        'input[name="lendingPattern"][value="' + CSS.escape(lastAcceptedLendingPatternCode) + '"]'
-      );
-      if (previous) previous.checked = true;
+      document.querySelectorAll('input[name="lendingPattern"]').forEach(input => {
+        input.checked = input.value === lastAcceptedLendingPatternCode;
+      });
       lendingPatternChangeInProgress = false;
       return;
     }
@@ -1361,12 +1360,9 @@ function changeLendingPattern(event = null) {
     document.getElementById("limitDeclarationArea").innerHTML = "";
     return;
   }
-
   createTable(currentData, jobData.job, jobData.gender);
   lastAcceptedLendingPatternCode = newCode;
 }
-
-
 function setupBasicInfoVisibility() {
   const employeeArea = document.getElementById("employeeNoArea");
   const employeeInput = document.getElementById("employeeNo");
