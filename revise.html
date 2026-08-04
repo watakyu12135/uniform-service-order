@@ -159,7 +159,7 @@ button {
   </div>
 
   <div class="search-method" id="nameSearchArea">
-    <h4>姓名＋職種＋4桁の数字で検索</h4>
+    <h4>姓名＋職種＋本人確認用4桁番号で検索</h4>
 
     <label for="sei">姓</label>
     <input id="sei">
@@ -172,19 +172,19 @@ button {
       <option value="">顧客情報を読み込み中...</option>
     </select>
 
-    <label for="nameRegistrationNo">登録した4桁の数字</label>
+    <label for="nameRegistrationNo">本人確認用4桁番号</label>
     <input id="nameRegistrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
   </div>
 
   <div id="employeeNoSearchArea" class="hidden">
     <div class="search-separator">または</div>
     <div class="search-method">
-      <h4>職員番号＋登録した4桁の数字で検索</h4>
+      <h4>職員番号＋本人確認用4桁番号で検索</h4>
 
       <label for="employeeNo">職員番号</label>
       <input id="employeeNo" inputmode="latin" autocomplete="off">
 
-      <label for="employeeRegistrationNo">登録した4桁の番号</label>
+      <label for="employeeRegistrationNo">本人確認用4桁番号</label>
       <input id="employeeRegistrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
     </div>
   </div>
@@ -426,7 +426,7 @@ async function searchRevision() {
     payload.measureNo = measureNo;
   } else if (employeeNoActive && (employeeNo || employeeRegistrationNo)) {
     if (!employeeNo || !employeeRegistrationNo) {
-      alert("職員番号検索では、職員番号と登録した4桁の番号を両方入力してください。");
+      alert("職員番号検索では、職員番号と本人確認用4桁番号を両方入力してください。");
       return;
     }
     if (!/^[A-Za-z0-9]+$/.test(employeeNo)) {
@@ -434,7 +434,7 @@ async function searchRevision() {
       return;
     }
     if (!/^\d{4}$/.test(employeeRegistrationNo)) {
-      alert("登録した4桁の番号は半角数字4桁で入力してください。");
+      alert("本人確認用4桁番号は半角数字4桁で入力してください。");
       return;
     }
     payload.searchType = "employeeNo";
@@ -448,7 +448,7 @@ async function searchRevision() {
       return;
     }
     if (!/^\d{4}$/.test(nameRegistrationNo)) {
-      alert("登録した4桁の数字は半角数字4桁で入力してください。");
+      alert("本人確認用4桁番号は半角数字4桁で入力してください。");
       return;
     }
     payload.searchType = "name";
@@ -485,7 +485,7 @@ async function searchRevision() {
       resultArea.innerHTML = `
         <div class="error">該当する登録情報が見つかりませんでした。</div>
         <div class="small">
-          入力内容、採寸番号、登録した4桁の数字をご確認ください。
+          入力内容、採寸番号、本人確認用4桁番号をご確認ください。
         </div>
       `;
       return;
