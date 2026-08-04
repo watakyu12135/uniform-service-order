@@ -1263,11 +1263,11 @@ function getSelectedLendingPattern() {
   const jobData = getSelectedJobBaseData();
   if (!jobData) return null;
   const code = getSelectedLendingPatternCode();
-  return (jobData.lendingPatterns || []).find(p => p.code === code) || null;
+  return (jobData.lendingPatterns || []).find(p => p["貸与パターンコード"] === code) || null;
 }
 function getLendingPatternName() {
   const pattern = getSelectedLendingPattern();
-  return pattern ? pattern.name : "";
+  return pattern ? pattern["貸与パターン名"] : "";
 }
 function clearCurrentProductSelection() {
   measurementData = {
@@ -1298,12 +1298,12 @@ function updateLendingPatternOptions(selectedCode = "") {
     const input = document.createElement("input");
     input.type = "radio";
     input.name = "lendingPattern";
-    input.value = pattern.code;
-    input.checked = pattern.code === selectedCode;
+    input.value = pattern["貸与パターンコード"];
+    input.checked = pattern["貸与パターンコード"] === selectedCode;
     input.addEventListener("change", changeLendingPattern);
     const name = document.createElement("span");
     name.className = "pattern-name";
-    name.textContent = pattern.name;
+    name.textContent = pattern["貸与パターン名"];
     label.appendChild(input);
     label.appendChild(name);
     if (pattern.note) {
@@ -2779,8 +2779,8 @@ function getSelectedJobData() {
     if (!pattern) return null;
     return {
       ...jobData,
-      selectedLendingPatternCode: pattern.code,
-      selectedLendingPatternName: pattern.name,
+      selectedLendingPatternCode: pattern["貸与パターンコード"],
+      selectedLendingPatternName: pattern["貸与パターン名"],
       categoryLimits: pattern.categoryLimits || [],
       conversionRules: pattern.conversionRules || [],
       categoryDisplay: pattern.categoryDisplay || []
@@ -3516,8 +3516,8 @@ meiKana: meiKana,
   gender: document.getElementById("gender").value,
   job: document.getElementById("job").value,
   department: departmentSelect ? departmentSelect.value : "",
-  lendingPatternCode: getSelectedLendingPatternCode(),
-  lendingPatternName: getLendingPatternName()
+  "貸与パターンコード": getSelectedLendingPatternCode(),
+  "貸与パターン名": getLendingPatternName()
 };
 
 
@@ -3585,10 +3585,8 @@ data.push({
   "性別": common.gender,
   "職種": common.job,
   "部署": common.department,
-  "貸与パターン": common.lendingPatternName,
-  "貸与パターンコード": common.lendingPatternCode,
-  lendingPatternCode: common.lendingPatternCode,
-  lendingPatternName: common.lendingPatternName,
+  "貸与パターンコード": common["貸与パターンコード"],
+  "貸与パターン名": common["貸与パターン名"],
   product,
   productCode,
   color,
