@@ -1280,7 +1280,8 @@ function getLendingPatternName() {
   const pattern = getSelectedLendingPattern();
   return pattern ? pattern["貸与パターン名"] : "";
 }
-function clearCurrentProductSelection() {
+function clearCurrentProductSelection(preserveMeasurement = false) {
+  if (preserveMeasurement) return;
   measurementData = {
     common: { height: "", weight: "", method: "ヌード寸法" },
     upper: { completed: false, A: "", B: "", C1: "", C2: "", C3: "", D: "", E: "", F: "", G: "", H: "", I: "" },
@@ -1339,7 +1340,7 @@ function changeLendingPattern(event = null) {
 
   if (effectiveEditMode && isUserChange && patternActuallyChanged) {
     const ok = confirm(
-      "貸与パターンを変更すると、現在の商品・サイズ・数量・股下加工・採寸入力がクリアされます。\n\n変更してよろしいですか？"
+      "貸与パターンを変更すると、現在の商品・サイズ・数量・股下加工がクリアされます。\n別寸採寸表の入力内容は保持されます。\n\n変更してよろしいですか？"
     );
     if (!ok) {
       lendingPatternChangeInProgress = true;
@@ -1351,7 +1352,8 @@ function changeLendingPattern(event = null) {
     }
   }
 
-  clearCurrentProductSelection();
+  const preserveMeasurement = effectiveEditMode && isUserChange && patternActuallyChanged;
+  clearCurrentProductSelection(preserveMeasurement);
   const jobData = getSelectedJobBaseData();
   const pattern = getSelectedLendingPattern();
   if (!jobData || !pattern) {
@@ -1713,7 +1715,7 @@ function setBasicInfoReadOnly() {
   if (patternArea && !patternArea.querySelector(".pattern-edit-note")) {
     const note = document.createElement("div");
     note.className = "pattern-edit-note";
-    note.textContent = "貸与パターンも変更できます。変更すると商品・サイズ・数量・股下加工・採寸入力はクリアされます。";
+    note.textContent = "貸与パターンも変更できます。変更すると商品・サイズ・数量・股下加工はクリアされますが、別寸採寸表は保持されます。";
     patternArea.appendChild(note);
   }
 }
@@ -2673,6 +2675,16 @@ function isMeasurementCompleteForType(type) {
   }
 
   return false;
+}
+
+function hasSelectedBespokeOrder() {
+  return Array.from(document.querySelectorAll("#table tr[data-product-category]")).some(row => {
+    const qtyInput = row.querySelector(".cell-qty input");
+    const qty = Number(qtyInput ? qtyInput.value : 0) || 0;
+    if (qty <= 0) return false;
+    const sizeInfo = getRowSizeInfo(row);
+    return sizeInfo.valid && sizeInfo.size === "別寸";
+  });
 }
 
 function hasBespokeWithoutMeasurement() {
@@ -3670,7 +3682,11 @@ if (hasBespokeWithoutMeasurement()) {
     }
   }
 
-  const measurementPayload = buildMeasurementPayload(common);
+  // 最終的に別寸商品が選択されている場合だけ採寸データを送信する。
+  // 修正時に別寸商品が0件なら、PA側で旧採寸データのみ有効フラグ0にし、新規採寸データは作成しない。
+  const measurementPayload = hasSelectedBespokeOrder()
+    ? buildMeasurementPayload(common)
+    : null;
 
   const customerKey = getCustomer();
   const payload = {
