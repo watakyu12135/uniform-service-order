@@ -854,6 +854,15 @@ tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; b
   font-size: 13px;
   line-height: 1.5;
 }
+.pattern-edit-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-left: 4px solid #e69a26;
+  background: #fff8e8;
+  color: #5c3b00;
+  font-size: 13px;
+  line-height: 1.5;
+}
 @media (prefers-reduced-motion: reduce) {
   .revise-card { animation: none; }
 }
@@ -1223,6 +1232,8 @@ const isEditMode = urlParams.get("mode") === "edit";
 let effectiveEditMode = isEditMode;
 let editData = null;
 let editMeasureNo = "";
+let lastAcceptedLendingPatternCode = "";
+let lendingPatternChangeInProgress = false;
 /* ======================== */
 
 function getBasicInfoSetting(name) {
@@ -1300,7 +1311,7 @@ function updateLendingPatternOptions(selectedCode = "") {
     input.name = "lendingPattern";
     input.value = pattern["貸与パターンコード"];
     input.checked = pattern["貸与パターンコード"] === selectedCode;
-    input.addEventListener("change", changeLendingPattern);
+    input.addEventListener("change", event => changeLendingPattern(event));
     const name = document.createElement("span");
     name.className = "pattern-name";
     name.textContent = pattern["貸与パターン名"];
@@ -1316,7 +1327,31 @@ function updateLendingPatternOptions(selectedCode = "") {
   });
   return true;
 }
-function changeLendingPattern() {
+function changeLendingPattern(event = null) {
+  if (lendingPatternChangeInProgress) return;
+
+  const newCode = getSelectedLendingPatternCode();
+  const isUserChange = !!(event && event.isTrusted);
+  const patternActuallyChanged =
+    !!lastAcceptedLendingPatternCode &&
+    !!newCode &&
+    newCode !== lastAcceptedLendingPatternCode;
+
+  if (effectiveEditMode && isUserChange && patternActuallyChanged) {
+    const ok = confirm(
+      "貸与パターンを変更すると、現在の商品・サイズ・数量・股下加工・採寸入力がクリアされます。\n\n変更してよろしいですか？"
+    );
+    if (!ok) {
+      lendingPatternChangeInProgress = true;
+      const previous = document.querySelector(
+        'input[name="lendingPattern"][value="' + CSS.escape(lastAcceptedLendingPatternCode) + '"]'
+      );
+      if (previous) previous.checked = true;
+      lendingPatternChangeInProgress = false;
+      return;
+    }
+  }
+
   clearCurrentProductSelection();
   const jobData = getSelectedJobBaseData();
   const pattern = getSelectedLendingPattern();
@@ -1326,7 +1361,9 @@ function changeLendingPattern() {
     document.getElementById("limitDeclarationArea").innerHTML = "";
     return;
   }
+
   createTable(currentData, jobData.job, jobData.gender);
+  lastAcceptedLendingPatternCode = newCode;
 }
 
 
@@ -1527,6 +1564,7 @@ function applyConfirmReturnData() {
   document.getElementById("job").value = jobValue;
   changeJob();
   updateLendingPatternOptions(lendingPatternCode);
+  lastAcceptedLendingPatternCode = lendingPatternCode;
   if (lendingPatternCode) changeLendingPattern();
   const departmentSelect = document.getElementById("department");
   if (departmentSelect) {
@@ -1619,6 +1657,7 @@ document.getElementById("meiKana").value = getFirstStoredValue(base, ["メイ", 
 
   changeJob();
   updateLendingPatternOptions(lendingPatternCode);
+  lastAcceptedLendingPatternCode = lendingPatternCode;
   if (lendingPatternCode) changeLendingPattern();
 
   const departmentSelect = document.getElementById("department");
@@ -1672,8 +1711,15 @@ function setBasicInfoReadOnly() {
     }
   });
   document.querySelectorAll('input[name="lendingPattern"]').forEach(input => {
-    input.disabled = true;
+    input.disabled = false;
   });
+  const patternArea = document.getElementById("lendingPatternArea");
+  if (patternArea && !patternArea.querySelector(".pattern-edit-note")) {
+    const note = document.createElement("div");
+    note.className = "pattern-edit-note";
+    note.textContent = "貸与パターンも変更できます。変更すると商品・サイズ・数量・股下加工・採寸入力はクリアされます。";
+    patternArea.appendChild(note);
+  }
 }
 
 function restoreOrdersFromEditData(orders) {
