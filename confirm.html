@@ -157,7 +157,7 @@ body.sending-locked { overflow: hidden; }
 </div>
 
 <!-- 本人確認用4桁番号 -->
-<div class="section">
+<div id="pinSection" class="section">
   <h3>本人確認用4桁番号</h3>
   <div class="notice">
     修正時に必要な数字4桁です。<br>
@@ -165,7 +165,14 @@ body.sending-locked { overflow: hidden; }
   </div>
   <label for="pin">4桁番号</label>
   <input id="pin" inputmode="numeric" maxlength="4" autocomplete="off">
-  <div class="small">例：1234 ※0000など同じ数字4つは使用不可。</div>
+  <div class="small">例：1234　※0000など、同じ数字4つは使用できません。</div>
+</div>
+
+<div id="pinInheritedSection" class="section hidden">
+  <h3>本人確認用4桁番号</h3>
+  <div class="notice">
+    初回登録時の番号を引き継ぎます。
+  </div>
 </div>
 
 <div id="rosterResultArea" class="section hidden">
@@ -328,11 +335,6 @@ function loadDraft() {
     return;
   }
 
-  const savedPin = sessionStorage.getItem("uniformConfirmPin");
-  if (savedPin !== null) {
-    const pinInput = document.getElementById("pin");
-    if (pinInput) pinInput.value = savedPin;
-  }
   const customerKey = getCustomerKey();
   if (customerKey) {
     draft.publicKey = customerKey;
@@ -342,6 +344,30 @@ function loadDraft() {
 
   const orders = draft.orders || [];
   const first = orders[0] || {};
+  const isEdit = draft.editMode === true;
+  const pinSection = document.getElementById("pinSection");
+  const pinInheritedSection = document.getElementById("pinInheritedSection");
+  const pinInput = document.getElementById("pin");
+
+  if (isEdit) {
+    const inheritedRegistrationNo = String(
+      draft.registrationNo ||
+      draft["登録番号"] ||
+      first["登録番号"] ||
+      first.registrationNo ||
+      ""
+    ).trim();
+
+    if (pinInput) pinInput.value = inheritedRegistrationNo;
+    if (pinSection) pinSection.classList.add("hidden");
+    if (pinInheritedSection) pinInheritedSection.classList.remove("hidden");
+  } else {
+    const savedPin = sessionStorage.getItem("uniformConfirmPin");
+    if (pinInput && savedPin !== null) pinInput.value = savedPin;
+    if (pinSection) pinSection.classList.remove("hidden");
+    if (pinInheritedSection) pinInheritedSection.classList.add("hidden");
+  }
+
   const employeeNo = first.employeeNo || first.staffNo || first["職員番号"] || "";
   const employeeNoRow = document.getElementById("employeeNoRow");
   const employeeNoSpan = document.getElementById("employeeNo");
@@ -641,14 +667,31 @@ function generateMeasurementNo() {
   return letter + number;
 }
 
-/* 4桁チェック */
-function validatePin() {
-  const pin = document.getElementById("pin").value.trim();
+/* 本人確認用4桁番号の取得・確認 */
+function getRegistrationNo(isEdit) {
+  const first = draft?.orders?.[0] || {};
+  if (isEdit) {
+    return String(
+      draft?.registrationNo ||
+      draft?.["登録番号"] ||
+      first["登録番号"] ||
+      first.registrationNo ||
+      ""
+    ).trim();
+  }
+  return String(document.getElementById("pin")?.value || "").trim();
+}
+
+function validatePin(isEdit) {
+  const pin = getRegistrationNo(isEdit);
   if (!/^\d{4}$/.test(pin)) {
-    alert("4桁の数字を入力してください。");
+    alert(isEdit
+      ? "初回登録時の本人確認用4桁番号を取得できませんでした。もう一度検索からやり直してください。"
+      : "4桁の数字を入力してください。"
+    );
     return false;
   }
-  if (/^(\d)\1{3}$/.test(pin)) {
+  if (!isEdit && /^(\d)\1{3}$/.test(pin)) {
     alert("同じ数字4つは使用できません。");
     return false;
   }
@@ -920,7 +963,7 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     return;
   }
 
-  if (!validatePin()) {
+  if (!validatePin(isEdit)) {
     resetSubmitButton(isEdit);
     return;
   }
@@ -932,7 +975,7 @@ const duplicateArea = document.getElementById("duplicateWarningArea");
     !duplicateArea.classList.contains("hidden") &&
     duplicateCheck &&
     duplicateCheck.checked;
-  const registrationNo = document.getElementById("pin").value.trim();
+  const registrationNo = getRegistrationNo(isEdit);
 
   const measurementNo = isEdit
     ? draft.measureNo
