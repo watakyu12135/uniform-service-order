@@ -168,13 +168,6 @@ body.sending-locked { overflow: hidden; }
   <div class="small">例：1234　※0000など、同じ数字4つは使用できません。</div>
 </div>
 
-<div id="pinInheritedSection" class="section hidden">
-  <h3>本人確認用4桁番号</h3>
-  <div class="notice">
-    初回登録時の番号を引き継ぎます。
-  </div>
-</div>
-
 <div id="rosterResultArea" class="section hidden">
   <h3>名簿確認結果</h3>
   <div id="rosterResultMessage" class="notice"></div>
@@ -345,8 +338,6 @@ function loadDraft() {
   const orders = draft.orders || [];
   const first = orders[0] || {};
   const isEdit = draft.editMode === true;
-  const pinSection = document.getElementById("pinSection");
-  const pinInheritedSection = document.getElementById("pinInheritedSection");
   const pinInput = document.getElementById("pin");
 
   if (isEdit) {
@@ -358,14 +349,24 @@ function loadDraft() {
       ""
     ).trim();
 
-    if (pinInput) pinInput.value = inheritedRegistrationNo;
-    if (pinSection) pinSection.classList.add("hidden");
-    if (pinInheritedSection) pinInheritedSection.classList.remove("hidden");
+    if (pinInput) {
+      pinInput.value = inheritedRegistrationNo;
+      pinInput.readOnly = true;
+      pinInput.setAttribute("aria-readonly", "true");
+      pinInput.style.backgroundColor = "#e9ecef";
+      pinInput.style.color = "#555";
+      pinInput.style.cursor = "not-allowed";
+    }
   } else {
     const savedPin = sessionStorage.getItem("uniformConfirmPin");
-    if (pinInput && savedPin !== null) pinInput.value = savedPin;
-    if (pinSection) pinSection.classList.remove("hidden");
-    if (pinInheritedSection) pinInheritedSection.classList.add("hidden");
+    if (pinInput) {
+      if (savedPin !== null) pinInput.value = savedPin;
+      pinInput.readOnly = false;
+      pinInput.removeAttribute("aria-readonly");
+      pinInput.style.backgroundColor = "";
+      pinInput.style.color = "";
+      pinInput.style.cursor = "";
+    }
   }
 
   const employeeNo = first.employeeNo || first.staffNo || first["職員番号"] || "";
