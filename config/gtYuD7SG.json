@@ -2,13 +2,64 @@
   "customerCode": "31010634",
   "customerName": "ピストル研究会病院",
   "basicInfos": [
-    {"name": "氏名", "displayOrder": 0, "active": true},
-    {"name": "性別", "displayOrder": 0, "active": true},
-    {"name": "職員番号", "displayOrder": 0, "active": false},
-    {"name": "職種", "displayOrder": 0, "active": true},
-    {"name": "部署", "displayOrder": 0, "active": true},
-    {"name": "貸与パターン", "displayOrder": 0, "active": true}
+    {"name": "職員番号", "active": true},
+    {"name": "氏名", "active": true},
+    {"name": "性別", "active": true},
+    {"name": "職種", "active": true},
+    {"name": "部署", "active": true},
+    {"name": "貸与パターン", "active": true}
   ],
+  "inseamRule": {
+    "scope": "standardOnly",
+    "mode": "SELECT",
+    "settings": [
+      {
+        "size": "SS",
+        "options": [58, 62, 66, 70, 74, 78],
+        "allowException": true
+      },
+      {
+        "size": "S",
+        "options": [60, 64, 68, 72, 76, 80],
+        "allowException": true
+      },
+      {
+        "size": "M",
+        "options": [60, 64, 68, 72, 76, 80],
+        "allowException": true
+      },
+      {
+        "size": "L",
+        "options": [62, 66, 70, 74, 78, 82],
+        "allowException": true
+      },
+      {
+        "size": "LL",
+        "options": [62, 66, 70, 74, 78, 82],
+        "allowException": true
+      },
+      {
+        "size": "EL",
+        "options": [62, 66, 70, 74, 78, 82],
+        "allowException": true
+      },
+      {
+        "size": "BL",
+        "options": [62, 66, 70, 74, 78, 82],
+        "allowException": true
+      },
+      {
+        "size": "3L",
+        "options": [62, 66, 70, 74, 78, 82],
+        "allowException": true
+      },
+      {
+        "size": "4L",
+        "options": [62, 66, 70, 74, 78, 82],
+        "allowException": true
+      }
+    ]
+  },
   "departments": [
     {"job": "医師", "department": "ゲノム研究部", "gender": "兼用", "displayOrder": 1, "active": true},
     {"job": "医師", "department": "ゲノム診療部", "gender": "兼用", "displayOrder": 2, "active": true},
