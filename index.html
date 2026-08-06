@@ -2958,12 +2958,12 @@ function buildCommonStandardInseamHtml() {
   const rule = getInseamRule();
   const help = rule.mode === "STEP"
     ? `${Number(rule.step)}cm単位（${Number(rule.step)}の倍数）で入力してください。`
-    : "股下加工が必要な場合のみ整数で入力してください。";
+    : "股下加工が必要な場合は整数で入力してください。";
   return `<div class="inseam-box" data-inseam-mode="${rule.mode}">
     <label>股下加工寸法</label><br>
     <input type="text" class="commonStandardInseamInput" inputmode="numeric" pattern="[0-9]*" placeholder="cm"
       value="${commonStandardInseamValue}" oninput="updateCommonStandardInseam(this)"> cm
-    <div class="small inseam-help">${help}<br>今回選択するすべての既製サイズに共通で適用されます。</div>
+    <div class="small inseam-help">${help}</div>
   </div>`;
 }
 function buildFreeInseamHtml(helpText, modeName) {
