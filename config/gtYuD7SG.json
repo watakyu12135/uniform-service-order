@@ -2,7 +2,7 @@
   "customerCode": "31010634",
   "customerName": "ピストル研究会病院",
   "basicInfos": [
-    {"name": "職員番号", "active": true},
+    {"name": "職員番号", "active": false},
     {"name": "氏名", "active": true},
     {"name": "性別", "active": true},
     {"name": "職種", "active": true},
