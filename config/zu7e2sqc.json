@@ -1,13 +1,20 @@
 {
   "customerCode": "31015597",
-  "customerName": "土井整形外科",
+  "customerName": "土丼整形外科",
   "basicInfos": [
-    {"name": "氏名", "displayOrder": 0, "active": true},
-    {"name": "性別", "displayOrder": 0, "active": true},
-    {"name": "職員番号", "displayOrder": 0, "active": false},
-    {"name": "職種", "displayOrder": 0, "active": true},
-    {"name": "部署", "displayOrder": 0, "active": false}
+    {"name": "職員番号", "active": false},
+    {"name": "氏名", "active": true},
+    {"name": "性別", "active": true},
+    {"name": "職種", "active": true},
+    {"name": "部署", "active": false},
+    {"name": "貸与パターン", "active": false}
   ],
+  "inseamRule": {
+    "scope": "standardOnly",
+    "mode": "FREE",
+    "min": 50,
+    "max": 90
+  },
   "departments": [
 
   ],
@@ -16,29 +23,9 @@
       "gender": "男性",
       "job": "技師",
       "products": [
-        {
-          "productCode": "MPA3902-14",
-          "name": "MPメンズスクラブ",
-          "color": "ネイビー",
-          "gender": "男性",
-          "productCategory": "上衣",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "MPA3903-14",
-          "name": "MPメンズスパンツ",
-          "color": "ネイビー",
-          "gender": "男性",
-          "productCategory": "パンツ",
-          "measurementGroup": "下衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 1,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
+
       ],
+      "lendingPatterns": [],
       "categoryLimits": [
         {
           "productCategory": "上衣",
@@ -72,29 +59,9 @@
       "gender": "女性",
       "job": "看護師",
       "products": [
-        {
-          "productCode": "MPA3912-135",
-          "name": "MPユニセックススクラブ",
-          "color": "ボトルグリーン",
-          "gender": "兼用",
-          "productCategory": "上衣",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "MPA3908-135",
-          "name": "MPレディースパンツ",
-          "color": "ボトルグリーン",
-          "gender": "女性",
-          "productCategory": "パンツ",
-          "measurementGroup": "下衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 1,
-          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
+
       ],
+      "lendingPatterns": [],
       "categoryLimits": [
         {
           "productCategory": "上衣",
@@ -128,29 +95,9 @@
       "gender": "男性",
       "job": "看護師",
       "products": [
-        {
-          "productCode": "MPA3912-135",
-          "name": "MPユニセックススクラブ",
-          "color": "ボトルグリーン",
-          "gender": "兼用",
-          "productCategory": "上衣",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "SS", "label": "SSサイズ", "type": "standard"},{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "3S", "label": "3Sサイズ", "type": "custom"},{"value": "B1", "label": "B1サイズ", "type": "custom"},{"value": "B3", "label": "B3サイズ", "type": "custom"},{"value": "B5", "label": "B5サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "MPA3903-135",
-          "name": "MPメンズパンツ",
-          "color": "ボトルグリーン",
-          "gender": "男性",
-          "productCategory": "パンツ",
-          "measurementGroup": "下衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 1,
-          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "BL", "label": "BLサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
+
       ],
+      "lendingPatterns": [],
       "categoryLimits": [
         {
           "productCategory": "上衣",
@@ -184,29 +131,9 @@
       "gender": "女性",
       "job": "事務",
       "products": [
-        {
-          "productCode": "LH6282-66",
-          "name": "チュニック",
-          "color": "チャコール",
-          "gender": "女性",
-          "productCategory": "上衣",
-          "measurementGroup": "上衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 0,
-          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        },
-        {
-          "productCode": "LH6203-66",
-          "name": "女子パンツ",
-          "color": "チャコール",
-          "gender": "女性",
-          "productCategory": "パンツ",
-          "measurementGroup": "下衣",
-          "sizeSuffix": "サイズ",
-          "inseamAlterable": 1,
-          "sizes": [{"value": "S", "label": "Sサイズ", "type": "standard"},{"value": "M", "label": "Mサイズ", "type": "standard"},{"value": "L", "label": "Lサイズ", "type": "standard"},{"value": "LL", "label": "LLサイズ", "type": "standard"},{"value": "EL", "label": "ELサイズ", "type": "standard"},{"value": "S1", "label": "S1サイズ", "type": "custom"},{"value": "E1", "label": "E1サイズ", "type": "custom"},{"value": "E2", "label": "E2サイズ", "type": "custom"},{"value": "E3", "label": "E3サイズ", "type": "custom"},{"value": "E4", "label": "E4サイズ", "type": "custom"},{"value": "E5", "label": "E5サイズ", "type": "custom"},{"value": "E6", "label": "E6サイズ", "type": "custom"},{"value": "別寸", "label": "別寸", "type": "bespoke"}]
-        }
+
       ],
+      "lendingPatterns": [],
       "categoryLimits": [
         {
           "productCategory": "上衣",
