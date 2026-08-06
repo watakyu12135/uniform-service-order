@@ -869,6 +869,7 @@ function normalizePayloadForPowerAutomate(payload){
       o["股下cm"] === undefined
         ? ""
         : o["股下cm"];
+    o["股下モード"] = o["股下モード"] || o.inseamMode || "";
 
     o["有効フラグ"] =
       o["有効フラグ"] === undefined || o["有効フラグ"] === ""
