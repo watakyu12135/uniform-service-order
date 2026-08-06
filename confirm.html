@@ -422,13 +422,17 @@ function renderOrders(orders) {
       currentCategory = o.productCategory;
       html += `<div class="category">${escapeHtml(currentCategory)}</div>`;
     }
-    const inseamCm = o["股下cm"] || o.inseamCm || "";
-
+    const rawInseam = String(o["股下cm"] ?? o.inseamCm ?? "").trim();
+    const inseamCm = /^\d+$/.test(rawInseam) && Number(rawInseam) > 0 ? String(Number(rawInseam)) : "";
+    const alterable = Number(o["股下加工可能"] ?? o.inseamAlterable ?? 0) === 1;
+    const inseamHtml = inseamCm
+      ? `<div><strong>股下加工：</strong>${escapeHtml(inseamCm)}cm</div>`
+      : (alterable ? `<div>股下加工：なし</div>` : "");
     html += `
       <div class="item">
         <div><strong>${escapeHtml(o.product)}</strong> ${escapeHtml(o.productCode)}</div>
         <div>色：${escapeHtml(o.color)} ／ サイズ：${escapeHtml(o.size)} ／ 数量：${escapeHtml(o.qty)}</div>
-        ${inseamCm ? `<div>股下加工：${escapeHtml(inseamCm)}cm</div>` : ""}
+        ${inseamHtml}
       </div>
     `;
   });
