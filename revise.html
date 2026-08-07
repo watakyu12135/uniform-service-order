@@ -194,10 +194,91 @@ button {
   .input-pair { gap: 8px; }
 }
 
+
+/* ===== PC表示を中央寄せのコンパクトなレイアウトにする ===== */
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  margin: 0;
+  background: #f5f7fa;
+  color: #222;
+}
+.page-shell {
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: 20px;
+}
+.back-to-application {
+  position: sticky;
+  width: 100%;
+  max-width: 920px;
+}
+.section,
+.result-box {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(34, 55, 78, 0.06);
+}
+.search-choice-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.search-panel {
+  max-width: 680px;
+  margin: 16px auto 0;
+  padding: 18px 20px;
+}
+.input-pair {
+  grid-template-columns: repeat(2, minmax(0, 240px));
+  justify-content: start;
+  gap: 14px;
+}
+.search-panel > input,
+.search-panel > select {
+  max-width: 494px;
+}
+.search-panel label {
+  margin-top: 12px;
+}
+.search-button {
+  display: block;
+  width: min(100%, 680px);
+  margin: 16px auto 0;
+}
+.result-box {
+  padding: 18px;
+}
+.result-box .item {
+  max-width: 680px;
+  padding: 12px;
+  border-radius: 6px;
+}
+.result-box button {
+  display: block;
+  width: min(100%, 680px);
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 760px) {
+  .page-shell { padding: 14px; }
+  .search-choice-list { grid-template-columns: 1fr; }
+  .search-panel { max-width: none; padding: 14px; }
+  .input-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .search-panel > input,
+  .search-panel > select { max-width: none; }
+  .result-box .item { max-width: none; }
+}
+@media (max-width: 420px) {
+  .input-pair { grid-template-columns: 1fr; }
+}
+
 </style>
 </head>
 
 <body>
+<div class="page-shell">
 <button id="backToApplicationButton" class="back-to-application" type="button">
   ← ユニフォーム申請画面に戻る
 </button>
