@@ -16,47 +16,47 @@
     "settings": [
       {
         "size": "SS",
-        "options": [58, 62, 66, 70, 74, 78],
+        "options": [57, 61, 65, 69, 73],
         "allowException": true
       },
       {
         "size": "S",
-        "options": [60, 64, 68, 72, 76, 80],
+        "options": [59, 63, 67, 71, 75],
         "allowException": true
       },
       {
         "size": "M",
-        "options": [60, 64, 68, 72, 76, 80],
+        "options": [62, 66, 70, 74, 78],
         "allowException": true
       },
       {
         "size": "L",
-        "options": [62, 66, 70, 74, 78, 82],
+        "options": [62, 66, 70, 74, 78],
         "allowException": true
       },
       {
         "size": "LL",
-        "options": [62, 66, 70, 74, 78, 82],
+        "options": [64, 68, 72, 76, 80],
         "allowException": true
       },
       {
         "size": "EL",
-        "options": [62, 66, 70, 74, 78, 82],
+        "options": [63, 67, 71, 75, 79],
         "allowException": true
       },
       {
         "size": "BL",
-        "options": [62, 66, 70, 74, 78, 82],
+        "options": [63, 67, 71, 75, 79],
         "allowException": true
       },
       {
         "size": "3L",
-        "options": [62, 66, 70, 74, 78, 82],
+        "options": [63, 67, 71, 75, 79],
         "allowException": true
       },
       {
         "size": "4L",
-        "options": [62, 66, 70, 74, 78, 82],
+        "options": [63, 67, 71, 75, 79],
         "allowException": true
       }
     ]
