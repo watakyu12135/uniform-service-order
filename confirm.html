@@ -141,6 +141,7 @@ body.sending-locked { overflow: hidden; }
   <div class="info-row">性別：<span id="gender"></span></div>
   <div class="info-row">職種：<span id="job"></span></div>
   <div class="info-row">部署：<span id="department"></span></div>
+  <div id="lendingGroupRow" class="info-row hidden">貸与グループ：<span id="lendingGroup"></span></div>
   <div id="lendingPatternRow" class="info-row hidden">貸与パターン：<span id="lendingPattern"></span></div>
 </div>
 
@@ -258,7 +259,7 @@ document.getElementById("returnToInputButton").addEventListener("click", () => {
 });
 
 const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
-const FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/2fadd75538814f6eb11f426aee74c62e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r_0adeV2uMpNHxM0OzPQUcI8StgIf6zMICtxq4y2cG0";  
+const FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/09/workflows/2213debe0fc347a489e24a4613581307/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=As4poTR9hczcDfcRWnpYA6jAD6W6GtsQSfjrqOxQsvA";  
 let draft = null;
 
 /* HTMLエスケープ */
@@ -387,6 +388,9 @@ document.getElementById("fullNameKana").innerText =
   document.getElementById("gender").innerText = first.gender || "";
   document.getElementById("job").innerText = first.job || "";
   document.getElementById("department").innerText = first.department || "なし";
+  const lendingGroup = String(first["登録貸与グループ"] ?? first["貸与グループ"] ?? first.lendingGroup ?? "").trim();
+  document.getElementById("lendingGroup").innerText = lendingGroup || "標準";
+  document.getElementById("lendingGroupRow").classList.remove("hidden");
   const lendingPattern = first["貸与パターン名"] || "";
   const lendingPatternRow = document.getElementById("lendingPatternRow");
   if (lendingPattern) {
@@ -857,6 +861,11 @@ function normalizePayloadForPowerAutomate(payload){
     o["性別"] = o["性別"] || o.gender || "";
     o["職種"] = o["職種"] || o.job || "";
     o["部署"] = o["部署"] || o.department || "";
+    o["登録職種"] = o["登録職種"] || o["職種"] || o.job || "";
+    o["登録部署"] = o["登録部署"] || o["部署"] || o.department || "";
+    o.lendingGroup = String(o.lendingGroup ?? o["登録貸与グループ"] ?? o["貸与グループ"] ?? "").trim();
+    o["貸与グループ"] = o.lendingGroup;
+    o["登録貸与グループ"] = o.lendingGroup;
     o["貸与パターンコード"] = o["貸与パターンコード"] || "";
     o["貸与パターン名"] = o["貸与パターン名"] || "";
 
@@ -917,6 +926,9 @@ function normalizePayloadForPowerAutomate(payload){
     m["性別"] = m["性別"] || m.gender || "";
     m["職種"] = m["職種"] || m.job || "";
     m["部署"] = m["部署"] || m.department || "";
+    m.lendingGroup = String(m.lendingGroup ?? m["登録貸与グループ"] ?? m["貸与グループ"] ?? "").trim();
+    m["貸与グループ"] = m.lendingGroup;
+    m["登録貸与グループ"] = m.lendingGroup;
 
     const measurementType = String(m["採寸区分"] || "").trim();
 
