@@ -54,7 +54,7 @@ button { margin-top: 16px; padding: 10px 18px; }
 <button onclick="finish()">OK</button>
 
 <script>
-const MAIL_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/00/workflows/7a69a2f1033b4d9e9d17e9a697da6dc3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bHBJudF_VqFv0Z9q2rWMSy1eP8eSkr8LRSoI2zR-_Z0";
+const MAIL_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/a24901be6470481091ba5d201272a9c1/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=T2JDA28OxESihTuGqGnVgX6hlyj4h_EbgQjhjiM1AyY";
 
 /* 通常のブラウザ「戻る」を抑止し、画面内ボタンだけで遷移させる */
 let allowApplicationNavigation = false;
@@ -273,6 +273,12 @@ function buildMailHtml(preparedMailDraft) {
   const gender = first.gender || first["性別"] || "";
   const job = first.job || first["職種"] || "";
   const department = first.department || first["部署"] || "";
+  const lendingGroup = String(
+    first["登録貸与グループ"] ??
+    first["貸与グループ"] ??
+    first.lendingGroup ??
+    ""
+  ).trim();
 
   const basicRows = [
     ["顧客", customerName],
@@ -282,6 +288,7 @@ function buildMailHtml(preparedMailDraft) {
     ["性別", gender],
     ["職種", job],
     ["部署", department || "なし"],
+    lendingGroup ? ["貸与区分", lendingGroup] : null,
     ["採寸番号", info.measureNo || ""]
   ].filter(Boolean).map(([label, value]) => `
     <tr>
