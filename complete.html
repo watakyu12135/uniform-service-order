@@ -246,10 +246,19 @@ function prepareMailDraftForMail(mailDraft) {
   }
 
   const firstAfterNormalize = orders[0] || {};
+  const registeredGender = String(firstAfterNormalize.gender || firstAfterNormalize["性別"] || "").trim();
+  const selectedUniformType = String(firstAfterNormalize.uniformType || firstAfterNormalize["ユニフォームタイプ"] || registeredGender).trim();
+  const alternateUniformSelected =
+    firstAfterNormalize.alternateUniformSelected === true ||
+    firstAfterNormalize.alternateUniformSelected === 1 ||
+    String(firstAfterNormalize.alternateUniformSelected || "").toLowerCase() === "true" ||
+    Number(firstAfterNormalize["異性ユニフォーム選択"] || 0) === 1 ||
+    !!(registeredGender && selectedUniformType && registeredGender !== selectedUniformType);
 
   return {
     orders,
     measurement,
+    alternateUniformSelected,
     seiKana: firstAfterNormalize["セイ"] || firstAfterNormalize["シ"] || firstAfterNormalize.seiKana || "",
     meiKana: firstAfterNormalize["メイ"] || firstAfterNormalize.meiKana || "",
     kanaName: [
@@ -264,6 +273,9 @@ function buildMailHtml(preparedMailDraft) {
   const orders = preparedMailDraft.orders || [];
   const first = orders[0] || {};
   const measurement = preparedMailDraft.measurement || null;
+  const alternateUniformNoticeHtml = preparedMailDraft.alternateUniformSelected
+    ? `<div style="margin:0 0 14px;padding:11px 13px;border-left:6px solid #d32f2f;background:#ffebee;color:#b71c1c;font-weight:700;line-height:1.5;">登録された性別と異なるユニフォームを選択しました</div>`
+    : "";
 
   const customerName = first.customerName || first["顧客名称"] || "";
   const employeeNo = first.employeeNo || first.staffNo || first["職員番号"] || "";
@@ -348,6 +360,7 @@ function buildMailHtml(preparedMailDraft) {
         <table role="presentation" style="width:100%;border-collapse:collapse;">${basicRows}</table>
 
         <h3 style="margin:28px 0 10px;color:#234f7d;">商品選択内容</h3>
+        ${alternateUniformNoticeHtml}
         <div style="overflow-x:auto;">
           <table role="presentation" style="width:100%;border-collapse:collapse;min-width:620px;">
             <thead>
