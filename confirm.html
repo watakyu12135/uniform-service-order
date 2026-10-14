@@ -16,6 +16,16 @@ label { font-weight: bold; display: block; margin-top: 10px; }
 .small { font-size: 13px; color: #555; }
 .category { font-weight: bold; margin-top: 14px; border-bottom: 1px solid #ccc; }
 .item { padding: 8px; background: #f9f9f9; margin-top: 6px; }
+.alternate-uniform-warning {
+  margin: 8px 0 14px;
+  padding: 11px 13px;
+  border-left: 6px solid #d32f2f;
+  background: #ffebee;
+  color: #b71c1c;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
 .check-area { margin-top: 20px; }
 .check-area label {
   display: flex;
@@ -148,6 +158,9 @@ body.sending-locked { overflow: hidden; }
 <!-- 商品内容（縦並び） -->
 <div class="section">
   <h3>商品選択内容</h3>
+  <div id="alternateUniformWarning" class="alternate-uniform-warning hidden" role="status">
+    登録された性別と異なる性別のユニフォームを選択しています
+  </div>
   <div id="orderArea"></div>
 </div>
 
@@ -258,7 +271,7 @@ document.getElementById("returnToInputButton").addEventListener("click", () => {
   location.replace("index.html?customer=" + encodeURIComponent(customerKey) + editQuery + "&from=confirm");
 });
 
-const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/d924c6a649f44455992c339678e781f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KoZtWybbrtFHIi307-m3dgXNIegRf_eIxOIrbqZzG4Q";
+const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/31/workflows/09d029ec44b749c1b9e34197ba1e92f6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=G4_LY4TPfDgAkb-D1QdZP0v1TKvBKBKtT7HW_zP36Zs";
 const FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/09/workflows/2213debe0fc347a489e24a4613581307/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=As4poTR9hczcDfcRWnpYA6jAD6W6GtsQSfjrqOxQsvA";  
 let draft = null;
 
@@ -274,12 +287,34 @@ function escapeHtml(value) {
 
 function getCustomerKey() {
   const url = new URL(window.location.href);
+  let storedDraft = null;
+  const rawDraft = sessionStorage.getItem("uniformDraft");
+
+  if (rawDraft) {
+    try {
+      storedDraft = JSON.parse(rawDraft);
+    } catch (error) {
+      console.error("uniformDraftの読み込みに失敗しました。", error);
+    }
+  }
+
+  const firstOrder =
+    draft?.orders?.[0] ||
+    storedDraft?.orders?.[0] ||
+    {};
+
   const customerKey =
     url.searchParams.get("customer") ||
     sessionStorage.getItem("uniformCustomer") ||
     draft?.publicKey ||
     draft?.customerKey ||
     draft?.customer ||
+    storedDraft?.publicKey ||
+    storedDraft?.customerKey ||
+    storedDraft?.customer ||
+    firstOrder.publicKey ||
+    firstOrder.customerKey ||
+    firstOrder.customer ||
     "";
 
   if (customerKey) {
@@ -291,6 +326,9 @@ function getCustomerKey() {
 
 async function checkPageDeadline() {
   const publicKey = getCustomerKey();
+  if (!publicKey) {
+    throw new Error("公開キーを取得できませんでした。入力画面からやり直してください。");
+  }
   if (!HP_DEADLINE_FLOW_URL || HP_DEADLINE_FLOW_URL.includes("HTTP POST URLをここに貼る")) {
     throw new Error("PA_HP有効期限チェックのHTTP POST URLが未設定です。");
   }
@@ -391,6 +429,16 @@ document.getElementById("fullNameKana").innerText =
   const lendingGroup = String(first["登録貸与グループ"] ?? first["貸与グループ"] ?? first.lendingGroup ?? "").trim();
   document.getElementById("lendingGroup").innerText = lendingGroup || "標準";
   document.getElementById("lendingGroupRow").classList.remove("hidden");
+  const registeredGender = String(first.gender || first["性別"] || "").trim();
+  const selectedUniformType = String(first.uniformType || first["ユニフォームタイプ"] || registeredGender).trim();
+  const alternateUniformSelected =
+    first.alternateUniformSelected === true ||
+    first.alternateUniformSelected === 1 ||
+    String(first.alternateUniformSelected || "").toLowerCase() === "true" ||
+    Number(first["異性ユニフォーム選択"] || 0) === 1 ||
+    !!(registeredGender && selectedUniformType && registeredGender !== selectedUniformType);
+  const alternateWarning = document.getElementById("alternateUniformWarning");
+  if (alternateWarning) alternateWarning.classList.toggle("hidden", !alternateUniformSelected);
   const lendingPattern = first["貸与パターン名"] || "";
   const lendingPatternRow = document.getElementById("lendingPatternRow");
   if (lendingPattern) {
@@ -859,6 +907,13 @@ function normalizePayloadForPowerAutomate(payload){
       "";
 
     o["性別"] = o["性別"] || o.gender || "";
+    const registeredGender = String(o.gender || o["性別"] || "").trim();
+    const selectedUniformType = String(o.uniformType || o["ユニフォームタイプ"] || registeredGender).trim();
+    o.alternateUniformSelected =
+      o.alternateUniformSelected === true ||
+      Number(o["異性ユニフォーム選択"] || 0) === 1 ||
+      !!(registeredGender && selectedUniformType && registeredGender !== selectedUniformType);
+    o["異性ユニフォーム選択"] = o.alternateUniformSelected ? 1 : 0;
     o["職種"] = o["職種"] || o.job || "";
     o["部署"] = o["部署"] || o.department || "";
     o["登録職種"] = o["登録職種"] || o["職種"] || o.job || "";
@@ -1153,12 +1208,17 @@ normalizePayloadForPowerAutomate(payload);
 
 async function initializeConfirmPage() {
   try {
+    loadDraft();
+
     const available = await checkPageDeadline();
     if (!available) return;
-    loadDraft();
   } catch (err) {
     console.error("HP公開期限チェックに失敗しました。", err);
-    location.replace("expired.html");
+    const message = document.getElementById("message");
+    if (message) {
+      message.innerText =
+        "HP公開期限チェックに失敗しました。通信環境を確認して、もう一度お試しください。";
+    }
   }
 }
 
