@@ -96,6 +96,17 @@ button {
   border: 1px solid #ddd;
 }
 
+.alternate-uniform-warning {
+  margin: 8px 0 14px;
+  padding: 11px 13px;
+  border-left: 6px solid #d32f2f;
+  background: #ffebee;
+  color: #b71c1c;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
 .small {
   font-size: 13px;
   color: #555;
@@ -657,7 +668,12 @@ async function searchRevision() {
     customerKey: customerKey,
     customer: customerKey,
     includeInseam: true,
-    requestedOrderFields: ["股下加工可能", "股下cm"]
+    requestedOrderFields: [
+      "股下加工可能",
+      "股下cm",
+      "ユニフォームタイプ",
+      "異性ユニフォーム選択"
+    ]
   };
 
   if (selectedMethod === "measureNo") {
@@ -813,6 +829,19 @@ function renderSearchResult(result) {
   `;
 
   html += `<h3>商品選択内容</h3>`;
+
+  const registeredGender = String(first["性別"] || first.gender || "").trim();
+  const selectedUniformType = String(first["ユニフォームタイプ"] || first.uniformType || registeredGender).trim();
+  const alternateUniformSelected =
+    first.alternateUniformSelected === true ||
+    first.alternateUniformSelected === 1 ||
+    String(first.alternateUniformSelected || "").toLowerCase() === "true" ||
+    Number(first["異性ユニフォーム選択"] || 0) === 1 ||
+    !!(registeredGender && selectedUniformType && registeredGender !== selectedUniformType);
+
+  if (alternateUniformSelected) {
+    html += `<div class="alternate-uniform-warning">登録された性別と異なる性別のユニフォームを選択しています</div>`;
+  }
 
   if (orders.length === 0) {
     html += `<div>商品データなし</div>`;
