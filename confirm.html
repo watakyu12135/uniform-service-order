@@ -1087,6 +1087,18 @@ const duplicateArea = document.getElementById("duplicateWarningArea");
   payload.contactPin = registrationNo;
 const rosterCheck = payload.rosterCheck || {};
 const rosterMatchType = String(rosterCheck.rosterMatchType || "");
+const rosterItemIdRaw = rosterCheck.rosterItemId;
+const rosterItemId =
+  rosterItemIdRaw === null ||
+  rosterItemIdRaw === undefined ||
+  String(rosterItemIdRaw).trim() === ""
+    ? null
+    : (/^\d+$/.test(String(rosterItemIdRaw).trim())
+        ? Number(rosterItemIdRaw)
+        : rosterItemIdRaw);
+const rosterRegistered =
+  rosterCheck.rosterRegistered === true ||
+  String(rosterCheck.rosterRegistered || "").toLowerCase() === "true";
 let rosterMismatchInfo = "";
 if (!isEdit) {
   if (rosterMatchType === "complete" && duplicateAlreadyConfirmed) rosterMismatchInfo = "同姓同名同音あり（確認後登録）";
@@ -1095,6 +1107,8 @@ if (!isEdit) {
 payload.overrideDuplicate = duplicateAlreadyConfirmed;
 payload.rosterMatchType = isEdit ? "revision_skip" : rosterMatchType;
 payload.rosterMismatchInfo = rosterMismatchInfo;
+payload.rosterItemId = isEdit ? null : rosterItemId;
+payload.rosterRegistered = isEdit ? false : rosterRegistered;
 payload.rosterCheckSkipped = isEdit;
 
 
