@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8"/>
 <title>ユニフォーム申請</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <style>
 body {
   font-family: sans-serif;
@@ -94,8 +94,9 @@ button {
 
 /* 名簿管理が有効な顧客向けの段階入力 */
 .roster-step-progress { display:flex; gap:8px; margin:0 0 18px; }
-.roster-step-progress span { flex:1; padding:7px 4px; border-radius:999px; background:#e8edf3; color:#566473; font-size:13px; font-weight:700; text-align:center; }
-.roster-step-progress span.active { background:#2f6fb2; color:#fff; }
+.roster-step-progress > span { flex:1; padding:7px 4px; border-radius:999px; background:#e8edf3; color:#566473; font-size:13px; font-weight:700; text-align:center; }
+.roster-step-progress > span.active { background:#2f6fb2; color:#fff; }
+.roster-step-progress > span > span { flex:0 1 auto; padding:0; border-radius:0; background:transparent; color:inherit; font-size:inherit; font-weight:inherit; text-align:inherit; }
 .roster-step-panel { padding:16px; border:1px solid #cfd6df; border-radius:10px; background:#f8fafc; }
 .roster-step-panel h3 { margin:0 0 8px; }
 .step-help { margin:0 0 14px; color:#4c5b68; line-height:1.6; }
@@ -136,7 +137,7 @@ button {
 .roster-candidate-select input { width:auto; margin-right:8px; }
 @media (max-width:600px) {
  .roster-step-progress { gap:5px; }
- .roster-step-progress span { font-size:12px; }
+ .roster-step-progress > span { font-size:12px; }
  .roster-step-panel { padding:13px; }
  .step-actions { display:flex; flex-direction:column; align-items:stretch; }
  .step-actions button { display:block; width:100%; margin-top:8px; }
@@ -1000,259 +1001,267 @@ tr.inseam-row .cell-inseam { display: block !important; margin: 0; padding: 0; b
   }
 }
 
+
+/* ===== Multilingual flexible layout ===== */
+:where(h1,h2,h3,h4,p,li,label,button,a,.notice,.error,.success,.info-row,.item,.small){overflow-wrap:anywhere;word-break:normal;white-space:normal;}
+button{height:auto;min-height:44px;line-height:1.45;}
+.uniform-language-selector{width:auto!important;max-width:100%!important;box-sizing:border-box!important;flex-wrap:wrap!important;}
+.uniform-language-selector label{display:inline-block!important;width:auto!important;max-width:none!important;margin:0!important;white-space:nowrap!important;flex:0 0 auto!important;}
+.uniform-language-selector select,#uniformLanguageSelect{display:inline-block!important;width:auto!important;min-width:130px!important;max-width:220px!important;margin:0!important;flex:0 0 auto!important;}
+
+.name-field{grid-template-columns:1fr!important;align-items:stretch!important}.name-field label{white-space:normal!important;overflow-wrap:anywhere}.name-field input{min-width:0}.roster-step-progress>span{display:flex;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:42px;line-height:1.25;white-space:normal;overflow-wrap:anywhere}.roster-progress-number{flex:0 0 auto!important}.roster-step-progress>span>span:last-child{flex:0 1 auto!important}.basic-field{display:grid;grid-template-columns:minmax(110px,auto) minmax(0,1fr);align-items:center;gap:8px}.basic-field label{min-width:0!important;white-space:normal}.basic-field input{width:100%!important}.basic-select-field{align-items:flex-start;flex-wrap:wrap}.basic-select-field>label{white-space:normal;overflow-wrap:anywhere}.revise-card-action{align-items:flex-start}.revise-card-action>span:first-child{min-width:0;overflow-wrap:anywhere}
+@media(max-width:600px){.name-area{grid-template-columns:1fr!important}.basic-field{grid-template-columns:1fr}.roster-step-progress{display:grid!important;grid-template-columns:1fr!important}.basic-select-field{display:grid!important;grid-template-columns:1fr!important}.basic-select-field select{width:100%!important;max-width:100%}}
+
 </style>
-</head>
-
+<style id="uniformI18nStyle">.uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}.uniform-language-selector select{min-width:130px;padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}</style></head>
 <body>
-
 <div class="page-shell">
-  <header class="site-header">
-    <div class="brand-row">
-      <div>
-        <img
-          class="company-logo"
-          src="images/company-logo.png"
-          alt="ワタキューセイモア株式会社"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-        >
-        <div class="logo-fallback">ワタキューセイモア株式会社</div>
-      </div>
-      <div id="policyLink">
-        <a href="privacy.html">プライバシーポリシー・免責事項</a>
-      </div>
-    </div>
-
-    <div class="page-heading">
-      <div id="customerInfo" class="customer-page-name">読み込み中... 様専用</div>
-      <h1 id="pageTitle">ユニフォーム申請受付</h1>
-    </div>
-
-    <a id="reviseLink" class="revise-card" href="revise.html">
-      <span class="revise-card-kicker">すでに申請済みの方</span>
-      <span class="revise-card-action">
-        <span>✎ 入力内容の修正はこちら</span>
-        <span aria-hidden="true">›</span>
-      </span>
-    </a>
-  </header>
-
-  <section class="basic-info-card" aria-labelledby="basicInfoTitle">
-    <h2 id="basicInfoTitle" class="basic-info-title">基本情報の入力</h2>
-
-    <div id="rosterStepUi" class="hidden">
-      <div id="rosterStepProgress" class="roster-step-progress" aria-label="入力手順"></div>
-
-      <section id="rosterStepEmployee" class="roster-step-panel hidden">
-        <h3>職員番号を入力してください</h3>
-        
-        <div class="basic-field"><label for="stepEmployeeNo">職員番号</label><input id="stepEmployeeNo" inputmode="latin" autocomplete="off" maxlength="30"></div>
-        <div class="employee-unknown-choice"><label><input type="checkbox" id="stepEmployeeNoUnknown">職員番号が分からない場合</label></div>
-        <div class="step-actions"><button type="button" class="roster-search-button primary-action" id="stepEmployeeSearchButton">名簿を検索</button></div>
-      </section>
-
-      <section id="rosterStepName" class="roster-step-panel hidden">
-        <h3>姓名・セイメイを入力してください</h3>
-        <p class="step-help">姓・名・セイ・メイをすべて入力してから名簿を検索してください。</p>
-        <div class="name-area">
-          <div class="name-field"><label for="stepSei">姓</label><input id="stepSei" autocomplete="family-name"></div>
-          <div class="name-field"><label for="stepMei">名</label><input id="stepMei" autocomplete="given-name"></div>
-          <div class="name-field"><label for="stepSeiKana">セイ</label><input id="stepSeiKana" inputmode="katakana" autocomplete="off"></div>
-          <div class="name-field"><label for="stepMeiKana">メイ</label><input id="stepMeiKana" inputmode="katakana" autocomplete="off"></div>
-        </div>
-        <div class="step-actions"><button type="button" class="roster-search-button primary-action" id="stepNameSearchButton">名簿を検索</button><button type="button" class="secondary-action" id="stepNameBackButton">戻る</button></div>
-      </section>
-
-      <section id="rosterStepCandidates" class="roster-step-panel hidden">
-        <h3>該当する名簿を選択してください</h3>
-        <p class="step-help">入力内容に一致する名簿が見つかりました。該当する情報を選択してください。</p>
-        <div id="rosterCandidateOptions"></div>
-        <div class="step-actions"><button type="button" class="roster-search-button primary-action" id="stepCandidateNextButton">選択した内容で進む</button><button type="button" class="secondary-action" id="stepCandidateBackButton">戻る</button></div>
-      </section>
-
-      <section id="rosterStepDetails" class="roster-step-panel hidden">
-        <h3>基本情報を確認してください</h3>
-        <p class="step-help">名簿に登録がない項目、または現在の内容と異なる項目は選択し直してください。</p>
-        <div id="rosterStepSummary" class="roster-confirm-list hidden"></div>
-        <div class="basic-select-field"><label for="stepGender">性別</label><select id="stepGender"><option value="">選択</option><option value="男性">男性</option><option value="女性">女性</option></select></div>
-        <div class="uniform-type-choice hidden" aria-hidden="true"><label><input type="checkbox" id="stepAlternateUniform" tabindex="-1">登録された性別と異なるユニフォームを選ぶ</label><div id="stepUniformTypeStatus" class="uniform-type-status"></div></div>
-        <div class="basic-select-field"><label for="stepJob">職種</label><select id="stepJob"><option value="">選択</option></select></div>
-        <div id="stepDepartmentArea" class="basic-select-field hidden"><label for="stepDepartment">部署</label><select id="stepDepartment"><option value="">選択</option></select></div>
-        <p id="stepDepartmentHelp" class="step-help hidden">部署が分からない場合は「不明」を選択してください。</p>
-        <div class="step-actions"><button type="button" class="roster-search-button primary-action" id="stepDetailsCompleteButton">この内容で進む</button><button type="button" class="secondary-action" id="stepDetailsBackButton">戻る</button></div>
-      </section>
-      <div id="stepRosterSearchResult" class="roster-search-result" role="status" aria-live="polite"></div>
-    </div>
-
-    <div id="standardBasicInfoUi">
-      <div id="employeeNoArea" class="basic-field hidden"><label for="employeeNo">職員番号</label><input id="employeeNo" inputmode="latin" autocomplete="off" maxlength="30" oninput="normalizeEmployeeNoInput(this); resetRosterSearchForInputChange()"></div>
-      <div class="name-area">
-        <div class="name-field"><label for="sei">姓</label><input id="sei" inputmode="text" autocomplete="family-name" oninput="resetRosterSearchForInputChange()"></div>
-        <div class="name-field"><label for="mei">名</label><input id="mei" inputmode="text" autocomplete="given-name" oninput="resetRosterSearchForInputChange()"></div>
-        <div class="name-field"><label for="seiKana">セイ</label><input id="seiKana" inputmode="katakana" autocomplete="off" oninput="resetRosterSearchForInputChange()"></div>
-        <div class="name-field"><label for="meiKana">メイ</label><input id="meiKana" inputmode="katakana" autocomplete="off" oninput="resetRosterSearchForInputChange()"></div>
-      </div>
-      <div class="basic-select-field"><label for="gender">性別</label><select id="gender" onchange="changeGender()"><option value="">選択</option><option value="男性">男性</option><option value="女性">女性</option></select></div>
-      <div class="uniform-type-choice"><label><input type="checkbox" id="alternateUniformType" onchange="changeUniformTypeChoice(this)">登録された性別と異なるユニフォームを選ぶ</label><div id="uniformTypeStatus" class="uniform-type-status"></div></div>
-      <div class="basic-select-field"><label for="job">職種</label><select id="job" onchange="changeJob()"><option value="">選択</option></select></div>
-      <div id="departmentArea" class="basic-select-field hidden"><label for="department">部署</label><select id="department" onchange="resetRosterSearchForInputChange()"><option value="">選択</option></select></div>
-      <div id="departmentHelp" class="field-help hidden">部署が分からない場合は「不明」を選択してください。</div>
-      <div id="rosterSearchArea" class="roster-search-area hidden"><button type="button" id="rosterSearchButton" class="roster-search-button" onclick="searchRoster()">名簿検索</button><div id="rosterSearchResult" class="roster-search-result" role="status" aria-live="polite"></div></div>
-    </div>
-    <div id="lendingPatternArea" class="basic-select-field pattern-field hidden"><label>貸与パターン</label><div id="lendingPatternOptions" class="pattern-options"></div></div>
-  </section>
+<header class="site-header">
+<div class="brand-row">
+<div>
+<img alt="ワタキューセイモア株式会社" class="company-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" src="images/company-logo.png"/>
+<div class="logo-fallback">ワタキューセイモア株式会社</div>
+</div>
+<div id="policyLink">
+<a href="privacy.html">プライバシーポリシー・免責事項</a>
+</div>
+</div>
+<div class="page-heading">
+<div class="customer-page-name" id="customerInfo">読み込み中... 様専用</div>
+<h1 id="pageTitle">ユニフォーム申請受付</h1>
+</div>
+<a class="revise-card" href="revise.html" id="reviseLink">
+<span class="revise-card-kicker">すでに申請済みの方</span>
+<span class="revise-card-action">
+<span>✎ 入力内容の修正はこちら</span>
+<span aria-hidden="true">›</span>
+</span>
+</a>
+</header>
+<section aria-labelledby="basicInfoTitle" class="basic-info-card">
+<h2 class="basic-info-title" id="basicInfoTitle">基本情報の入力</h2>
+<div class="hidden" id="rosterStepUi">
+<div aria-label="入力手順" class="roster-step-progress" id="rosterStepProgress"></div>
+<section class="roster-step-panel hidden" id="rosterStepEmployee">
+<h3>職員番号を入力してください</h3>
+<div class="basic-field"><label for="stepEmployeeNo">職員番号</label><input autocomplete="off" id="stepEmployeeNo" inputmode="latin" maxlength="30"/></div>
+<div class="employee-unknown-choice"><label><input id="stepEmployeeNoUnknown" type="checkbox"/>職員番号が分からない場合</label></div>
+<div class="step-actions"><button class="roster-search-button primary-action" id="stepEmployeeSearchButton" type="button">名簿を検索</button></div>
+</section>
+<section class="roster-step-panel hidden" id="rosterStepName">
+<h3>姓名・セイメイを入力してください</h3>
+<p class="step-help">姓・名・セイ・メイをすべて入力してから名簿を検索してください。</p>
+<div class="name-area">
+<div class="name-field"><label for="stepSei">姓</label><input autocomplete="family-name" id="stepSei"/></div>
+<div class="name-field"><label for="stepMei">名</label><input autocomplete="given-name" id="stepMei"/></div>
+<div class="name-field"><label for="stepSeiKana">セイ</label><input autocomplete="off" id="stepSeiKana" inputmode="katakana"/></div>
+<div class="name-field"><label for="stepMeiKana">メイ</label><input autocomplete="off" id="stepMeiKana" inputmode="katakana"/></div>
+</div>
+<div class="step-actions"><button class="roster-search-button primary-action" id="stepNameSearchButton" type="button">名簿を検索</button><button class="secondary-action" id="stepNameBackButton" type="button">戻る</button></div>
+</section>
+<section class="roster-step-panel hidden" id="rosterStepCandidates">
+<h3>該当する名簿を選択してください</h3>
+<p class="step-help">入力内容に一致する名簿が見つかりました。該当する情報を選択してください。</p>
+<div id="rosterCandidateOptions"></div>
+<div class="step-actions"><button class="roster-search-button primary-action" id="stepCandidateNextButton" type="button">選択した内容で進む</button><button class="secondary-action" id="stepCandidateBackButton" type="button">戻る</button></div>
+</section>
+<section class="roster-step-panel hidden" id="rosterStepDetails">
+<h3>基本情報を確認してください</h3>
+<p class="step-help">名簿に登録がない項目、または現在の内容と異なる項目は選択し直してください。</p>
+<div class="roster-confirm-list hidden" id="rosterStepSummary"></div>
+<div class="basic-select-field"><label for="stepGender">性別</label><select id="stepGender"><option value="">選択</option><option value="男性">男性</option><option value="女性">女性</option></select></div>
+<div aria-hidden="true" class="uniform-type-choice hidden"><label><input id="stepAlternateUniform" tabindex="-1" type="checkbox"/>登録された性別と異なるユニフォームを選ぶ</label><div class="uniform-type-status" id="stepUniformTypeStatus"></div></div>
+<div class="basic-select-field"><label for="stepJob">職種</label><select id="stepJob"><option value="">選択</option></select></div>
+<div class="basic-select-field hidden" id="stepDepartmentArea"><label for="stepDepartment">部署</label><select id="stepDepartment"><option value="">選択</option></select></div>
+<p class="step-help hidden" id="stepDepartmentHelp">部署が分からない場合は「不明」を選択してください。</p>
+<div class="step-actions"><button class="roster-search-button primary-action" id="stepDetailsCompleteButton" type="button">この内容で進む</button><button class="secondary-action" id="stepDetailsBackButton" type="button">戻る</button></div>
+</section>
+<div aria-live="polite" class="roster-search-result" id="stepRosterSearchResult" role="status"></div>
+</div>
+<div id="standardBasicInfoUi">
+<div class="basic-field hidden" id="employeeNoArea"><label for="employeeNo">職員番号</label><input autocomplete="off" id="employeeNo" inputmode="latin" maxlength="30" oninput="normalizeEmployeeNoInput(this); resetRosterSearchForInputChange()"/></div>
+<div class="name-area">
+<div class="name-field"><label for="sei">姓</label><input autocomplete="family-name" id="sei" inputmode="text" oninput="resetRosterSearchForInputChange()"/></div>
+<div class="name-field"><label for="mei">名</label><input autocomplete="given-name" id="mei" inputmode="text" oninput="resetRosterSearchForInputChange()"/></div>
+<div class="name-field"><label for="seiKana">セイ</label><input autocomplete="off" id="seiKana" inputmode="katakana" oninput="resetRosterSearchForInputChange()"/></div>
+<div class="name-field"><label for="meiKana">メイ</label><input autocomplete="off" id="meiKana" inputmode="katakana" oninput="resetRosterSearchForInputChange()"/></div>
+</div>
+<div class="basic-select-field"><label for="gender">性別</label><select id="gender" onchange="changeGender()"><option value="">選択</option><option value="男性">男性</option><option value="女性">女性</option></select></div>
+<div class="uniform-type-choice"><label><input id="alternateUniformType" onchange="changeUniformTypeChoice(this)" type="checkbox"/>登録された性別と異なるユニフォームを選ぶ</label><div class="uniform-type-status" id="uniformTypeStatus"></div></div>
+<div class="basic-select-field"><label for="job">職種</label><select id="job" onchange="changeJob()"><option value="">選択</option></select></div>
+<div class="basic-select-field hidden" id="departmentArea"><label for="department">部署</label><select id="department" onchange="resetRosterSearchForInputChange()"><option value="">選択</option></select></div>
+<div class="field-help hidden" id="departmentHelp">部署が分からない場合は「不明」を選択してください。</div>
+<div class="roster-search-area hidden" id="rosterSearchArea"><button class="roster-search-button" id="rosterSearchButton" onclick="searchRoster()" type="button">名簿検索</button><div aria-live="polite" class="roster-search-result" id="rosterSearchResult" role="status"></div></div>
+</div>
+<div class="basic-select-field pattern-field hidden" id="lendingPatternArea"><label>貸与パターン</label><div class="pattern-options" id="lendingPatternOptions"></div></div>
+</section>
 <div id="productSelectionArea">
 <div id="limitDeclarationArea"></div>
-
 <div class="table-wrap">
-  <table id="table"></table>
+<table id="table"></table>
 </div>
-
 <div id="categoryStatus"></div>
-
 <div class="step-actions product-action-buttons">
-  <button type="button" id="submitButton" class="primary-action" onclick="submitData(event)">確認</button>
-  <button type="button" id="backToBasicInfoButton" class="secondary-action hidden" onclick="backToBasicInfoFromProducts()">戻る</button>
-</div>
-
+<button class="primary-action" id="submitButton" onclick="submitData(event)" type="button">確認</button>
+<button class="secondary-action hidden" id="backToBasicInfoButton" onclick="backToBasicInfoFromProducts()" type="button">戻る</button>
 </div>
 </div>
-<div id="measurementArea" class="hidden measurement-area">
-
-  <h2>別寸採寸表入力</h2>
-
-  <div id="measurementMessage"></div>
-
-  <div class="measurement-guide" id="measurementGuide">
-    <strong>採寸図：</strong><br>
-    <div class="measurement-image-wrapper" id="measurementImageWrapper">
-      <img src="images/measurement-guide.png" alt="採寸図。図中のアルファベットをタップすると対応する入力欄へ移動します。" class="measurement-image">
-      <button type="button" class="measure-hit hit-A" data-field="m_A" data-point="A" aria-label="A 衿回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-B" data-field="m_B" data-point="B" aria-label="B 肩巾の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-C" data-field="m_C1" data-point="C" aria-label="C 袖丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-D" data-field="m_D" data-point="D" aria-label="D 胸回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-E-upper" data-field="m_E" data-point="E-upper" aria-label="上衣 E 胴回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-F-upper" data-field="m_F" data-point="F-upper" aria-label="上衣 F 腰回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-G" data-field="m_G" data-point="G" aria-label="G 背丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-H" data-field="m_H" data-point="H" aria-label="H 着丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-I" data-field="m_I" data-point="I" aria-label="I 袖付回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-e-lower" data-field="m_a" data-point="e-lower" aria-label="下衣 e 胴回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-f-lower" data-field="m_b" data-point="f-lower" aria-label="下衣 f 腰回りの入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-J" data-field="m_c" data-point="J" aria-label="J 股上の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-K" data-field="m_d" data-point="K" aria-label="K 股下の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-L" data-field="m_e" data-point="L" aria-label="L 総丈の入力欄へ移動"></button>
-      <button type="button" class="measure-hit hit-M" data-field="m_f" data-point="M" aria-label="M 太股回りの入力欄へ移動"></button>
-    </div>
-    <div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
-  </div>
-
-  <div class="measurement-nude-notice" role="alert">
+</div>
+<div class="hidden measurement-area" id="measurementArea">
+<h2>別寸採寸表入力</h2>
+<div id="measurementMessage"></div>
+<div class="measurement-guide" id="measurementGuide">
+<strong>採寸図：</strong><br/>
+<div class="measurement-image-wrapper" id="measurementImageWrapper">
+<img alt="採寸図。図中のアルファベットをタップすると対応する入力欄へ移動します。" class="measurement-image" src="images/measurement-guide.png"/>
+<button aria-label="A 衿回りの入力欄へ移動" class="measure-hit hit-A" data-field="m_A" data-point="A" type="button"></button>
+<button aria-label="B 肩巾の入力欄へ移動" class="measure-hit hit-B" data-field="m_B" data-point="B" type="button"></button>
+<button aria-label="C 袖丈の入力欄へ移動" class="measure-hit hit-C" data-field="m_C1" data-point="C" type="button"></button>
+<button aria-label="D 胸回りの入力欄へ移動" class="measure-hit hit-D" data-field="m_D" data-point="D" type="button"></button>
+<button aria-label="上衣 E 胴回りの入力欄へ移動" class="measure-hit hit-E-upper" data-field="m_E" data-point="E-upper" type="button"></button>
+<button aria-label="上衣 F 腰回りの入力欄へ移動" class="measure-hit hit-F-upper" data-field="m_F" data-point="F-upper" type="button"></button>
+<button aria-label="G 背丈の入力欄へ移動" class="measure-hit hit-G" data-field="m_G" data-point="G" type="button"></button>
+<button aria-label="H 着丈の入力欄へ移動" class="measure-hit hit-H" data-field="m_H" data-point="H" type="button"></button>
+<button aria-label="I 袖付回りの入力欄へ移動" class="measure-hit hit-I" data-field="m_I" data-point="I" type="button"></button>
+<button aria-label="下衣 e 胴回りの入力欄へ移動" class="measure-hit hit-e-lower" data-field="m_a" data-point="e-lower" type="button"></button>
+<button aria-label="下衣 f 腰回りの入力欄へ移動" class="measure-hit hit-f-lower" data-field="m_b" data-point="f-lower" type="button"></button>
+<button aria-label="J 股上の入力欄へ移動" class="measure-hit hit-J" data-field="m_c" data-point="J" type="button"></button>
+<button aria-label="K 股下の入力欄へ移動" class="measure-hit hit-K" data-field="m_d" data-point="K" type="button"></button>
+<button aria-label="L 総丈の入力欄へ移動" class="measure-hit hit-L" data-field="m_e" data-point="L" type="button"></button>
+<button aria-label="M 太股回りの入力欄へ移動" class="measure-hit hit-M" data-field="m_f" data-point="M" type="button"></button>
+</div>
+<div class="measurement-guide-note">図中のアルファベットをタップすると、対応する入力欄へ移動します。</div>
+</div>
+<div class="measurement-nude-notice" role="alert">
     採寸はヌード寸法でご記入ください。
   </div>
-  <section class="measure-section" id="measureCommon">
-    <h3>共通項目</h3>
-
-    <label>身長</label>
-    <input type="number" id="m_height"> cm<br>
-
-    <label>体重</label>
-    <input type="number" id="m_weight"> kg<br>
-
-  </section>
-
-  <section class="measure-section" id="measureUpper">
-    <h3>上衣採寸</h3>
-
-    <label class="measure-jump-label" data-image-point="A" tabindex="0" role="button">A_衿回り</label>
-    <input type="number" id="m_A"> cm
+<section class="measure-section" id="measureCommon">
+<h3>共通項目</h3>
+<label>身長</label>
+<input id="m_height" type="number"/> cm<br/>
+<label>体重</label>
+<input id="m_weight" type="number"/> kg<br/>
+</section>
+<section class="measure-section" id="measureUpper">
+<h3>上衣採寸</h3>
+<label class="measure-jump-label" data-image-point="A" role="button" tabindex="0">A_衿回り</label>
+<input id="m_A" type="number"/> cm
     <div class="measure-help">のどぼとけのすぐ下で測る。</div>
-
-    <label class="measure-jump-label" data-image-point="B" tabindex="0" role="button">B_肩巾</label>
-    <input type="number" id="m_B"> cm
+<label class="measure-jump-label" data-image-point="B" role="button" tabindex="0">B_肩巾</label>
+<input id="m_B" type="number"/> cm
     <div class="measure-help">左、右の肩先まで測る。</div>
-
-    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C1_袖丈_半袖</label>
-    <input type="number" id="m_C1"> cm<br>
-
-    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C2_袖丈_七分袖</label>
-    <input type="number" id="m_C2"> cm<br>
-
-    <label class="measure-jump-label" data-image-point="C" tabindex="0" role="button">C3_袖丈_長袖</label>
-    <input type="number" id="m_C3"> cm
+<label class="measure-jump-label" data-image-point="C" role="button" tabindex="0">C1_袖丈_半袖</label>
+<input id="m_C1" type="number"/> cm<br/>
+<label class="measure-jump-label" data-image-point="C" role="button" tabindex="0">C2_袖丈_七分袖</label>
+<input id="m_C2" type="number"/> cm<br/>
+<label class="measure-jump-label" data-image-point="C" role="button" tabindex="0">C3_袖丈_長袖</label>
+<input id="m_C3" type="number"/> cm
 
     <div class="measure-help">
-      肩先から本人希望の長さ。該当する袖丈のみ入力してください。<br>
+      肩先から本人希望の長さ。該当する袖丈のみ入力してください。<br/>
       ※半袖の商品を長袖で製作することはできません。
     </div>
-
-    <label class="measure-jump-label" data-image-point="D" tabindex="0" role="button">D_胸回り</label>
-    <input type="number" id="m_D"> cm
+<label class="measure-jump-label" data-image-point="D" role="button" tabindex="0">D_胸回り</label>
+<input id="m_D" type="number"/> cm
     <div class="measure-help">脇のすぐ下で水平にメジャーを回して測る。</div>
-
-    <label class="measure-jump-label" data-image-point="E-upper" tabindex="0" role="button">E_胴回り</label>
-    <input type="number" id="m_E" oninput="syncLinkedMeasurement(this, 'm_a')" onchange="syncLinkedMeasurement(this, 'm_a')"> cm
+<label class="measure-jump-label" data-image-point="E-upper" role="button" tabindex="0">E_胴回り</label>
+<input id="m_E" onchange="syncLinkedMeasurement(this, 'm_a')" oninput="syncLinkedMeasurement(this, 'm_a')" type="number"/> cm
     <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="F-upper" tabindex="0" role="button">F_腰回り</label>
-    <input type="number" id="m_F" oninput="syncLinkedMeasurement(this, 'm_b')" onchange="syncLinkedMeasurement(this, 'm_b')"> cm
+<label class="measure-jump-label" data-image-point="F-upper" role="button" tabindex="0">F_腰回り</label>
+<input id="m_F" onchange="syncLinkedMeasurement(this, 'm_b')" oninput="syncLinkedMeasurement(this, 'm_b')" type="number"/> cm
     <div class="measure-help">腰の一番張ったところを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="G" tabindex="0" role="button">G_背丈</label>
-    <input type="number" id="m_G"> cm
+<label class="measure-jump-label" data-image-point="G" role="button" tabindex="0">G_背丈</label>
+<input id="m_G" type="number"/> cm
     <div class="measure-help">首の付け根の中心から胴回りの測定位置まで。</div>
-
-    <label class="measure-jump-label" data-image-point="H" tabindex="0" role="button">H_着丈</label>
-    <input type="number" id="m_H"> cm
+<label class="measure-jump-label" data-image-point="H" role="button" tabindex="0">H_着丈</label>
+<input id="m_H" type="number"/> cm
     <div class="measure-help">首の付け根の中心から本人希望の長さまで。</div>
-
-    <label class="measure-jump-label" data-image-point="I" tabindex="0" role="button">I_袖付回り</label>
-    <input type="number" id="m_I"> cm
+<label class="measure-jump-label" data-image-point="I" role="button" tabindex="0">I_袖付回り</label>
+<input id="m_I" type="number"/> cm
     <div class="measure-help">肩先から腕の付け根部分回りを測る。</div>
-  </section>
-
-  <section class="measure-section" id="measureLower">
-    <h3>下衣採寸</h3>
-
-    <label class="measure-jump-label" data-image-point="e-lower" tabindex="0" role="button">e_胴回り</label>
-    <input type="number" id="m_a" oninput="syncLinkedMeasurement(this, 'm_E')" onchange="syncLinkedMeasurement(this, 'm_E')"> cm
+</section>
+<section class="measure-section" id="measureLower">
+<h3>下衣採寸</h3>
+<label class="measure-jump-label" data-image-point="e-lower" role="button" tabindex="0">e_胴回り</label>
+<input id="m_a" onchange="syncLinkedMeasurement(this, 'm_E')" oninput="syncLinkedMeasurement(this, 'm_E')" type="number"/> cm
     <div class="measure-help">ベルトの上、へそのあたりを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="f-lower" tabindex="0" role="button">f_腰回り</label>
-    <input type="number" id="m_b" oninput="syncLinkedMeasurement(this, 'm_F')" onchange="syncLinkedMeasurement(this, 'm_F')"> cm
+<label class="measure-jump-label" data-image-point="f-lower" role="button" tabindex="0">f_腰回り</label>
+<input id="m_b" onchange="syncLinkedMeasurement(this, 'm_F')" oninput="syncLinkedMeasurement(this, 'm_F')" type="number"/> cm
     <div class="measure-help">腰の一番張ったところを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="J" tabindex="0" role="button">J_股上</label>
-    <input type="number" id="m_c"> cm
+<label class="measure-jump-label" data-image-point="J" role="button" tabindex="0">J_股上</label>
+<input id="m_c" type="number"/> cm
     <div class="measure-help">胴回り位置から股下までを測る。</div>
-
-    <label class="measure-jump-label" data-image-point="K" tabindex="0" role="button">K_股下</label>
-    <input type="number" id="m_d"> cm
+<label class="measure-jump-label" data-image-point="K" role="button" tabindex="0">K_股下</label>
+<input id="m_d" type="number"/> cm
     <div class="measure-help">股下より本人希望の長さ。</div>
-
-    <label class="measure-jump-label" data-image-point="L" tabindex="0" role="button">L_総丈</label>
-    <input type="number" id="m_e"> cm
+<label class="measure-jump-label" data-image-point="L" role="button" tabindex="0">L_総丈</label>
+<input id="m_e" type="number"/> cm
     <div class="measure-help">胴回り位置からズボン裾まで。</div>
-
-    <label class="measure-jump-label" data-image-point="M" tabindex="0" role="button">M_太股回り</label>
-    <input type="number" id="m_f"> cm
+<label class="measure-jump-label" data-image-point="M" role="button" tabindex="0">M_太股回り</label>
+<input id="m_f" type="number"/> cm
     <div class="measure-help">股下より10cm下がった位置を測る。</div>
-  </section>
-
-  <section class="measure-section">
-    <h3>特記事項・備考</h3>
-
-    <label>特記事項</label><br>
-    <textarea id="m_specialNote" rows="3"></textarea><br>
-
-    <label>備考</label><br>
-    <textarea id="m_memo" rows="3"></textarea>
-  </section>
-
-  <button onclick="saveMeasurement()">採寸表を保存して戻る</button>
-  <button onclick="cancelMeasurement()">保存せず戻る</button>
-
+</section>
+<section class="measure-section">
+<h3>特記事項・備考</h3>
+<label>特記事項</label><br/>
+<textarea id="m_specialNote" rows="3"></textarea><br/>
+<label>備考</label><br/>
+<textarea id="m_memo" rows="3"></textarea>
+</section>
+<button onclick="saveMeasurement()">採寸表を保存して戻る</button>
+<button onclick="cancelMeasurement()">保存せず戻る</button>
 </div>
-
-<script>
+<script id="uniformI18nRuntime">
+(() => {
+ "use strict";
+ const KEY="uniformLanguage", DEF="ja", SUP=["ja","en","vi"];
+ let lang=SUP.includes(localStorage.getItem(KEY))?localStorage.getItem(KEY):DEF;
+ let sourceMap={en:{},vi:{}}, applying=false;
+ const nb=v=>String(v??"").replace(/\\n/g,"\n");
+ const esc=v=>v.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+ function tr(text){
+   if(lang===DEF||!text)return text;
+   const map=sourceMap[lang]||{}, raw=String(text), trimmed=raw.trim();
+   if(Object.prototype.hasOwnProperty.call(map,raw))return nb(map[raw]);
+   if(Object.prototype.hasOwnProperty.call(map,trimmed))return raw.replace(trimmed,nb(map[trimmed]));
+   for(const [ja,to] of Object.entries(map)){
+     if(!ja.includes("{")||!ja.includes("}"))continue;
+     const names=[...ja.matchAll(/\{([^{}]+)\}/g)].map(m=>m[1]);let p=esc(ja);
+     names.forEach(n=>p=p.replace(esc("{"+n+"}"),"(.+?)"));const m=raw.match(new RegExp("^"+p+"$"));if(!m)continue;
+     let result=nb(to);names.forEach((n,i)=>result=result.replaceAll("{"+n+"}",m[i+1]));return result;
+   }
+   return raw;
+ }
+ function translateNode(node){
+   if(node.nodeType===Node.TEXT_NODE){const b=node.nodeValue,a=tr(b);if(a!==b)node.nodeValue=a;return;}
+   if(node.nodeType!==Node.ELEMENT_NODE||node.closest("script,style,[data-i18n-ignore]"))return;
+   /* Translation-key mode. Never translate value because business logic uses Japanese internal values. */
+   const key=node.getAttribute("data-i18n");
+   if(key){
+     const keyed=window.uniformTranslations?.[lang]?.[key];
+     if(keyed!==undefined){
+       const target=node.getAttribute("data-i18n-attr");
+       if(target){node.setAttribute(target,nb(keyed));}else{node.textContent=nb(keyed);}
+       return;
+     }
+   }
+   ["placeholder","title","aria-label"].forEach(attr=>{if(node.hasAttribute(attr)){const b=node.getAttribute(attr),a=tr(b);if(a!==b)node.setAttribute(attr,a);}});
+   [...node.childNodes].forEach(translateNode);
+ }
+ function selector(data){
+   const wrap=document.createElement("div");wrap.id="uniformLanguageSelector";wrap.className="uniform-language-selector";wrap.dataset.i18nIgnore="true";
+   const label=document.createElement("label");label.htmlFor="uniformLanguageSelect";label.textContent="言語 / Language";
+   const sel=document.createElement("select");sel.id="uniformLanguageSelect";
+   [...(data.languages||[])].sort((a,b)=>a.order-b.order).forEach(x=>{const o=document.createElement("option");o.value=x.code;o.textContent=x.displayName;o.selected=x.code===lang;sel.appendChild(o);});
+   sel.addEventListener("change",()=>{localStorage.setItem(KEY,sel.value);location.reload();});wrap.append(label,sel);document.body.prepend(wrap);
+ }
+ const oa=window.alert.bind(window),oc=window.confirm.bind(window);window.alert=m=>oa(tr(m));window.confirm=m=>oc(tr(m));window.uniformTranslate=tr;window.uniformApplyTranslations=translateNode;
+ Promise.all([fetch("languages.json",{cache:"no-store"}).then(r=>r.json()),fetch("translations.json",{cache:"no-store"}).then(r=>r.json())]).then(([ld,td])=>{
+   sourceMap=td.sourceMap||sourceMap;window.uniformTranslations=td.translations||{};selector(ld);document.documentElement.lang=lang;applying=true;translateNode(document.body);applying=false;
+   new MutationObserver(rs=>{if(applying||lang===DEF)return;applying=true;rs.forEach(r=>r.addedNodes.forEach(translateNode));applying=false;}).observe(document.body,{childList:true,subtree:true});
+ }).catch(e=>console.warn("Translation files could not be loaded.",e));
+})();
+</script><script>
 
 const HP_DEADLINE_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/31/workflows/09d029ec44b749c1b9e34197ba1e92f6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=G4_LY4TPfDgAkb-D1QdZP0v1TKvBKBKtT7HW_zP36Zs";
 const ROSTER_CHECK_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/a2ad90b4288b421dba07527e957df3b6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mfc1Al8GnTNU9AgQ43twXYCekRC37FSDJ57x3ENuiSc";
@@ -1358,8 +1367,8 @@ function getStep3BasicSignature() {
     employeeNo: String(document.getElementById("stepEmployeeNo")?.value || "").trim(),
     sei: String(document.getElementById("stepSei")?.value || "").trim(),
     mei: String(document.getElementById("stepMei")?.value || "").trim(),
-    seiKana: String(document.getElementById("stepSeiKana")?.value || "").trim(),
-    meiKana: String(document.getElementById("stepMeiKana")?.value || "").trim(),
+    seiKana: normalizeKanaForInput(document.getElementById("stepSeiKana")?.value),
+    meiKana: normalizeKanaForInput(document.getElementById("stepMeiKana")?.value),
     gender: String(document.getElementById("stepGender")?.value || "").trim(),
     alternateUniform: document.getElementById("stepAlternateUniform")?.checked === true,
     job: String(document.getElementById("stepJob")?.value || "").trim(),
@@ -1403,18 +1412,70 @@ function resetProductAndPatternAfterUniformChange(){
  document.getElementById("table").innerHTML="<tr><td colspan='7'>貸与パターンを選択してください</td></tr>";
  document.getElementById("categoryStatus").innerHTML=""; document.getElementById("limitDeclarationArea").innerHTML="";
 }
+let lastUniformDepartmentBeforeChange = "";
+let uniformDepartmentAlertActive = false;
 function changeUniformTypeChoice(checkbox) {
-  const oldChecked=!checkbox.checked;
-  if(selectedProductExists() && !confirm("ユニフォームタイプを変更すると、現在の商品・サイズ・数量・股下加工がクリアされます。変更してよろしいですか？")){checkbox.checked=oldChecked;updateUniformTypeStatus();return;}
-  const oldJob=document.getElementById("job").value; const oldDept=document.getElementById("department").value;
-  updateUniformTypeStatus(); updateJobOptions();
-  if(Array.from(document.getElementById("job").options).some(o=>o.value===oldJob)) document.getElementById("job").value=oldJob;
-  else document.getElementById("job").value="";
+  const oldChecked = !checkbox.checked;
+  if (selectedProductExists() && !confirm("ユニフォームタイプを変更すると、現在の商品・サイズ・数量・股下加工がクリアされます。変更してよろしいですか？")) {
+    checkbox.checked = oldChecked;
+    updateUniformTypeStatus();
+    return;
+  }
+  const jobSelect = document.getElementById("job");
+  const departmentSelect = document.getElementById("department");
+  const oldJob = jobSelect.value;
+  const stateDepartment = String(rosterBasicInfoState?.department || "").trim();
+  const oldDept = departmentSelect.value || lastUniformDepartmentBeforeChange || stateDepartment;
+  if (departmentSelect.value) lastUniformDepartmentBeforeChange = departmentSelect.value;
+
+  updateUniformTypeStatus();
+  updateJobOptions();
+  jobSelect.value = Array.from(jobSelect.options).some(o => o.value === oldJob) ? oldJob : "";
   updateDepartmentOptions();
-  if(Array.from(document.getElementById("department").options).some(o=>o.value===oldDept)) document.getElementById("department").value=oldDept;
-  else if(oldDept) alert("選択したユニフォームには現在の部署が設定されていません。部署を選択し直してください。");
-  if(oldJob && !document.getElementById("job").value) alert("選択したユニフォームには現在の職種が設定されていません。職種を選択し直してください。");
-  resetProductAndPatternAfterUniformChange(); updateLendingPatternOptions();
+
+  const departmentAvailable = !!oldDept && Array.from(departmentSelect.options).some(o => o.value === oldDept);
+  if (departmentAvailable) {
+    departmentSelect.value = oldDept;
+    lastUniformDepartmentBeforeChange = oldDept;
+    if (rosterBasicInfoState) rosterBasicInfoState.department = oldDept;
+    uniformDepartmentAlertActive = false;
+  } else {
+    departmentSelect.value = "";
+    if (checkbox.checked && oldDept && !uniformDepartmentAlertActive) {
+      uniformDepartmentAlertActive = true;
+      alert("選択したユニフォームには現在の部署が設定されていません。部署を選択し直してください。");
+    } else if (!checkbox.checked) {
+      uniformDepartmentAlertActive = false;
+    }
+  }
+  if (oldJob && !jobSelect.value) alert("選択したユニフォームには現在の職種が設定されていません。職種を選択し直してください。");
+  resetProductAndPatternAfterUniformChange();
+
+  // 切替先に貸与パターンが実在する場合だけ、貸与パターン選択へ進む。
+  // 貸与パターン機能がONでも、切替先が0件なら貸与ルールから直接商品を表示する。
+  const destinationJobData = getSelectedJobBaseData();
+  const destinationPatterns = destinationJobData && Array.isArray(destinationJobData.lendingPatterns)
+    ? destinationJobData.lendingPatterns
+    : [];
+
+  if (isLendingPatternActive() && destinationPatterns.length > 0) {
+    updateLendingPatternOptions("", {
+      allowGroupFallback: true,
+      autoSelectSingle: true,
+      showMissingMessage: true
+    });
+  } else {
+    document.getElementById("lendingPatternArea")?.classList.add("hidden");
+    const patternOptions = document.getElementById("lendingPatternOptions");
+    if (patternOptions) patternOptions.innerHTML = "";
+
+    if (jobSelect.value && destinationJobData) {
+      createTable(currentData, jobSelect.value, getUniformTypeGender());
+    } else {
+      document.getElementById("table").innerHTML =
+        "<tr><td colspan='7'>選択したユニフォームに対応する貸与ルールまたは商品が設定されていません。管理者にお問い合わせください。</td></tr>";
+    }
+  }
 }
 
 /* ======================== */
@@ -1431,6 +1492,19 @@ function isBasicInfoActive(name) {
   if (["姓名", "性別", "職種"].includes(name)) return true;
   if (!info) return false;
   return info.active === true || info.active === 1 || String(info.active).toLowerCase() === "true";
+}
+
+function isMaximumLendingMethod() {
+  return isBasicInfoActive("貸与方式");
+}
+
+function normalizeLendingGroup(value) {
+  const group = String(value ?? "").trim();
+  return group === "" || group === "常勤" ? "" : group;
+}
+
+function lendingGroupsMatch(left, right) {
+  return normalizeLendingGroup(left) === normalizeLendingGroup(right);
 }
 
 function isEmployeeNoActive() {
@@ -1477,40 +1551,60 @@ function clearCurrentProductSelection(preserveMeasurement = false) {
     memo: ""
   };
 }
-function updateLendingPatternOptions(selectedCode = "") {
+function updateLendingPatternOptions(selectedCode = "", behavior = {}) {
   const area = document.getElementById("lendingPatternArea");
   const optionsArea = document.getElementById("lendingPatternOptions");
   if (!area || !optionsArea) return false;
+
   const jobData = getSelectedJobBaseData();
   const allPatterns = jobData && isLendingPatternActive() && Array.isArray(jobData.lendingPatterns)
     ? [...jobData.lendingPatterns]
     : [];
-  const patterns = allPatterns
-    .filter(pattern =>
-      currentLendingGroup === null ||
-      String(pattern["貸与グループ"] || "") === currentLendingGroup
-    )
-    .sort((a, b) => (a.displayOrder || 9999) - (b.displayOrder || 9999));
+
+  let patterns = allPatterns.filter(pattern =>
+    currentLendingGroup === null ||
+    lendingGroupsMatch(pattern["貸与グループ"], currentLendingGroup)
+  );
+
+  // 名簿に登録された旧ユニフォーム側の貸与グループで0件になった場合、
+  // 異性ユニフォーム側では貸与グループの絞り込みを解除する。
+  if (patterns.length === 0 && allPatterns.length > 0 && behavior.allowGroupFallback === true) {
+    currentLendingGroup = null;
+    patterns = [...allPatterns];
+  }
+
+  patterns.sort((a, b) => (a.displayOrder || 9999) - (b.displayOrder || 9999));
   optionsArea.innerHTML = "";
+
   if (patterns.length === 0) {
     area.classList.add("hidden");
+    if (behavior.showMissingMessage === true) {
+      document.getElementById("table").innerHTML =
+        "<tr><td colspan='7'>選択したユニフォームに対応する貸与パターンが設定されていません。管理者にお問い合わせください。</td></tr>";
+      document.getElementById("categoryStatus").innerHTML = "";
+      document.getElementById("limitDeclarationArea").innerHTML = "";
+    }
     return false;
   }
+
   area.classList.remove("hidden");
   patterns.forEach(pattern => {
     const label = document.createElement("label");
     label.className = "pattern-option";
+
     const input = document.createElement("input");
     input.type = "radio";
     input.name = "lendingPattern";
     input.value = pattern["貸与パターンコード"];
     input.checked = pattern["貸与パターンコード"] === selectedCode;
     input.addEventListener("change", event => changeLendingPattern(event));
+
     const name = document.createElement("span");
     name.className = "pattern-name";
     name.textContent = pattern["貸与パターン名"];
     label.appendChild(input);
     label.appendChild(name);
+
     if (pattern.note) {
       const note = document.createElement("span");
       note.className = "pattern-note";
@@ -1519,6 +1613,16 @@ function updateLendingPatternOptions(selectedCode = "") {
     }
     optionsArea.appendChild(label);
   });
+
+  // 候補が1件だけなら利用者に再選択させず、自動選択して商品を表示する。
+  if (patterns.length === 1 && behavior.autoSelectSingle === true) {
+    const onlyInput = optionsArea.querySelector('input[name="lendingPattern"]');
+    if (onlyInput) {
+      onlyInput.checked = true;
+      changeLendingPattern();
+    }
+  }
+
   return true;
 }
 function changeLendingPattern(event = null) {
@@ -1577,9 +1681,18 @@ function setupBasicInfoVisibility() {
  }
 }
 function renderStepProgress(active){
- const items=isEmployeeNoActive()?[['employee','1 職員番号'],['name','2 姓名・セイメイ'],['details','3 基本情報の確認']]:[['name','1 姓名・セイメイ'],['details','2 基本情報の確認']];
+ const items=isEmployeeNoActive()
+   ? [['employee','1','index.step.employeeNo','職員番号','rosterProgressEmployee'],['name','2','index.step.name','姓名・セイメイ','rosterProgressName'],['details','3','index.step.basicInfo','基本情報の確認','rosterProgressDetails']]
+   : [['name','1','index.step.name','姓名・セイメイ','rosterProgressName'],['details','2','index.step.basicInfo','基本情報の確認','rosterProgressDetails']];
  const area=document.getElementById("rosterStepProgress");area.innerHTML="";
- items.forEach(([key,label])=>{const e=document.createElement("span");e.textContent=label;e.classList.toggle("active",key===active);area.appendChild(e);});
+ items.forEach(([stepKey,number,i18nKey,japanese,sourceId])=>{
+   const e=document.createElement("span");
+   const numberNode=document.createElement("span");numberNode.className="roster-progress-number";numberNode.textContent=number;
+   const labelNode=document.createElement("span");labelNode.id=sourceId;labelNode.setAttribute("data-i18n",i18nKey);labelNode.textContent=japanese;
+   e.append(numberNode,document.createTextNode(" "),labelNode);
+   e.classList.toggle("active",stepKey===active);area.appendChild(e);
+ });
+ if (window.uniformTranslate && typeof window.uniformApplyTranslations === "function") { window.uniformApplyTranslations(area); }
 }
 function setRosterStep(step){
  rosterStepCurrent=step;
@@ -1664,19 +1777,26 @@ function getRosterCandidateValue(candidate, keys) {
   }
   return "";
 }
+function normalizeKanaForInput(value) {
+  return String(value ?? "")
+    .normalize("NFKC")
+    .replace(/[\s\u3000]+/g, "")
+    .trim();
+}
+
 function buildRosterBasicInfoState(candidate, source = "roster") {
   const state = {
     source,
-    employeeNo: String(candidate?.employeeNo ?? "").trim(),
-    sei: String(candidate?.sei ?? "").trim(),
-    mei: String(candidate?.mei ?? "").trim(),
-    seiKana: String(candidate?.seiKana ?? "").trim(),
-    meiKana: String(candidate?.meiKana ?? "").trim(),
-    gender: String(candidate?.gender ?? "").trim(),
-    job: String(candidate?.job ?? "").trim(),
-    department: String(candidate?.department ?? "").trim(),
-    lendingGroup: String(candidate?.lendingGroup ?? "").trim(),
-    lendingPatternCode: String(candidate?.lendingPatternCode ?? candidate?.assignedPatternCode ?? "").trim()
+    employeeNo: getRosterCandidateValue(candidate, ["employeeNo", "staffNo", "職員番号"]),
+    sei: getRosterCandidateValue(candidate, ["lastName", "sei", "姓", "氏"]),
+    mei: getRosterCandidateValue(candidate, ["firstName", "mei", "名"]),
+    seiKana: normalizeKanaForInput(getRosterCandidateValue(candidate, ["lastNameKana", "seiKana", "セイ", "シ"])),
+    meiKana: normalizeKanaForInput(getRosterCandidateValue(candidate, ["firstNameKana", "meiKana", "メイ"])),
+    gender: getRosterCandidateValue(candidate, ["gender", "性別"]),
+    job: getRosterCandidateValue(candidate, ["jobType", "job", "職種"]),
+    department: getRosterCandidateValue(candidate, ["department", "部署"]),
+    lendingGroup: getRosterCandidateValue(candidate, ["loanGroup", "lendingGroup", "貸与グループ", "登録貸与グループ"]),
+    lendingPatternCode: getRosterCandidateValue(candidate, ["貸与パターンコード", "登録貸与パターンコード", "lendingPatternCode", "assignedPatternCode"])
   };
   state.displayName = `${state.sei}${state.mei}`;
   state.displayNameKana = `${state.seiKana}${state.meiKana}`;
@@ -1704,6 +1824,10 @@ function buildManualBasicInfoState() {
 }
 function writeBasicInfoStateToInputs(state) {
   if (!state) return false;
+  state.seiKana = normalizeKanaForInput(state.seiKana);
+  state.meiKana = normalizeKanaForInput(state.meiKana);
+  state.displayNameKana = `${state.seiKana}${state.meiKana}`;
+  state.identityComplete = !!(state.sei && state.mei && state.seiKana && state.meiKana);
   document.getElementById("employeeNo").value = state.employeeNo || "";
   document.getElementById("stepEmployeeNo").value = state.employeeNo || "";
   document.getElementById("sei").value = state.sei || "";
@@ -1827,6 +1951,12 @@ function syncStepDetails(event){
  populateStepDepartments(oldDep);document.getElementById("gender").value=document.getElementById("stepGender").value;updateUniformTypeStatus();
 }
 function completeRosterStepDetails() {
+  const currentMainSeiKana = normalizeKanaForInput(document.getElementById("seiKana")?.value);
+  const currentMainMeiKana = normalizeKanaForInput(document.getElementById("meiKana")?.value);
+  if (rosterBasicInfoState) {
+    if (currentMainSeiKana) rosterBasicInfoState.seiKana = currentMainSeiKana;
+    if (currentMainMeiKana) rosterBasicInfoState.meiKana = currentMainMeiKana;
+  }
   if (rosterStepLastCandidate && rosterBasicInfoState?.source === "employee") {
     const refreshed = buildRosterBasicInfoState(rosterStepLastCandidate, "employee");
     for (const [key, value] of Object.entries(refreshed)) {
@@ -1893,11 +2023,23 @@ function backToBasicInfoFromProducts() {
   setProductSelectionVisible(false);
   document.getElementById("standardBasicInfoUi").classList.add("hidden");
   document.getElementById("rosterStepUi").classList.remove("hidden");
-  if (rosterBasicInfoState) {
-    writeBasicInfoStateToInputs(rosterBasicInfoState);
-    applyStateDetailsToStep(rosterBasicInfoState);
+  if (!rosterBasicInfoState) {
+    rosterBasicInfoState = buildManualBasicInfoState();
   }
-  fillStepDetails(rosterStepLastCandidate, rosterBasicInfoState?.source || "manual");
+  writeBasicInfoStateToInputs(rosterBasicInfoState);
+  applyStateDetailsToStep(rosterBasicInfoState);
+  const summary = document.getElementById("rosterStepSummary");
+  if (summary && rosterStepLastCandidate) {
+    summary.classList.remove("hidden");
+    summary.innerHTML = `${isEmployeeNoActive() ? `職員番号：${escapeRosterText(rosterBasicInfoState.employeeNo || "未登録")}<br>` : ""}` +
+      `姓名：${escapeRosterText(`${rosterBasicInfoState.sei || ""}${rosterBasicInfoState.mei || ""}`)}<br>` +
+      `セイメイ：${escapeRosterText(`${rosterBasicInfoState.seiKana || ""}${rosterBasicInfoState.meiKana || ""}`)}<br>` +
+      `性別：${escapeRosterText(rosterBasicInfoState.gender || "未登録")}<br>` +
+      `職種：${escapeRosterText(rosterBasicInfoState.job || "未登録")}<br>` +
+      `部署：${escapeRosterText(rosterBasicInfoState.department || "未登録")}`;
+  }
+  updateUniformTypeStatus();
+  setRosterStep("details");
 }
 async function searchRosterFromStep(mode){
   const empMode = mode === "employee";
@@ -2393,8 +2535,14 @@ document.getElementById("customerInfo").innerText =
     }
   })
   .catch(error => {
-    document.getElementById("table").innerHTML =
-      "<tr><td colspan='7'>読み込みに失敗しました：" + error.message + "</td></tr>";
+    console.error("病院データの読み込みに失敗しました。", error);
+    const customerInfo = document.getElementById("customerInfo");
+    if (customerInfo) customerInfo.innerText = "病院データを読み込めませんでした";
+    const table = document.getElementById("table");
+    if (table) {
+      table.innerHTML =
+        "<tr><td colspan='7'>読み込みに失敗しました：" + String(error && error.message ? error.message : error) + "</td></tr>";
+    }
   });
 
 function getFirstStoredValue(source, keys) {
@@ -2433,10 +2581,10 @@ function restoreConfirmReturnToStep3(base) {
   if (!isRosterManagementActive() || effectiveEditMode) return;
   const candidate = {
     employeeNo: getFirstStoredValue(base, ["職員番号", "employeeNo", "staffNo"]),
-    sei: getFirstStoredValue(base, ["姓", "氏", "sei"]),
-    mei: getFirstStoredValue(base, ["名", "mei"]),
-    seiKana: getFirstStoredValue(base, ["セイ", "シ", "seiKana"]),
-    meiKana: getFirstStoredValue(base, ["メイ", "meiKana"]),
+    sei: getFirstStoredValue(base, ["lastName", "姓", "氏", "sei"]),
+    mei: getFirstStoredValue(base, ["firstName", "名", "mei"]),
+    seiKana: getFirstStoredValue(base, ["lastNameKana", "セイ", "シ", "seiKana"]),
+    meiKana: getFirstStoredValue(base, ["firstNameKana", "メイ", "meiKana"]),
     gender: getFirstStoredValue(base, ["性別", "gender"]),
     job: getFirstStoredValue(base, ["職種", "job"]),
     department: getFirstStoredValue(base, ["部署", "department"]),
@@ -2489,10 +2637,10 @@ function applyConfirmReturnData() {
   ) || String(returnDraft.registrationNo || "").trim();
   const employeeNoInput = document.getElementById("employeeNo");
   if (employeeNoInput) employeeNoInput.value = getFirstStoredValue(base, ["職員番号", "employeeNo", "staffNo"]);
-  document.getElementById("sei").value = getFirstStoredValue(base, ["姓", "氏", "sei"]);
-  document.getElementById("mei").value = getFirstStoredValue(base, ["名", "mei"]);
-  document.getElementById("seiKana").value = getFirstStoredValue(base, ["セイ", "シ", "seiKana"]);
-  document.getElementById("meiKana").value = getFirstStoredValue(base, ["メイ", "meiKana"]);
+  document.getElementById("sei").value = getFirstStoredValue(base, ["lastName", "姓", "氏", "sei"]);
+  document.getElementById("mei").value = getFirstStoredValue(base, ["firstName", "名", "mei"]);
+  document.getElementById("seiKana").value = getFirstStoredValue(base, ["lastNameKana", "セイ", "シ", "seiKana"]);
+  document.getElementById("meiKana").value = getFirstStoredValue(base, ["firstNameKana", "メイ", "meiKana"]);
 
   const genderValue = getFirstStoredValue(base, ["性別", "gender"]);
   const jobValue = getFirstStoredValue(base, ["職種", "job"]);
@@ -2585,10 +2733,10 @@ function applyEditModeData() {
   }
 
   const employeeNo = getFirstStoredValue(base, ["職員番号", "employeeNo", "staffNo"]);
-  const sei = getFirstStoredValue(base, ["姓", "氏", "sei"]);
-  const mei = getFirstStoredValue(base, ["名", "mei"]);
-  const seiKana = getFirstStoredValue(base, ["セイ", "シ", "seiKana"]);
-  const meiKana = getFirstStoredValue(base, ["メイ", "meiKana"]);
+  const sei = getFirstStoredValue(base, ["lastName", "姓", "氏", "sei"]);
+  const mei = getFirstStoredValue(base, ["firstName", "名", "mei"]);
+  const seiKana = getFirstStoredValue(base, ["lastNameKana", "セイ", "シ", "seiKana"]);
+  const meiKana = getFirstStoredValue(base, ["firstNameKana", "メイ", "meiKana"]);
   const gender = getFirstStoredValue(base, ["性別", "gender"]);
   const job = getFirstStoredValue(base, ["職種", "job"]);
   const department = getFirstStoredValue(base, ["部署", "department"]);
@@ -4040,9 +4188,14 @@ function setInseamValueForRow(row, value) {
   const sizeInfo = getRowSizeInfo(row);
   if (sizeInfo.valid && sizeInfo.sizeType === "standard" && isCommonStandardInseamMode(row)) {
     const key = getCommonInseamKey(row);
-    if (!commonStandardInseamValues[key]) commonStandardInseamValues[key] = normalized;
-    const host = getRowsByProductCode(key)[0];
-    if (host) updateInseamAreaForRow(host, true);
+    if (!commonStandardInseamValues[key]) {
+      commonStandardInseamValues[key] = normalized;
+    }
+    const host = getRowsByProductCode(key).find(productRow =>
+      isInseamAlterable(productRow) && isCommonInseamHostRow(productRow)
+    );
+    const input = host?.querySelector(".commonStandardInseamInput");
+    if (input) input.value = commonStandardInseamValues[key];
     return;
   }
   const select = row.querySelector(".inseamSelect");
@@ -4121,17 +4274,19 @@ function buildLimitDeclarationHtml(jobData) {
     return "";
   }
 
+  const maximumMode = isMaximumLendingMethod();
   let html = `
     <div>
       <strong>貸与枚数は以下のとおりです</strong><br>
   `;
 
   jobData.categoryLimits.forEach(rule => {
-    html += `${rule.productCategory} ${rule.limit}枚<br>`;
+    html += maximumMode
+      ? `${rule.productCategory} 最大 ${rule.limit}枚まで<br>`
+      : `${rule.productCategory} ${rule.limit}枚<br>`;
   });
 
   html += `</div>`;
-
   return html;
 }
 
@@ -4150,7 +4305,6 @@ function updateLimitDeclarationArea() {
 }
 
 function updateCategorySummary() {
-
   const jobData = getSelectedJobData();
   const area = document.getElementById("categoryStatus");
 
@@ -4159,6 +4313,7 @@ function updateCategorySummary() {
     return;
   }
 
+  const maximumMode = isMaximumLendingMethod();
   const counts = {};
   const limits = {};
   const selectedByProductCategory = {};
@@ -4169,16 +4324,12 @@ function updateCategorySummary() {
   });
 
   const rows = document.querySelectorAll("#table tr");
-
   rows.forEach(row => {
-
     const productCategory = row.dataset.productCategory;
-
     if (!productCategory) return;
 
     const qtyInput = row.querySelector(".cell-qty input");
-    const qty = Number(qtyInput.value) || 0;
-
+    const qty = Number(qtyInput ? qtyInput.value : 0) || 0;
     if (qty <= 0) return;
 
     const sizeInfo = getRowSizeInfo(row);
@@ -4187,55 +4338,40 @@ function updateCategorySummary() {
     if (selectedByProductCategory[productCategory] === undefined) {
       selectedByProductCategory[productCategory] = 0;
     }
-
     selectedByProductCategory[productCategory] += qty;
 
     const rules = jobData.conversionRules.filter(r =>
       r.fromProductCategory === productCategory
     );
-
     rules.forEach(rule => {
-
       if (counts[rule.toConsumptionCategory] === undefined) {
         counts[rule.toConsumptionCategory] = 0;
       }
-
       counts[rule.toConsumptionCategory] += qty * rule.qty;
     });
   });
 
-  let html = "";
-html += "<h3>現在の選択枚数</h3>";
-
+  let html = "<h3>現在の選択枚数</h3>";
   Object.keys(limits).forEach(category => {
-
     const current = counts[category] || 0;
     const limit = limits[category];
-
     let className = "category-normal";
 
     if (current > limit) {
       className = "category-over";
     } else if (current === limit) {
       className = "category-ok";
-    } else if (current > 0 && limit - current === 1) {
+    } else if (!maximumMode && current > 0 && limit - current === 1) {
       className = "category-warning";
     }
 
-    html += `<div class="${className}">
-      ${category}：${current} / ${limit}
-    </div>`;
+    html += `<div class="${className}">${category}：${current} / ${limit}</div>`;
   });
-
   area.innerHTML = html;
 
-  const headingElements = document.querySelectorAll("[data-category-heading]");
-
-  headingElements.forEach(el => {
-
+  document.querySelectorAll("[data-category-heading]").forEach(el => {
     const category = el.dataset.categoryHeading;
     const countSpan = el.querySelector(".category-count");
-
     if (!countSpan) return;
 
     const limit = limits[category];
@@ -4249,35 +4385,30 @@ html += "<h3>現在の選択枚数</h3>";
     );
 
     if (limit !== undefined) {
-
-      countSpan.innerText = `（合計${limit}枚） 選択中 ${current}/${limit}`;
+      countSpan.innerText = maximumMode
+        ? `（最大${limit}枚まで） 選択中 ${current}/${limit}`
+        : `（合計${limit}枚） 選択中 ${current}/${limit}`;
 
       if (current > limit) {
         countSpan.classList.add("category-count-over");
       } else if (current === limit) {
         countSpan.classList.add("category-count-ok");
-      } else if (current > 0 && limit - current === 1) {
+      } else if (!maximumMode && current > 0 && limit - current === 1) {
         countSpan.classList.add("category-count-warning");
       }
-
     } else {
-
-      if (selected > 0) {
-        countSpan.innerText = `選択中 ${selected}枚`;
-      } else {
-        countSpan.innerText = "";
-      }
+      countSpan.innerText = selected > 0 ? `選択中 ${selected}枚` : "";
     }
   });
 }
 
 function validateCategoryLimitsBeforeSubmit() {
   const jobData = getSelectedJobData();
-
   if (!jobData || !jobData.categoryLimits || jobData.categoryLimits.length === 0) {
     return "";
   }
 
+  const maximumMode = isMaximumLendingMethod();
   const counts = {};
   const limits = {};
 
@@ -4286,9 +4417,7 @@ function validateCategoryLimitsBeforeSubmit() {
     counts[rule.productCategory] = 0;
   });
 
-  const rows = document.querySelectorAll("#table tr");
-
-  rows.forEach(row => {
+  document.querySelectorAll("#table tr").forEach(row => {
     const productCategory = row.dataset.productCategory;
     if (!productCategory) return;
 
@@ -4299,34 +4428,35 @@ function validateCategoryLimitsBeforeSubmit() {
     const sizeInfo = getRowSizeInfo(row);
     if (!sizeInfo.valid) return;
 
-    const rules = jobData.conversionRules.filter(r =>
-      r.fromProductCategory === productCategory
-    );
-
-    rules.forEach(rule => {
-      if (counts[rule.toConsumptionCategory] === undefined) {
-        counts[rule.toConsumptionCategory] = 0;
-      }
-
-      counts[rule.toConsumptionCategory] += qty * rule.qty;
-    });
+    jobData.conversionRules
+      .filter(rule => rule.fromProductCategory === productCategory)
+      .forEach(rule => {
+        if (counts[rule.toConsumptionCategory] === undefined) {
+          counts[rule.toConsumptionCategory] = 0;
+        }
+        counts[rule.toConsumptionCategory] += qty * rule.qty;
+      });
   });
 
   const messages = [];
-
   Object.keys(limits).forEach(category => {
     const current = counts[category] || 0;
     const limit = limits[category];
 
-    if (current !== limit) {
-      messages.push(category + "：現在 " + current + " / 必要 " + limit);
+    if (maximumMode ? current > limit : current !== limit) {
+      messages.push(
+        maximumMode
+          ? `${category}：現在 ${current} / 上限 ${limit}`
+          : `${category}：現在 ${current} / 必要 ${limit}`
+      );
     }
   });
 
   if (messages.length > 0) {
-    return "貸与枚数が合っていません。\n\n" + messages.join("\n");
+    return maximumMode
+      ? "貸与枚数が上限を超えています。\n\n" + messages.join("\n")
+      : "貸与枚数が合っていません。\n\n" + messages.join("\n");
   }
-
   return "";
 }
 
@@ -4349,7 +4479,7 @@ function isFullWidthKatakana(value) {
   }
 
   // 全角カタカナ、長音、全角スペースのみ許可
-  return /^[ァ-ヶー　]+$/.test(text);
+  return /^[ァ-ヶーヴヷヸヹヺ・]+$/.test(normalizeKanaForInput(text));
 }
 
 async function checkRosterDuplicate(common) {
@@ -4432,8 +4562,10 @@ async function submitData(event) {
 
   const sei = document.getElementById("sei").value.trim();
   const mei = document.getElementById("mei").value.trim();
-  const seiKana = document.getElementById("seiKana").value.trim();
-  const meiKana = document.getElementById("meiKana").value.trim();
+  const seiKana = normalizeKanaForInput(document.getElementById("seiKana").value);
+  const meiKana = normalizeKanaForInput(document.getElementById("meiKana").value);
+  document.getElementById("seiKana").value = seiKana;
+  document.getElementById("meiKana").value = meiKana;
 
   if (!sei) {
     alert("姓を入力してください");
@@ -4638,7 +4770,7 @@ data.push({
   }
 
  if (data.length === 0) {
-  alert("商品が入力されていません（サイズ・数量）");
+  alert("商品を1枚以上選択してください。");
   return;
 }
 
@@ -4710,6 +4842,5 @@ if (hasBespokeWithoutMeasurement()) {
   }
 }
 </script>
-
 </body>
 </html>
