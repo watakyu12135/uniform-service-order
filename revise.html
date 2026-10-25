@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8"/>
 <title>採寸内容修正</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <style>
 body {
   font-family: sans-serif;
@@ -285,122 +285,233 @@ body {
   .input-pair { grid-template-columns: 1fr; }
 }
 
-</style>
-</head>
 
+/* ===== Multilingual flexible layout ===== */
+:where(h1,h2,h3,h4,p,li,label,button,a,.notice,.error,.success,.info-row,.item,.small){overflow-wrap:anywhere;word-break:normal;white-space:normal;}
+button{height:auto;min-height:44px;line-height:1.45;}
+.uniform-language-selector{width:auto!important;max-width:100%!important;box-sizing:border-box!important;flex-wrap:wrap!important;}
+.uniform-language-selector label{display:inline-block!important;width:auto!important;max-width:none!important;margin:0!important;white-space:nowrap!important;flex:0 0 auto!important;}
+.uniform-language-selector select,#uniformLanguageSelect{display:inline-block!important;width:auto!important;min-width:130px!important;max-width:220px!important;margin:0!important;flex:0 0 auto!important;}
+
+.input-pair>div{min-width:0}.input-pair label{white-space:normal}.input-pair input{min-width:0}
+@media(max-width:600px){.input-pair{grid-template-columns:1fr!important}.search-choice{white-space:normal;align-items:flex-start}}
+</style>
+<style id="uniformI18nStyle">
+.uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}
+.uniform-language-selector select{min-width:130px;padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}
+@media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
+</style></head>
 <body>
 <div class="page-shell">
-<button id="backToApplicationButton" class="back-to-application" type="button">
+<button class="back-to-application" id="backToApplicationButton" type="button">
   ← ユニフォーム申請画面に戻る
 </button>
-
 <h2>採寸内容修正</h2>
-
 <div id="customerInfo">顧客：読み込み中...</div>
-<div id="message" class="error"></div>
-
+<div class="error" id="message"></div>
 <div class="section">
-  <h3>検索方法を選択してください</h3>
-
-  <div class="search-choice-list" role="radiogroup" aria-label="検索方法">
-    <label class="search-choice">
-      <input type="radio" name="searchMethod" value="measureNo">
-      <span>採寸番号で検索</span>
-    </label>
-
-    <label class="search-choice">
-      <input type="radio" name="searchMethod" value="name">
-      <span>氏名情報で検索</span>
-    </label>
-
-    <label id="employeeMethodOption" class="search-choice hidden">
-      <input type="radio" name="searchMethod" value="employeeNo">
-      <span>職員番号で検索</span>
-    </label>
-  </div>
-
-  <div id="measureSearchPanel" class="search-panel hidden">
-    <h3>採寸番号で検索</h3>
-    <div class="notice">
+<h3>検索方法を選択してください</h3>
+<div aria-label="検索方法" class="search-choice-list" role="radiogroup">
+<label class="search-choice">
+<input name="searchMethod" type="radio" value="measureNo"/>
+<span>採寸番号で検索</span>
+</label>
+<label class="search-choice">
+<input name="searchMethod" type="radio" value="name"/>
+<span>氏名情報で検索</span>
+</label>
+<label class="search-choice hidden" id="employeeMethodOption">
+<input name="searchMethod" type="radio" value="employeeNo"/>
+<span>職員番号で検索</span>
+</label>
+</div>
+<div class="search-panel hidden" id="measureSearchPanel">
+<h3>採寸番号で検索</h3>
+<div class="notice">
       初回登録時の採寸番号と本人確認用4桁番号を入力してください。
     </div>
-
-    <label for="measureNo">採寸番号</label>
-    <input id="measureNo" placeholder="例：A123456" autocomplete="off">
-
-    <label for="measureRegistrationNo">本人確認用4桁番号</label>
-    <input id="measureRegistrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
-  </div>
-
-  <div id="nameSearchPanel" class="search-panel hidden">
-    <h3>氏名情報で検索</h3>
-    <div class="notice">
+<label for="measureNo">採寸番号</label>
+<input autocomplete="off" id="measureNo" placeholder="例：A123456"/>
+<label for="measureRegistrationNo">本人確認用4桁番号</label>
+<input autocomplete="off" id="measureRegistrationNo" inputmode="numeric" maxlength="4"/>
+</div>
+<div class="search-panel hidden" id="nameSearchPanel">
+<h3>氏名情報で検索</h3>
+<div class="notice">
       初回登録時と同じ表記で入力してください。
     </div>
-
-    <div class="input-pair">
-      <div>
-        <label for="sei">姓</label>
-        <input id="sei" autocomplete="off">
-      </div>
-      <div>
-        <label for="mei">名</label>
-        <input id="mei" autocomplete="off">
-      </div>
-    </div>
-
-    <div class="input-pair">
-      <div>
-        <label for="seiKana">セイ</label>
-        <input id="seiKana" autocomplete="off">
-      </div>
-      <div>
-        <label for="meiKana">メイ</label>
-        <input id="meiKana" autocomplete="off">
-      </div>
-    </div>
-
-    <label for="job">職種</label>
-    <select id="job" disabled>
-      <option value="">顧客情報を読み込み中...</option>
-    </select>
-
-    <label for="nameRegistrationNo">本人確認用4桁番号</label>
-    <input id="nameRegistrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
-  </div>
-
-  <div id="employeeSearchPanel" class="search-panel hidden">
-    <h3>職員番号で検索</h3>
-    <div class="notice">
+<div class="input-pair">
+<div>
+<label for="sei">姓</label>
+<input autocomplete="off" id="sei"/>
+</div>
+<div>
+<label for="mei">名</label>
+<input autocomplete="off" id="mei"/>
+</div>
+</div>
+<div class="input-pair">
+<div>
+<label for="seiKana">セイ</label>
+<input autocomplete="off" id="seiKana"/>
+</div>
+<div>
+<label for="meiKana">メイ</label>
+<input autocomplete="off" id="meiKana"/>
+</div>
+</div>
+<label for="job">職種</label>
+<select disabled="" id="job">
+<option value="">顧客情報を読み込み中...</option>
+</select>
+<label for="nameRegistrationNo">本人確認用4桁番号</label>
+<input autocomplete="off" id="nameRegistrationNo" inputmode="numeric" maxlength="4"/>
+</div>
+<div class="search-panel hidden" id="employeeSearchPanel">
+<h3>職員番号で検索</h3>
+<div class="notice">
       初回登録時の職員番号・姓名・本人確認用4桁番号を入力してください。
     </div>
-
-    <label for="employeeNo">職員番号</label>
-    <input id="employeeNo" inputmode="latin" autocomplete="off">
-
-    <div class="input-pair">
-      <div>
-        <label for="employeeSei">姓</label>
-        <input id="employeeSei" autocomplete="off">
-      </div>
-      <div>
-        <label for="employeeMei">名</label>
-        <input id="employeeMei" autocomplete="off">
-      </div>
-    </div>
-
-    <label for="employeeRegistrationNo">本人確認用4桁番号</label>
-    <input id="employeeRegistrationNo" inputmode="numeric" maxlength="4" autocomplete="off">
-  </div>
-
-  <button id="searchButton" class="search-button" type="button" disabled>
+<label for="employeeNo">職員番号</label>
+<input autocomplete="off" id="employeeNo" inputmode="latin"/>
+<div class="input-pair">
+<div>
+<label for="employeeSei">姓</label>
+<input autocomplete="off" id="employeeSei"/>
+</div>
+<div>
+<label for="employeeMei">名</label>
+<input autocomplete="off" id="employeeMei"/>
+</div>
+</div>
+<label for="employeeRegistrationNo">本人確認用4桁番号</label>
+<input autocomplete="off" id="employeeRegistrationNo" inputmode="numeric" maxlength="4"/>
+</div>
+<button class="search-button" disabled="" id="searchButton" type="button">
     検索
   </button>
 </div>
+<div class="result-box hidden" id="resultArea"></div>
+<script id="uniformI18nRuntime">
+(() => {
+  "use strict";
+  const STORAGE_KEY = "uniformLanguage";
+  const DEFAULT_LANGUAGE = "ja";
+  const SUPPORTED = ["ja", "en", "vi"];
+  let currentLanguage = SUPPORTED.includes(localStorage.getItem(STORAGE_KEY)) ? localStorage.getItem(STORAGE_KEY) : DEFAULT_LANGUAGE;
+  let sourceMap = { en: {}, vi: {} };
+  let applying = false;
 
-<div id="resultArea" class="result-box hidden"></div>
+  const normalizeBreaks = value => String(value ?? "").replace(/\\n/g, "\n");
+  const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-<script>
+  function translateTemplate(text) {
+    if (currentLanguage === DEFAULT_LANGUAGE || !text) return text;
+    const map = sourceMap[currentLanguage] || {};
+    const raw = String(text);
+    if (Object.prototype.hasOwnProperty.call(map, raw)) return normalizeBreaks(map[raw]);
+    const trimmed = raw.trim();
+    if (Object.prototype.hasOwnProperty.call(map, trimmed)) {
+      return raw.replace(trimmed, normalizeBreaks(map[trimmed]));
+    }
+    for (const [ja, translated] of Object.entries(map)) {
+      if (!ja.includes("{") || !ja.includes("}")) continue;
+      const names = [...ja.matchAll(/\{([^{}]+)\}/g)].map(m => m[1]);
+      let pattern = escapeRegExp(ja);
+      names.forEach(name => { pattern = pattern.replace(escapeRegExp("{" + name + "}"), "(.+?)"); });
+      const match = raw.match(new RegExp("^" + pattern + "$"));
+      if (!match) continue;
+      let result = normalizeBreaks(translated);
+      names.forEach((name, index) => { result = result.replaceAll("{" + name + "}", match[index + 1]); });
+      return result;
+    }
+    return raw;
+  }
+
+  function translateNode(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const before = node.nodeValue;
+      const after = translateTemplate(before);
+      if (after !== before) node.nodeValue = after;
+      return;
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    if (node.closest("script,style,[data-i18n-ignore]")) return;
+    ["placeholder", "title", "aria-label", "value"].forEach(attr => {
+      if (!node.hasAttribute(attr)) return;
+      if (attr === "value" && !["BUTTON", "INPUT", "OPTION"].includes(node.tagName)) return;
+      const before = node.getAttribute(attr);
+      const after = translateTemplate(before);
+      if (after !== before) node.setAttribute(attr, after);
+    });
+    [...node.childNodes].forEach(translateNode);
+  }
+
+  function applyLanguage(language) {
+    currentLanguage = SUPPORTED.includes(language) ? language : DEFAULT_LANGUAGE;
+    localStorage.setItem(STORAGE_KEY, currentLanguage);
+    document.documentElement.lang = currentLanguage;
+    applying = true;
+    translateNode(document.body);
+    applying = false;
+    document.dispatchEvent(new CustomEvent("uniformLanguageChanged", { detail: { language: currentLanguage } }));
+  }
+
+  function createSelector(languageData) {
+    if (document.getElementById("uniformLanguageSelector")) return;
+    const wrap = document.createElement("div");
+    wrap.id = "uniformLanguageSelector";
+    wrap.className = "uniform-language-selector";
+    wrap.setAttribute("data-i18n-ignore", "true");
+    const label = document.createElement("label");
+    label.htmlFor = "uniformLanguageSelect";
+    label.textContent = "言語 / Language";
+    const select = document.createElement("select");
+    select.id = "uniformLanguageSelect";
+    (languageData.languages || []).sort((a,b) => a.order - b.order).forEach(item => {
+      const option = document.createElement("option");
+      option.value = item.code;
+      option.textContent = item.displayName;
+      option.selected = item.code === currentLanguage;
+      select.appendChild(option);
+    });
+    select.addEventListener("change", () => {
+      localStorage.setItem(STORAGE_KEY, select.value);
+      location.reload();
+    });
+    wrap.append(label, select);
+    document.body.prepend(wrap);
+  }
+
+  const originalAlert = window.alert.bind(window);
+  const originalConfirm = window.confirm.bind(window);
+  window.alert = message => originalAlert(translateTemplate(message));
+  window.confirm = message => originalConfirm(translateTemplate(message));
+  window.uniformTranslate = translateTemplate;
+
+  Promise.all([
+    fetch("languages.json", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("languages.json"); return r.json(); }),
+    fetch("translations.json", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("translations.json"); return r.json(); })
+  ]).then(([languageData, translationData]) => {
+    sourceMap = translationData.sourceMap || { en: {}, vi: {} };
+    createSelector(languageData);
+    applyLanguage(currentLanguage);
+    new MutationObserver(records => {
+      if (applying || currentLanguage === DEFAULT_LANGUAGE) return;
+      applying = true;
+      records.forEach(record => record.addedNodes.forEach(translateNode));
+      applying = false;
+    }).observe(document.body, { childList: true, subtree: true });
+  }).catch(error => {
+    console.warn("Translation files could not be loaded. Japanese will be displayed.", error);
+    createSelector({ languages: [
+      { code: "ja", displayName: "日本語", order: 1 },
+      { code: "en", displayName: "English", order: 2 },
+      { code: "vi", displayName: "Tiếng Việt", order: 3 }
+    ]});
+  });
+})();
+</script><script>
 
 /* 通常のブラウザ「戻る」を抑止し、画面内ボタンだけで遷移させる */
 let allowApplicationNavigation = false;
@@ -974,6 +1085,5 @@ function startEdit() {
 initializeSearchMethodUI();
 loadCustomerConfig();
 </script>
-
-</body>
+</div></body>
 </html>
