@@ -44,6 +44,15 @@ button {
   padding: 10px 18px;
   font-size: 15px;
 }
+
+/* ===== Multilingual flexible layout ===== */
+:where(h1,h2,h3,h4,p,li,label,button,a,.notice,.error,.success,.info-row,.item,.small){overflow-wrap:anywhere;word-break:normal;white-space:normal;}
+button{height:auto;min-height:44px;line-height:1.45;}
+.uniform-language-selector{width:auto!important;max-width:100%!important;box-sizing:border-box!important;flex-wrap:wrap!important;}
+.uniform-language-selector label{display:inline-block!important;width:auto!important;max-width:none!important;margin:0!important;white-space:nowrap!important;flex:0 0 auto!important;}
+.uniform-language-selector select,#uniformLanguageSelect{display:inline-block!important;width:auto!important;min-width:130px!important;max-width:220px!important;margin:0!important;flex:0 0 auto!important;}
+
+body{max-width:900px;margin:0 auto;box-sizing:border-box}.uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}.uniform-language-selector select{padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}@media(max-width:600px){body{padding:14px}.uniform-language-selector{position:relative;padding:7px 0}#backButton{width:100%}}
 </style>
 </head>
 
@@ -164,6 +173,20 @@ button {
 </p>
 
 <button id="backButton" type="button" onclick="history.back()">戻る</button>
+
+<script id="uniformI18nRuntime">
+(() => {
+ "use strict";
+ const KEY="uniformLanguage", DEF="ja", SUP=["ja","en","vi"];
+ let lang=SUP.includes(localStorage.getItem(KEY))?localStorage.getItem(KEY):DEF;
+ let sourceMap={en:{},vi:{}},applying=false;
+ const nb=v=>String(v??"").replace(/\\n/g,"\n");
+ function tr(text){if(lang===DEF||!text)return text;const map=sourceMap[lang]||{},raw=String(text),trimmed=raw.trim();if(Object.prototype.hasOwnProperty.call(map,raw))return nb(map[raw]);if(Object.prototype.hasOwnProperty.call(map,trimmed))return raw.replace(trimmed,nb(map[trimmed]));const compact=v=>String(v).replace(/\s+/g," ").trim();const hit=Object.entries(map).find(([ja])=>compact(ja)===compact(trimmed));return hit?raw.replace(trimmed,nb(hit[1])):raw;}
+ function translateNode(node){if(node.nodeType===Node.TEXT_NODE){const b=node.nodeValue,a=tr(b);if(a!==b)node.nodeValue=a;return;}if(node.nodeType!==Node.ELEMENT_NODE||node.closest("script,style,[data-i18n-ignore]"))return;["placeholder","title","aria-label"].forEach(attr=>{if(node.hasAttribute(attr)){const b=node.getAttribute(attr),a=tr(b);if(a!==b)node.setAttribute(attr,a);}});[...node.childNodes].forEach(translateNode);}
+ function selector(data){const wrap=document.createElement("div");wrap.id="uniformLanguageSelector";wrap.className="uniform-language-selector";wrap.dataset.i18nIgnore="true";const label=document.createElement("label");label.htmlFor="uniformLanguageSelect";label.textContent="言語 / Language";const sel=document.createElement("select");sel.id="uniformLanguageSelect";[...(data.languages||[])].sort((a,b)=>a.order-b.order).forEach(x=>{const o=document.createElement("option");o.value=x.code;o.textContent=x.displayName;o.selected=x.code===lang;sel.appendChild(o)});sel.addEventListener("change",()=>{localStorage.setItem(KEY,sel.value);location.reload()});wrap.append(label,sel);document.body.prepend(wrap)}
+ Promise.all([fetch("languages.json",{cache:"no-store"}).then(r=>r.json()),fetch("translations.json",{cache:"no-store"}).then(r=>r.json())]).then(([ld,td])=>{sourceMap=td.sourceMap||sourceMap;selector(ld);document.documentElement.lang=lang;applying=true;translateNode(document.body);applying=false;new MutationObserver(rs=>{if(applying||lang===DEF)return;applying=true;rs.forEach(r=>r.addedNodes.forEach(translateNode));applying=false}).observe(document.body,{childList:true,subtree:true})}).catch(e=>console.warn("Translation files could not be loaded. Japanese will be displayed.",e));
+})();
+</script>
 <script>
 (function () {
   const params = new URLSearchParams(window.location.search);
