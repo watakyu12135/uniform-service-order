@@ -19,16 +19,21 @@
   }
   },
   "departments": [
-    {"job": "看護師", "department": "３階病棟", "gender": "兼用", "displayOrder": 1, "active": true},
-    {"job": "看護師", "department": "４階病棟", "gender": "兼用", "displayOrder": 2, "active": true},
-    {"job": "看護師", "department": "手術室", "gender": "兼用", "displayOrder": 4, "active": true},
-    {"job": "看護師", "department": "外来", "gender": "兼用", "displayOrder": 3, "active": true},
+    {"job": "看護師", "department": "３階病棟", "gender": "男性", "displayOrder": 1, "active": true},
+    {"job": "看護師", "department": "３階病棟", "gender": "女性", "displayOrder": 1, "active": true},
+    {"job": "看護師", "department": "４階病棟", "gender": "男性", "displayOrder": 2, "active": true},
+    {"job": "看護師", "department": "４階病棟", "gender": "女性", "displayOrder": 2, "active": true},
+    {"job": "看護師", "department": "手術室", "gender": "男性", "displayOrder": 3, "active": true},
+    {"job": "看護師", "department": "手術室", "gender": "女性", "displayOrder": 3, "active": true},
+    {"job": "看護師", "department": "外来", "gender": "男性", "displayOrder": 4, "active": true},
+    {"job": "看護師", "department": "外来", "gender": "女性", "displayOrder": 4, "active": true},
+    {"job": "看護師", "department": "小児科", "gender": "男性", "displayOrder": 5, "active": true},
     {"job": "看護師", "department": "小児科", "gender": "女性", "displayOrder": 5, "active": true},
-    {"job": "一般事務", "department": "事務部", "gender": "女性", "displayOrder": 1, "active": true},
-    {"job": "一般事務", "department": "受付", "gender": "女性", "displayOrder": 2, "active": true},
-    {"job": "医療秘書", "department": "医事課", "gender": "女性", "displayOrder": 1, "active": true},
-    {"job": "医療秘書", "department": "秘書課", "gender": "女性", "displayOrder": 2, "active": true},
-    {"job": "健診センター", "department": "健診センター", "gender": "女性", "displayOrder": 1, "active": true}
+    {"job": "一般事務", "department": "事務部", "gender": "女性", "displayOrder": 6, "active": true},
+    {"job": "一般事務", "department": "受付", "gender": "女性", "displayOrder": 7, "active": true},
+    {"job": "医療秘書", "department": "医事課", "gender": "女性", "displayOrder": 8, "active": true},
+    {"job": "医療秘書", "department": "秘書課", "gender": "女性", "displayOrder": 9, "active": true},
+    {"job": "健診センター", "department": "健診センター", "gender": "女性", "displayOrder": 10, "active": true}
   ],
   "jobs": [
     {
