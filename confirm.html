@@ -143,6 +143,13 @@ button{height:auto;min-height:44px;line-height:1.45;}
 .uniform-language-selector select,#uniformLanguageSelect{display:inline-block!important;width:auto!important;min-width:130px!important;max-width:220px!important;margin:0!important;flex:0 0 auto!important;}
 
 .check-area label{align-items:flex-start!important}.check-area input[type="checkbox"]{flex:0 0 auto;margin-top:.25em!important}.check-area label>span{min-width:0;overflow-wrap:anywhere}.info-row{display:grid;grid-template-columns:minmax(150px,auto) minmax(0,1fr);gap:6px}.info-row span{min-width:0;overflow-wrap:anywhere}@media(max-width:600px){.info-row{grid-template-columns:1fr}}
+
+.test-banner { margin: 0 0 18px; padding: 14px 16px; border: 2px solid #d97706; border-radius: 8px; background: #fff7ed; color: #7c2d12; font-weight: 800; line-height: 1.6; }
+.test-result { margin-top: 22px; padding: 16px; border: 3px solid #d97706; border-radius: 10px; background: #fffaf0; }
+.test-result h3 { margin-top: 0; color: #9a3412; }
+.test-result pre { max-height: 55vh; overflow: auto; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: #0f172a; color: #e2e8f0; font-size: 12px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.test-result-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.test-result-actions button { width: auto; flex: 1 1 180px; }
 </style>
 <style id="uniformI18nStyle">
 .uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}
@@ -150,6 +157,7 @@ button{height:auto;min-height:44px;line-height:1.45;}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
 </style></head>
 <body>
+<div class="test-banner" role="status">AWS移行実験版です。登録ボタンを押しても外部へ送信されず、送信予定内容をこの画面に表示します。</div>
 <h2>登録内容確認</h2>
 <div class="error" id="message"></div>
 <!-- 基本情報 -->
@@ -234,6 +242,17 @@ button{height:auto;min-height:44px;line-height:1.45;}
 <button disabled="" id="privacyCloseButton" type="button">確認して閉じる</button>
 </div>
 </div>
+</div>
+
+<div class="test-result hidden" id="testResultArea" tabindex="-1">
+  <h3>実験版・送信予定内容</h3>
+  <p><strong>データは登録されていません。メールも送信されていません。</strong></p>
+  <p>以下は、AWS移行後にAPIへ送信する予定の内容です。</p>
+  <pre id="testPayloadOutput"></pre>
+  <div class="test-result-actions">
+    <button id="copyTestPayloadButton" type="button">JSONをコピー</button>
+    <button id="editTestPayloadButton" type="button">入力画面に戻る</button>
+  </div>
 </div>
 <div aria-busy="true" aria-live="assertive" class="sending-overlay hidden" id="sendingOverlay" role="alert">
 <div class="sending-panel">
@@ -1281,64 +1300,46 @@ if (!payload.measurement) {
 
 normalizePayloadForPowerAutomate(payload);
 
+  // ===== AWS移行実験版 =====
+  // 外部のPower Automateには送信せず、送信予定のJSONを画面に表示する。
+  stopSendingAnimation();
+  document.getElementById("sendingOverlay").classList.add("hidden");
+  document.body.classList.remove("sending-locked");
+
+  const resultArea = document.getElementById("testResultArea");
+  const output = document.getElementById("testPayloadOutput");
+  output.textContent = JSON.stringify(payload, null, 2);
+  resultArea.classList.remove("hidden");
+
+  submitInProgress = false;
+  submitBtn.innerText = isEdit ? "修正内容を再表示する" : "送信予定内容を再表示する";
+  submitBtn.disabled = false;
+  document.getElementById("returnToInputButton").disabled = false;
+  document.getElementById("returnToInputButton").classList.remove("hidden");
+  document.getElementById("confirmCheck").disabled = true;
+  document.getElementById("duplicateConfirmCheck").disabled = true;
+
+  resultArea.focus();
+  resultArea.scrollIntoView({ behavior: "smooth", block: "start" });
+
+});
+
+
+
+document.getElementById("copyTestPayloadButton").addEventListener("click", async () => {
+  const text = document.getElementById("testPayloadOutput").textContent || "";
   try {
-    const res = await fetch(FLOW_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-   const text = await res.text();
-
-    if (!res.ok) {
-      let errorMessage = "登録に失敗しました。時間をおいて再度お試しください。";
-      try {
-        const errorJson = JSON.parse(text);
-        if (errorJson.errorCode === "duplicate_registration_no") {
-          errorMessage =
-            "その4桁番号は同じ登録者で既に使用中です。\n" +
-            "別の番号を入力してください。";
-        } else if (errorJson.message) {
-          errorMessage = errorJson.message;
-        }
-      } catch {
-        if (text) errorMessage += "\n" + text;
-      }
-      alert(errorMessage);
-      resetSubmitButton(isEdit);
-      return;
-    }
-
-    confirmRegistrationCompleted = true;
-    sessionStorage.setItem("uniformComplete", JSON.stringify({
-      measureNo: measurementNo,
-      registrationNo: registrationNo,
-      editMode: isEdit,
-      registrationType: registrationType,
-      customerKey: customerKey
-    }));
-
-    sessionStorage.setItem("uniformMailDraft", JSON.stringify(payload));
-
-    sessionStorage.removeItem("uniformDraft");
-    sessionStorage.removeItem("uniformConfirmPin");
-
-    if (isEdit) {
-      sessionStorage.removeItem("uniformEditData");
-      sessionStorage.removeItem("uniformEditCustomer");
-    }
-
-    location.href = "complete.html";
-
-  } catch (err) {
-    alert("登録送信中にエラーが発生しました。\n通信環境を確認して、再度お試しください。\n\n" + err.message);
-
-    resetSubmitButton(isEdit);
+    await navigator.clipboard.writeText(text);
+    alert("送信予定のJSONをコピーしました。");
+  } catch (error) {
+    console.error("JSONのコピーに失敗しました。", error);
+    alert("自動コピーできませんでした。表示内容を選択してコピーしてください。");
   }
 });
 
+document.getElementById("editTestPayloadButton").addEventListener("click", () => {
+  document.getElementById("returnToInputButton").click();
+});
 
 async function initializeConfirmPage() {
   try {
