@@ -536,9 +536,10 @@ function loadDraft() {
       pinInput.style.cursor = "not-allowed";
     }
   } else {
-    const savedPin = sessionStorage.getItem("uniformConfirmPin");
+    // 新規登録では前回の4桁番号を引き継がず、必ず空欄から開始する。
+    sessionStorage.removeItem("uniformConfirmPin");
     if (pinInput) {
-      if (savedPin !== null) pinInput.value = savedPin;
+      pinInput.value = "";
       pinInput.readOnly = false;
       pinInput.removeAttribute("aria-readonly");
       pinInput.style.backgroundColor = "";
@@ -1301,25 +1302,21 @@ if (!payload.measurement) {
 normalizePayloadForPowerAutomate(payload);
 
   // ===== AWS移行実験版 =====
-  // 外部のPower Automateには送信せず、送信予定のJSONを画面に表示する。
+  // 外部へ送信せず、送信予定のJSONを画面に表示する。
   stopSendingAnimation();
   document.getElementById("sendingOverlay").classList.add("hidden");
   document.body.classList.remove("sending-locked");
 
   const resultArea = document.getElementById("testResultArea");
-  const output = document.getElementById("testPayloadOutput");
-  output.textContent = JSON.stringify(payload, null, 2);
+  document.getElementById("testPayloadOutput").textContent = JSON.stringify(payload, null, 2);
   resultArea.classList.remove("hidden");
 
   submitInProgress = false;
-
-  // 結果表示後は既存の操作ボタンを隠し、結果欄内の2ボタンだけを表示する。
   submitBtn.disabled = true;
   submitBtn.classList.add("hidden");
   const returnToInputButton = document.getElementById("returnToInputButton");
   returnToInputButton.disabled = true;
   returnToInputButton.classList.add("hidden");
-
   document.getElementById("confirmCheck").disabled = true;
   document.getElementById("duplicateConfirmCheck").disabled = true;
 
