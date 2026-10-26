@@ -1,7 +1,8 @@
 (function () {
   "use strict";
 
-  let warningShown = false;
+  let idleWarningShown = false;
+  let absoluteWarningShown = false;
   let timerId = null;
   let lastTouchAt = 0;
   const listeners = [];
@@ -19,27 +20,37 @@
 
   function recordActivity() {
     const current = Date.now();
-    // 連続入力でsessionStorageを書き続けないよう、更新は15秒に1回まで。
     if (current - lastTouchAt < 15000) return;
     if (window.uniformAuth.touch()) {
       lastTouchAt = current;
-      warningShown = false;
+      idleWarningShown = false;
     }
   }
 
   function start(options) {
     stop();
+    idleWarningShown = false;
+    absoluteWarningShown = false;
     options = options || {};
+
     const statusElement = options.statusElement || null;
-    const onWarning = options.onWarning || function (seconds) {
-      return window.confirm("無操作による認証終了まで約" + seconds + "秒です。入力を続けますか？");
+    const onIdleWarning = options.onIdleWarning || function (seconds) {
+      return window.confirm(
+        "無操作による認証終了まで約" + seconds +
+        "秒です。\n\n入力を続けますか？"
+      );
+    };
+    const onAbsoluteWarning = options.onAbsoluteWarning || function (seconds) {
+      window.alert(
+        "この認証は最大利用時間に達するため、約" + seconds +
+        "秒後に終了します。\n\n入力中の内容を確認してください。"
+      );
     };
     const onExpired = options.onExpired || function () {
       window.uniformAuth.logout("timeout");
       location.replace("login.html?expired=1");
     };
 
-    // 実際の入力・選択・ボタン操作で無操作時間だけを延長する。
     addTrackedListener(document, "input", recordActivity, true);
     addTrackedListener(document, "change", recordActivity, true);
     addTrackedListener(document, "click", function (event) {
@@ -58,25 +69,38 @@
 
       const cfg = window.APP_CONFIG || {};
       const current = Date.now();
+      const warningSeconds = Number(cfg.warningBeforeSeconds || 30);
       const idleExpiresAt = Number(result.session.lastActivityAt) + Number(cfg.idleTimeoutMinutes || 2) * 60000;
       const absoluteExpiresAt = Number(result.session.absoluteExpiresAt);
-      const expiresAt = Math.min(idleExpiresAt, absoluteExpiresAt);
-      const idleRemaining = Math.max(0, idleExpiresAt - current);
-      const absoluteRemaining = Math.max(0, absoluteExpiresAt - current);
-      const remaining = Math.min(idleRemaining, absoluteRemaining);
-      const seconds = Math.ceil(remaining / 1000);
+      const idleSeconds = Math.max(0, Math.ceil((idleExpiresAt - current) / 1000));
+      const absoluteSeconds = Math.max(0, Math.ceil((absoluteExpiresAt - current) / 1000));
 
       if (statusElement) {
-        const idleMinutes = Math.max(1, Math.ceil(idleRemaining / 60000));
-        const absoluteMinutes = Math.max(1, Math.ceil(absoluteRemaining / 60000));
-        statusElement.textContent = "無操作 " + idleMinutes + "分 / 最大 " + absoluteMinutes + "分";
+        const idleLabel = idleSeconds >= 60
+          ? Math.ceil(idleSeconds / 60) + "分"
+          : idleSeconds + "秒";
+        const absoluteLabel = absoluteSeconds >= 60
+          ? Math.ceil(absoluteSeconds / 60) + "分"
+          : absoluteSeconds + "秒";
+        statusElement.textContent = "無操作 " + idleLabel + " / 最大 " + absoluteLabel;
       }
 
-      if (!warningShown && seconds <= Number(cfg.warningBeforeSeconds || 30)) {
-        warningShown = true;
-        if (onWarning(seconds) === true && window.uniformAuth.touch()) {
+      // 最大利用時間は延長できないため、警告は1回だけ表示する。
+      if (!absoluteWarningShown && absoluteSeconds <= warningSeconds) {
+        absoluteWarningShown = true;
+        onAbsoluteWarning(absoluteSeconds);
+        return;
+      }
+
+      // 最大期限が先に来る場合は、無操作警告を重ねて表示しない。
+      if (absoluteSeconds <= idleSeconds) return;
+
+      // 無操作警告は「続ける」で延長できるため、次の無操作時には再表示可能。
+      if (!idleWarningShown && idleSeconds <= warningSeconds) {
+        idleWarningShown = true;
+        if (onIdleWarning(idleSeconds) === true && window.uniformAuth.touch()) {
           lastTouchAt = Date.now();
-          warningShown = false;
+          idleWarningShown = false;
         }
       }
     }
@@ -91,5 +115,9 @@
     removeTrackedListeners();
   }
 
-  window.uniformSessionManager = Object.freeze({ start: start, stop: stop, recordActivity: recordActivity });
+  window.uniformSessionManager = Object.freeze({
+    start: start,
+    stop: stop,
+    recordActivity: recordActivity
+  });
 })();
