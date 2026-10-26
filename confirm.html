@@ -382,7 +382,10 @@ button{height:auto;min-height:44px;line-height:1.45;}
     ]});
   });
 })();
-</script><script>
+</script>
+<script src="js/app-config.js"></script>
+<script src="js/api-client.js"></script>
+<script>
 
 /* 戻り方にかかわらず、index.htmlが確認直前の入力内容を復元できるようにする */
 let allowApplicationNavigation = false;
@@ -1301,27 +1304,43 @@ if (!payload.measurement) {
 
 normalizePayloadForPowerAutomate(payload);
 
-  // ===== AWS移行実験版 =====
-  // 外部へ送信せず、送信予定のJSONを画面に表示する。
-  stopSendingAnimation();
-  document.getElementById("sendingOverlay").classList.add("hidden");
-  document.body.classList.remove("sending-locked");
+  try {
+    // API通信は共通クライアントへ集約する。
+    // 現在はpreviewモードのため、外部へ送信せずpayloadを返す。
+    const result = await window.uniformApiClient.submitRegistration(payload);
 
-  const resultArea = document.getElementById("testResultArea");
-  document.getElementById("testPayloadOutput").textContent = JSON.stringify(payload, null, 2);
-  resultArea.classList.remove("hidden");
+    stopSendingAnimation();
+    document.getElementById("sendingOverlay").classList.add("hidden");
+    document.body.classList.remove("sending-locked");
 
-  submitInProgress = false;
-  submitBtn.disabled = true;
-  submitBtn.classList.add("hidden");
-  const returnToInputButton = document.getElementById("returnToInputButton");
-  returnToInputButton.disabled = true;
-  returnToInputButton.classList.add("hidden");
-  document.getElementById("confirmCheck").disabled = true;
-  document.getElementById("duplicateConfirmCheck").disabled = true;
+    if (result.preview) {
+      const resultArea = document.getElementById("testResultArea");
+      document.getElementById("testPayloadOutput").textContent =
+        JSON.stringify(result.payload, null, 2);
+      resultArea.classList.remove("hidden");
 
-  resultArea.focus();
-  resultArea.scrollIntoView({ behavior: "smooth", block: "start" });
+      submitInProgress = false;
+      submitBtn.disabled = true;
+      submitBtn.classList.add("hidden");
+      const returnToInputButton = document.getElementById("returnToInputButton");
+      returnToInputButton.disabled = true;
+      returnToInputButton.classList.add("hidden");
+      document.getElementById("confirmCheck").disabled = true;
+      document.getElementById("duplicateConfirmCheck").disabled = true;
+
+      resultArea.focus();
+      resultArea.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    alert(result.message || "登録しました。");
+  } catch (err) {
+    stopSendingAnimation();
+    document.getElementById("sendingOverlay").classList.add("hidden");
+    document.body.classList.remove("sending-locked");
+    alert("登録処理中にエラーが発生しました。\n\n" + err.message);
+    resetSubmitButton(isEdit);
+  }
 
 });
 
