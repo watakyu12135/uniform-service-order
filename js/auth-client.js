@@ -46,16 +46,54 @@
     return { ok: false, message: "ユーザーIDまたはパスワードが正しくありません。" };
   }
 
-  function loginWithQr(token, customerKey) {
-    const results = {
-      QR_TEST_EXPIRED: "このQRコードは有効期限が切れています。",
-      QR_TEST_DISABLED: "このQRコードは現在停止されています。",
-      QR_TEST_INVALID: "QRコードを確認できませんでした。"
-    };
-    if (token === "QR_TEST_SUCCESS") {
-      return { ok: true, session: createSession("qr-test", customerKey) };
+  function checkCustomerAccess(customerStatus) {
+    if (customerStatus === "expired") {
+      return {
+        ok: false,
+        stage: "customer",
+        code: "CUSTOMER_EXPIRED",
+        message: "この採寸ページの公開期限は終了しています。"
+      };
     }
-    return { ok: false, message: results[token] || "QR認証コードが指定されていないか、不正です。" };
+    if (customerStatus === "disabled") {
+      return {
+        ok: false,
+        stage: "customer",
+        code: "CUSTOMER_DISABLED",
+        message: "この採寸ページは現在利用できません。"
+      };
+    }
+    return { ok: true };
+  }
+
+  function loginWithQr(token, customerKey, customerStatus) {
+    // 第1段階：QR認証コード自体を確認する。
+    if (token === "QR_TEST_DISABLED") {
+      return {
+        ok: false,
+        stage: "qr",
+        code: "QR_DISABLED",
+        message: "このQRコードは現在使用できません。"
+      };
+    }
+    if (token !== "QR_TEST_SUCCESS") {
+      return {
+        ok: false,
+        stage: "qr",
+        code: "QR_INVALID",
+        message: "QRコードを確認できませんでした。"
+      };
+    }
+
+    // 第2段階：QRに紐づく顧客の有効状態と公開期限を確認する。
+    const customerResult = checkCustomerAccess(customerStatus || "active");
+    if (!customerResult.ok) return customerResult;
+
+    return {
+      ok: true,
+      stage: "complete",
+      session: createSession("qr-test", customerKey)
+    };
   }
 
   function getSession() {
@@ -95,5 +133,5 @@
     return null;
   }
 
-  window.uniformAuth = Object.freeze({ login, loginWithQr, getSession, validateSession, touch, logout, requireAuth, clearPreviousApplicationData });
+  window.uniformAuth = Object.freeze({ login, loginWithQr, checkCustomerAccess, getSession, validateSession, touch, logout, requireAuth, clearPreviousApplicationData });
 })();
