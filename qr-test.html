@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR認証テスト</title>
+<style>
+body{margin:0;background:#f4f7fb;color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:720px;margin:30px auto;padding:16px}.card{background:#fff;border:1px solid #cbd5e1;border-radius:14px;padding:24px;box-shadow:0 8px 24px #0f172a18}.test{background:#fff7ed;border:2px solid #d97706;color:#7c2d12;border-radius:10px;padding:12px;margin-bottom:18px;font-weight:700}h1{font-size:24px;margin:0 0 8px}.sub{color:#475569;line-height:1.7}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}.item{border:1px solid #cbd5e1;border-radius:10px;padding:16px;background:#f8fafc}.item h2{font-size:18px;margin:0 0 8px}.item p{min-height:44px;color:#475569;font-size:14px;line-height:1.55}.item a{display:block;padding:12px;border-radius:8px;color:#fff;text-decoration:none;text-align:center;font-weight:700}.success a{background:#166534}.expired a{background:#92400e}.disabled a{background:#7f1d1d}.invalid a{background:#334155}.back{display:block;margin-top:22px;text-align:center;color:#075985}.note{margin-top:20px;padding:12px;background:#eef2ff;border-radius:8px;font-size:14px;line-height:1.65}@media(max-width:620px){.grid{grid-template-columns:1fr}.item p{min-height:auto}.wrap{margin:8px auto}.card{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="test">AWS移行実験版です。以下は本番QRコードではありません。</div>
+  <main class="card">
+    <h1>QR認証テスト</h1>
+    <p class="sub">QR認証APIが返す予定の代表的な結果を、GitHub Pages上で疑似確認します。</p>
+    <div class="grid">
+      <section class="item success"><h2>1. 認証成功</h2><p>有効なQRコードとして認証し、白衣採寸WEBを表示します。</p><a href="qr-login.html?token=QR_TEST_SUCCESS&customer=gtYuD7SG">成功を試す</a></section>
+      <section class="item expired"><h2>2. 有効期限切れ</h2><p>利用期間を過ぎたQRコードとして、エラー画面を表示します。</p><a href="qr-login.html?token=QR_TEST_EXPIRED&customer=gtYuD7SG">期限切れを試す</a></section>
+      <section class="item disabled"><h2>3. QR停止中</h2><p>管理者が無効化したQRコードとして、エラー画面を表示します。</p><a href="qr-login.html?token=QR_TEST_DISABLED&customer=gtYuD7SG">停止中を試す</a></section>
+      <section class="item invalid"><h2>4. QRコード不正</h2><p>登録されていない認証コードとして、エラー画面を表示します。</p><a href="qr-login.html?token=QR_TEST_INVALID&customer=gtYuD7SG">不正コードを試す</a></section>
+    </div>
+    <div class="note"><strong>AWS移行後</strong><br>画面のURL形式は維持し、<code>QR_TEST_...</code>の疑似判定を、API Gateway＋LambdaによるQR認証コード照合へ置き換えます。</div>
+    <a class="back" href="login.html">ログイン画面へ戻る</a>
+  </main>
+</div>
+</body>
+</html>
