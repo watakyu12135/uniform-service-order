@@ -4854,6 +4854,11 @@ if (hasBespokeWithoutMeasurement()) {
 
 <script id="authStatusRuntime">
 document.addEventListener("DOMContentLoaded", function () {
+  const customerNotice = sessionStorage.getItem("uniformCustomerContextNotice");
+  if (customerNotice === "corrected") {
+    sessionStorage.removeItem("uniformCustomerContextNotice");
+    console.warn("URLのcustomer値を認証中の顧客へ修正しました。");
+  }
   const session = window.uniformCurrentSession || window.uniformAuth.getSession();
   if (!session) return;
   document.getElementById("authMethodText").textContent =
