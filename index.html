@@ -1013,8 +1013,16 @@ button{height:auto;min-height:44px;line-height:1.45;}
 @media(max-width:600px){.name-area{grid-template-columns:1fr!important}.basic-field{grid-template-columns:1fr}.roster-step-progress{display:grid!important;grid-template-columns:1fr!important}.basic-select-field{display:grid!important;grid-template-columns:1fr!important}.basic-select-field select{width:100%!important;max-width:100%}}
 
 </style>
-<style id="uniformI18nStyle">.uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}.uniform-language-selector select{min-width:130px;padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}</style></head>
+<style id="uniformI18nStyle">.uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}.uniform-language-selector select{min-width:130px;padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}</style>
+<style id="authStatusStyle">.auth-status-bar{position:sticky;top:0;z-index:10000;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:#0f172a;color:#fff;font-size:13px}.auth-status-bar strong{color:#fde68a}.auth-status-actions{display:flex;align-items:center;gap:10px}.auth-status-bar button{width:auto!important;margin:0!important;padding:7px 12px!important;background:#fff!important;color:#0f172a!important;border:0!important;border-radius:6px!important;font-weight:700!important}.auth-status-note{white-space:nowrap}@media(max-width:600px){.auth-status-bar{align-items:flex-start;flex-direction:column}.auth-status-actions{width:100%;justify-content:space-between}}</style>
+<script src="js/app-config.js"></script>
+<script src="js/auth-client.js"></script>
+<script src="js/session-manager.js"></script>
+<script>window.uniformCurrentSession=window.uniformAuth.requireAuth();</script>
+</head>
 <body>
+<div class="auth-status-bar" id="authStatusBar"><div><strong>AWS移行認証実験中</strong>　<span id="authMethodText"></span></div><div class="auth-status-actions"><span class="auth-status-note" id="authRemainingText">認証時間を確認中</span><button type="button" id="authLogoutButton">ログアウト</button></div></div>
+
 <div class="page-shell">
 <header class="site-header">
 <div class="brand-row">
@@ -4841,6 +4849,23 @@ if (hasBespokeWithoutMeasurement()) {
     setConfirmTransitionBusy(false);
   }
 }
+</script>
+
+<script id="authStatusRuntime">
+document.addEventListener("DOMContentLoaded", function () {
+  const session = window.uniformCurrentSession || window.uniformAuth.getSession();
+  if (!session) return;
+  document.getElementById("authMethodText").textContent =
+    session.authMethod === "qr-test" ? "QRコードで認証済み" : "ID・パスワードで認証済み";
+  document.getElementById("authLogoutButton").addEventListener("click", function () {
+    window.uniformSessionManager.stop();
+    window.uniformAuth.logout("manual");
+    location.replace("login.html");
+  });
+  window.uniformSessionManager.start({
+    statusElement: document.getElementById("authRemainingText")
+  });
+});
 </script>
 </body>
 </html>
