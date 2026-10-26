@@ -6,7 +6,24 @@
   function now() { return Date.now(); }
   function config() { return window.APP_CONFIG || {}; }
 
+  function clearPreviousApplicationData() {
+    // 新しい認証を開始するときは、前回の入力途中・確認・修正データを引き継がない。
+    [
+      "uniformDraft",
+      "uniformDraftPending",
+      "uniformReturnToIndex",
+      "uniformConfirmPin",
+      "uniformComplete",
+      "uniformMailDraft",
+      "uniformEditData",
+      "uniformEditCustomer"
+    ].forEach(function (key) {
+      sessionStorage.removeItem(key);
+    });
+  }
+
   function createSession(authMethod, customerKey, customerName) {
+    clearPreviousApplicationData();
     const issuedAt = now();
     const session = {
       authenticated: true,
@@ -78,5 +95,5 @@
     return null;
   }
 
-  window.uniformAuth = Object.freeze({ login, loginWithQr, getSession, validateSession, touch, logout, requireAuth });
+  window.uniformAuth = Object.freeze({ login, loginWithQr, getSession, validateSession, touch, logout, requireAuth, clearPreviousApplicationData });
 })();
