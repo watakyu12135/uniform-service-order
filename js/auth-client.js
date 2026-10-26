@@ -41,7 +41,7 @@
   function login(userId, password, customerKey) {
     // GitHub Pages上の画面確認専用。AWS移行後はCognito認証へ交換する。
     if (userId === "TEST" && password === "TEST1234") {
-      return { ok: true, session: createSession("password-test", customerKey) };
+      return { ok: true, session: createSession("password-test", "gtYuD7SG") };
     }
     return { ok: false, message: "ユーザーIDまたはパスワードが正しくありません。" };
   }
@@ -92,7 +92,7 @@
     return {
       ok: true,
       stage: "complete",
-      session: createSession("qr-test", customerKey)
+      session: createSession("qr-test", "gtYuD7SG")
     };
   }
 
