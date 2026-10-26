@@ -157,10 +157,10 @@ button{height:auto;min-height:44px;line-height:1.45;}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
 </style>
 <style id="authStatusStyle">.auth-status-bar{position:sticky;top:0;z-index:10000;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:#0f172a;color:#fff;font-size:13px}.auth-status-bar strong{color:#fde68a}.auth-status-actions{display:flex;align-items:center;gap:10px}.auth-status-bar button{width:auto!important;margin:0!important;padding:7px 12px!important;background:#fff!important;color:#0f172a!important;border:0!important;border-radius:6px!important;font-weight:700!important}.auth-status-note{white-space:nowrap}@media(max-width:600px){.auth-status-bar{align-items:flex-start;flex-direction:column}.auth-status-actions{width:100%;justify-content:space-between}}</style>
-<script src="js/app-config.js?v=7.4"></script>
-<script src="js/auth-client.js?v=7.4"></script>
-<script src="js/session-manager.js?v=7.4"></script>
-<script src="js/protected-page.js?v=7.4"></script>
+<script src="js/app-config.js?v=7.5"></script>
+<script src="js/auth-client.js?v=7.5"></script>
+<script src="js/session-manager.js?v=7.5"></script>
+<script src="js/protected-page.js?v=7.5"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
 </head>
 <body>
@@ -392,7 +392,7 @@ button{height:auto;min-height:44px;line-height:1.45;}
   });
 })();
 </script>
-<script src="js/app-config.js?v=7.4"></script>
+<script src="js/app-config.js?v=7.5"></script>
 <script src="js/api-client.js"></script>
 <script>
 
@@ -436,43 +436,108 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function collectDraftCustomerKeys(targetDraft) {
+  const found = [];
+  const add = (source, path) => {
+    if (!source || typeof source !== "object") return;
+    ["publicKey", "customerKey", "customer"].forEach(key => {
+      const value = String(source[key] || "").trim();
+      if (value) found.push({ path: path + "." + key, value });
+    });
+  };
+
+  add(targetDraft, "draft");
+  (targetDraft?.orders || []).forEach((order, index) => add(order, `draft.orders[${index}]`));
+  add(targetDraft?.measurement, "draft.measurement");
+  return found;
+}
+
+function lockConfirmPage(messageText) {
+  const message = document.getElementById("message");
+  if (message) {
+    message.innerText = messageText;
+    message.style.display = "block";
+    message.style.color = "#991b1b";
+    message.style.background = "#fee2e2";
+    message.style.border = "1px solid #fecaca";
+    message.style.padding = "12px";
+    message.style.borderRadius = "8px";
+  }
+
+  ["submitButton", "returnToInputButton", "confirmCheck", "duplicateConfirmCheck", "editTestPayloadButton"]
+    .forEach(id => {
+      const element = document.getElementById(id);
+      if (element) element.disabled = true;
+    });
+
+  const resultArea = document.getElementById("testPayloadResult");
+  if (resultArea) {
+    resultArea.textContent = "顧客情報の不一致を検出したため、登録予定JSONは作成していません。";
+  }
+}
+
+function validateDraftCustomerContext(targetDraft) {
+  const session = window.uniformCurrentSession || window.uniformAuth?.getSession?.();
+  const authenticatedCustomer = String(session?.customerKey || "").trim();
+
+  if (!authenticatedCustomer) {
+    return {
+      ok: false,
+      message: "認証中の顧客情報を確認できません。ログインし直してください。"
+    };
+  }
+
+  if (!targetDraft || typeof targetDraft !== "object") {
+    return {
+      ok: false,
+      message: "入力データを確認できません。入力画面からやり直してください。"
+    };
+  }
+
+  const values = collectDraftCustomerKeys(targetDraft);
+  if (values.length === 0) {
+    return {
+      ok: false,
+      message: "入力データに公開キーがありません。入力画面からやり直してください。"
+    };
+  }
+
+  const mismatch = values.find(item => item.value !== authenticatedCustomer);
+  if (mismatch) {
+    console.error("顧客情報の不一致を検出しました。", {
+      authenticatedCustomer,
+      mismatchPath: mismatch.path,
+      draftCustomer: mismatch.value
+    });
+    return {
+      ok: false,
+      message: "認証中の顧客と入力データの顧客が一致しません。登録処理を停止しました。入力画面へ戻ってやり直してください。"
+    };
+  }
+
+  // 照合済みの公開キーで、登録予定データ内の全階層を統一する。
+  targetDraft.publicKey = authenticatedCustomer;
+  targetDraft.customerKey = authenticatedCustomer;
+  targetDraft.customer = authenticatedCustomer;
+  (targetDraft.orders || []).forEach(order => {
+    order.publicKey = authenticatedCustomer;
+    order.customerKey = authenticatedCustomer;
+    order.customer = authenticatedCustomer;
+  });
+  if (targetDraft.measurement) {
+    targetDraft.measurement.publicKey = authenticatedCustomer;
+    targetDraft.measurement.customerKey = authenticatedCustomer;
+    targetDraft.measurement.customer = authenticatedCustomer;
+  }
+  sessionStorage.setItem("uniformCustomer", authenticatedCustomer);
+  sessionStorage.setItem("uniformDraft", JSON.stringify(targetDraft));
+
+  return { ok: true, customerKey: authenticatedCustomer };
+}
+
 function getCustomerKey() {
-  const url = new URL(window.location.href);
-  let storedDraft = null;
-  const rawDraft = sessionStorage.getItem("uniformDraft");
-
-  if (rawDraft) {
-    try {
-      storedDraft = JSON.parse(rawDraft);
-    } catch (error) {
-      console.error("uniformDraftの読み込みに失敗しました。", error);
-    }
-  }
-
-  const firstOrder =
-    draft?.orders?.[0] ||
-    storedDraft?.orders?.[0] ||
-    {};
-
-  const customerKey =
-    url.searchParams.get("customer") ||
-    sessionStorage.getItem("uniformCustomer") ||
-    draft?.publicKey ||
-    draft?.customerKey ||
-    draft?.customer ||
-    storedDraft?.publicKey ||
-    storedDraft?.customerKey ||
-    storedDraft?.customer ||
-    firstOrder.publicKey ||
-    firstOrder.customerKey ||
-    firstOrder.customer ||
-    "";
-
-  if (customerKey) {
-    sessionStorage.setItem("uniformCustomer", customerKey);
-  }
-
-  return customerKey;
+  const session = window.uniformCurrentSession || window.uniformAuth?.getSession?.();
+  return String(session?.customerKey || "").trim();
 }
 
 async function checkPageDeadline() {
@@ -1215,8 +1280,15 @@ const duplicateArea = document.getElementById("duplicateWarningArea");
     return;
   }
 
+  const integrity = validateDraftCustomerContext(draft);
+  if (!integrity.ok) {
+    lockConfirmPage(integrity.message);
+    alert(integrity.message);
+    return;
+  }
+
   const payload = JSON.parse(JSON.stringify(draft));
-  const customerKey = getCustomerKey();
+  const customerKey = integrity.customerKey;
   payload.publicKey = customerKey;
   payload.customerKey = customerKey;
   payload.customer = customerKey;
@@ -1374,15 +1446,19 @@ async function initializeConfirmPage() {
   try {
     loadDraft();
 
+    const integrity = validateDraftCustomerContext(draft);
+    if (!integrity.ok) {
+      lockConfirmPage(integrity.message);
+      return;
+    }
+
     const available = await checkPageDeadline();
     if (!available) return;
   } catch (err) {
-    console.error("HP公開期限チェックに失敗しました。", err);
-    const message = document.getElementById("message");
-    if (message) {
-      message.innerText =
-        "HP公開期限チェックに失敗しました。通信環境を確認して、もう一度お試しください。";
-    }
+    console.error("確認画面の初期化に失敗しました。", err);
+    lockConfirmPage(
+      "確認画面の初期化に失敗しました。通信環境を確認するか、入力画面からやり直してください。"
+    );
   }
 }
 
