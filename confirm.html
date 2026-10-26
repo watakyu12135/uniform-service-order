@@ -160,8 +160,9 @@ button{height:auto;min-height:44px;line-height:1.45;}
 <script src="js/app-config.js"></script>
 <script src="js/auth-client.js"></script>
 <script src="js/session-manager.js"></script>
-<script>window.uniformCurrentSession=window.uniformAuth.requireAuth();</script>
-</head>
+<script src="js/protected-page.js"></script>
+<script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
+<style id="authInitialHide">html{visibility:hidden}</style></head>
 <body>
 <div class="auth-status-bar" id="authStatusBar"><div><strong>AWS移行認証実験中</strong>　<span id="authMethodText"></span></div><div class="auth-status-actions"><span class="auth-status-note" id="authRemainingText">認証時間を確認中</span><button type="button" id="authLogoutButton">ログアウト</button></div></div>
 
