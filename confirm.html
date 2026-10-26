@@ -1312,10 +1312,14 @@ normalizePayloadForPowerAutomate(payload);
   resultArea.classList.remove("hidden");
 
   submitInProgress = false;
-  submitBtn.innerText = isEdit ? "修正内容を再表示する" : "送信予定内容を再表示する";
-  submitBtn.disabled = false;
-  document.getElementById("returnToInputButton").disabled = false;
-  document.getElementById("returnToInputButton").classList.remove("hidden");
+
+  // 結果表示後は既存の操作ボタンを隠し、結果欄内の2ボタンだけを表示する。
+  submitBtn.disabled = true;
+  submitBtn.classList.add("hidden");
+  const returnToInputButton = document.getElementById("returnToInputButton");
+  returnToInputButton.disabled = true;
+  returnToInputButton.classList.add("hidden");
+
   document.getElementById("confirmCheck").disabled = true;
   document.getElementById("duplicateConfirmCheck").disabled = true;
 
