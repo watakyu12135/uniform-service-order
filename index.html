@@ -1054,10 +1054,10 @@ button{height:auto;min-height:44px;line-height:1.45;}
   }
 })();
 </script>
-<script src="js/app-config.js?v=7.7"></script>
-<script src="js/auth-client.js?v=7.7"></script>
-<script src="js/session-manager.js?v=7.7"></script>
-<script src="js/protected-page.js?v=7.7"></script>
+<script src="js/app-config.js?v=7.7.1.1"></script>
+<script src="js/auth-client.js?v=7.7.1.1"></script>
+<script src="js/session-manager.js?v=7.7.1.1"></script>
+<script src="js/protected-page.js?v=7.7.1.1"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
 </head>
 <body>
@@ -2559,10 +2559,30 @@ checkPageDeadline()
     }
 
 currentData = data;
-const identityBinding = window.uniformAuth.bindCustomerIdentity(
-  currentData.customerCode,
-  currentData.customerName
-);
+const currentSession = window.uniformAuth.getSession();
+const loadedCustomerCode = String(currentData.customerCode || "").trim();
+const loadedCustomerName = String(currentData.customerName || "").trim();
+let identityBinding = { ok: false, message: "認証セッションがありません。" };
+
+if (currentSession && loadedCustomerCode && loadedCustomerName) {
+  const codeMismatch = currentSession.customerCode &&
+    String(currentSession.customerCode).trim() !== loadedCustomerCode;
+  const nameMismatch = currentSession.customerName &&
+    String(currentSession.customerName).trim() !== loadedCustomerName &&
+    String(currentSession.customerName).trim() !== "AWS移行実験用顧客";
+
+  if (!codeMismatch && !nameMismatch) {
+    currentSession.customerCode = loadedCustomerCode;
+    currentSession.customerName = loadedCustomerName;
+    sessionStorage.setItem("uniformAuthSession", JSON.stringify(currentSession));
+    identityBinding = { ok: true, session: currentSession };
+  } else {
+    identityBinding = { ok: false, message: "認証セッションと顧客設定が一致しません。" };
+  }
+} else if (currentSession) {
+  identityBinding = { ok: false, message: "顧客コードまたは顧客名称を取得できません。" };
+}
+
 if (!identityBinding.ok) {
   console.error(identityBinding.message);
   window.uniformAuth.logout("customer-identity-mismatch");
