@@ -157,10 +157,10 @@ button{height:auto;min-height:44px;line-height:1.45;}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
 </style>
 <style id="authStatusStyle">.auth-status-bar{position:sticky;top:0;z-index:10000;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:#0f172a;color:#fff;font-size:13px}.auth-status-bar strong{color:#fde68a}.auth-status-actions{display:flex;align-items:center;gap:10px}.auth-status-bar button{width:auto!important;margin:0!important;padding:7px 12px!important;background:#fff!important;color:#0f172a!important;border:0!important;border-radius:6px!important;font-weight:700!important}.auth-status-note{white-space:nowrap}@media(max-width:600px){.auth-status-bar{align-items:flex-start;flex-direction:column}.auth-status-actions{width:100%;justify-content:space-between}}</style>
-<script src="js/app-config.js?v=7.6"></script>
-<script src="js/auth-client.js?v=7.6"></script>
-<script src="js/session-manager.js?v=7.6"></script>
-<script src="js/protected-page.js?v=7.6"></script>
+<script src="js/app-config.js?v=7.7"></script>
+<script src="js/auth-client.js?v=7.7"></script>
+<script src="js/session-manager.js?v=7.7"></script>
+<script src="js/protected-page.js?v=7.7"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
 </head>
 <body>
@@ -392,7 +392,7 @@ button{height:auto;min-height:44px;line-height:1.45;}
   });
 })();
 </script>
-<script src="js/app-config.js?v=7.6"></script>
+<script src="js/app-config.js?v=7.7"></script>
 <script src="js/api-client.js"></script>
 <script>
 
@@ -1113,6 +1113,49 @@ function resetSubmitButton(isEdit) {
   updateSubmitButtonState();
 }
 
+function applyAuthenticatedCustomerIdentity(payload) {
+  const session = window.uniformCurrentSession || window.uniformAuth?.getSession?.();
+  const customerKey = String(session?.customerKey || "").trim();
+  const customerCode = String(session?.customerCode || "").trim();
+  const customerName = String(session?.customerName || "").trim();
+  if (!customerKey || !customerCode || !customerName) throw new Error("認証セッションの顧客情報が不足しています。入力画面からやり直してください。");
+  const apply = target => {
+    if (!target || typeof target !== "object") return;
+    target.publicKey = customerKey;
+    target.customerKey = customerKey;
+    target.customer = customerKey;
+    target.customerCode = customerCode;
+    target.customerName = customerName;
+    target["顧客コード"] = customerCode;
+    target["顧客名称"] = customerName;
+  };
+  apply(payload);
+  (payload.orders || []).forEach(apply);
+  apply(payload.measurement);
+  return { customerKey, customerCode, customerName };
+}
+
+function assertFinalCustomerIdentity(payload, identity) {
+  const records = [
+    { path: "payload", value: payload },
+    ...(payload.orders || []).map((value, index) => ({ path: `payload.orders[${index}]`, value })),
+    ...(payload.measurement ? [{ path: "payload.measurement", value: payload.measurement }] : [])
+  ];
+  const mismatch = records.find(({ value }) =>
+    String(value.publicKey || "").trim() !== identity.customerKey ||
+    String(value.customerKey || "").trim() !== identity.customerKey ||
+    String(value.customer || "").trim() !== identity.customerKey ||
+    String(value.customerCode || "").trim() !== identity.customerCode ||
+    String(value.customerName || "").trim() !== identity.customerName ||
+    String(value["顧客コード"] || "").trim() !== identity.customerCode ||
+    String(value["顧客名称"] || "").trim() !== identity.customerName
+  );
+  if (mismatch) {
+    console.error("最終JSONの顧客情報が一致しません。", mismatch);
+    throw new Error("最終JSONの顧客情報が認証中の顧客と一致しません。登録処理を停止しました。");
+  }
+}
+
 function normalizePayloadForPowerAutomate(payload){
 
   const orders = payload.orders || [];
@@ -1411,7 +1454,11 @@ if (!payload.measurement) {
   delete payload.measurement;
 }
 
+const finalIdentity = applyAuthenticatedCustomerIdentity(payload);
 normalizePayloadForPowerAutomate(payload);
+// 正規化後にも認証済み顧客情報を再設定し、最終JSONを検証する。
+applyAuthenticatedCustomerIdentity(payload);
+assertFinalCustomerIdentity(payload, finalIdentity);
 
   try {
     // API通信は共通クライアントへ集約する。
