@@ -1054,10 +1054,10 @@ button{height:auto;min-height:44px;line-height:1.45;}
   }
 })();
 </script>
-<script src="js/app-config.js?v=7.4"></script>
-<script src="js/auth-client.js?v=7.4"></script>
-<script src="js/session-manager.js?v=7.4"></script>
-<script src="js/protected-page.js?v=7.4"></script>
+<script src="js/app-config.js?v=7.6"></script>
+<script src="js/auth-client.js?v=7.6"></script>
+<script src="js/session-manager.js?v=7.6"></script>
+<script src="js/protected-page.js?v=7.6"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
 </head>
 <body>
@@ -2559,6 +2559,17 @@ checkPageDeadline()
     }
 
 currentData = data;
+const identityBinding = window.uniformAuth.bindCustomerIdentity(
+  currentData.customerCode,
+  currentData.customerName
+);
+if (!identityBinding.ok) {
+  console.error(identityBinding.message);
+  window.uniformAuth.logout("customer-identity-mismatch");
+  location.replace("login.html");
+  return;
+}
+window.uniformCurrentSession = identityBinding.session;
 setupBasicInfoVisibility();
 
 document.getElementById("customerInfo").innerText =

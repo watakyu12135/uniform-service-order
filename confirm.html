@@ -157,10 +157,10 @@ button{height:auto;min-height:44px;line-height:1.45;}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
 </style>
 <style id="authStatusStyle">.auth-status-bar{position:sticky;top:0;z-index:10000;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:#0f172a;color:#fff;font-size:13px}.auth-status-bar strong{color:#fde68a}.auth-status-actions{display:flex;align-items:center;gap:10px}.auth-status-bar button{width:auto!important;margin:0!important;padding:7px 12px!important;background:#fff!important;color:#0f172a!important;border:0!important;border-radius:6px!important;font-weight:700!important}.auth-status-note{white-space:nowrap}@media(max-width:600px){.auth-status-bar{align-items:flex-start;flex-direction:column}.auth-status-actions{width:100%;justify-content:space-between}}</style>
-<script src="js/app-config.js?v=7.5"></script>
-<script src="js/auth-client.js?v=7.5"></script>
-<script src="js/session-manager.js?v=7.5"></script>
-<script src="js/protected-page.js?v=7.5"></script>
+<script src="js/app-config.js?v=7.6"></script>
+<script src="js/auth-client.js?v=7.6"></script>
+<script src="js/session-manager.js?v=7.6"></script>
+<script src="js/protected-page.js?v=7.6"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
 </head>
 <body>
@@ -392,7 +392,7 @@ button{height:auto;min-height:44px;line-height:1.45;}
   });
 })();
 </script>
-<script src="js/app-config.js?v=7.5"></script>
+<script src="js/app-config.js?v=7.6"></script>
 <script src="js/api-client.js"></script>
 <script>
 
@@ -494,6 +494,12 @@ function validateDraftCustomerContext(targetDraft) {
     };
   }
 
+  const authenticatedCode = String(session?.customerCode || "").trim();
+  const authenticatedName = String(session?.customerName || "").trim();
+  if (!authenticatedCode || !authenticatedName) {
+    return { ok: false, message: "認証セッションに顧客コードまたは顧客名称がありません。入力画面からやり直してください。" };
+  }
+
   const values = collectDraftCustomerKeys(targetDraft);
   if (values.length === 0) {
     return {
@@ -515,19 +521,41 @@ function validateDraftCustomerContext(targetDraft) {
     };
   }
 
-  // 照合済みの公開キーで、登録予定データ内の全階層を統一する。
+  const records = [targetDraft, ...(targetDraft.orders || []), targetDraft.measurement].filter(Boolean);
+  const identityMismatch = records.find(record => {
+    const code = String(record.customerCode || record["顧客コード"] || "").trim();
+    const name = String(record.customerName || record["顧客名称"] || "").trim();
+    return !code || !name || code !== authenticatedCode || name !== authenticatedName;
+  });
+  if (identityMismatch) {
+    return { ok: false, message: "認証中の顧客コード・顧客名称と入力データが一致しません。登録処理を停止しました。" };
+  }
+
+  // 照合済みの顧客情報で、登録予定データ内の全階層を統一する。
   targetDraft.publicKey = authenticatedCustomer;
+  targetDraft.customerCode = authenticatedCode;
+  targetDraft.customerName = authenticatedName;
+  targetDraft["顧客コード"] = authenticatedCode;
+  targetDraft["顧客名称"] = authenticatedName;
   targetDraft.customerKey = authenticatedCustomer;
   targetDraft.customer = authenticatedCustomer;
   (targetDraft.orders || []).forEach(order => {
     order.publicKey = authenticatedCustomer;
     order.customerKey = authenticatedCustomer;
     order.customer = authenticatedCustomer;
+    order.customerCode = authenticatedCode;
+    order.customerName = authenticatedName;
+    order["顧客コード"] = authenticatedCode;
+    order["顧客名称"] = authenticatedName;
   });
   if (targetDraft.measurement) {
     targetDraft.measurement.publicKey = authenticatedCustomer;
     targetDraft.measurement.customerKey = authenticatedCustomer;
     targetDraft.measurement.customer = authenticatedCustomer;
+    targetDraft.measurement.customerCode = authenticatedCode;
+    targetDraft.measurement.customerName = authenticatedName;
+    targetDraft.measurement["顧客コード"] = authenticatedCode;
+    targetDraft.measurement["顧客名称"] = authenticatedName;
   }
   sessionStorage.setItem("uniformCustomer", authenticatedCustomer);
   sessionStorage.setItem("uniformDraft", JSON.stringify(targetDraft));

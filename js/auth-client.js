@@ -96,6 +96,22 @@
     };
   }
 
+  function bindCustomerIdentity(customerCode, customerName) {
+    const session = getSession();
+    if (!session) return { ok: false, message: "認証セッションがありません。" };
+    const code = String(customerCode || "").trim();
+    const name = String(customerName || "").trim();
+    if (!code || !name) return { ok: false, message: "顧客コードまたは顧客名称を取得できません。" };
+    if ((session.customerCode && session.customerCode !== code) ||
+        (session.customerName && session.customerName !== name && session.customerName !== "AWS移行実験用顧客")) {
+      return { ok: false, message: "認証セッションと顧客設定が一致しません。" };
+    }
+    session.customerCode = code;
+    session.customerName = name;
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    return { ok: true, session: session };
+  }
+
   function getSession() {
     try { return JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null"); }
     catch { return null; }
