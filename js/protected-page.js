@@ -64,13 +64,6 @@
     enforceCustomerContext: enforceCustomerContext
   });
 
-  window.addEventListener("storage", function (event) {
-    if (event.key !== "uniformLogoutBroadcast" || !event.newValue) return;
-    sessionStorage.setItem("uniformLogoutReason", "manual");
-    if (window.uniformAuth) window.uniformAuth.logout("manual", { broadcast: false });
-    location.replace("login.html");
-  });
-
   window.addEventListener("pageshow", function () {
     validateOrRedirect();
   });

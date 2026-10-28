@@ -300,8 +300,8 @@ button{height:auto;min-height:44px;line-height:1.45;}
 .uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}
 .uniform-language-selector select{min-width:130px;padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
-</style></head>
-<body>
+</style><style>.auth-status-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 auto 12px;max-width:900px;padding:10px 14px;border:1px solid #bbd7ef;border-radius:10px;background:#eef7ff;color:#16324f;font-size:13px;box-sizing:border-box}.auth-status-bar button{min-height:36px;padding:7px 14px;border:0;border-radius:7px;background:#475569;color:#fff;font-weight:700;cursor:pointer}</style></head>
+<body><script src="js/app-config.js?v=7.11"></script><script src="js/auth-client.js?v=7.11"></script><script src="js/session-manager.js?v=7.11"></script><script src="js/protected-page.js?v=7.11"></script><script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script><div class="auth-status-bar"><span id="reviseAuthStatus">認証確認中...</span><button id="reviseLogoutButton" type="button">ログアウト</button></div>
 <div class="page-shell">
 <button class="back-to-application" id="backToApplicationButton" type="button">
   ← ユニフォーム申請画面に戻る
@@ -553,16 +553,10 @@ let customerCode = "";
 let lastSearchResult = null;
 
 function getCustomer() {
-  const url = new URL(window.location.href);
-  const customerKey =
-    url.searchParams.get("customer") ||
-    sessionStorage.getItem("uniformCustomer") ||
-    "gvhp8hex";
-
-  if (customerKey) {
-    sessionStorage.setItem("uniformCustomer", customerKey);
-  }
-
+  const session = window.uniformCurrentSession || window.uniformAuth.getSession();
+  const customerKey = String(session?.customerKey || "").trim();
+  if (!customerKey) { location.replace("login.html"); return ""; }
+  sessionStorage.setItem("uniformCustomer", customerKey);
   return customerKey;
 }
 
@@ -1085,5 +1079,5 @@ function startEdit() {
 initializeSearchMethodUI();
 loadCustomerConfig();
 </script>
-</div></body>
+</div><script id="reviseAuthRuntime">document.addEventListener("DOMContentLoaded",function(){const session=window.uniformCurrentSession||window.uniformAuth.getSession();const status=document.getElementById("reviseAuthStatus");if(status&&session)status.textContent="認証済み："+(session.customerName||session.customerKey);document.getElementById("reviseLogoutButton")?.addEventListener("click",function(){window.uniformAuth.logout("manual");location.replace("login.html");});window.uniformSessionManager.start({statusElement:status});});</script></body>
 </html>

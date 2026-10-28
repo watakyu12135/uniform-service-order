@@ -30,8 +30,8 @@ button{height:auto;min-height:44px;line-height:1.45;}
 .uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}
 .uniform-language-selector select{min-width:130px;padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
-</style></head>
-<body>
+</style><style>.auth-status-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px;padding:10px 12px;border:1px solid #bbd7ef;border-radius:10px;background:#eef7ff;color:#16324f;font-size:13px}.auth-status-bar button,.complete-actions button{min-height:42px;padding:9px 16px;border:0;border-radius:7px;font-weight:700;cursor:pointer}.auth-status-bar button{background:#475569;color:#fff}.complete-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}.complete-actions button:first-child{background:#0875b7;color:#fff}.complete-actions button:last-child{background:#475569;color:#fff}</style></head>
+<body><script src="js/app-config.js?v=7.11"></script><script src="js/auth-client.js?v=7.11"></script><script src="js/session-manager.js?v=7.11"></script><script src="js/protected-page.js?v=7.11"></script><script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script><div class="auth-status-bar"><span id="completeAuthStatus">認証確認中...</span><button id="completeLogoutButton" type="button">ログアウト</button></div>
 <h2>登録完了</h2>
 <div class="box">
 <p>登録を受け付けました。</p>
@@ -59,7 +59,7 @@ button{height:auto;min-height:44px;line-height:1.45;}
 <input autocomplete="email" id="emailConfirm" inputmode="email" type="email"/>
 <button class="hidden" id="mailBtn">メールを送信する</button>
 </div>
-<button onclick="finish()">OK</button>
+<div class="complete-actions"><button onclick="finishNextPerson()">次の方を入力する</button><button onclick="finishLogout()">終了する</button></div>
 <script id="uniformI18nRuntime">
 (() => {
   "use strict";
@@ -181,6 +181,8 @@ button{height:auto;min-height:44px;line-height:1.45;}
 })();
 </script><script>
 const MAIL_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/a24901be6470481091ba5d201272a9c1/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=T2JDA28OxESihTuGqGnVgX6hlyj4h_EbgQjhjiM1AyY";
+
+(function(){const session=window.uniformCurrentSession||window.uniformAuth.getSession();if(!session)return;const rawComplete=sessionStorage.getItem("uniformComplete");const rawMail=sessionStorage.getItem("uniformMailDraft");if(!rawComplete&&!rawMail){location.replace("index.html?customer="+encodeURIComponent(session.customerKey)+"&new=1");return;}if(rawMail){try{const mailDraft=JSON.parse(rawMail);const records=Array.isArray(mailDraft.orders)?mailDraft.orders:[];const mismatch=records.find(record=>{const key=String(record.publicKey||record.customerKey||record.customer||"").trim();const code=String(record.customerCode||record["顧客コード"]||"").trim();const name=String(record.customerName||record["顧客名称"]||"").trim();return key!==String(session.customerKey||"").trim()||(session.customerCode&&code!==String(session.customerCode).trim())||(session.customerName&&name!==String(session.customerName).trim());});if(mismatch){sessionStorage.removeItem("uniformComplete");sessionStorage.removeItem("uniformMailDraft");alert("認証中の顧客と完了データが一致しません。ログインし直してください。");window.uniformAuth.logout("manual");location.replace("login.html");}}catch(error){sessionStorage.removeItem("uniformComplete");sessionStorage.removeItem("uniformMailDraft");location.replace("index.html?customer="+encodeURIComponent(session.customerKey)+"&new=1");}}})();
 
 /* 通常のブラウザ「戻る」を抑止し、画面内ボタンだけで遷移させる */
 let allowApplicationNavigation = false;
@@ -578,7 +580,7 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
     sessionStorage.removeItem("uniformComplete");
 
     allowApplicationNavigation = true;
-    location.replace("https://www.yahoo.co.jp/");
+    location.replace("index.html?customer=" + encodeURIComponent(getAuthenticatedCustomerKey()) + "&new=1");
 
   } catch (err) {
     alert("控えメール送信中にエラーが発生しました。\n通信環境を確認して、再度お試しください。\n\n" + err.message);
@@ -589,13 +591,10 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
 });
 
 /* 完了後 */
-function finish() {
-  allowApplicationNavigation = true;
-  sessionStorage.removeItem("uniformComplete");
-  sessionStorage.removeItem("uniformMailDraft");
-  allowApplicationNavigation = true;
-    location.replace("https://www.yahoo.co.jp/");
-}
+function clearCompletionData(){["uniformComplete","uniformMailDraft","uniformDraft","uniformDraftPending","uniformReturnToIndex","uniformConfirmPin","uniformEditData"].forEach(key=>sessionStorage.removeItem(key));}
+function getAuthenticatedCustomerKey(){const session=window.uniformCurrentSession||window.uniformAuth.getSession();return String(session?.customerKey||"").trim();}
+function finishNextPerson(){const customerKey=getAuthenticatedCustomerKey();if(!customerKey){location.replace("login.html");return;}allowApplicationNavigation=true;clearCompletionData();location.replace("index.html?customer="+encodeURIComponent(customerKey)+"&new=1");}
+function finishLogout(){allowApplicationNavigation=true;clearCompletionData();window.uniformAuth.logout("manual");location.replace("login.html");}
 </script>
-</body>
+<script id="completeAuthRuntime">document.addEventListener("DOMContentLoaded",function(){const session=window.uniformCurrentSession||window.uniformAuth.getSession();const status=document.getElementById("completeAuthStatus");if(status&&session)status.textContent="認証済み："+(session.customerName||session.customerKey);document.getElementById("completeLogoutButton")?.addEventListener("click",function(){clearCompletionData();window.uniformAuth.logout("manual");location.replace("login.html");});window.uniformSessionManager.start({statusElement:status});});</script></body>
 </html>

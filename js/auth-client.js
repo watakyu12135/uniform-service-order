@@ -2,7 +2,6 @@
   "use strict";
 
   const SESSION_KEY = "uniformAuthSession";
-  const LOGOUT_BROADCAST_KEY = "uniformLogoutBroadcast";
 
   function now() { return Date.now(); }
   function config() { return window.APP_CONFIG || {}; }
@@ -118,18 +117,9 @@
     catch { return null; }
   }
 
-  function getLogoutBroadcast() {
-    try { return JSON.parse(localStorage.getItem(LOGOUT_BROADCAST_KEY) || "null"); }
-    catch { return null; }
-  }
-
   function validateSession() {
     const session = getSession();
     if (!session || session.authenticated !== true) return { ok: false, reason: "unauthenticated" };
-    const broadcast = getLogoutBroadcast();
-    if (broadcast && Number(broadcast.at || 0) > Number(session.issuedAt || 0)) {
-      return { ok: false, reason: "cross-tab-logout" };
-    }
     const current = now();
     const idleLimit = Number(config().idleTimeoutMinutes || 2) * 60 * 1000;
     if (current >= Number(session.absoluteExpiresAt || 0)) return { ok: false, reason: "absolute-timeout" };
@@ -145,16 +135,9 @@
     return true;
   }
 
-  function logout(reason, options) {
-    const normalizedReason = reason === "idle-timeout" ? "idle-timeout" :
-      ((reason === "absolute-timeout" || reason === "timeout") ? "absolute-timeout" : "manual");
-    const shouldBroadcast = !options || options.broadcast !== false;
+  function logout(reason) {
     sessionStorage.removeItem(SESSION_KEY);
-    clearPreviousApplicationData();
-    sessionStorage.removeItem("uniformCustomer");
-    sessionStorage.removeItem("uniformCustomerContextNotice");
-    sessionStorage.setItem("uniformLogoutReason", normalizedReason);
-    if (shouldBroadcast) localStorage.setItem(LOGOUT_BROADCAST_KEY, JSON.stringify({ reason: normalizedReason, at: now(), nonce: Math.random().toString(36).slice(2) }));
+    if (reason) sessionStorage.setItem("uniformLogoutReason", reason);
   }
 
   function requireAuth() {
