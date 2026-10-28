@@ -47,8 +47,10 @@
       );
     };
     const onExpired = options.onExpired || function (reason) {
-      const logoutReason = reason === "idle-timeout" ? "idle-timeout" : "absolute-timeout";
-      window.uniformAuth.logout(logoutReason);
+      let logoutReason = reason === "idle-timeout" ? "idle-timeout" : "absolute-timeout";
+      let broadcast = true;
+      if (reason === "cross-tab-logout") { logoutReason = "manual"; broadcast = false; }
+      window.uniformAuth.logout(logoutReason, { broadcast: broadcast });
       location.replace("login.html");
     };
 

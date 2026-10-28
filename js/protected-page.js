@@ -10,16 +10,12 @@
   }
 
   function redirectToLogin(reason) {
-    const storedReason = sessionStorage.getItem("uniformLogoutReason");
-    const effectiveReason = storedReason || reason || "unauthenticated";
-
-    // 戻る操作で手動ログアウト理由を時間切れへ上書きしない。
-    if (!storedReason && effectiveReason !== "unauthenticated") {
-      sessionStorage.setItem("uniformLogoutReason", effectiveReason);
+    const params = new URLSearchParams();
+    params.set("return", currentReturnPath());
+    if (reason === "idle-timeout" || reason === "absolute-timeout" || reason === "timeout") {
+      params.set("expired", "1");
     }
-
-    // ログアウト・時間切れ後は確認画面へ戻さず、ログイン後は常にindex.htmlから開始する。
-    location.replace("login.html");
+    location.replace("login.html?" + params.toString());
   }
 
   function enforceCustomerContext(session) {
@@ -66,6 +62,13 @@
     validateOrRedirect: validateOrRedirect,
     redirectToLogin: redirectToLogin,
     enforceCustomerContext: enforceCustomerContext
+  });
+
+  window.addEventListener("storage", function (event) {
+    if (event.key !== "uniformLogoutBroadcast" || !event.newValue) return;
+    sessionStorage.setItem("uniformLogoutReason", "manual");
+    if (window.uniformAuth) window.uniformAuth.logout("manual", { broadcast: false });
+    location.replace("login.html");
   });
 
   window.addEventListener("pageshow", function () {
