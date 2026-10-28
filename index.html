@@ -1054,10 +1054,10 @@ button{height:auto;min-height:44px;line-height:1.45;}
   }
 })();
 </script>
-<script src="js/app-config.js?v=7.7.1.1"></script>
-<script src="js/auth-client.js?v=7.7.1.1"></script>
-<script src="js/session-manager.js?v=7.7.1.1"></script>
-<script src="js/protected-page.js?v=7.7.1.1"></script>
+<script src="js/app-config.js?v=7.8.1.1"></script>
+<script src="js/auth-client.js?v=7.8.1.1"></script>
+<script src="js/session-manager.js?v=7.8.1.1"></script>
+<script src="js/protected-page.js?v=7.8.1.1"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
 </head>
 <body>
@@ -2736,14 +2736,17 @@ function applyConfirmReturnData() {
   changeJob();
   currentLendingGroup = lendingGroupValue;
   rosterSearchCompleted = true;
-  if (returnEditMode) {
-    updateLendingPatternOptions(lendingPatternCode);
-    lastAcceptedLendingPatternCode = lendingPatternCode;
-    if (lendingPatternCode) changeLendingPattern();
+  // 確認画面から修正に戻る場合は、新規・修正を問わず貸与パターンと商品画面まで復元する。
+  updateLendingPatternOptions(lendingPatternCode);
+  lastAcceptedLendingPatternCode = lendingPatternCode;
+  if (lendingPatternCode) {
+    document.querySelectorAll('input[name="lendingPattern"]').forEach(input => {
+      input.checked = input.value === lendingPatternCode;
+    });
+    changeLendingPattern();
   } else {
-    document.getElementById("lendingPatternArea").classList.add("hidden");
-    document.getElementById("lendingPatternOptions").innerHTML = "";
-    lastAcceptedLendingPatternCode = "";
+    createTable(currentData, jobValue, getUniformTypeGender());
+    setProductSelectionVisible(true);
   }
   const departmentSelect = document.getElementById("department");
   if (departmentSelect) {
@@ -2752,7 +2755,7 @@ function applyConfirmReturnData() {
   }
 
   restoreMeasurementFromEditData(returnDraft.measurement);
-  if (returnEditMode) restoreOrdersFromEditData(returnDraft.orders);
+  restoreOrdersFromEditData(returnDraft.orders);
 
   if (returnEditMode) {
     const title = document.getElementById("pageTitle");
@@ -2775,7 +2778,13 @@ function applyConfirmReturnData() {
   updateCategorySummary();
   updateAllMeasurementButtons();
   updateAllInseamAreas();
-  if (!returnEditMode) restoreConfirmReturnToStep3(base);
+
+  // 新規登録の修正でも基本情報・貸与パターン選択へ戻さず、商品選択内容を直接表示する。
+  confirmReturnStep3Active = false;
+  document.getElementById("standardBasicInfoUi")?.classList.remove("hidden");
+  document.getElementById("rosterStepUi")?.classList.add("hidden");
+  setProductSelectionVisible(true);
+  document.getElementById("table")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function applyEditModeData() {
