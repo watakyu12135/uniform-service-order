@@ -10,12 +10,16 @@
   }
 
   function redirectToLogin(reason) {
-    const params = new URLSearchParams();
-    params.set("return", currentReturnPath());
-    if (reason === "idle-timeout" || reason === "absolute-timeout" || reason === "timeout") {
-      params.set("expired", "1");
+    const storedReason = sessionStorage.getItem("uniformLogoutReason");
+    const effectiveReason = storedReason || reason || "unauthenticated";
+
+    // 戻る操作で手動ログアウト理由を時間切れへ上書きしない。
+    if (!storedReason && effectiveReason !== "unauthenticated") {
+      sessionStorage.setItem("uniformLogoutReason", effectiveReason);
     }
-    location.replace("login.html?" + params.toString());
+
+    // ログアウト・時間切れ後は確認画面へ戻さず、ログイン後は常にindex.htmlから開始する。
+    location.replace("login.html");
   }
 
   function enforceCustomerContext(session) {

@@ -46,9 +46,10 @@
         "秒後に終了します。\n\n入力中の内容を確認してください。"
       );
     };
-    const onExpired = options.onExpired || function () {
-      window.uniformAuth.logout("timeout");
-      location.replace("login.html?expired=1");
+    const onExpired = options.onExpired || function (reason) {
+      const logoutReason = reason === "idle-timeout" ? "idle-timeout" : "absolute-timeout";
+      window.uniformAuth.logout(logoutReason);
+      location.replace("login.html");
     };
 
     addTrackedListener(document, "input", recordActivity, true);

@@ -135,9 +135,20 @@
     return true;
   }
 
+  function normalizeLogoutReason(reason) {
+    if (reason === "idle-timeout") return "idle-timeout";
+    if (reason === "absolute-timeout" || reason === "timeout") return "absolute-timeout";
+    if (reason === "manual" || !reason) return "manual";
+    return String(reason);
+  }
+
   function logout(reason) {
+    const normalizedReason = normalizeLogoutReason(reason);
     sessionStorage.removeItem(SESSION_KEY);
-    if (reason) sessionStorage.setItem("uniformLogoutReason", reason);
+    clearPreviousApplicationData();
+    sessionStorage.removeItem("uniformCustomer");
+    sessionStorage.removeItem("uniformCustomerContextNotice");
+    sessionStorage.setItem("uniformLogoutReason", normalizedReason);
   }
 
   function requireAuth() {
