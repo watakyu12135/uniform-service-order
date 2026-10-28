@@ -30,16 +30,8 @@ button{height:auto;min-height:44px;line-height:1.45;}
 .uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}
 .uniform-language-selector select{min-width:130px;padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
-</style><style>.auth-status-bar{display:flex;align-items:center;justify-content:flex-end;gap:8px;width:max-content;max-width:calc(100% - 24px);margin:6px 12px 4px auto;padding:3px 6px 3px 10px;border:1px solid #d7e3ee;border-radius:999px;background:#f8fbfe;color:#52677b;font-size:11px;line-height:1.25;box-sizing:border-box}.auth-status-bar button{min-height:0!important;padding:3px 8px!important;border:0!important;border-left:1px solid #d7e3ee!important;border-radius:0!important;background:transparent!important;color:#52677b!important;font-size:11px!important;font-weight:600!important;cursor:pointer}.auth-status-bar button:hover{color:#0b6091!important;text-decoration:underline}@media(max-width:600px){.auth-status-bar{margin-top:4px;font-size:10px}.auth-status-bar button{font-size:10px!important}}.complete-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}.complete-actions button{min-height:42px;padding:9px 16px;border:0;border-radius:7px;font-weight:700;cursor:pointer}.complete-actions button:first-child{background:#0875b7;color:#fff}.complete-actions button:last-child{background:#475569;color:#fff}.complete-test-notice{margin:8px 0 14px;padding:10px 12px;border:1px solid #f2b24b;border-radius:8px;background:#fff8e8;color:#855200;font-size:13px;font-weight:700}</style>
-<style id="authCompactOverride">
-.auth-status-bar{display:inline-flex!important;float:right!important;width:auto!important;max-width:none!important;min-width:0!important;margin:4px 12px 6px auto!important;padding:2px 4px 2px 8px!important;gap:5px!important;border:0!important;border-radius:5px!important;background:#f4f6f8!important;box-shadow:none!important;color:#67778a!important;font-size:10px!important;line-height:1.2!important;clear:both!important}
-#completeLogoutButton{display:inline-block!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;max-width:none!important;height:auto!important;min-height:0!important;margin:0!important;padding:2px 6px!important;border:0!important;border-left:1px solid #cbd5df!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#67778a!important;font-size:10px!important;font-weight:500!important;line-height:1.2!important}
-#completeLogoutButton:hover{background:transparent!important;color:#075985!important;text-decoration:underline!important}
-.auth-status-bar + .page-shell,.auth-status-bar + .container{clear:both!important}
-@media(max-width:600px){.auth-status-bar{margin-right:6px!important;font-size:9px!important}#completeLogoutButton{font-size:9px!important}}
-</style>
-</head>
-<body><script src="js/app-config.js?v=7.11.2"></script><script src="js/auth-client.js?v=7.11.2"></script><script src="js/session-manager.js?v=7.11.2"></script><script src="js/protected-page.js?v=7.11.2"></script><script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script><div class="auth-status-bar"><span id="completeAuthStatus">認証確認中...</span><button id="completeLogoutButton" type="button">ログアウト</button></div><div class="complete-test-notice" id="completeTestNotice" hidden>完了画面の検証モードです。実際の登録・メール送信は行わないでください。</div>
+</style><style id="uniformCommonHeaderStyle">.uniform-common-header{position:sticky;top:0;z-index:12000;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px;padding:7px 12px;background:#0f172a;color:#fff;box-sizing:border-box;font-size:12px;line-height:1.35}.uniform-common-brand{display:flex;align-items:center;gap:8px;white-space:nowrap}.uniform-common-brand strong{color:#fde68a}.uniform-common-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px}.uniform-language-host{display:flex;align-items:center}.uniform-common-header .uniform-language-selector{position:static!important;display:flex!important;align-items:center!important;gap:6px!important;width:auto!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;color:#fff!important;font-size:12px!important}.uniform-common-header .uniform-language-selector label{display:inline-block!important;width:auto!important;margin:0!important;color:#fff!important;font-size:12px!important;white-space:nowrap!important}.uniform-common-header .uniform-language-selector select,.uniform-common-header #uniformLanguageSelect{width:auto!important;min-width:112px!important;max-width:160px!important;height:34px!important;margin:0!important;padding:5px 28px 5px 8px!important;border:1px solid #94a3b8!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:13px!important}.uniform-common-time{white-space:nowrap}.uniform-common-logout{display:inline-block!important;width:auto!important;min-width:0!important;height:34px!important;min-height:34px!important;margin:0!important;padding:5px 11px!important;border:1px solid #fff!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:12px!important;font-weight:700!important;line-height:1.2!important}@media(max-width:760px){.uniform-common-header{position:relative;flex-direction:column;align-items:stretch;gap:6px}.uniform-common-actions{flex-wrap:wrap;justify-content:space-between}.uniform-language-host{flex:1 1 180px}.uniform-common-header .uniform-language-selector{justify-content:flex-start!important}}</style><script src="js/app-config.js?v=7.12"></script><script src="js/auth-client.js?v=7.12"></script><script src="js/session-manager.js?v=7.12"></script><script src="js/protected-page.js?v=7.12"></script><script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script></head>
+<body><div class="uniform-common-header" id="authStatusBar"><div class="uniform-common-brand"><strong>AWS移行認証実験中</strong><span id="authMethodText"></span></div><div class="uniform-common-actions"><div class="uniform-language-host" id="uniformLanguageHost"></div><span class="uniform-common-time" id="authRemainingText">認証時間を確認中</span><button class="uniform-common-logout" type="button" id="authLogoutButton">ログアウト</button></div></div>
 <h2>登録完了</h2>
 <div class="box">
 <p>登録を受け付けました。</p>
@@ -67,7 +59,7 @@ button{height:auto;min-height:44px;line-height:1.45;}
 <input autocomplete="email" id="emailConfirm" inputmode="email" type="email"/>
 <button class="hidden" id="mailBtn">メールを送信する</button>
 </div>
-<div class="complete-actions"><button onclick="finishNextPerson()">次の方を入力する</button><button onclick="finishLogout()">終了する</button></div>
+<button onclick="finish()">OK</button>
 <script id="uniformI18nRuntime">
 (() => {
   "use strict";
@@ -189,20 +181,6 @@ button{height:auto;min-height:44px;line-height:1.45;}
 })();
 </script><script>
 const MAIL_FLOW_URL = "https://defaultc8b61927a8e4402d9bae737ebea8e5.6c.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/a24901be6470481091ba5d201272a9c1/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=T2JDA28OxESihTuGqGnVgX6hlyj4h_EbgQjhjiM1AyY";
-
-(function prepareCompleteTestMode(){
-  const params=new URLSearchParams(location.search);
-  if(params.get("test")!=="1")return;
-  const rawDraft=sessionStorage.getItem("uniformDraft");
-  if(!rawDraft)return;
-  try{
-    const draft=JSON.parse(rawDraft);
-    const measureNo=String(draft.measureNo||draft.measurementNo||draft["採寸番号"]||draft.orders?.[0]?.measurementNo||draft.orders?.[0]?.["採寸番号"]||"TEST");
-    sessionStorage.setItem("uniformComplete",JSON.stringify({measureNo:measureNo,testMode:true}));
-    sessionStorage.setItem("uniformMailDraft",JSON.stringify(draft));
-  }catch(error){console.error("完了画面テスト用データの準備に失敗しました。",error);}
-})();
-(function(){const session=window.uniformCurrentSession||window.uniformAuth.getSession();if(!session)return;const rawComplete=sessionStorage.getItem("uniformComplete");const rawMail=sessionStorage.getItem("uniformMailDraft");if(!rawComplete&&!rawMail){location.replace("index.html?customer="+encodeURIComponent(session.customerKey)+"&new=1");return;}if(rawMail){try{const mailDraft=JSON.parse(rawMail);const records=Array.isArray(mailDraft.orders)?mailDraft.orders:[];const mismatch=records.find(record=>{const key=String(record.publicKey||record.customerKey||record.customer||"").trim();const code=String(record.customerCode||record["顧客コード"]||"").trim();const name=String(record.customerName||record["顧客名称"]||"").trim();return key!==String(session.customerKey||"").trim()||(session.customerCode&&code!==String(session.customerCode).trim())||(session.customerName&&name!==String(session.customerName).trim());});if(mismatch){sessionStorage.removeItem("uniformComplete");sessionStorage.removeItem("uniformMailDraft");alert("認証中の顧客と完了データが一致しません。ログインし直してください。");window.uniformAuth.logout("manual");location.replace("login.html");}}catch(error){sessionStorage.removeItem("uniformComplete");sessionStorage.removeItem("uniformMailDraft");location.replace("index.html?customer="+encodeURIComponent(session.customerKey)+"&new=1");}}})();
 
 /* 通常のブラウザ「戻る」を抑止し、画面内ボタンだけで遷移させる */
 let allowApplicationNavigation = false;
@@ -600,7 +578,7 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
     sessionStorage.removeItem("uniformComplete");
 
     allowApplicationNavigation = true;
-    location.replace("index.html?customer=" + encodeURIComponent(getAuthenticatedCustomerKey()) + "&new=1");
+    location.replace("https://www.yahoo.co.jp/");
 
   } catch (err) {
     alert("控えメール送信中にエラーが発生しました。\n通信環境を確認して、再度お試しください。\n\n" + err.message);
@@ -611,10 +589,13 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
 });
 
 /* 完了後 */
-function clearCompletionData(){["uniformComplete","uniformMailDraft","uniformDraft","uniformDraftPending","uniformReturnToIndex","uniformConfirmPin","uniformEditData"].forEach(key=>sessionStorage.removeItem(key));}
-function getAuthenticatedCustomerKey(){const session=window.uniformCurrentSession||window.uniformAuth.getSession();return String(session?.customerKey||"").trim();}
-function finishNextPerson(){const customerKey=getAuthenticatedCustomerKey();if(!customerKey){location.replace("login.html");return;}allowApplicationNavigation=true;clearCompletionData();location.replace("index.html?customer="+encodeURIComponent(customerKey)+"&new=1");}
-function finishLogout(){allowApplicationNavigation=true;clearCompletionData();window.uniformAuth.logout("manual");location.replace("login.html");}
+function finish() {
+  allowApplicationNavigation = true;
+  sessionStorage.removeItem("uniformComplete");
+  sessionStorage.removeItem("uniformMailDraft");
+  allowApplicationNavigation = true;
+    location.replace("https://www.yahoo.co.jp/");
+}
 </script>
-<script id="completeAuthRuntime">document.addEventListener("DOMContentLoaded",function(){const session=window.uniformCurrentSession||window.uniformAuth.getSession();const isTestMode=new URLSearchParams(location.search).get("test")==="1";const notice=document.getElementById("completeTestNotice");if(notice)notice.hidden=!isTestMode;if(isTestMode){const mailBtn=document.getElementById("mailBtn");if(mailBtn){mailBtn.disabled=true;mailBtn.classList.add("hidden");}}const status=document.getElementById("completeAuthStatus");if(status&&session)status.textContent="認証済み："+(session.customerName||session.customerKey);document.getElementById("completeLogoutButton")?.addEventListener("click",function(){clearCompletionData();window.uniformAuth.logout("manual");location.replace("login.html");});window.uniformSessionManager.start({statusElement:status});});</script></body>
+<script id="uniformCommonHeaderRuntime">(function(){function move(){const h=document.getElementById("uniformLanguageHost"),s=document.getElementById("uniformLanguageSelector");if(h&&s&&s.parentElement!==h)h.appendChild(s)}function init(){const x=window.uniformCurrentSession||window.uniformAuth?.getSession?.();if(!x)return;const m=document.getElementById("authMethodText");if(m)m.textContent=x.authMethod==="qr-test"?"QRコードで認証済み":"ID・パスワードで認証済み";document.getElementById("authLogoutButton")?.addEventListener("click",function(){window.uniformSessionManager?.stop?.();window.uniformAuth.logout("manual");location.replace("login.html")});window.uniformSessionManager.start({statusElement:document.getElementById("authRemainingText")});move();new MutationObserver(move).observe(document.body,{childList:true,subtree:true})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",init):init()})();</script></body>
 </html>

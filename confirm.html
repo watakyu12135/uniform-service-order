@@ -157,14 +157,14 @@ button{height:auto;min-height:44px;line-height:1.45;}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
 </style>
 <style id="authStatusStyle">.auth-status-bar{position:sticky;top:0;z-index:10000;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:#0f172a;color:#fff;font-size:13px}.auth-status-bar strong{color:#fde68a}.auth-status-actions{display:flex;align-items:center;gap:10px}.auth-status-bar button{width:auto!important;margin:0!important;padding:7px 12px!important;background:#fff!important;color:#0f172a!important;border:0!important;border-radius:6px!important;font-weight:700!important}.auth-status-note{white-space:nowrap}@media(max-width:600px){.auth-status-bar{align-items:flex-start;flex-direction:column}.auth-status-actions{width:100%;justify-content:space-between}}</style>
-<script src="js/app-config.js?v=7.8"></script>
-<script src="js/auth-client.js?v=7.8"></script>
-<script src="js/session-manager.js?v=7.8"></script>
-<script src="js/protected-page.js?v=7.8"></script>
+<script src="js/app-config.js?v=7.12"></script>
+<script src="js/auth-client.js?v=7.12"></script>
+<script src="js/session-manager.js?v=7.12"></script>
+<script src="js/protected-page.js?v=7.12"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
-</head>
+<style id="uniformCommonHeaderStyle">.uniform-common-header{position:sticky;top:0;z-index:12000;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px;padding:7px 12px;background:#0f172a;color:#fff;box-sizing:border-box;font-size:12px;line-height:1.35}.uniform-common-brand{display:flex;align-items:center;gap:8px;white-space:nowrap}.uniform-common-brand strong{color:#fde68a}.uniform-common-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px}.uniform-language-host{display:flex;align-items:center}.uniform-common-header .uniform-language-selector{position:static!important;display:flex!important;align-items:center!important;gap:6px!important;width:auto!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;color:#fff!important;font-size:12px!important}.uniform-common-header .uniform-language-selector label{display:inline-block!important;width:auto!important;margin:0!important;color:#fff!important;font-size:12px!important;white-space:nowrap!important}.uniform-common-header .uniform-language-selector select,.uniform-common-header #uniformLanguageSelect{width:auto!important;min-width:112px!important;max-width:160px!important;height:34px!important;margin:0!important;padding:5px 28px 5px 8px!important;border:1px solid #94a3b8!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:13px!important}.uniform-common-time{white-space:nowrap}.uniform-common-logout{display:inline-block!important;width:auto!important;min-width:0!important;height:34px!important;min-height:34px!important;margin:0!important;padding:5px 11px!important;border:1px solid #fff!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:12px!important;font-weight:700!important;line-height:1.2!important}@media(max-width:760px){.uniform-common-header{position:relative;flex-direction:column;align-items:stretch;gap:6px}.uniform-common-actions{flex-wrap:wrap;justify-content:space-between}.uniform-language-host{flex:1 1 180px}.uniform-common-header .uniform-language-selector{justify-content:flex-start!important}}</style></head>
 <body>
-<div class="auth-status-bar" id="authStatusBar"><div><strong>AWS移行認証実験中</strong>　<span id="authMethodText"></span></div><div class="auth-status-actions"><span class="auth-status-note" id="authRemainingText">認証時間を確認中</span><button type="button" id="authLogoutButton">ログアウト</button></div></div>
+<div class="uniform-common-header" id="authStatusBar"><div class="uniform-common-brand"><strong>AWS移行認証実験中</strong><span id="authMethodText"></span></div><div class="uniform-common-actions"><div class="uniform-language-host" id="uniformLanguageHost"></div><span class="uniform-common-time" id="authRemainingText">認証時間を確認中</span><button class="uniform-common-logout" type="button" id="authLogoutButton">ログアウト</button></div></div>
 
 <div class="test-banner" role="status">AWS移行実験版です。登録ボタンを押しても外部へ送信されず、送信予定内容をこの画面に表示します。</div>
 <h2>登録内容確認</h2>
@@ -393,7 +393,7 @@ button{height:auto;min-height:44px;line-height:1.45;}
   });
 })();
 </script>
-<script src="js/app-config.js?v=7.8"></script>
+<script src="js/app-config.js?v=7.12"></script>
 <script src="js/api-client.js"></script>
 <script>
 
@@ -1595,5 +1595,5 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
-</body>
+<script id="uniformCommonHeaderRuntime">(function(){function move(){const h=document.getElementById("uniformLanguageHost"),s=document.getElementById("uniformLanguageSelector");if(h&&s&&s.parentElement!==h)h.appendChild(s)}function init(){const x=window.uniformCurrentSession||window.uniformAuth?.getSession?.();if(!x)return;const m=document.getElementById("authMethodText");if(m)m.textContent=x.authMethod==="qr-test"?"QRコードで認証済み":"ID・パスワードで認証済み";document.getElementById("authLogoutButton")?.addEventListener("click",function(){window.uniformSessionManager?.stop?.();window.uniformAuth.logout("manual");location.replace("login.html")});window.uniformSessionManager.start({statusElement:document.getElementById("authRemainingText")});move();new MutationObserver(move).observe(document.body,{childList:true,subtree:true})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",init):init()})();</script></body>
 </html>
