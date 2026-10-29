@@ -1059,7 +1059,16 @@ button{height:auto;min-height:44px;line-height:1.45;}
 <script src="js/session-manager.js?v=7.12"></script>
 <script src="js/protected-page.js?v=7.12"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
-<style id="uniformCommonHeaderStyle">.uniform-common-header{position:sticky;top:0;z-index:12000;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px;padding:7px 12px;background:#0f172a;color:#fff;box-sizing:border-box;font-size:12px;line-height:1.35}.uniform-common-brand{display:flex;align-items:center;gap:8px;white-space:nowrap}.uniform-common-brand strong{color:#fde68a}.uniform-common-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px}.uniform-language-host{display:flex;align-items:center}.uniform-common-header .uniform-language-selector{position:static!important;display:flex!important;align-items:center!important;gap:6px!important;width:auto!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;color:#fff!important;font-size:12px!important}.uniform-common-header .uniform-language-selector label{display:inline-block!important;width:auto!important;margin:0!important;color:#fff!important;font-size:12px!important;white-space:nowrap!important}.uniform-common-header .uniform-language-selector select,.uniform-common-header #uniformLanguageSelect{width:auto!important;min-width:112px!important;max-width:160px!important;height:34px!important;margin:0!important;padding:5px 28px 5px 8px!important;border:1px solid #94a3b8!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:13px!important}.uniform-common-time{white-space:nowrap}.uniform-common-logout{display:inline-block!important;width:auto!important;min-width:0!important;height:34px!important;min-height:34px!important;margin:0!important;padding:5px 11px!important;border:1px solid #fff!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:12px!important;font-weight:700!important;line-height:1.2!important}@media(max-width:760px){.uniform-common-header{position:relative;flex-direction:column;align-items:stretch;gap:6px}.uniform-common-actions{flex-wrap:wrap;justify-content:space-between}.uniform-language-host{flex:1 1 180px}.uniform-common-header .uniform-language-selector{justify-content:flex-start!important}}</style></head>
+<style id="uniformCommonHeaderStyle">.uniform-common-header{position:sticky;top:0;z-index:12000;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px;padding:7px 12px;background:#0f172a;color:#fff;box-sizing:border-box;font-size:12px;line-height:1.35}.uniform-common-brand{display:flex;align-items:center;gap:8px;white-space:nowrap}.uniform-common-brand strong{color:#fde68a}.uniform-common-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px}.uniform-language-host{display:flex;align-items:center}.uniform-common-header .uniform-language-selector{position:static!important;display:flex!important;align-items:center!important;gap:6px!important;width:auto!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;color:#fff!important;font-size:12px!important}.uniform-common-header .uniform-language-selector label{display:inline-block!important;width:auto!important;margin:0!important;color:#fff!important;font-size:12px!important;white-space:nowrap!important}.uniform-common-header .uniform-language-selector select,.uniform-common-header #uniformLanguageSelect{width:auto!important;min-width:112px!important;max-width:160px!important;height:34px!important;margin:0!important;padding:5px 28px 5px 8px!important;border:1px solid #94a3b8!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:13px!important}.uniform-common-time{white-space:nowrap}.uniform-common-logout{display:inline-block!important;width:auto!important;min-width:0!important;height:34px!important;min-height:34px!important;margin:0!important;padding:5px 11px!important;border:1px solid #fff!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:12px!important;font-weight:700!important;line-height:1.2!important}@media(max-width:760px){.uniform-common-header{position:relative;flex-direction:column;align-items:stretch;gap:6px}.uniform-common-actions{flex-wrap:wrap;justify-content:space-between}.uniform-language-host{flex:1 1 180px}.uniform-common-header .uniform-language-selector{justify-content:flex-start!important}}</style><style id="rosterCheckingOverlayStyle">
+.roster-checking-overlay{position:fixed;inset:0;z-index:25000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.68);text-align:center}
+.roster-checking-overlay.hidden{display:none}
+.roster-checking-panel{width:min(90vw,460px);padding:34px 24px;border-radius:14px;background:#fff;box-shadow:0 14px 44px rgba(0,0,0,.38)}
+.roster-checking-wait,.roster-checking-warning{margin:0;font-size:18px;font-weight:700;line-height:1.6}
+.roster-checking-status{display:flex;justify-content:center;align-items:baseline;min-height:38px;margin:22px 0;color:#174f86;font-size:26px;font-weight:800;letter-spacing:.04em}
+.roster-checking-dots{display:inline-block;width:3ch;text-align:left;white-space:pre}
+body.roster-checking-locked{overflow:hidden}
+</style>
+</head>
 <body>
 <div class="uniform-common-header" id="authStatusBar"><div class="uniform-common-brand"><strong>AWS移行認証実験中</strong><span id="authMethodText"></span></div><div class="uniform-common-actions"><div class="uniform-language-host" id="uniformLanguageHost"></div><span class="uniform-common-time" id="authRemainingText">認証時間を確認中</span><button class="uniform-common-logout" type="button" id="authLogoutButton">ログアウト</button></div></div>
 
@@ -1150,6 +1159,14 @@ button{height:auto;min-height:44px;line-height:1.45;}
 </div>
 <div id="categoryStatus"></div>
 <div class="step-actions product-action-buttons">
+<div aria-busy="true" aria-live="assertive" class="roster-checking-overlay hidden" id="rosterCheckingOverlay" role="alert">
+  <div class="roster-checking-panel">
+    <p class="roster-checking-wait">しばらくお待ち下さい。</p>
+    <div class="roster-checking-status"><span>名簿確認中</span><span class="roster-checking-dots" id="rosterCheckingDots">.</span></div>
+    <p class="roster-checking-warning">画面を閉じたり戻ったりしないで下さい。</p>
+  </div>
+</div>
+
 <button class="primary-action" id="submitButton" onclick="submitData(event)" type="button">確認</button>
 <button class="secondary-action hidden" id="backToBasicInfoButton" onclick="backToBasicInfoFromProducts()" type="button">戻る</button>
 </div>
@@ -4595,11 +4612,40 @@ async function checkRosterDuplicate(common) {
   if (json.result !== "ok") throw new Error(json.message || "名簿重複チェックに失敗しました。");
   return json;
 }
-function setConfirmTransitionBusy(busy) {
+let rosterCheckingTimer = null;
+let rosterCheckingDotCount = 1;
+
+function startRosterCheckingAnimation() {
+  stopRosterCheckingAnimation();
+  rosterCheckingDotCount = 1;
+  const dots = document.getElementById("rosterCheckingDots");
+  if (dots) dots.textContent = ".";
+  rosterCheckingTimer = window.setInterval(() => {
+    rosterCheckingDotCount = rosterCheckingDotCount % 3 + 1;
+    const currentDots = document.getElementById("rosterCheckingDots");
+    if (currentDots) currentDots.textContent = ".".repeat(rosterCheckingDotCount);
+  }, 500);
+}
+
+function stopRosterCheckingAnimation() {
+  if (rosterCheckingTimer) window.clearInterval(rosterCheckingTimer);
+  rosterCheckingTimer = null;
+}
+
+function setConfirmTransitionBusy(busy, showRosterOverlay = false) {
   const button = document.getElementById("submitButton");
-  if (!button) return;
-  button.disabled = busy;
-  button.innerText = busy ? "名簿確認中..." : "確認";
+  if (button) {
+    button.disabled = busy;
+    button.innerText = busy ? "名簿確認中..." : "確認";
+  }
+
+  const overlay = document.getElementById("rosterCheckingOverlay");
+  const shouldShowOverlay = busy && showRosterOverlay;
+  if (overlay) overlay.classList.toggle("hidden", !shouldShowOverlay);
+  document.body.classList.toggle("roster-checking-locked", shouldShowOverlay);
+
+  if (shouldShowOverlay) startRosterCheckingAnimation();
+  else stopRosterCheckingAnimation();
 }
 // confirm.htmlからブラウザの履歴で戻った場合、
 // bfcacheに保存された「名簿確認中...」状態を解除する。
@@ -4909,7 +4955,7 @@ if (hasBespokeWithoutMeasurement()) {
   }
 
   console.log(payload);
-  setConfirmTransitionBusy(true);
+  setConfirmTransitionBusy(true, !effectiveEditMode);
   try {
     if (effectiveEditMode) {
       payload.rosterCheck = { skipped: true, reason: "revision" };
