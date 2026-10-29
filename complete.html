@@ -30,11 +30,15 @@ button{height:auto;min-height:44px;line-height:1.45;}
 .uniform-language-selector{position:sticky;top:0;z-index:9999;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid #d9e2ec;font-size:13px;color:#334155}
 .uniform-language-selector select{min-width:130px;padding:7px 30px 7px 10px;border:1px solid #94a3b8;border-radius:8px;background:#fff;color:#0f172a;font-size:14px}
 @media(max-width:600px){.uniform-language-selector{position:relative;padding:7px 10px}.uniform-language-selector label{font-size:12px}.uniform-language-selector select{min-width:120px}}
-</style><style id="uniformCommonHeaderStyle">.uniform-common-header{position:sticky;top:0;z-index:12000;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px;padding:7px 12px;background:#0f172a;color:#fff;box-sizing:border-box;font-size:12px;line-height:1.35}.uniform-common-brand{display:flex;align-items:center;gap:8px;white-space:nowrap}.uniform-common-brand strong{color:#fde68a}.uniform-common-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px}.uniform-language-host{display:flex;align-items:center}.uniform-common-header .uniform-language-selector{position:static!important;display:flex!important;align-items:center!important;gap:6px!important;width:auto!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;color:#fff!important;font-size:12px!important}.uniform-common-header .uniform-language-selector label{display:inline-block!important;width:auto!important;margin:0!important;color:#fff!important;font-size:12px!important;white-space:nowrap!important}.uniform-common-header .uniform-language-selector select,.uniform-common-header #uniformLanguageSelect{width:auto!important;min-width:112px!important;max-width:160px!important;height:34px!important;margin:0!important;padding:5px 28px 5px 8px!important;border:1px solid #94a3b8!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:13px!important}.uniform-common-time{white-space:nowrap}.uniform-common-logout{display:inline-block!important;width:auto!important;min-width:0!important;height:34px!important;min-height:34px!important;margin:0!important;padding:5px 11px!important;border:1px solid #fff!important;border-radius:6px!important;background:#fff!important;color:#0f172a!important;font-size:12px!important;font-weight:700!important;line-height:1.2!important}@media(max-width:760px){.uniform-common-header{position:relative;flex-direction:column;align-items:stretch;gap:6px}.uniform-common-actions{flex-wrap:wrap;justify-content:space-between}.uniform-language-host{flex:1 1 180px}.uniform-common-header .uniform-language-selector{justify-content:flex-start!important}}</style><script src="js/app-config.js?v=7.13"></script><script src="js/auth-client.js?v=7.13"></script><script src="js/session-manager.js?v=7.13"></script><script src="js/protected-page.js?v=7.13"></script><script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script><style id="completeTestModeStyle">
-.complete-test-notice{margin:10px 22px;padding:10px 12px;border:1px solid #f2b24b;border-radius:8px;background:#fff8e8;color:#855200;font-size:13px;font-weight:700}
-.complete-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.complete-actions button{width:auto;min-width:150px;min-height:42px;padding:9px 16px;border:0;border-radius:7px;font-weight:700;cursor:pointer}.complete-actions button:first-child{background:#0875b7;color:#fff}.complete-actions button:last-child{background:#475569;color:#fff}
+</style><style id="completeActionButtonStyle">
+#emailValidationMessage{min-height:1.5em;margin-top:8px;font-size:14px;font-weight:700}
+#mailBtn{background:#0b74d1!important;color:#fff!important;border:1px solid #0b74d1!important;border-radius:8px!important;font-weight:700!important;box-shadow:none!important;cursor:pointer!important}
+#mailBtn:hover,#mailBtn:focus-visible{background:#095fae!important;border-color:#095fae!important}
+#finishButton{background:#d9d9d9!important;color:#222!important;border:1px solid #c6c6c6!important;border-radius:8px!important;font-weight:700!important;box-shadow:none!important;cursor:pointer!important}
+#finishButton:hover,#finishButton:focus-visible{background:#c9c9c9!important;border-color:#b8b8b8!important}
+@media(max-width:600px){#mailBtn,#finishButton{width:100%!important;min-height:50px!important;font-size:16px!important}}
 </style></head>
-<body><div class="uniform-common-header" id="authStatusBar"><div class="uniform-common-brand"><strong>AWS移行認証実験中</strong><span id="authMethodText"></span></div><div class="uniform-common-actions"><div class="uniform-language-host" id="uniformLanguageHost"></div><span class="uniform-common-time" id="authRemainingText">認証時間を確認中</span><button class="uniform-common-logout" type="button" id="authLogoutButton">ログアウト</button></div></div><div class="complete-test-notice" id="completeTestNotice" hidden>完了画面の検証モードです。実際の登録・メール送信は行われません。<span id="completeTestDataStatus"></span></div>
+<body>
 <h2>登録完了</h2>
 <div class="box">
 <p>登録を受け付けました。</p>
@@ -49,20 +53,20 @@ button{height:auto;min-height:44px;line-height:1.45;}
 </div>
 <!-- メール送信（任意） -->
 <div class="section">
-<h3>控えをメールで受け取る（任意）</h3>
+<h3>入力内容の控えを自分宛に送信する（任意）</h3>
 <div class="notice">
     採寸番号と入力内容を記録用として<br/>
     ご自身のメールアドレスに送信できます。<br/>
-<br/>
     ※ メールアドレスは弊社には登録されません。
   </div>
 <label for="email">メールアドレス</label>
 <input autocomplete="email" id="email" inputmode="email" type="email"/>
 <label for="emailConfirm">メールアドレス再入力</label>
 <input autocomplete="email" id="emailConfirm" inputmode="email" type="email"/>
-<button class="hidden" id="mailBtn">メールを送信する</button>
+<div aria-live="polite" id="emailValidationMessage"></div>
+<button class="hidden" id="mailBtn" type="button">メールを送信する</button>
 </div>
-<div class="complete-actions"><button type="button" onclick="finishNextPerson()">次の方を入力する</button><button type="button" onclick="finishLogout()">終了する</button></div>
+<button id="finishButton" onclick="finish()" type="button">終了する</button>
 <script id="uniformI18nRuntime">
 (() => {
   "use strict";
@@ -212,22 +216,6 @@ let allowApplicationNavigation = false;
 })();
 
 /* 読み込み */
-(function prepareCompleteTestMode(){
-  const params=new URLSearchParams(location.search);
-  if(params.get("test")!=="1")return;
-  const rawDraft=sessionStorage.getItem("uniformDraft") || sessionStorage.getItem("uniformMailDraft");
-  if(!rawDraft){
-    console.error("完了画面の検証に必要な入力データがありません。同じタブの確認画面から『完了画面を確認する』を押してください。");
-    return;
-  }
-  try{
-    const draft=JSON.parse(rawDraft);
-    const first=Array.isArray(draft.orders)?draft.orders[0]||{}:{};
-    const measureNo=String(draft.measureNo||draft.measurementNo||draft["採寸番号"]||first.measurementNo||first["採寸番号"]||"----");
-    sessionStorage.setItem("uniformComplete",JSON.stringify({measureNo:measureNo,testMode:true}));
-    sessionStorage.setItem("uniformMailDraft",JSON.stringify(draft));
-  }catch(error){console.error("完了画面テスト用データの準備に失敗しました。",error);}
-})();
 const raw = sessionStorage.getItem("uniformComplete");
 let info = {};
 try {
@@ -249,27 +237,33 @@ function escapeHtml(value) {
 }
 
 /* メール入力一致チェック */
-function checkEmail() {
+function getEmailInputState() {
   const e1 = document.getElementById("email").value.trim();
   const e2 = document.getElementById("emailConfirm").value.trim();
+  const validFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e1);
+  if (!e1 && !e2) return "empty";
+  if (!e1 || !e2 || e1 !== e2) return "mismatch";
+  if (!validFormat) return "invalid";
+  return "valid";
+}
+
+function checkEmail() {
+  const state = getEmailInputState();
   const btn = document.getElementById("mailBtn");
-
-  if (!e1 || !e2) {
-    btn.classList.add("hidden");
-    return;
+  const message = document.getElementById("emailValidationMessage");
+  btn.classList.toggle("hidden", state !== "valid");
+  if (state === "mismatch") {
+    message.style.color = "#c00";
+    message.textContent = "メールアドレスが一致していません。";
+  } else if (state === "invalid") {
+    message.style.color = "#c00";
+    message.textContent = "メールアドレスの形式を確認してください。";
+  } else if (state === "valid") {
+    message.style.color = "#0a7a2f";
+    message.textContent = "✓ メールアドレスが一致しました。";
+  } else {
+    message.textContent = "";
   }
-
-  if (e1 !== e2) {
-    btn.classList.add("hidden");
-    return;
-  }
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e1)) {
-    btn.classList.add("hidden");
-    return;
-  }
-
-  btn.classList.remove("hidden");
 }
 
 document.getElementById("email").addEventListener("input", checkEmail);
@@ -597,7 +591,7 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
     sessionStorage.removeItem("uniformComplete");
 
     allowApplicationNavigation = true;
-    location.replace("index.html?customer="+encodeURIComponent(getAuthenticatedCustomerKey())+"&new=1");
+    location.replace("https://www.yahoo.co.jp/");
 
   } catch (err) {
     alert("控えメール送信中にエラーが発生しました。\n通信環境を確認して、再度お試しください。\n\n" + err.message);
@@ -608,39 +602,16 @@ document.getElementById("mailBtn").addEventListener("click", async () => {
 });
 
 /* 完了後 */
-function clearCompletionData(){
-  ["uniformComplete","uniformMailDraft","uniformDraft","uniformDraftPending","uniformReturnToIndex","uniformConfirmPin","uniformEditData"].forEach(key=>sessionStorage.removeItem(key));
-}
-function getAuthenticatedCustomerKey(){
-  const session=window.uniformCurrentSession||window.uniformAuth?.getSession?.();
-  return String(session?.customerKey||"").trim();
-}
-function finishNextPerson(){
-  const customerKey=getAuthenticatedCustomerKey();
-  if(!customerKey){location.replace("login.html");return;}
-  allowApplicationNavigation=true;
-  clearCompletionData();
-  location.replace("index.html?customer="+encodeURIComponent(customerKey)+"&new=1");
-}
-function finishLogout(){
-  allowApplicationNavigation=true;
-  clearCompletionData();
-  window.uniformAuth.logout("manual");
-  location.replace("login.html");
+function finish() {
+  const state = getEmailInputState();
+  if (state !== "empty" && state !== "valid") {
+    if (!confirm("控えメールは送信されません。")) return;
+  }
+  allowApplicationNavigation = true;
+  sessionStorage.removeItem("uniformComplete");
+  sessionStorage.removeItem("uniformMailDraft");
+  location.replace("https://www.yahoo.co.jp/");
 }
 </script>
-<script id="uniformCommonHeaderRuntime">(function(){function move(){const h=document.getElementById("uniformLanguageHost"),s=document.getElementById("uniformLanguageSelector");if(h&&s&&s.parentElement!==h)h.appendChild(s)}function init(){const x=window.uniformCurrentSession||window.uniformAuth?.getSession?.();if(!x)return;const m=document.getElementById("authMethodText");if(m)m.textContent=x.authMethod==="qr-test"?"QRコードで認証済み":"ID・パスワードで認証済み";document.getElementById("authLogoutButton")?.addEventListener("click",function(){window.uniformSessionManager?.stop?.();window.uniformAuth.logout("manual");location.replace("login.html")});window.uniformSessionManager.start({statusElement:document.getElementById("authRemainingText")});move();new MutationObserver(move).observe(document.body,{childList:true,subtree:true})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",init):init()})();</script><script id="completeTestModeRuntime">
-document.addEventListener("DOMContentLoaded",function(){
-  const isTestMode=new URLSearchParams(location.search).get("test")==="1";
-  const notice=document.getElementById("completeTestNotice");
-  if(notice)notice.hidden=!isTestMode;
-  if(isTestMode){
-    const status=document.getElementById("completeTestDataStatus");
-    const hasData=!!(sessionStorage.getItem("uniformDraft")||sessionStorage.getItem("uniformMailDraft"));
-    if(status&&!hasData)status.textContent=" 入力データが見つかりません。同じタブの確認画面から開いてください。";
-    const mailBtn=document.getElementById("mailBtn");
-    if(mailBtn){mailBtn.disabled=true;mailBtn.classList.add("hidden");}
-  }
-});
-</script></body>
+</body>
 </html>
