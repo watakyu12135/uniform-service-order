@@ -162,7 +162,22 @@ button{height:auto;min-height:44px;line-height:1.45;}
 <script src="js/session-manager.js?v=7.13"></script>
 <script src="js/protected-page.js?v=7.13"></script>
 <script>window.uniformCurrentSession=window.uniformProtectedPage.validateOrRedirect();</script>
-</head>
+<style id="confirmMobileInfoStyle">
+@media(max-width:600px){
+  .info-row{
+    display:grid!important;
+    grid-template-columns:minmax(92px,32%) minmax(0,1fr)!important;
+    column-gap:10px!important;
+    align-items:start!important;
+    margin:8px 0!important;
+  }
+  .info-row span{
+    min-width:0!important;
+    overflow-wrap:anywhere!important;
+    word-break:normal!important;
+  }
+}
+</style></head>
 <body>
 <div class="auth-status-bar" id="authStatusBar"><div><strong>AWS移行認証実験中</strong>　<span id="authMethodText"></span></div><div class="auth-status-actions"><span class="auth-status-note" id="authRemainingText">認証時間を確認中</span><button type="button" id="authLogoutButton">ログアウト</button></div></div>
 
@@ -414,8 +429,10 @@ function navigateBackToInputForEdit() {
     alert("戻す入力内容がありません。入力画面からやり直してください。");
     return;
   }
+  // 入力画面へ戻る場合、4桁番号は保持せず、次回confirm画面で必ず再入力する。
+  sessionStorage.removeItem("uniformConfirmPin");
   const pin = document.getElementById("pin");
-  if (pin) sessionStorage.setItem("uniformConfirmPin", pin.value || "");
+  if (pin) pin.value = "";
   sessionStorage.setItem("uniformReturnToIndex", "1");
   sessionStorage.setItem("uniformDraftPending", "1");
   allowApplicationNavigation = true;
